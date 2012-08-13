@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Media", "Carbon.Media\Carbon.Media.csproj", "{C7B6747D-9269-4C89-855B-32268EEEC1AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.csproj", "{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

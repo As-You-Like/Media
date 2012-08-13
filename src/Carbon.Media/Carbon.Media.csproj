@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7B6747D-9269-4C89-855B-32268EEEC1AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carbon.Media</RootNamespace>
+    <AssemblyName>Carbon.Media</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Codecs\MediaCodecType.cs" />
+    <Compile Include="Codecs\MediaCodec.cs" />
+    <Compile Include="Encoding\Bitrate.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="Helpers\Alignment.cs" />
+    <Compile Include="Audio\AudioFormat.cs" />
+    <Compile Include="Audio\IAudioInfo.cs" />
+    <Compile Include="Encoding\AudioProfile.cs" />
+    <Compile Include="Encoding\EncodingProfile.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Math\Fraction.cs" />
+    <Compile Include="Math\SizeExtensions.cs" />
+    <Compile Include="Encoding\VideoProfile.cs" />
+    <Compile Include="Helpers\AlignmentExtensions.cs" />
+    <Compile Include="Helpers\AlignmentHelper.cs" />
+    <Compile Include="Helpers\MediaContainerExtensions.cs" />
+    <Compile Include="Helpers\VideoHelper.cs" />
+    <Compile Include="Helpers\ImageRenditionInfo.cs" />
+    <Compile Include="Models\IMediaInfo.cs" />
+    <Compile Include="Containers\MediaContainer.cs" />
+    <Compile Include="Features\MediaFeatures.cs" />
+    <Compile Include="Helpers\MediaTransformation.cs" />
+    <Compile Include="Helpers\ScaleMode.cs" />
+    <Compile Include="Mime\FileFormat.cs" />
+    <Compile Include="Mime\MediaType.cs" />
+    <Compile Include="Mime\Mime.cs" />
+    <Compile Include="Mime\MimeHelper.cs" />
+    <Compile Include="Transforms\AnchoredResize.cs" />
+    <Compile Include="Transforms\Clip.cs" />
+    <Compile Include="Transforms\Crop.cs" />
+    <Compile Include="Transforms\ITransform.cs" />
+    <Compile Include="Transforms\Resize.cs" />
+    <Compile Include="Transforms\Rotate.cs" />
+    <Compile Include="Codecs\H264Profile.cs" />
+    <Compile Include="Video\IFrameInfo.cs" />
+    <Compile Include="Video\IVideoInfo.cs" />
+    <Compile Include="Video\VideoFormat.cs" />
+    <Compile Include="Helpers\VisualHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
