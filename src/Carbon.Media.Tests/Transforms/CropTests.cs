@@ -11,7 +11,7 @@
 		[Test]
 		public void FromFullKey()
 		{
-			var crop = Crop.ParseKey("crop:10-0_85x20");
+			var crop = Crop.Parse("crop:10-0_85x20");
 
 			Assert.AreEqual(10, crop.Rectangle.X);
 			Assert.AreEqual(0, crop.Rectangle.Y);
@@ -22,7 +22,7 @@
 		[Test]
 		public void FromPartialKey()
 		{
-			var crop = Crop.ParseKey("0-0_85x20");
+			var crop = Crop.Parse("0-0_85x20");
 
 			Assert.AreEqual(0, crop.Rectangle.X);
 			Assert.AreEqual(0, crop.Rectangle.Y);

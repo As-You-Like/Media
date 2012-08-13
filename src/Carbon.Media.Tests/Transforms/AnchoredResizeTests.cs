@@ -11,7 +11,7 @@
 		[Test]
 		public void FromFullKey()
 		{
-			var resize = AnchoredResize.ParseKey("resize:85x20-c");
+			var resize = AnchoredResize.Parse("resize:85x20-c");
 
 			Assert.AreEqual(85, resize.Width);
 			Assert.AreEqual(20, resize.Height);
@@ -21,7 +21,7 @@
 		[Test]
 		public void FromPartialKey()
 		{
-			var resize = AnchoredResize.ParseKey("85x20-l");
+			var resize = AnchoredResize.Parse("85x20-l");
 
 			Assert.AreEqual(85, resize.Width);
 			Assert.AreEqual(20, resize.Height);

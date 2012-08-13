@@ -10,7 +10,7 @@
 		[Test]
 		public void FromFullKey()
 		{
-			var rotate = Rotate.ParseKey("360");
+			var rotate = Rotate.Parse("360");
 
 			Assert.AreEqual(360, rotate.Angle);
 		}
@@ -18,7 +18,7 @@
 		[Test]
 		public void FromPartialKey()
 		{
-			var rotate = Rotate.ParseKey("rotate:360");
+			var rotate = Rotate.Parse("rotate:360");
 
 			Assert.AreEqual(360, rotate.Angle);
 		}

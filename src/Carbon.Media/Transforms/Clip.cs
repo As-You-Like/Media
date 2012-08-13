@@ -32,7 +32,7 @@
 			get { return end; }
 		}
 
-		public string ToKey() 
+		public override string ToString() 
 		{
 			return string.Format("clip:{0}-{1}", start.TotalSeconds, end.TotalSeconds);
 		}

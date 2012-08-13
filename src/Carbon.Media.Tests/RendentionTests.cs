@@ -35,7 +35,7 @@
 			Assert.AreEqual(1045645, rendition2.Source.Id);
 			Assert.AreEqual("jpeg", rendition2.Format);
 			Assert.AreEqual(1, rendition2.Transforms.Count);
-			Assert.AreEqual("85x20", rendition2.Transforms[0].ToKey());
+			Assert.AreEqual("85x20", rendition2.Transforms[0].ToString());
 		}
 
 		[Test]
@@ -53,8 +53,8 @@
 			Assert.AreEqual(1045645, rendition2.Source.Id);
 			Assert.AreEqual("png", rendition2.Format);
 			Assert.AreEqual(2, rendition2.Transforms.Count);
-			Assert.AreEqual("100x100", rendition2.Transforms[0].ToKey());
-			Assert.AreEqual("crop:0-0_85x20", rendition2.Transforms[1].ToKey());
+			Assert.AreEqual("100x100", rendition2.Transforms[0].ToString());
+			Assert.AreEqual("crop:0-0_85x20", rendition2.Transforms[1].ToString());
 		}
 
 		[Test]

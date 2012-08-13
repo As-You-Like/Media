@@ -12,8 +12,6 @@
 		private readonly int height;
 		private readonly int width;
 
-		// SCALE?
-
 		public Resize(Size size) 
 			: this(size.Width, size.Height) { }
 
@@ -47,12 +45,12 @@
 			get { return new Size(width, height); }
 		}
 
-		public string ToKey()
+		public override string ToString()
 		{
 			return width + "x" + height;
 		}
 
-		public static Resize ParseKey(string key)
+		public static Resize Parse(string key)
 		{
 			#region Normalization
 

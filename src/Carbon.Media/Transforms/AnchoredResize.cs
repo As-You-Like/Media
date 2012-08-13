@@ -51,7 +51,7 @@
 			get { return anchor; }
 		}
 
-		public string ToKey()
+		public override string ToString()
 		{
 			// {width}x{height}-{anchorAbbreviation}
 
@@ -62,7 +62,7 @@
 			);
 		}
 
-		public static AnchoredResize ParseKey(string key)
+		public static AnchoredResize Parse(string key)
 		{
 			#region Normalization
 

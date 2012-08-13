@@ -37,7 +37,7 @@
 			get { return rectangle; }
 		}
 
-		public string ToKey()
+		public override string ToString()
 		{
 			// crop:0-0_100x100
 
@@ -49,7 +49,7 @@
 			);
 		}
 
-		public static Crop ParseKey(string key)
+		public static Crop Parse(string key)
 		{
 			#region Normalization
 

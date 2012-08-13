@@ -27,17 +27,16 @@
 			get { return angle; }
 		}
 
-		public string ToKey()
+		public override string ToString()
 		{
 			return "rotate:" + angle;
 		}
 
-		public static Rotate ParseKey(string key)
+		public static Rotate Parse(string key)
 		{
 			#region Normalization
 
-			if (key.StartsWith("rotate:"))
-			{
+			if (key.StartsWith("rotate:")) {
 				key = key.Remove(0, 7);
 			}
 

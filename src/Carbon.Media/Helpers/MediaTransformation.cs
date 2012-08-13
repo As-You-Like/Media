@@ -128,14 +128,14 @@
 
 					switch (transformName)
 					{
-						case "crop":	transform = Crop.ParseKey(segment);			break;
-						case "rotate":	transform = Rotate.ParseKey(segment);		break;
+						case "crop":   transform = Crop.Parse(segment);	  break;
+						case "rotate": transform = Rotate.Parse(segment); break;
 						default:
 							if (segment.Contains("-")) {
-								transform = AnchoredResize.ParseKey(segment);
+								transform = AnchoredResize.Parse(segment);
 							}
 							else {
-								transform = Resize.ParseKey(segment);
+								transform = Resize.Parse(segment);
 							}
 
 							break;
@@ -186,7 +186,7 @@
 					sb.Append("/");
 				}
 
-				sb.Append(transform.ToKey());
+				sb.Append(transform.ToString());
 			}
 
 			sb.Append(".");
