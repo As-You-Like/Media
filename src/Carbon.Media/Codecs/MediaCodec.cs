@@ -10,7 +10,7 @@
 		private readonly MediaCodecType type;
 		private readonly MediaCodecProfile profile;
 
-		public MediaCodec(string name, MediaCodecType type, MediaCodecProfile profile = null)
+		public MediaCodec(string name, MediaCodecType type,  MediaCodecProfile profile = null)
 		{
 			#region Preconditions
 
@@ -91,15 +91,16 @@
 		public static readonly MediaCodec H264High		= new MediaCodec("avc1.64001E", MediaCodecType.H264, H264Profile.High);
 
 		public static readonly MediaCodec Vorbis		= new MediaCodec("vorbis", MediaCodecType.Vorbis);
-
 		public static readonly MediaCodec Vp8			= new MediaCodec("vp8", MediaCodecType.Vp8);
 
 		// Images --------------------------------------------------------------------------------------------------
 		public static readonly MediaCodec Bmp			= new MediaCodec("bmp", MediaCodecType.Bmp);
 		public static readonly MediaCodec Gif			= new MediaCodec("gif", MediaCodecType.Gif);
 		public static readonly MediaCodec Jpeg			= new MediaCodec("jpeg", MediaCodecType.Jpeg);
+		public static readonly MediaCodec Png			= new MediaCodec("jp2", MediaCodecType.Jpeg2000);
+		public static readonly MediaCodec Tiff			= new MediaCodec("tiff", MediaCodecType.Tiff);
 		public static readonly MediaCodec Jxr			= new MediaCodec("jxr", MediaCodecType.Jxr);
-		public static readonly MediaCodec Png			= new MediaCodec("png", MediaCodecType.Png);
+		public static readonly MediaCodec WebP			= new MediaCodec("webp", MediaCodecType.WebP);
 	}
 
 	public abstract class MediaCodecProfile { }

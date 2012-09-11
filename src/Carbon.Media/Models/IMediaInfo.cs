@@ -7,6 +7,8 @@
 		int Id { get; }
 
 		// e.g. image/jpeg
+		// TODO: Change to Codec
+
 		Mime Type { get; }
 
 		int Width { get; }

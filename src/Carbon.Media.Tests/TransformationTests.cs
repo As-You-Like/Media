@@ -11,13 +11,13 @@
 		[Test]
 		public void ResizedJpegUriIsCorrect()
 		{
-			var rendition = new MediaTransformation(new MediaInfo(1045645), "jpeg") { 
+			var transformation = new MediaTransformation(new MediaInfo(1045645), "jpeg") { 
 				BaseMediaPath = "http://m.cmcdn.net",
 				Transforms = { new Resize(85, 20) }
 			};
 
-			Assert.AreEqual("http://m.cmcdn.net/1045645/85x20.jpeg", rendition.Url);
-			Assert.AreEqual(rendition.Url, rendition.Url.ToString());
+			Assert.AreEqual("http://m.cmcdn.net/1045645/85x20.jpeg", transformation.Url);
+			Assert.AreEqual(transformation.Url, transformation.Url.ToString());
 		}
 
 		[Test]
@@ -41,14 +41,14 @@
 		[Test]
 		public void CropPng()
 		{
-			var rendition = new MediaTransformation(new MediaInfo(1045645), "png") {
+			var transformation = new MediaTransformation(new MediaInfo(1045645), "png") {
 				Transforms = { new Resize(100, 100), new Crop(0, 0, 85, 20) }	
 			};
 
-			Assert.AreEqual("100x100/crop:0-0_85x20.png", rendition.GetFullName());
-			Assert.AreEqual("1045645/100x100/crop:0-0_85x20.png", rendition.GetUrlPath());
+			Assert.AreEqual("100x100/crop:0-0_85x20.png", transformation.GetFullName());
+			Assert.AreEqual("1045645/100x100/crop:0-0_85x20.png", transformation.GetUrlPath());
 
-			var rendition2 = MediaTransformation.ParseUrlPath(rendition.GetUrlPath());
+			var rendition2 = MediaTransformation.ParseUrlPath(transformation.GetUrlPath());
 
 			Assert.AreEqual(1045645, rendition2.Source.Id);
 			Assert.AreEqual("png", rendition2.Format);
@@ -78,20 +78,26 @@
 				}
 			};
 
-			Assert.AreEqual("50x50/crop:0-0_85x20/rotate:90.jpeg", rendition.GetFullName());
+			Assert.AreEqual("50x50/crop:0-0_85x20/rotate(90).jpeg", rendition.GetFullName());
+
+			var rendition2 = MediaTransformation.ParseUrlPath(rendition.GetUrlPath());
+
+			Assert.AreEqual(3, rendition2.Transforms.Count);
+
+			Assert.AreEqual(90, ((Rotate)rendition2.Transforms[2]).Angle);
 		}
 
 		[Test]
 		public void LeftAnchoredResizeAndRotate90()
 		{
-			var rendition = new MediaTransformation(new MediaInfo(1045645), "jpeg") {
+			var transformation = new MediaTransformation(new MediaInfo(1045645), "jpeg") {
 				Transforms = { 
 					new AnchoredResize(150, 50, Alignment.Left),
 					new Rotate(90)
 				}
 			};
 
-			Assert.AreEqual("150x50-l/rotate:90.jpeg", rendition.GetFullName());
+			Assert.AreEqual("150x50-l/rotate(90).jpeg", transformation.GetFullName());
 		}
 
 		[Test]
@@ -104,7 +110,7 @@
 				}
 			};
 
-			Assert.AreEqual("50x50-l/rotate:180.tiff", rendition.GetFullName());
+			Assert.AreEqual("50x50-l/rotate(180).tiff", rendition.GetFullName());
 		}
 
 		[Test]
@@ -121,6 +127,40 @@
 			};
 
 			Assert.AreEqual(@"500x100-c.jpeg", rendition.GetFullName());
+		}
+
+		[Test]
+		public void Filters()
+		{
+			var transformation = new MediaTransformation(new MediaInfo(1045645), "jpeg") {
+				Transforms = { 
+					new ApplyFilter("contrast", "2"), 
+					new ApplyFilter("grayscale", "1"),
+					new ApplyFilter("sepia", "1")
+				}
+			};
+
+			Assert.AreEqual("contrast(2)/grayscale(1)/sepia(1).jpeg", transformation.GetFullName());
+
+			var rendition2 = MediaTransformation.ParseUrlPath(transformation.GetUrlPath());
+
+			Assert.AreEqual(3, rendition2.Transforms.Count);
+
+			Assert.AreEqual("contrast", ((ApplyFilter)rendition2.Transforms[0]).Name);
+			Assert.AreEqual("grayscale", ((ApplyFilter)rendition2.Transforms[1]).Name);
+			Assert.AreEqual("sepia", ((ApplyFilter)rendition2.Transforms[2]).Name);
+		}
+
+		[Test]
+		public void BuilderTests()
+		{
+			var transformation = new MediaTransformation(new MediaInfo(1045645), "jpeg")
+				.Resize(100, 100)
+				.Rotate(90)
+				.ApplyFilter("sepia", 1);
+
+
+			Assert.AreEqual("100x100/rotate(90)/sepia(1).jpeg", transformation.GetFullName());
 		}
 	}
 

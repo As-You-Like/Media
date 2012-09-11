@@ -58,7 +58,7 @@
     <Compile Include="Models\IMediaInfo.cs" />
     <Compile Include="Containers\MediaContainer.cs" />
     <Compile Include="Features\MediaFeatures.cs" />
-    <Compile Include="Helpers\MediaTransformation.cs" />
+    <Compile Include="Transforms\MediaTransformation.cs" />
     <Compile Include="Helpers\ScaleMode.cs" />
     <Compile Include="Mime\FileFormat.cs" />
     <Compile Include="Mime\MediaType.cs" />
@@ -66,6 +66,7 @@
     <Compile Include="Mime\MimeHelper.cs" />
     <Compile Include="Transforms\AnchoredResize.cs" />
     <Compile Include="Transforms\Clip.cs" />
+    <Compile Include="Transforms\Filter.cs" />
     <Compile Include="Transforms\Crop.cs" />
     <Compile Include="Transforms\ITransform.cs" />
     <Compile Include="Transforms\Resize.cs" />

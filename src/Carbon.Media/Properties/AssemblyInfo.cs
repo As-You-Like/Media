@@ -3,9 +3,14 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 Jason Nelson")]
-[assembly: AssemblyVersion("0.0.4")]
+[assembly: AssemblyVersion("0.0.7")]
 
 /*
+ - Added WebP mime
+ - Base the format on the LAST dot
+ - Changed rotate specification to rotate(90deg) 
+ - Added FilterTransform
+
  0.0.4 (2012-08-12)
  -----------------------------------------------------
  Simplified Transforms to use ToString() & Parse()

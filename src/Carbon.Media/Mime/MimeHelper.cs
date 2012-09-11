@@ -50,6 +50,7 @@
 			{ "tif",	Mime.Tiff },
 			{ "tiff",	Mime.Tiff },
 			{ "wdp",	Mime.Jxr },
+			{ "webp",	Mime.WebP },
 
 			// Text
 			{ "css",	Mime.Css },

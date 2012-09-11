@@ -29,15 +29,15 @@
 
 		public override string ToString()
 		{
-			return "rotate:" + angle;
+			return "rotate(" + angle + ")";
 		}
 
 		public static Rotate Parse(string key)
 		{
 			#region Normalization
 
-			if (key.StartsWith("rotate:")) {
-				key = key.Remove(0, 7);
+			if (key.StartsWith("rotate(")) {
+				key = key.Remove(0, 7).TrimEnd(')');
 			}
 
 			#endregion

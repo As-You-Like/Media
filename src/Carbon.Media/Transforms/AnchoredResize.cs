@@ -55,6 +55,10 @@
 		{
 			// {width}x{height}-{anchorAbbreviation}
 
+			// 100x100;fit=contain;anchor=center/
+
+			// fit: cover,contain,crop,pad
+
 			return string.Format("{0}x{1}-{2}", 
 				/*0*/ width,
 				/*1*/ height,

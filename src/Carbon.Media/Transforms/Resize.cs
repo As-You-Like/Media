@@ -31,19 +31,25 @@
 			this.height = height;
 		}
 
-		public int Height {
+		public int Height 
+		{
 			get { return height; }
 		}
 
-		public int Width {
+		public int Width 
+		{
 			get { return width; }
 		}
+
+		#region Private
 
 		[IgnoreDataMember]
 		public Size Size 
 		{
 			get { return new Size(width, height); }
 		}
+
+		#endregion
 
 		public override string ToString()
 		{
@@ -69,11 +75,24 @@
 
 /* 
 
+500x0
+0x500
+
+500x500;fit:crop;anchor:center
+500x500(fit:crop;anchor:center)
+500x500+x:100+y:200 
+
+500x500(fit:crop anchor:center)
+
+HTTP HEADER SYNTAX
+
+compress;q=0.5, gzip;q=1.0
+text/html; charset=ISO-8859-4
+ 
 Image Magic : 
 -resize 64x64
 -crop 40x30+10+10  (width,height,top,left)
 
 -crop <width>x<height>{+-}<x>{+-}<y>{%}
- 
 
 */

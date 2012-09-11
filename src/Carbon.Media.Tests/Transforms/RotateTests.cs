@@ -18,7 +18,7 @@
 		[Test]
 		public void FromPartialKey()
 		{
-			var rotate = Rotate.Parse("rotate:360");
+			var rotate = Rotate.Parse("rotate(360)");
 
 			Assert.AreEqual(360, rotate.Angle);
 		}

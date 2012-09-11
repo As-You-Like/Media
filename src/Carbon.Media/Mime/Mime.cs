@@ -7,10 +7,13 @@
 	public struct Mime
 	{
 		private readonly string name;
-		private readonly string format;
+		private readonly string[] formats;
 		private readonly MediaType type;
 
 		public Mime(string name, string format = null)
+			: this(name, (format != null) ? new[] { format } : null) { }
+
+		public Mime(string name, string[] formats)
 		{
 			#region Preconditions
 
@@ -20,14 +23,9 @@
 			#endregion
 
 			this.name = name;
-			this.format = format;
+			this.formats = formats;
 
 			this.type = name.Split('/')[0].ToEnum<MediaType>(ignoreCase: true);
-
-			if (format == null)
-			{
-				this.format = name.Split('/')[1];
-			}
 		}
 
 		public MediaType Type
@@ -40,10 +38,9 @@
 			get { return name; }
 		}
 
-		// string[] Formats ? 
-		public string Format
+		public string[] Formats
 		{
-			get { return format; }
+			get { return formats; }
 		}
 
 		public override string ToString()
@@ -146,6 +143,7 @@
 		public static readonly Mime Png = new Mime("image/png", "png");
 		public static readonly Mime Svg = new Mime("image/svg+xml", "svg");
 		public static readonly Mime Tiff = new Mime("image/tiff", "tiff");
+		public static readonly Mime WebP = new Mime("image/webp", "webp");
 
 		// Video
 		public static readonly Mime Avi = new Mime("video/x-msvideo", "avi");

@@ -52,6 +52,38 @@
 			get { return transforms; }
 		}
 
+		#region Builders
+
+		public MediaTransformation Rotate(int angle)
+		{
+			this.Transforms.Add(new Rotate(angle));
+
+			return this;
+		}
+
+		public MediaTransformation Crop(int x, int y, int width, int height)
+		{
+			this.Transforms.Add(new Crop(x, y, width, height));
+
+			return this;
+		}
+
+		public MediaTransformation Resize(int width, int height)
+		{
+			this.Transforms.Add(new Resize(width, height));
+
+			return this;
+		}
+
+		public MediaTransformation ApplyFilter(string name, int value)
+		{
+			this.Transforms.Add(new ApplyFilter(name, value.ToString()));
+
+			return this;
+		}
+
+		#endregion
+
 		#region Transform Helpers
 
 		public bool HasTransforms
@@ -100,14 +132,21 @@
 
 		public static MediaTransformation ParseUrlPath(string path)
 		{
-			// 100/key/key.format
+			// 100/transform/transform.format
 
-			var segments = path.Split('/', '.');
+			var lastDotIndex = path.LastIndexOf('.');
+			var format = (lastDotIndex > 0) ? path.Substring(lastDotIndex + 1): null;
+
+			if (lastDotIndex > 0)
+			{
+				path = path.Substring(0, lastDotIndex);
+			}
+
+			var segments = path.Split('/');
 
 			int i = 1;
 
 			var id = 0;
-			var format = "";
 			var transforms = new List<ITransform>();
 
 			foreach (var segment in segments)
@@ -116,29 +155,32 @@
 				{
 					id = Int32.Parse(segment);
 				}
-				else if (i == segments.Length) 
-				{
-					format = segment; // The last part
-				}
 				else
 				{
 					ITransform transform;
 
-					var transformName = segment.Split(':')[0];
+					var transformName = segment.Split('(', ':')[0];
 
-					switch (transformName)
+					if (Char.IsDigit(segment[0]))
 					{
-						case "crop":   transform = Crop.Parse(segment);	  break;
-						case "rotate": transform = Rotate.Parse(segment); break;
-						default:
-							if (segment.Contains("-")) {
-								transform = AnchoredResize.Parse(segment);
-							}
-							else {
-								transform = Resize.Parse(segment);
-							}
+						if (segment.Contains("-"))
+						{
+							transform = Carbon.Media.AnchoredResize.Parse(segment);
+						}
+						else
+						{
+							transform = Carbon.Media.Resize.Parse(segment);
+						}
+					}
+					else
+					{
 
-							break;
+						switch (transformName)
+						{
+							case "crop": transform = Carbon.Media.Crop.Parse(segment); break;
+							case "rotate": transform = Carbon.Media.Rotate.Parse(segment); break;
+							default: transform = Carbon.Media.ApplyFilter.Parse(segment); break;
+						}
 					}
 
 					transforms.Add(transform);
@@ -172,8 +214,8 @@
 			/* 
 			10x10.gif			
 			crop:0-0_10x10.jpeg		// A cropped image rendention (x=0,y=0,width=100,height=100)
-			10x10-c/rotate:90.png	// A 10x10 image (anchored at it's center when resized) rotated 90 degrees
-			200x100/rotate:90.png
+			10x10-c/rotate(90).png	// A 10x10 image (anchored at it's center when resized) rotated 90 degrees
+			200x100/rotate(90).png
 			640x480.mp4
 			*/
 
