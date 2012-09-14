@@ -37,6 +37,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Math\FractionTest.cs" />
     <Compile Include="Mime\MediaTypeTests.cs" />
     <Compile Include="Mime\MimeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="VideoFormatTests.cs" />
     <Compile Include="VideoHelperTests.cs" />
     <Compile Include="VideoRendentionTests.cs" />
+    <Compile Include="VisualHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Carbon.Media\Carbon.Media.csproj">
