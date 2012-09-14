@@ -48,7 +48,7 @@
     <Compile Include="Encoding\EncodingProfile.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Math\Fraction.cs" />
-    <Compile Include="Math\SizeExtensions.cs" />
+    <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Encoding\VideoProfile.cs" />
     <Compile Include="Helpers\AlignmentExtensions.cs" />
     <Compile Include="Helpers\AlignmentHelper.cs" />
