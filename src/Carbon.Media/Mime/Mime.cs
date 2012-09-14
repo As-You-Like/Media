@@ -28,14 +28,14 @@
 			this.type = name.Split('/')[0].ToEnum<MediaType>(ignoreCase: true);
 		}
 
-		public MediaType Type
-		{
-			get { return type; }
-		}
-
 		public string Name
 		{
 			get { return name; }
+		}
+
+		public MediaType Type
+		{
+			get { return type; }
 		}
 
 		public string[] Formats
@@ -130,6 +130,7 @@
 		// Audio
 		public static readonly Mime Aac = new Mime("audio/mp4", "aac");
 		public static readonly Mime Mp3 = new Mime("audio/mpeg", "mp3");
+		public static readonly Mime Opus = new Mime("audio/opus", "opus");
 		public static readonly Mime Ra = new Mime("audio/x-realaudio", "ra");
 		public static readonly Mime Wav = new Mime("audio/wav", "wav");
 		public static readonly Mime Wma = new Mime("audio/x-ms-wma", "wma");

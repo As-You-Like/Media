@@ -3,12 +3,15 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 Jason Nelson")]
-[assembly: AssemblyVersion("0.0.7")]
+[assembly: AssemblyVersion("0.0.8")]
 
 /*
+ 0.0.8 (2012-09-20)
+ -----------------------------------------------------
+ - Added Opus mime
  - Added WebP mime
  - Base the format on the LAST dot
- - Changed rotate specification to rotate(90deg) 
+ - Changed rotate format to rotate(90deg) 
  - Added FilterTransform
 
  0.0.4 (2012-08-12)

@@ -28,11 +28,11 @@
 			{ "eot",	Mime.Eot },
 			{ "ttf",	Mime.Ttf },
 			{ "woff",	Mime.Woff },
-			
 
 			// Audio
 			{ "aac",	Mime.Aac },
 			{ "mp3",	Mime.Mp3 },
+			{ "opus",	Mime.Opus },
 			{ "ra",		Mime.Ra },
 			{ "wav",	Mime.Wav },
 			{ "wma",	Mime.Wma },
