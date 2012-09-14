@@ -5,15 +5,13 @@
 	using System.Drawing;
 	using System.Text;
 
-	using Carbon.Helpers;
-
 	public class MediaTransformation
 	{
 		protected readonly IMediaInfo source;
 		protected readonly string format;
 		protected readonly List<ITransform> transforms = new List<ITransform>();
 
-		private string baseMediaPath = "";
+		private Uri baseUri;
 
 		public MediaTransformation(IMediaInfo source, string format)
 		{
@@ -27,13 +25,8 @@
 
 			#endregion
 
-			this.format = format;
 			this.source = source;
-		}
-
-		public string Format
-		{
-			get { return format; }
+			this.format = format;
 		}
 
 		public IMediaInfo Source
@@ -41,10 +34,17 @@
 			get { return source; }
 		}
 
-		public string BaseMediaPath
+		public string Format
 		{
-			get { return baseMediaPath; }
-			set { baseMediaPath = value; }
+			get { return format; }
+		}
+
+		// e.g. http://media.io/
+
+		public Uri BaseUri
+		{
+			get { return baseUri; }
+			set { baseUri = value; }
 		}
 
 		public List<ITransform> Transforms
@@ -130,7 +130,7 @@
 
 		#region Helpers
 
-		public static MediaTransformation ParseUrlPath(string path)
+		public static MediaTransformation ParsePath(string path)
 		{
 			// 100/transform/transform.format
 
@@ -199,12 +199,14 @@
 			return rendition;
 		}
 
+		/*
 		public string GetKey()
 		{
 			return source.Id + ":" + GetFullName();
 		}
+		*/
 
-		public string GetUrlPath()
+		public string GetPath()
 		{
 			return source.Id + "/" + GetFullName();
 		}
@@ -232,6 +234,7 @@
 			}
 
 			sb.Append(".");
+
 			sb.Append(format);
 
 			return sb.ToString();
@@ -239,14 +242,9 @@
 
 		#endregion
 
-		public string Url
+		public Uri Url
 		{
-			get
-			{
-				var key = GetUrlPath();
-
-				return string.Format("{0}/{1}", BaseMediaPath, key);
-			}
+			get { return new Uri(baseUri, GetPath()); }
 		}
 	}
 
@@ -254,7 +252,7 @@
 	{
 		public int Id { get; set; }
 
-		public Mime Type
+		public string Format
 		{
 			get { throw new NotImplementedException(); }
 		}

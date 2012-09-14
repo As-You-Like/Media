@@ -12,11 +12,11 @@
 		public void ResizedJpegUriIsCorrect()
 		{
 			var transformation = new MediaTransformation(new MediaInfo(1045645), "jpeg") { 
-				BaseMediaPath = "http://m.cmcdn.net",
+				BaseUri = new Uri("http://m.cmcdn.net/"),
 				Transforms = { new Resize(85, 20) }
 			};
 
-			Assert.AreEqual("http://m.cmcdn.net/1045645/85x20.jpeg", transformation.Url);
+			Assert.AreEqual(new Uri("http://m.cmcdn.net/1045645/85x20.jpeg"), transformation.Url);
 			Assert.AreEqual(transformation.Url, transformation.Url.ToString());
 		}
 
@@ -28,9 +28,9 @@
 			};
 
 			Assert.AreEqual("85x20.jpeg", rendition.GetFullName());
-			Assert.AreEqual("1045645/85x20.jpeg", rendition.GetUrlPath());
+			Assert.AreEqual("1045645/85x20.jpeg", rendition.GetPath());
 
-			var rendition2 = MediaTransformation.ParseUrlPath(rendition.GetUrlPath());
+			var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
 
 			Assert.AreEqual(1045645, rendition2.Source.Id);
 			Assert.AreEqual("jpeg", rendition2.Format);
@@ -46,9 +46,9 @@
 			};
 
 			Assert.AreEqual("100x100/crop:0-0_85x20.png", transformation.GetFullName());
-			Assert.AreEqual("1045645/100x100/crop:0-0_85x20.png", transformation.GetUrlPath());
+			Assert.AreEqual("1045645/100x100/crop:0-0_85x20.png", transformation.GetPath());
 
-			var rendition2 = MediaTransformation.ParseUrlPath(transformation.GetUrlPath());
+			var rendition2 = MediaTransformation.ParsePath(transformation.GetPath());
 
 			Assert.AreEqual(1045645, rendition2.Source.Id);
 			Assert.AreEqual("png", rendition2.Format);
@@ -80,7 +80,7 @@
 
 			Assert.AreEqual("50x50/crop:0-0_85x20/rotate(90).jpeg", rendition.GetFullName());
 
-			var rendition2 = MediaTransformation.ParseUrlPath(rendition.GetUrlPath());
+			var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
 
 			Assert.AreEqual(3, rendition2.Transforms.Count);
 
@@ -142,7 +142,7 @@
 
 			Assert.AreEqual("contrast(2)/grayscale(1)/sepia(1).jpeg", transformation.GetFullName());
 
-			var rendition2 = MediaTransformation.ParseUrlPath(transformation.GetUrlPath());
+			var rendition2 = MediaTransformation.ParsePath(transformation.GetPath());
 
 			Assert.AreEqual(3, rendition2.Transforms.Count);
 
@@ -177,7 +177,7 @@
 
 		public int Width { get; set; }
 
-		public Mime Type { get; set; }
+		public string Format { get; set; }
 
 		public Uri Url { get; set; }
 	}
