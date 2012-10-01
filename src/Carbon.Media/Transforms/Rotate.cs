@@ -2,8 +2,6 @@
 {
 	using System;
 
-	using Carbon.Helpers;
-
 	public class Rotate : ITransform
 	{
 		private readonly int angle;

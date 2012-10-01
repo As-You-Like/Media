@@ -2,8 +2,6 @@
 {
 	using System;
 
-	using Carbon.Helpers;
-
 	public class Clip : ITransform
 	{
 		private readonly TimeSpan start;

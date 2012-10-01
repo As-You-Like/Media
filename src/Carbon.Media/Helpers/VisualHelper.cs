@@ -39,7 +39,7 @@
 
 		public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ScaleMode scaleMode = ScaleMode.None)
 		{
-			var aspect = sourceSize.ToFraction();
+			var aspect = sourceSize.ToRational();
 
 			var calculatedSize = CalculateMaxSize(maxSize, aspect);
 
@@ -110,7 +110,7 @@
 		public static Size CalculateMaxSize(Size sourceSize, Rational aspect)
 		{
 			double targetAspect = aspect.ToDouble();
-			double currentAspect = sourceSize.ToFraction().ToDouble();
+			double currentAspect = sourceSize.ToRational().ToDouble();
 
 			if (currentAspect > targetAspect) // Shrink the width
 			{

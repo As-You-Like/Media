@@ -1,10 +1,6 @@
 ﻿namespace Carbon.Media
 {
-	using System;
 	using System.Collections.Generic;
-	using System.Linq;
-
-	using Carbon.Helpers;
 
 	public static class MimeHelper
 	{

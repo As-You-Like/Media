@@ -1,9 +1,5 @@
 ﻿namespace Carbon.Media
 {
-	using System;
-
-	using Carbon.Helpers;
-
 	public class ApplyFilter : ITransform
 	{
 		private readonly string name;

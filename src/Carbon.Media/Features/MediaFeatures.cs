@@ -8,7 +8,7 @@
 		Unknown = 0,
 		None = 1,
 		AlphaChannel = 2,
-		Animated = 4,				// Motion? [Audio]
+		Animated = 4,			// Motion? [Audio]
 		ColorProfile = 8,
 		EightBit = 16
 	}

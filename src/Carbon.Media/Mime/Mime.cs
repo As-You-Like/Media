@@ -2,8 +2,6 @@
 {
 	using System;
 
-	using Carbon.Helpers;
-
 	public struct Mime
 	{
 		private readonly string name;

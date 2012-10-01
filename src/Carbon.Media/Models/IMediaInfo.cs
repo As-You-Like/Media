@@ -4,7 +4,7 @@
 
 	public interface IMediaInfo
 	{
-		int Id { get; }
+		int Id { get; } // TODO: Key
 
 		string Format { get; }
 
