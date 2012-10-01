@@ -11,9 +11,9 @@
 			return source.Width <= target.Width && source.Height <= target.Height;
 		}
 
-		public static Fraction ToFraction(this Size size)
+		public static Rational ToRational(this Size size)
 		{
-			return new Fraction(size.Width, size.Height);
+			return new Rational(size.Width, size.Height);
 		}
 	}
 }

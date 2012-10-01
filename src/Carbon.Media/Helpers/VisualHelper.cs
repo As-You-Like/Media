@@ -107,7 +107,7 @@
 		/// <summary>
 		/// Returns the maximium dimensions of an image w/ a specific aspect
 		/// </summary>
-		public static Size CalculateMaxSize(Size sourceSize, Fraction aspect)
+		public static Size CalculateMaxSize(Size sourceSize, Rational aspect)
 		{
 			double targetAspect = aspect.ToDouble();
 			double currentAspect = sourceSize.ToFraction().ToDouble();

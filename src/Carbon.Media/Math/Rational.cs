@@ -2,18 +2,18 @@
 {
 	using System;
 
-	public struct Fraction
+	public struct Rational
 	{
 		private long numerator;
 		private long denominator;
 
-		public Fraction(long value)
+		public Rational(long value)
 		{
 			this.numerator = value;
 			this.denominator = 1;
 		}
 
-		public Fraction(long numerator, long denominator)
+		public Rational(long numerator, long denominator)
 		{
 			#region Preconditions
 
@@ -28,31 +28,26 @@
 			this.Reduce();
 		}
 
-		public long Denominator {
+		public long Denominator 
+		{
 			get { return denominator; }
 		}
 
-		public long Numerator {
+		public long Numerator 
+		{
 			get { return numerator; }
 		}
 
-		public double ToDouble() {
-			return ((double)this.numerator / (double)this.denominator);
-		}
-
-		/// <summary>
-		/// The function reduces(simplifies) a Fraction object by dividing both its numerator 
-		/// and denominator by their GCD
-		/// </summary>
 		private void Reduce()
 		{
-			if (this.numerator == 0) {
+			if (this.numerator == 0) 
+			{
 				this.denominator = 1;
 
 				return;
 			}
 
-			long gcd = CalculateGcd(this.numerator, this.denominator);
+			var gcd = CalculateGcd(this.numerator, this.denominator);
 
 			this.numerator /= gcd;
 			this.denominator /= gcd;
@@ -62,6 +57,11 @@
 				this.numerator *= -1;
 				this.denominator *= -1;
 			}
+		}
+
+		public double ToDouble()
+		{
+			return ((double)this.numerator / (double)this.denominator);
 		}
 
 		public override string ToString()
@@ -84,7 +84,8 @@
 
 			long remainder;
 
-			while (b != 0) {
+			while (b != 0) 
+			{
 				remainder = a % b;
 				a = b;
 				b = remainder;

@@ -6,6 +6,8 @@
 [assembly: AssemblyVersion("0.0.8")]
 
 /*
+ - Renamed Fraction to Rational
+ 
  0.0.8 (2012-09-20)
  -----------------------------------------------------
  - Added Opus mime

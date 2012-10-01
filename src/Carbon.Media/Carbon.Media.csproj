@@ -40,6 +40,7 @@
     <Compile Include="Codecs\MediaCodecType.cs" />
     <Compile Include="Codecs\MediaCodec.cs" />
     <Compile Include="Encoding\Bitrate.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Helpers\Alignment.cs" />
     <Compile Include="Audio\AudioFormat.cs" />
@@ -47,7 +48,7 @@
     <Compile Include="Encoding\AudioProfile.cs" />
     <Compile Include="Encoding\EncodingProfile.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
-    <Compile Include="Math\Fraction.cs" />
+    <Compile Include="Math\Rational.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Encoding\VideoProfile.cs" />
     <Compile Include="Helpers\AlignmentExtensions.cs" />
