@@ -46,8 +46,6 @@
     <Compile Include="Transforms\CropTests.cs" />
     <Compile Include="Transforms\ResizeTests.cs" />
     <Compile Include="Transforms\RotateTests.cs" />
-    <Compile Include="VideoFormatTests.cs" />
-    <Compile Include="VideoHelperTests.cs" />
     <Compile Include="VideoRendentionTests.cs" />
     <Compile Include="VisualHelperTests.cs" />
   </ItemGroup>

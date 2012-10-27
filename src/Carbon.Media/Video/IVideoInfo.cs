@@ -4,7 +4,7 @@
 
 	public interface IVideoInfo
 	{
-		MediaCodec Codec { get; } // TODO: Break out audio and video codecs
+		MediaCodec Codec { get; }
 
 		TimeSpan Duration { get; }
 
@@ -13,7 +13,5 @@
 		int Height { get; }
 
 		double FrameRate { get; }
-
-		VideoFormat Format { get; }
 	}
 }
