@@ -19,8 +19,6 @@
 		
 		TimeSpan Duration { get; }
 
-		AudioFormat Format { get; }
-
 		/// <summary>
 		/// The sampling rate defines the number of samples per second
 		/// taken from a continuous signal to make a discrete signal.
