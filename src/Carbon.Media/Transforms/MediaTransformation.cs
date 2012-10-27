@@ -252,6 +252,8 @@
 	{
 		public int Id { get; set; }
 
+		public byte[] Sha256 { get; set; }
+
 		public string Format
 		{
 			get { throw new NotImplementedException(); }
@@ -263,11 +265,6 @@
 		}
 
 		public int Height
-		{
-			get { throw new NotImplementedException(); }
-		}
-
-		public Uri Url
 		{
 			get { throw new NotImplementedException(); }
 		}

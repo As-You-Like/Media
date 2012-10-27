@@ -4,14 +4,14 @@
 
 	public interface IMediaInfo
 	{
-		int Id { get; } // TODO: Key
+		int Id { get; }
+
+		// byte[] Sha256 { get; }
 
 		string Format { get; }
 
 		int Width { get; }
 
 		int Height { get; }
-
-		Uri Url { get; }
 	}
 }

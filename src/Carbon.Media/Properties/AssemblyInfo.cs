@@ -3,15 +3,27 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 Jason Nelson")]
-[assembly: AssemblyVersion("0.0.8")]
+[assembly: AssemblyVersion("0.1.0")]
 
 /*
+ 0.1.0 (2012-10-26)
+ -----------------------------------------------------
+ * Mime *
+ - FromName
+ - FromPath
+ - Added Formats[]
+ 
  - Renamed Fraction to Rational
+ - Removed VideoFormat
+ - Removed VideoHelper
  
  0.0.8 (2012-09-20)
  -----------------------------------------------------
- - Added Opus mime
- - Added WebP mime
+ * Mimes *
+ - Added Opus
+ - Added WebP
+ 
+ * Transformations *
  - Base the format on the LAST dot
  - Changed rotate format to rotate(90deg) 
  - Added FilterTransform
