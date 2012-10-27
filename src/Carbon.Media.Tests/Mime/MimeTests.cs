@@ -8,16 +8,32 @@
 	public class MimeTests
 	{
 		[Test]
-		public void EqualityTests()
+		public void MimesFromNames()
 		{
-			Assert.AreEqual(new Mime("application/zip"), new Mime("application/zip"));
-			Assert.AreEqual(new Mime("application/zip", "zip"), Mime.Zip);
+			// Images
+			Assert.AreEqual("png",	Mime.FromName("image/png").Format);
+			Assert.AreEqual("tiff",	Mime.FromName("image/tiff").Format);
+			Assert.AreEqual("gif",	Mime.FromName("image/gif").Format);
+			Assert.AreEqual("jpeg",	Mime.FromName("image/jpeg").Format);
+			Assert.AreEqual("jxr",	Mime.FromName("image/vnd.ms-photo").Format);
+			Assert.AreEqual("svg",	Mime.FromName("image/svg+xml").Format);
 
-			Assert.AreNotEqual(new Mime("application/jpeg"), Mime.Zip);
+			// Videos
+			Assert.AreEqual("wmv",	Mime.FromName("video/x-ms-wmv").Format);
+			Assert.AreEqual("mp4",	Mime.FromName("video/mp4").Format);
+			Assert.AreEqual("mov",	Mime.FromName("video/quicktime").Format);
+			
+			Assert.AreEqual("zip",	Mime.FromName("application/zip").Format);
 		}
 
 		[Test]
-		public void GetMimeFromFileFormatTests()
+		public void MimeEqualityTests()
+		{
+			Assert.AreEqual(Mime.Zip, Mime.Zip);
+		}
+
+		[Test]
+		public void MimeFromFileFormatTests()
 		{
 			// Applications
 			Assert.AreEqual("application/x-shockwave-flash", Mime.FromFormat("swf").ToString());
@@ -63,9 +79,11 @@
 			Assert.AreEqual("image/png", Mime.FromExtension(".pNG").ToString());
 			Assert.AreEqual("audio/mpeg", Mime.FromExtension(".mP3").ToString());
 
+			Assert.AreEqual("application/octet-stream", Mime.FromExtension("blob").ToString());
+
 			// Unknowns
-			Assert.AreEqual("application/octet-stream", Mime.FromFormat(".FID").ToString());
-			Assert.AreEqual("application/octet-stream", Mime.FromFormat(".pie").ToString());
+			// Assert.AreEqual("application/octet-stream", Mime.FromFormat(".FID").ToString());
+			// Assert.AreEqual("application/octet-stream", Mime.FromFormat(".pie").ToString());
 		}
 
 		[Test]
