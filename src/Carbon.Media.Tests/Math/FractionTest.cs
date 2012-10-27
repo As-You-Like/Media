@@ -3,7 +3,7 @@
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class FractionTest
+	public class RationalTest
 	{
 		[Test]
 		public void ToDoubleTests()

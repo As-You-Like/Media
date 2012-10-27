@@ -30,6 +30,8 @@
 			return name;
 		}
 
+		#region Equality
+
 		public override int GetHashCode()
 		{
 			return name.GetHashCode();
@@ -43,6 +45,8 @@
 
 			return other.name == this.name;
 		}
+
+		#endregion
 
 		public static readonly H264Profile Baseline	= new H264Profile("avc1.42E01E", H264ProfileType.Baseline);
 		public static readonly H264Profile Main		= new H264Profile("avc1.4D401E", H264ProfileType.Main);

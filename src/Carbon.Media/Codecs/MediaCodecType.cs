@@ -8,6 +8,8 @@
 
 		/// <summary>
 		/// Advanced Audio Coding, MPEG-4 AAC
+		/// Container: mpeg4
+		/// Mime: audio/x-m4a
 		/// </summary>
 		Aac = 200,
 
@@ -15,40 +17,59 @@
 		/// Audio Codec 3 
 		/// Creator: Dolby Laboratories
 		/// </summary>
-		Ac3 = 210,
+		Ac3 = 205,
+
+		/// <summary>
+		/// Audio Interchange File Format 
+		/// Container: aiff
+		/// Mime: audio/aiff
+		/// </summary>
+		Aiff = 210,
 
 		/// <summary>
 		/// Apple Lossless
 		/// Creator: Apple Inc.
 		/// Extension: .m4a
 		/// </summary>
-		Alac = 220,
+		Alac = 215,
 
 		/// <summary>
 		/// Free Lossless Audio Codec
 		/// Creator: Xiph Foundation
 		/// </summary>
-		Flac = 230,
+		Flac = 220,
 
 		/// <summary>
 		/// MPEG-1 Audio Layer 3
 		/// Extension: .mp3
+		/// Mime: audio/mpeg
 		/// </summary>
-		Mp3 = 240,
+		Mp3 = 230,
 
 		/// <summary>
 		/// Reserved
 		/// </summary>
-		Opus = 250,
+		Opus = 240,
 
-		Pcm = 260,
+		Pcm = 250,
 
-		Vorbis = 270,
+		/// <summary>
+		/// Vorbis
+		/// Mimes: audio/ogg, audio/vorbis
+		/// </summary>
+		Vorbis = 260,
+
+		/// <summary>
+		/// Container: wav
+		/// Mime: audio/wav
+		/// </summary>
+		Wav = 270,
 
 		/// <summary>
 		/// Windows Media Audio
 		/// Creator: Microsoft
 		/// Supported Containers: asf
+		///  Mime: audio/x-ms-wma
 		/// </summary>
 		Wma = 280,
 
