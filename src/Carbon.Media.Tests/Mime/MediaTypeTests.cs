@@ -56,6 +56,9 @@
 		[Test]
 		public void VideoTypeTests()
 		{
+			Assert.AreEqual(MediaType.Video, Mime.FromPath("DemoReel_01.10.13-HD for Apple Devices.m4v").Type);
+			Assert.AreEqual("mp4", Mime.FromPath("DemoReel_01.10.13-HD for Apple Devices.m4v").Format);
+
 			var formats = new[] { "avi", "f4v", "flv", "m4v", "mp4", "mpg", "mpeg", "qt", "webm", "wmv" };
 
 			Assert.IsTrue(formats.All(format => Mime.FromFormat(format).Type == MediaType.Video));
