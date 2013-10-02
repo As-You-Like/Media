@@ -184,9 +184,10 @@
 
 						switch (transformName)
 						{
-							case "crop"		: transform = Carbon.Media.Crop.Parse(segment); break;
-							case "rotate"	: transform = Carbon.Media.Rotate.Parse(segment); break;
-							default			: transform = Carbon.Media.ApplyFilter.Parse(segment); break;
+							case "crop"   : transform = Carbon.Media.Crop.Parse(segment);        break;
+							case "rotate" : transform = Carbon.Media.Rotate.Parse(segment);      break;
+							case "flip"   : transform = Carbon.Media.Flip.Parse(segment);        break;
+							default       : transform = Carbon.Media.ApplyFilter.Parse(segment); break;
 						}
 					}
 
