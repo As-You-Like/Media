@@ -38,9 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorTests.cs" />
+    <Compile Include="FormatTests.cs" />
     <Compile Include="Math\FractionTest.cs" />
     <Compile Include="Mime\MediaTypeTests.cs" />
     <Compile Include="Mime\MimeTests.cs" />
+    <Compile Include="OrientationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SizeTests.cs" />
     <Compile Include="TransformationTests.cs" />

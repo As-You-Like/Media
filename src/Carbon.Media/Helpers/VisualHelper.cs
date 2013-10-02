@@ -25,6 +25,21 @@
 			return new Size(Int32.Parse(parts[0]), Int32.Parse(parts[1]));
 		}
 
+		public static Size CalculateScaledSize(IMediaInfo source, double scale)
+		{
+			#region Preconditions
+
+			if (source == null)
+				throw new ArgumentNullException("source");
+
+			#endregion
+
+			return new Size(
+				width:	(int)((double)source.Height * scale),
+				height: (int)((double)source.Width * scale)
+			);
+		}
+
 		public static Size CalculateScaledSize(IMediaInfo source, Size maxSize)
 		{
 			#region Preconditions
