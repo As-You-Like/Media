@@ -5,6 +5,8 @@
 
 	public static class FileFormat
 	{
+		private static readonly string[] compressableFormats = { "atom", "css", "csv", "html", "js", "json", "txt", "xml" };
+
 		public static string Normalize(string format)
 		{
 			#region Preconditions
@@ -25,6 +27,11 @@
 
 				default: return format;
 			}
+		}
+
+		public static bool IsCompressible(string format)
+		{
+			return Array.BinarySearch(compressableFormats, format) > 0;
 		}
 
 		public static string FromPath(string path)
