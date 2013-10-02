@@ -1,26 +1,15 @@
 ﻿namespace Carbon.Media
 {
-	public enum MediaOrientation
+	public enum MediaOrientation : byte
 	{
-		Horizontal = 1,
-		MirrorHorizontal = 2,
-		Rotate180 = 3,
-		MirrorVertical = 4,
-		MirrorHorizontalAndRotate270 = 5,
-		Rotate90 = 6,
-		MirroHorizontalAndRotate90 = 7,
-		Rotate270 = 8
+		None			= 0, // None
+		Horizontal		= 1, // None
+		FlipHorizontal	= 2, // Flip horizontally
+		Rotate180		= 3, // Rotate 180
+		FlipVertical	= 4, // Flip vertically
+		Transpose		= 5, // Transpose (mirror horizontal and rotate 270)
+		Rotate90		= 6, // Rotate 90
+		Transverse		= 7, // Transverse (mirror horizontal and rotate 90)
+		Rotate270		= 8	 // Rotate 270
 	}
-
-	/*
-	274	0×0112	integer
-	1 = Horizontal (normal) 
-	2 = Mirror horizontal 
-	3 = Rotate 180 
-	4 = Mirror vertical 
-	5 = Mirror horizontal and rotate 270 CW 
-	6 = Rotate 90 CW 
-	7 = Mirror horizontal and rotate 90 CW 
-	8 = Rotate 270 CW
-	*/
 }

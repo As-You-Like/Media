@@ -2,9 +2,6 @@
 {
 	using System;
 	using System.Drawing;
-	using System.Text;
-
-	using Carbon.Helpers;
 
 	public class Crop : ITransform
 	{
@@ -73,3 +70,9 @@
 		}
 	}
 }
+
+// GM SPEC
+// <width>x<height>{+-}<x>{+-}<y>{%}
+
+// 500x500-19-19
+// 18-65-300x200
