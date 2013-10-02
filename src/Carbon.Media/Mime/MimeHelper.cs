@@ -17,7 +17,8 @@
 			{ "application/x-font-ttf",			Mime.Ttf },		// Font			TTF
 			{ "application/pdf",				Mime.Pdf },		// Document		PDF
 			{ "application/x-silverlight-app",	Mime.Xap },		// Plugin		Silverlight
-			{ "application/x-font-woff",		Mime.Woff },	// Font			WOFF
+			{ "application/x-font-woff",		Mime.Woff },	// Font			woff
+			{ "application/font-woff",			Mime.Woff },	// Font			woff
 			{ "application/zip",				Mime.Zip },		// Package		ZIP			
 
 			// Audio
