@@ -95,9 +95,9 @@
 
 		#region Calculate Size 
 
-		public Size CalculateSize(int width, int height)
+		public Size CalculateSize()
 		{
-			var size = new Size(width, height);
+			var size = new Size(source.Width, source.Height);
 
 			foreach (var transform in transforms)
 			{
@@ -119,7 +119,14 @@
 				else if (transform is Rotate) {
 					var rotate = (Rotate)transform;
 
-					// TODO: Flip the size
+					if (rotate.Angle == 90 || rotate.Angle == 270)
+					{
+						var prevSize = size;
+
+						// Flip the height and width
+						size.Width = prevSize.Height;
+						size.Height = prevSize.Width;
+					}
 				}
 			}
 
@@ -177,9 +184,9 @@
 
 						switch (transformName)
 						{
-							case "crop": transform = Carbon.Media.Crop.Parse(segment); break;
-							case "rotate": transform = Carbon.Media.Rotate.Parse(segment); break;
-							default: transform = Carbon.Media.ApplyFilter.Parse(segment); break;
+							case "crop"		: transform = Carbon.Media.Crop.Parse(segment); break;
+							case "rotate"	: transform = Carbon.Media.Rotate.Parse(segment); break;
+							default			: transform = Carbon.Media.ApplyFilter.Parse(segment); break;
 						}
 					}
 
