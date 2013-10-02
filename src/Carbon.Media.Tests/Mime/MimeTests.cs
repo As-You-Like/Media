@@ -11,19 +11,19 @@
 		public void MimesFromNames()
 		{
 			// Images
-			Assert.AreEqual("png",	Mime.FromName("image/png").Format);
-			Assert.AreEqual("tiff",	Mime.FromName("image/tiff").Format);
-			Assert.AreEqual("gif",	Mime.FromName("image/gif").Format);
-			Assert.AreEqual("jpeg",	Mime.FromName("image/jpeg").Format);
-			Assert.AreEqual("jxr",	Mime.FromName("image/vnd.ms-photo").Format);
-			Assert.AreEqual("svg",	Mime.FromName("image/svg+xml").Format);
+			Assert.AreEqual("png",	Mime.Parse("image/png").Format);
+			Assert.AreEqual("tiff",	Mime.Parse("image/tiff").Format);
+			Assert.AreEqual("gif",	Mime.Parse("image/gif").Format);
+			Assert.AreEqual("jpeg",	Mime.Parse("image/jpeg").Format);
+			Assert.AreEqual("jxr",	Mime.Parse("image/vnd.ms-photo").Format);
+			Assert.AreEqual("svg",	Mime.Parse("image/svg+xml").Format);
 
 			// Videos
-			Assert.AreEqual("wmv",	Mime.FromName("video/x-ms-wmv").Format);
-			Assert.AreEqual("mp4",	Mime.FromName("video/mp4").Format);
-			Assert.AreEqual("mov",	Mime.FromName("video/quicktime").Format);
+			Assert.AreEqual("wmv",	Mime.Parse("video/x-ms-wmv").Format);
+			Assert.AreEqual("mp4",	Mime.Parse("video/mp4").Format);
+			Assert.AreEqual("mov",	Mime.Parse("video/quicktime").Format);
 			
-			Assert.AreEqual("zip",	Mime.FromName("application/zip").Format);
+			Assert.AreEqual("zip",	Mime.Parse("application/zip").Format);
 		}
 
 		[Test]

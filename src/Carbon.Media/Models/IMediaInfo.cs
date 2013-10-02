@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Media
 {
-	using System;
-
 	public interface IMediaInfo
 	{
 		int Id { get; }

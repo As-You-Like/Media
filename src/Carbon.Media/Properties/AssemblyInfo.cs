@@ -2,10 +2,14 @@
 
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
-[assembly: AssemblyCopyright("© 2012 Jason Nelson")]
+[assembly: AssemblyCopyright("© 2012 - 2013 Jason Nelson")]
 [assembly: AssemblyVersion("0.1.0")]
 
 /*
+ 0.1.1 (2013-10-10)
+ -----------------------------------------------------
+ Calculate the size correctly when rotating
+ 
  0.1.0 (2012-10-26)
  -----------------------------------------------------
  * Mime *
