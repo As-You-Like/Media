@@ -21,8 +21,8 @@
 			if (width < 0 || width > 3200)
 				throw new ArgumentOutOfRangeException("width", width, message: "Must be between 0 and 3200");
 
-			if (height < 0 || height > 6500)
-				throw new ArgumentOutOfRangeException("height", height, message: "Must be between 0 and 6500");
+			if (height < 0 || height > 10000)
+				throw new ArgumentOutOfRangeException("height", height, message: "Must be between 0 and 10,000");
 			
 			#endregion
 
@@ -40,15 +40,11 @@
 			get { return width; }
 		}
 
-		#region Private
-
 		[IgnoreDataMember]
 		public Size Size 
 		{
 			get { return new Size(width, height); }
 		}
-
-		#endregion
 
 		public override string ToString()
 		{
