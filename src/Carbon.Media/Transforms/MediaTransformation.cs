@@ -11,22 +11,30 @@
 		protected readonly string format;
 		protected readonly List<ITransform> transforms = new List<ITransform>();
 
+		private Size size;
+
 		private Uri baseUri;
 
 		public MediaTransformation(IMediaInfo source, string format)
 		{
 			#region Preconditions
 
-			if (source == null)
-				throw new ArgumentNullException("source");
-
-			if (format == null)
-				throw new ArgumentNullException("format");
+			if (source == null) throw new ArgumentNullException("source");
+			if (format == null) throw new ArgumentNullException("format");
 
 			#endregion
 
 			this.source = source;
 			this.format = format;
+
+			this.size = new Size(source.Width, source.Height);
+		}
+
+
+		public MediaTransformation(IMediaInfo source, MediaOrientation orientation, string format)
+			: this(source, format)
+		{
+			Transform(orientation.GetTransforms());	
 		}
 
 		public IMediaInfo Source
@@ -47,37 +55,94 @@
 			set { baseUri = value; }
 		}
 
-		public List<ITransform> Transforms
+		public Size Size
 		{
-			get { return transforms; }
+			get { return size; }
+		}
+
+		// TODO: Immutable
+		public IList<ITransform> GetTransforms()
+		{
+			return transforms.AsReadOnly();
+		}
+
+		public MediaTransformation Transform(params ITransform[] transformList)
+		{
+			#region Preconditions
+
+			if (transformList == null) throw new ArgumentNullException("transformList");
+
+			#endregion
+
+			if (transformList.Length == 0) return this;
+
+			foreach (var transform in transformList)
+			{
+				#region Update the Current Size
+
+				if (transform is AnchoredResize)
+				{
+					var anchoredResize = (AnchoredResize)transform;
+
+					size = anchoredResize.Size;
+				}
+				else if (transform is Resize)
+				{
+					var resize = (Resize)transform;
+
+					size = resize.Size;
+				}
+				else if (transform is Crop)
+				{
+					var crop = (Crop)transform;
+
+					size = crop.Rectangle.Size;
+				}
+				else if (transform is Rotate)
+				{
+					var rotate = (Rotate)transform;
+
+					// Flip the height & width
+					if (rotate.Angle == 90 || rotate.Angle == 270)
+					{
+						size = new Size(size.Height, size.Width);
+					}
+				}
+
+				#endregion
+
+				this.transforms.Add(transform);
+			}
+
+			return this;
 		}
 
 		#region Builders
 
 		public MediaTransformation Rotate(int angle)
 		{
-			this.Transforms.Add(new Rotate(angle));
+			Transform(new Rotate(angle));
 
 			return this;
 		}
 
 		public MediaTransformation Crop(int x, int y, int width, int height)
 		{
-			this.Transforms.Add(new Crop(x, y, width, height));
+			Transform(new Crop(x, y, width, height));
 
 			return this;
 		}
 
 		public MediaTransformation Resize(int width, int height)
 		{
-			this.Transforms.Add(new Resize(width, height));
+			Transform(new Resize(width, height));
 
 			return this;
 		}
 
 		public MediaTransformation ApplyFilter(string name, int value)
 		{
-			this.Transforms.Add(new ApplyFilter(name, value.ToString()));
+			Transform(new ApplyFilter(name, value.ToString()));
 
 			return this;
 		}
@@ -89,48 +154,6 @@
 		public bool HasTransforms
 		{
 			get { return transforms.Count > 0; }
-		}
-
-		#endregion
-
-		#region Calculate Size 
-
-		public Size CalculateSize()
-		{
-			var size = new Size(source.Width, source.Height);
-
-			foreach (var transform in transforms)
-			{
-				if (transform is AnchoredResize) {
-					var anchoredResize = (AnchoredResize)transform;
-
-					size = anchoredResize.Size;
-				}
-				else if (transform is Resize) {
-					var resize = (Resize)transform;
-
-					size = resize.Size;
-				}
-				else if (transform is Crop) {
-					var crop = (Crop)transform;
-
-					size = crop.Rectangle.Size;
-				}
-				else if (transform is Rotate) {
-					var rotate = (Rotate)transform;
-
-					if (rotate.Angle == 90 || rotate.Angle == 270)
-					{
-						var prevSize = size;
-
-						// Flip the height and width
-						size.Width = prevSize.Height;
-						size.Height = prevSize.Width;
-					}
-				}
-			}
-
-			return size;
 		}
 
 		#endregion
@@ -201,7 +224,7 @@
 
 			foreach (var t in transforms)
 			{
-				rendition.Transforms.Add(t);
+				rendition.Transform(t);
 			}
 
 			return rendition;
@@ -264,17 +287,17 @@
 
 		public string Format
 		{
-			get { throw new NotImplementedException(); }
+			get { return null; }
 		}
 
 		public int Width
 		{
-			get { throw new NotImplementedException(); }
+			get { return 0; }
 		}
 
 		public int Height
 		{
-			get { throw new NotImplementedException(); }
+			get { return 0; }
 		}
 	}
 }

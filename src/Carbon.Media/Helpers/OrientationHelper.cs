@@ -1,5 +1,6 @@
 ﻿namespace Carbon.Media
 {
+	using System;
 	using System.Drawing;
 
 	public static class OrientationHelper
@@ -14,6 +15,11 @@
 				case MediaOrientation.Rotate270	 : return new Size(media.Height, media.Width);
 				default							 : return new Size(media.Width, media.Height);
 			}
+		}
+
+		public static MediaOrientation Parse(string text)
+		{
+			return (MediaOrientation)Enum.Parse(typeof(MediaOrientation), text);
 		}
 
 		public static ITransform[] GetTransforms(this MediaOrientation orientation)

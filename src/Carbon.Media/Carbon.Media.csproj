@@ -46,6 +46,7 @@
     <Compile Include="Audio\IAudioInfo.cs" />
     <Compile Include="Encoding\AudioProfile.cs" />
     <Compile Include="Encoding\EncodingProfile.cs" />
+    <Compile Include="Helpers\OrientationHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Math\Rational.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Containers\MediaContainer.cs" />
     <Compile Include="Features\MediaFeatures.cs" />
     <Compile Include="Models\MediaOrientation.cs" />
+    <Compile Include="Transforms\Flip.cs" />
     <Compile Include="Transforms\MediaTransformation.cs" />
     <Compile Include="Helpers\ScaleMode.cs" />
     <Compile Include="Mime\FileFormat.cs" />

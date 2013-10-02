@@ -13,10 +13,7 @@
 			var orientation = (MediaOrientation)Enum.Parse(typeof(MediaOrientation), "1");
 
 			Assert.AreEqual(MediaOrientation.Horizontal, orientation);
-		}
-
-		public void OrientationTests()
-		{
+			Assert.AreEqual(MediaOrientation.Horizontal, OrientationHelper.Parse("1"));
 		}
 	}
 }
