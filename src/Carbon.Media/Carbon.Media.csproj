@@ -54,10 +54,15 @@
     <Compile Include="Helpers\AlignmentExtensions.cs" />
     <Compile Include="Helpers\AlignmentHelper.cs" />
     <Compile Include="Helpers\MediaContainerExtensions.cs" />
-    <Compile Include="Helpers\ImageRenditionInfo.cs" />
+    <Compile Include="Helpers\MediaRenditionInfo.cs" />
+    <Compile Include="Models\ColorProfile.cs" />
+    <Compile Include="Models\ColorProfileParser.cs" />
+    <Compile Include="Models\ColorSpace.cs" />
+    <Compile Include="Models\MediaFlags.cs" />
+    <Compile Include="Models\MediaMetadata.cs" />
     <Compile Include="Models\IMediaInfo.cs" />
     <Compile Include="Containers\MediaContainer.cs" />
-    <Compile Include="Features\MediaFeatures.cs" />
+    <Compile Include="Models\MediaFeatures.cs" />
     <Compile Include="Models\MediaOrientation.cs" />
     <Compile Include="Transforms\Flip.cs" />
     <Compile Include="Transforms\MediaTransformation.cs" />

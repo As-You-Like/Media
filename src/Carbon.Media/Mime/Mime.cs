@@ -169,6 +169,9 @@
 		public static readonly Mime Ttf		= new Mime("application/x-font-ttf",		"ttf");
 		public static readonly Mime Woff	= new Mime("application/font-woff",			"woff");
 
+		// Applications - Color PRofiles
+		public static readonly Mime Icc		= new Mime("application/vnd.iccprofile",	"icc");
+
 		// Audio
 		public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
 		public static readonly Mime Mp3		= new Mime("audio/mpeg",			"mp3");
@@ -201,11 +204,12 @@
 		public static readonly Mime Wmv		= new Mime("video/x-ms-wmv",	"wmv");
 
 		// Text
-		public static readonly Mime Css		= new Mime("text/css",			"css");
-		public static readonly Mime Csv		= new Mime("text/csv",			"csv");
-		public static readonly Mime Html	= new Mime("text/html",			"html");
-		public static readonly Mime Txt		= new Mime("text/plain",		"plain");
-		public static readonly Mime Xml		= new Mime("text/xml",			"xml");
+		public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
+		public static readonly Mime Css		 = new Mime("text/css",				"css");
+		public static readonly Mime Csv		 = new Mime("text/csv",				"csv");
+		public static readonly Mime Html	 = new Mime("text/html",			"html");
+		public static readonly Mime Txt		 = new Mime("text/plain",			"plain");
+		public static readonly Mime Xml		 = new Mime("text/xml",				"xml");
 	}
 }
 
@@ -214,4 +218,6 @@
 // [0]:	Internet Explorer 8 does not accept the official mime type "image/vnd.microsoft.icon". Must be "Content-Type: image/x-icon".
 
 // http://en.wikipedia.org/wiki/Internet_media_type
-// A media type is composed of two or more parts: A type, a subtype, and zero or more optional parameters. For example, subtypes of text have an optional charset parameter that can be included to indicate the character encoding e.g. text/html; charset=UTF-8), and subtypes of multipart type often define a boundary between parts. Allowed charset values are defined in the list of IANA character sets.
+// A media type is composed of two or more parts: A type, a subtype, and zero or more optional parameters.
+// For example, subtypes of text have an optional charset parameter that can be included to indicate the character encoding e.g. text/html; charset=UTF-8),
+// and subtypes of multipart type often define a boundary between parts. Allowed charset values are defined in the list of IANA character sets.

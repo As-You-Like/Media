@@ -6,20 +6,22 @@
 	{
 		internal static readonly Dictionary<string, Mime> NameToMimeMap = new Dictionary<string, Mime> {
 		
-			// Applications										   TYPE			NAME
-			{ "application/atom+xml",			Mime.Atom },	// Document		Atom
-			{ "application/octet-stream",		Mime.Blob },	// Data			Binary Blob
-			{ "application/msword",				Mime.Doc },		// Document		Word
-			{ "application/vnd.ms-fontobject",	Mime.Eot },		// Font			EOT
-			{ "application/javascript",			Mime.Js },		// Script		JavaScript
-			{ "application/json",				Mime.Json },	// Data			JSON
-			{ "application/x-shockwave-flash",	Mime.Swf },		// Plugin		Flash
-			{ "application/x-font-ttf",			Mime.Ttf },		// Font			TTF
-			{ "application/pdf",				Mime.Pdf },		// Document		PDF
-			{ "application/x-silverlight-app",	Mime.Xap },		// Plugin		Silverlight
-			{ "application/x-font-woff",		Mime.Woff },	// Font			woff
-			{ "application/font-woff",			Mime.Woff },	// Font			woff
-			{ "application/zip",				Mime.Zip },		// Package		ZIP			
+			// Applications										   TYPE				NAME
+			{ "application/atom+xml",			Mime.Atom },	// Document			Atom
+			{ "application/octet-stream",		Mime.Blob },	// Data				Binary Blob
+			{ "application/msword",				Mime.Doc },		// Document			Word
+			{ "application/vnd.iccprofile",		Mime.Icc },		// Color Profile	ICC
+			{ "application/vnd.ms-fontobject",	Mime.Eot },		// Font				EOT
+
+			{ "application/javascript",			Mime.Js },		// Script			JavaScript
+			{ "application/json",				Mime.Json },	// Data				JSON
+			{ "application/x-shockwave-flash",	Mime.Swf },		// Plugin			Flash
+			{ "application/x-font-ttf",			Mime.Ttf },		// Font				TTF
+			{ "application/pdf",				Mime.Pdf },		// Document			PDF
+			{ "application/x-silverlight-app",	Mime.Xap },		// Plugin			Silverlight
+			{ "application/x-font-woff",		Mime.Woff },	// Font				woff
+			{ "application/font-woff",			Mime.Woff },	// Font				woff
+			{ "application/zip",				Mime.Zip },		// Package			ZIP			
 
 			// Audio
 			{ "audio/mp4",						Mime.Aac },
@@ -43,6 +45,7 @@
 			{ "image/webp",						Mime.WebP },
 
 			// Text
+			{ "text/cache-manifest",			Mime.AppCache },
 			{ "text/css",						Mime.Css },
 			{ "text/csv",						Mime.Csv },
 			{ "text/html",						Mime.Html },
@@ -101,12 +104,13 @@
 			{ "webp",	Mime.WebP },
 
 			// Text
-			{ "css",	Mime.Css },
-			{ "csv",	Mime.Csv },
-			{ "htm",	Mime.Html },
-			{ "html",	Mime.Html },
-			{ "txt",	Mime.Txt },
-			{ "xml",	Mime.Xml },
+			{ "appcache",	Mime.AppCache },
+			{ "css",		Mime.Css },
+			{ "csv",		Mime.Csv },
+			{ "htm",		Mime.Html },
+			{ "html",		Mime.Html },
+			{ "txt",		Mime.Txt },
+			{ "xml",		Mime.Xml },
 
 			// Videos
 			{ "avi",	Mime.Avi },
@@ -120,7 +124,10 @@
 			{ "ts",		Mime.Ts },
 			{ "qt",		Mime.Mov },
 			{ "webm",	Mime.WebM },
-			{ "wmv",	Mime.Wmv }
+			{ "wmv",	Mime.Wmv },
+
+			// Other
+			{ "icc",	Mime.Icc }
 		};
 	}
 }

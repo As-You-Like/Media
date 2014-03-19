@@ -5,7 +5,7 @@
 
 	public static class FileFormat
 	{
-		private static readonly string[] compressableFormats = { "atom", "css", "csv", "html", "js", "json", "txt", "xml" };
+		private static readonly string[] compressableFormats = { "appcache", "atom", "css", "csv", "html", "js", "json", "txt", "xml" };
 
 		public static string Normalize(string format)
 		{
