@@ -65,6 +65,7 @@
     <Compile Include="Containers\MediaContainer.cs" />
     <Compile Include="Models\MediaFeatures.cs" />
     <Compile Include="Models\MediaOrientation.cs" />
+    <Compile Include="Models\PixelFormat.cs" />
     <Compile Include="Transforms\Flip.cs" />
     <Compile Include="Transforms\MediaTransformation.cs" />
     <Compile Include="Helpers\ScaleMode.cs" />
