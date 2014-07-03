@@ -2,7 +2,9 @@
 {
 	using System;
 
-	public enum PixelFormat : byte
+	// Avoid conflict with System.Windows.PixelFormat
+
+	public enum PixelFormatType : byte
 	{	
 		Unknown			= 0,
 
@@ -35,43 +37,43 @@
 
 	public static class PixelFormatHelper
 	{
-		public static PixelFormat Parse(string text)
+		public static PixelFormatType Parse(string text)
 		{
-			PixelFormat format;
+			PixelFormatType format;
 
-			Enum.TryParse<PixelFormat>(text, out format);
+			Enum.TryParse<PixelFormatType>(text, out format);
 
 			return format;
 		}
 
-		public static ColorSpace GetColorSpace(PixelFormat format)
+		public static ColorSpace GetColorSpace(PixelFormatType format)
 		{
 			switch (format)
 			{
-				case PixelFormat.Bgr101010		:
-				case PixelFormat.Bgr24			:
-				case PixelFormat.Bgr32			:
-				case PixelFormat.Bgr555			:
-				case PixelFormat.Bgr565			:
-				case PixelFormat.Bgra32			: return ColorSpace.sRGB;
+				case PixelFormatType.Bgr101010		:
+				case PixelFormatType.Bgr24			:
+				case PixelFormatType.Bgr32			:
+				case PixelFormatType.Bgr555			:
+				case PixelFormatType.Bgr565			:
+				case PixelFormatType.Bgra32			: return ColorSpace.sRGB;
 				
-				case PixelFormat.BlackWhite		: return ColorSpace.Gray;
+				case PixelFormatType.BlackWhite		: return ColorSpace.Gray;
 
-				case PixelFormat.Cmyk32			: return ColorSpace.CMYK;
+				case PixelFormatType.Cmyk32			: return ColorSpace.CMYK;
 
-				case PixelFormat.Gray16			:
-				case PixelFormat.Gray2			:
-				case PixelFormat.Gray32Float	:	
-				case PixelFormat.Gray4			:
-				case PixelFormat.Gray8			: return ColorSpace.Gray;
+				case PixelFormatType.Gray16			:
+				case PixelFormatType.Gray2			:
+				case PixelFormatType.Gray32Float	:	
+				case PixelFormatType.Gray4			:
+				case PixelFormatType.Gray8			: return ColorSpace.Gray;
 
-				case PixelFormat.Pbgra32		: return ColorSpace.sRGB;
-				case PixelFormat.Prgba128Float	: return ColorSpace.scRGB;
+				case PixelFormatType.Pbgra32		: return ColorSpace.sRGB;
+				case PixelFormatType.Prgba128Float	: return ColorSpace.scRGB;
 
-				case PixelFormat.Rgb24			: 
-				case PixelFormat.Rgb48			: return ColorSpace.sRGB;
-				case PixelFormat.Rgba128Float	: return ColorSpace.scRGB;
-				case PixelFormat.Rgba64			: return ColorSpace.sRGB;
+				case PixelFormatType.Rgb24			: 
+				case PixelFormatType.Rgb48			: return ColorSpace.sRGB;
+				case PixelFormatType.Rgba128Float	: return ColorSpace.scRGB;
+				case PixelFormatType.Rgba64			: return ColorSpace.sRGB;
 
 				default							: return ColorSpace.Unknown;
 
