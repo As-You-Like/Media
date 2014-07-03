@@ -1,7 +1,6 @@
 ﻿namespace Carbon.Media
 {
 	using System;
-	using System.Drawing;
 	using System.Runtime.Serialization;
 
 	using Carbon.Helpers;
@@ -18,8 +17,8 @@
 		{
 			#region Preconditions
 
-			if (width < 0 || width > 3200)
-				throw new ArgumentOutOfRangeException("width", width, message: "Must be between 0 and 3200");
+			if (width < 0 || width > 5000)
+				throw new ArgumentOutOfRangeException("width", width, message: "Must be between 0 and 5,000");
 
 			if (height < 0 || height > 10000)
 				throw new ArgumentOutOfRangeException("height", height, message: "Must be between 0 and 10,000");
