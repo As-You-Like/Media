@@ -77,10 +77,10 @@
 		{
 			get
 			{
-				// A SHA256 Hash of the ColorProfile Data in Hex Format
+				// A SHA1 Hash of the ColorProfile Data in Hex Format
 				if (data == null) return null;
 
-				using (var sha = SHA256.Create())
+				using (var sha = SHA1.Create())
 				{
 					return BitConverter.ToString(sha.ComputeHash(Data)).Replace("-", string.Empty);
 				}

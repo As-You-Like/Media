@@ -27,7 +27,6 @@
 			header.ColorSpaceOfData		= reader.ReadString(4).TrimEnd(' ');
 			header.PCS					= reader.ReadInt32BE(); 
 			
-
 			return header;
 		}
 
