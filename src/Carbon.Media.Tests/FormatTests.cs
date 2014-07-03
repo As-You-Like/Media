@@ -1,8 +1,7 @@
 ﻿namespace Carbon.Helpers.Tests
 {
-	using System.Drawing;
-
 	using NUnit.Framework;
+
 	using Carbon.Media;
 
 	[TestFixture]
@@ -18,6 +17,17 @@
 			Assert.IsFalse(FileFormat.IsCompressible("woff"));
 			Assert.IsFalse(FileFormat.IsCompressible("jpeg"));
 			Assert.IsFalse(FileFormat.IsCompressible("gif"));
+		}
+
+		[Test]
+		public void FeatureTests()
+		{
+			Assert.AreEqual(1, (int)MediaFeatures.None);
+			Assert.AreEqual(2, (int)MediaFeatures.AlphaChannel);
+			Assert.AreEqual(4, (int)MediaFeatures.Animated);
+			Assert.AreEqual(8, (int)MediaFeatures.ColorProfile);
+			// Assert.AreEqual(1, (int)MediaFeatures.None);
+			// Assert.AreEqual(1, (int)MediaFeatures.None);
 		}
 	}
 }

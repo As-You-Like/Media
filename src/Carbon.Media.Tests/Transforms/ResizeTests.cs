@@ -1,7 +1,6 @@
 ﻿namespace Carbon.Media.Tests
 {
 	using System;
-	using System.Drawing.Imaging;
 
 	using NUnit.Framework;
 

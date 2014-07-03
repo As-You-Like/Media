@@ -1,7 +1,6 @@
 ﻿namespace Carbon.Helpers
 {
 	using System;
-	using System.Drawing;
 
 	using Carbon.Math;
 	using Carbon.Media;
@@ -72,7 +71,8 @@
 
 		public static Rectangle CalculateCropRectangle(Size sourceSize, Size targetSize, Alignment anchor)
 		{
-			var cropResult = new Rectangle { X = 0, Y = 0 };
+			var x = 0;
+			var y = 0;
 
 			double nPercent = 0;
 			double nPercentW = (double)targetSize.Width / (double)sourceSize.Width;
@@ -85,13 +85,13 @@
 				switch (anchor)
 				{
 					case Alignment.Top:
-						cropResult.Y = 0;
+						y= 0;
 						break;
 					case Alignment.Bottom:
-						cropResult.Y = (int)(targetSize.Height - ((double)sourceSize.Height * nPercent));
+						y = (int)(targetSize.Height - ((double)sourceSize.Height * nPercent));
 						break;
 					default:
-						cropResult.Y = (int)((targetSize.Height - ((double)sourceSize.Height * nPercent)) / 2);
+						y = (int)((targetSize.Height - ((double)sourceSize.Height * nPercent)) / 2);
 						break;
 				}
 			}
@@ -102,21 +102,23 @@
 				switch (anchor)
 				{
 					case Alignment.Left: 
-						cropResult.Y = 0;
+						y = 0;
 						break;
 					case Alignment.Right:
-						cropResult.X = (int)(targetSize.Width - ((double)sourceSize.Width * nPercent));
+						x = (int)(targetSize.Width - ((double)sourceSize.Width * nPercent));
 						break;
 					default:
-						cropResult.X = (int)((targetSize.Width - ((double)sourceSize.Width * nPercent)) / 2);
+						x = (int)((targetSize.Width - ((double)sourceSize.Width * nPercent)) / 2);
 						break;
 				}
 			}
 
-			cropResult.Width = (int)((double)sourceSize.Width * nPercent);
-			cropResult.Height = (int)((double)sourceSize.Height * nPercent);
-
-			return cropResult;
+			return new Rectangle(
+				x	   : x,
+				y      : y,
+				width  : (int)((double)sourceSize.Width * nPercent),
+				height : (int)((double)sourceSize.Height * nPercent)
+			);
 		}
 
 		/// <summary>

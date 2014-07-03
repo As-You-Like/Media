@@ -1,7 +1,6 @@
 ﻿namespace Carbon.Helpers.Tests
 {
-	using System.Drawing;
-
+	using Carbon.Media;
 	using NUnit.Framework;
 
 	[TestFixture]

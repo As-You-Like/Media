@@ -32,8 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +44,11 @@
     <Compile Include="Audio\IAudioInfo.cs" />
     <Compile Include="Encoding\AudioProfile.cs" />
     <Compile Include="Encoding\EncodingProfile.cs" />
+    <Compile Include="Helpers\ISize.cs" />
     <Compile Include="Helpers\OrientationHelper.cs" />
+    <Compile Include="Helpers\Point.cs" />
+    <Compile Include="Helpers\Rectangle.cs" />
+    <Compile Include="Helpers\Size.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Math\Rational.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
@@ -58,7 +60,6 @@
     <Compile Include="Models\ColorProfile.cs" />
     <Compile Include="Models\ColorProfileParser.cs" />
     <Compile Include="Models\ColorSpace.cs" />
-    <Compile Include="Models\MediaFlags.cs" />
     <Compile Include="Models\MediaMetadata.cs" />
     <Compile Include="Models\IMediaInfo.cs" />
     <Compile Include="Containers\MediaContainer.cs" />

@@ -1,14 +1,13 @@
 ﻿namespace Carbon.Media
 {
 	using System;
-	using System.Drawing;
 
-	public class Crop : ITransform
+	public struct Crop : ITransform
 	{
 		private readonly Rectangle rectangle;
 
 		public Crop(Point origin, Size size)
-			: this(new Rectangle(origin, size)) { }
+			: this(new Rectangle(origin.X, origin.Y, size.Width, size.Height)) { }
 
 		public Crop(int x, int y, int width, int height)
 		{
@@ -32,6 +31,16 @@
 		public Rectangle Rectangle
 		{
 			get { return rectangle; }
+		}
+
+		public int Width
+		{
+			get { return rectangle.Width; }
+		}
+
+		public int Height
+		{
+			get { return rectangle.Height; }
 		}
 
 		public override string ToString()

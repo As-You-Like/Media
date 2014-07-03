@@ -1,7 +1,6 @@
 ﻿namespace Carbon.Media
 {
 	using System;
-	using System.Drawing;
 
 	using Carbon.Helpers;
 

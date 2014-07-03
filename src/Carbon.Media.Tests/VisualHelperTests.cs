@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Helpers.Tests
 {
-	using System.Drawing;
-
 	using Carbon.Math;
 	using Carbon.Media;
 
@@ -68,10 +66,13 @@
 
 			var targetSize = new Size(1000, 500);
 
-			Rectangle destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, Alignment.Center);
+			var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, Alignment.Center);
 
-			Assert.AreEqual(0, destinationR.Left);
-			Assert.AreEqual(-250, destinationR.Top);
+			//Assert.AreEqual(0, destinationR.Left);
+			// Assert.AreEqual(-250, destinationR.Top);
+
+			Assert.AreEqual(0, destinationR.X);
+			Assert.AreEqual(-250, destinationR.Y);
 		}
 
 		[Test]

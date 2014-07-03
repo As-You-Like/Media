@@ -2,18 +2,16 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Drawing;
 	using System.Text;
 
-	public class MediaTransformation
+	public class MediaTransformation : ISize
 	{
 		protected readonly IMediaInfo source;
 		protected readonly string format;
 		protected readonly List<ITransform> transforms = new List<ITransform>();
 
-		private Size size;
-
-		private Uri baseUri;
+		private int width;
+		private int height;
 
 		public MediaTransformation(IMediaInfo source, string format)
 		{
@@ -27,9 +25,9 @@
 			this.source = source;
 			this.format = format;
 
-			this.size = new Size(source.Width, source.Height);
+			this.width = source.Width;
+			this.height = source.Height;
 		}
-
 
 		public MediaTransformation(IMediaInfo source, MediaOrientation orientation, string format)
 			: this(source, format)
@@ -47,17 +45,14 @@
 			get { return format; }
 		}
 
-		// e.g. http://media.io/
-
-		public Uri BaseUri
+		public int Width
 		{
-			get { return baseUri; }
-			set { baseUri = value; }
+			get { return width; }
 		}
 
-		public Size Size
+		public int Height
 		{
-			get { return size; }
+			get { return height; }
 		}
 
 		// TODO: Immutable
@@ -84,19 +79,22 @@
 				{
 					var anchoredResize = (AnchoredResize)transform;
 
-					size = anchoredResize.Size;
+					width = anchoredResize.Width;
+					height = anchoredResize.Height;
 				}
 				else if (transform is Resize)
 				{
 					var resize = (Resize)transform;
 
-					size = resize.Size;
+					width = resize.Width;
+					height = resize.Height;
 				}
 				else if (transform is Crop)
 				{
 					var crop = (Crop)transform;
 
-					size = crop.Rectangle.Size;
+					this.width = crop.Width;
+					this.height = crop.Height;
 				}
 				else if (transform is Rotate)
 				{
@@ -105,7 +103,11 @@
 					// Flip the height & width
 					if (rotate.Angle == 90 || rotate.Angle == 270)
 					{
-						size = new Size(size.Height, size.Width);
+						var oldWidth = width;
+						var oldHeight = height;
+
+						width = oldHeight;
+						height = oldWidth;
 					}
 				}
 
@@ -172,34 +174,34 @@
 				path = path.Substring(0, lastDotIndex);
 			}
 
-			var segments = path.Split('/');
+			var parts = path.TrimStart('/').Split('/');
 
 			int i = 1;
 
 			var id = 0;
 			var transforms = new List<ITransform>();
 
-			foreach (var segment in segments)
+			foreach (var part in parts)
 			{
 				if (i == 1) 
 				{
-					id = Int32.Parse(segment);
+					id = Int32.Parse(part);
 				}
 				else
 				{
 					ITransform transform;
 
-					var transformName = segment.Split('(', ':')[0];
+					var transformName = part.Split('(', ':')[0];
 
-					if (Char.IsDigit(segment[0]))
+					if (Char.IsDigit(part[0]))
 					{
-						if (segment.Contains("-"))
+						if (part.Contains("-"))
 						{
-							transform = Carbon.Media.AnchoredResize.Parse(segment);
+							transform = Carbon.Media.AnchoredResize.Parse(part);
 						}
 						else
 						{
-							transform = Carbon.Media.Resize.Parse(segment);
+							transform = Carbon.Media.Resize.Parse(part);
 						}
 					}
 					else
@@ -207,10 +209,10 @@
 
 						switch (transformName)
 						{
-							case "crop"   : transform = Carbon.Media.Crop.Parse(segment);        break;
-							case "rotate" : transform = Carbon.Media.Rotate.Parse(segment);      break;
-							case "flip"   : transform = Carbon.Media.Flip.Parse(segment);        break;
-							default       : transform = Carbon.Media.ApplyFilter.Parse(segment); break;
+							case "crop"   : transform = Carbon.Media.Crop.Parse(part);        break;
+							case "rotate" : transform = Carbon.Media.Rotate.Parse(part);      break;
+							case "flip"   : transform = Carbon.Media.Flip.Parse(part);        break;
+							default       : transform = Carbon.Media.ApplyFilter.Parse(part); break;
 						}
 					}
 
@@ -229,13 +231,6 @@
 
 			return rendition;
 		}
-
-		/*
-		public string GetKey()
-		{
-			return source.Id + ":" + GetFullName();
-		}
-		*/
 
 		public string GetPath()
 		{
@@ -272,11 +267,6 @@
 		}
 
 		#endregion
-
-		public Uri Url
-		{
-			get { return new Uri(baseUri, GetPath()); }
-		}
 	}
 
 	internal class MediaMock : IMediaInfo

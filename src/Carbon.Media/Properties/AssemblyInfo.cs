@@ -3,9 +3,14 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 - 2013 Jason Nelson")]
-[assembly: AssemblyVersion("0.1.0")]
+[assembly: AssemblyVersion("1.0.0")]
 
 /*
+ 1.0.0 (2014-06-10)
+ -----------------------------------------------------
+ Remove System.Drawing dependecy
+ 
+ 
  0.1.1 (2013-10-10)
  -----------------------------------------------------
  Calculate the size correctly when rotating
