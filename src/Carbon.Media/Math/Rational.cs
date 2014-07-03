@@ -2,7 +2,7 @@
 {
 	using System;
 
-	public struct Rational
+	public struct Rational : IFormattable
 	{
 		private long numerator;
 		private long denominator;
@@ -38,6 +38,11 @@
 			get { return numerator; }
 		}
 
+		public Rational Invert()
+		{
+			return new Rational(denominator, numerator);
+		}
+
 		private void Reduce()
 		{
 			if (this.numerator == 0) 
@@ -66,7 +71,8 @@
 
 		public override string ToString()
 		{
-			if (denominator == 1) {
+			if (denominator == 1) 
+			{
 				return numerator.ToString();
 			}
 
@@ -92,7 +98,12 @@
 			}
 
 			return a;
-		} 
+		}
+
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return ToDouble().ToString(format);
+		}
 	}
 }
 
