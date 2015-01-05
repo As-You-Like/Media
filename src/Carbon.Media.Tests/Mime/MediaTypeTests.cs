@@ -1,9 +1,7 @@
 ﻿namespace Carbon.Media.Tests
 {
-	using System;
 	using System.Linq;
 
-	using Carbon.Helpers;
 
 	using NUnit.Framework;
 
@@ -40,7 +38,7 @@
 		[Test]
 		public void AudioTypeTests()
 		{
-			var formats = new[] { "aac", "mp3", "ra", "wav", "wma" };
+			var formats = new[] { "aiff", "aif", "aac", "mp3", "m4a", "opus", "ra", "wav", "wma" };
 
 			Assert.IsTrue(formats.All(format => Mime.FromFormat(format).Type == MediaType.Audio));
 		}
@@ -48,7 +46,7 @@
 		[Test]
 		public void ImageTypeTests()
 		{
-			var formats = new[] { "bmp", "gif", "ico", "jpg", "jpeg", "jxr", "png", "tif", "tiff" };
+			var formats = new[] { "bmp", "gif", "ico", "jpg", "jpeg", "jxr", "png", "tif", "tiff", "webp" };
 
 			Assert.IsTrue(formats.All(format => Mime.FromFormat(format).Type == MediaType.Image));
 		}

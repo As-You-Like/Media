@@ -24,7 +24,7 @@
 			{ "application/zip",				Mime.Zip },		// Package			ZIP			
 
 			// Audio
-			{ "audio/mp4",						Mime.Aac },
+			{ "audio/mp4",						Mime.M4a },
 			{ "audio/mpeg",						Mime.Mp3 },
 			{ "audio/opus",						Mime.Opus },
 			{ "audio/x-realaudio",				Mime.Ra },
@@ -82,7 +82,12 @@
 
 			// Audio
 			{ "aac",	Mime.Aac },
+			{ "aif",	Mime.Aif },
+			{ "aifc",	Mime.Aif },
+			{ "aiff",   Mime.Aif },
+			{ "m4a",    Mime.M4a },
 			{ "mp3",	Mime.Mp3 },
+			{ "ogg",	Mime.Ogg },
 			{ "opus",	Mime.Opus },
 			{ "ra",		Mime.Ra },
 			{ "wav",	Mime.Wav },

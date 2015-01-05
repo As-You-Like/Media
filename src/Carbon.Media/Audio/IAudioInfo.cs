@@ -4,16 +4,7 @@
 
 	public interface IAudioInfo
 	{
-		/// <summary>
-		/// In kb/s
-		/// </summary>
-		int Bitrate { get; }
-
-		/// <summary>
-		/// The number of channels in the audio stream.
-		/// e.g. mono:1, stereo:2, 5, ...
-		/// </summary>
-		int Channels { get; }
+		int ChannelCount { get; }
 
 		MediaCodec Codec { get; }
 		

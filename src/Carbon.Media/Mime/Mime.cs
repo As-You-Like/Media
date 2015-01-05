@@ -174,7 +174,9 @@
 
 		// Audio
 		public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
+		public static readonly Mime Aif		= new Mime("audio/aiff",			"aif");
 		public static readonly Mime Mp3		= new Mime("audio/mpeg",			"mp3");
+		public static readonly Mime M4a		= new Mime("audio/mp4",				"m4a");
 		public static readonly Mime Opus	= new Mime("audio/opus",			"opus");
 		public static readonly Mime Ra		= new Mime("audio/x-realaudio",		new[] { "ra", "ram" });
 		public static readonly Mime Wav		= new Mime("audio/wav",				"wav");

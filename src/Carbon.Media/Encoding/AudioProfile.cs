@@ -3,7 +3,6 @@
 	public class AudioProfile
 	{
 		// audio_bitrate_in_kbps
-		// [DivisibleBy(16)]
 		public int Bitrate { get; set; }
 
 		// TODO: Channels
