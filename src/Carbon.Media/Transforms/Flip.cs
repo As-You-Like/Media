@@ -4,8 +4,8 @@
 
 	public class Flip : ITransform
 	{
-		public static readonly Flip Horizontally	= new Flip(FlipAxis.X);
-		public static readonly Flip Vertically		= new Flip(FlipAxis.Y);
+		public static readonly Flip Horizontally = new Flip(FlipAxis.X);
+		public static readonly Flip Vertically	 = new Flip(FlipAxis.Y);
 
 		private readonly FlipAxis axis;
 

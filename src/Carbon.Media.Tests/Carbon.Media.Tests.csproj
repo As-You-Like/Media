@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorTests.cs" />
-    <Compile Include="FormatTests.cs" />
+    <Compile Include="PixelFormatTests.cs" />
     <Compile Include="Math\FractionTest.cs" />
     <Compile Include="Mime\MediaTypeTests.cs" />
     <Compile Include="Mime\MimeTests.cs" />

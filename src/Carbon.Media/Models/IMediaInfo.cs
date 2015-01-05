@@ -4,8 +4,6 @@
 	{
 		int Id { get; }
 
-		// byte[] Sha256 { get; }
-
 		string Format { get; }
 
 		int Width { get; }

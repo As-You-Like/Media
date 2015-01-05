@@ -6,12 +6,12 @@
 		{
 			switch (container)
 			{
-				case MediaContainer.Ogg:	return "ogg";
-				case MediaContainer.Flv:	return "flv";
-				case MediaContainer.Mp4:	return "mp4";
-				case MediaContainer.WebM:	return "webm";
+				case MediaContainer.Ogg		: return "ogg";
+				case MediaContainer.Flv		: return "flv";
+				case MediaContainer.Mp4		: return "mp4";
+				case MediaContainer.WebM	: return "webm";
 
-				default:					return null;
+				default						: return null;
 			}
 		}
 	}
