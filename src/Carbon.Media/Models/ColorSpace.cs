@@ -6,7 +6,15 @@
 
 		// RGB
 		sRGB		= 1,	// The sRGB color space is based on the ITU-R BT.709 standard. It specifies a gamma of 2.2 and a white point of 6500 degrees K.
-		scRGB		= 2,	// scRGB is a wide color gamut RGB (Red Green Blue) color space created by Microsoft and HP that uses the same color primaries and white/black points as the sRGB color space but allows coordinates below zero and greater than one. The full range is -0.5 through just less than +7.5.
+		
+		/// <summary>
+		/// // scRGB is a wide color gamut RGB (Red Green Blue) color space created  by Microsoft 
+		/// and HP that uses the same color primaries and white/black points as the sRGB color space 
+		/// but allows coordinates below zero and greater than one. 
+		/// The full range is -0.5 through just less than +7.5.
+		/// </summary>
+		scRGB		= 2,	
+
 		RGB			= 3,
 
 		CMY			= 10,	// CMY,		uncommon expect on low-end color printers

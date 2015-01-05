@@ -60,9 +60,7 @@
 
 			#endregion
 
-			var size = VisualHelper.ParseSize(key);
-
-			return new Resize(size);
+			return new Resize(Size.Parse(key));
 		}
 	}
 }

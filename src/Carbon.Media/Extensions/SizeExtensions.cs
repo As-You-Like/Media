@@ -10,7 +10,7 @@
 			return source.Width <= target.Width && source.Height <= target.Height;
 		}
 
-		public static Size Scale(this Size size, float scale)
+		public static Size Scale(this ISize size, float scale)
 		{
 			return new Size(
 				width  : (int)((float)size.Width * scale),

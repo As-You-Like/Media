@@ -149,6 +149,13 @@
 			return this;
 		}
 
+		public MediaTransformation ApplyFilter(string name, string value)
+		{
+			Transform(new ApplyFilter(name, value));
+
+			return this;
+		}
+
 		#endregion
 
 		#region Transform Helpers
@@ -272,8 +279,6 @@
 	internal class MediaMock : IMediaInfo
 	{
 		public int Id { get; set; }
-
-		public byte[] Sha256 { get; set; }
 
 		public string Format
 		{

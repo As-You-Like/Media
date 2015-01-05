@@ -7,29 +7,11 @@
 
 	public static class VisualHelper
 	{
-		public static Size ParseSize(this string size)
+		public static Size CalculateScaledSize(ISize source, double scale)
 		{
 			#region Preconditions
 
-			if (size == null)
-				throw new ArgumentNullException("size");
-
-			if (!size.Contains("x"))
-				throw new ArgumentException(string.Format("Invalid size. Was '{0}'.", size));
-
-			#endregion
-
-			var parts = size.Split('x');
-
-			return new Size(Int32.Parse(parts[0]), Int32.Parse(parts[1]));
-		}
-
-		public static Size CalculateScaledSize(IMediaInfo source, double scale)
-		{
-			#region Preconditions
-
-			if (source == null)
-				throw new ArgumentNullException("source");
+			if (source == null) throw new ArgumentNullException("source");
 
 			#endregion
 
@@ -69,7 +51,7 @@
 			return calculatedSize;
 		}
 
-		public static Rectangle CalculateCropRectangle(Size sourceSize, Size targetSize, Alignment anchor)
+		public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize targetSize, Alignment anchor)
 		{
 			var x = 0;
 			var y = 0;
