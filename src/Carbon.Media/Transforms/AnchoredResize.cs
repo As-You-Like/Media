@@ -2,8 +2,6 @@
 {
 	using System;
 
-	using Carbon.Helpers;
-
 	public class AnchoredResize : ITransform
 	{
 		private readonly int width;
@@ -30,25 +28,13 @@
 			this.anchor = anchor;
 		}
 
-		public int Width
-		{
-			get { return width; }
-		}
+		public int Width => width;
 
-		public int Height
-		{
-			get { return height; }
-		}
+		public int Height => height;
 
-		public Size Size 
-		{
-			get { return new Size(width, height); }
-		}
+		public Size Size => new Size(width, height);
 
-		public Alignment Anchor
-		{
-			get { return anchor; }
-		}
+		public Alignment Anchor => anchor;
 
 		public override string ToString()
 		{

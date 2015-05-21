@@ -3,7 +3,7 @@
 	using System;
 	using System.IO;
 
-	public struct Mime
+	public class Mime
 	{
 		private readonly string name;
 		private readonly MediaType type;
@@ -28,9 +28,8 @@
 			#endregion
 
 			this.name = name;
-			this.formats = formats;
-
-			this.type = name.Split('/')[0].ToEnum<MediaType>(ignoreCase: true);
+			this.formats = formats;			
+			this.type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
 		}
 
 		public string Name
@@ -89,7 +88,7 @@
 		{
 			#region Preconditions
 
-			if (name == null) throw new ArgumentNullException("name");
+			if (name == null) throw new ArgumentNullException(nameof(name));
 
 			#endregion
 
@@ -133,8 +132,7 @@
 		{
 			#region Preconditions
 
-			if (format == null)
-				throw new ArgumentNullException("format");
+			if (format == null) throw new ArgumentNullException(nameof(format));
 
 			#endregion
 
@@ -154,11 +152,13 @@
 		public static readonly Mime Blob	= new Mime("application/octet-stream",		"blob");
 
 		// Applications
+		public static readonly Mime Ai		= new Mime("application/illustrator",		"ai");
 		public static readonly Mime Atom	= new Mime("application/atom+xml",			"atom");
 		public static readonly Mime Doc		= new Mime("application/msword",			"doc");
 		public static readonly Mime Js		= new Mime("application/javascript",		"js");
 		public static readonly Mime Json	= new Mime("application/json",				"json");	 // http://tools.ietf.org/html/rfc4627
 		public static readonly Mime M3u8	= new Mime("application/x-mpegURL",			"m3u8");
+		public static readonly Mime Mpd		= new Mime("application/dash+xml",			"mpd");
 		public static readonly Mime Pdf		= new Mime("application/pdf",				"pdf");
 		public static readonly Mime Swf		= new Mime("application/x-shockwave-flash", "swf");
 		public static readonly Mime Xap		= new Mime("application/x-silverlight-app", "xap");
@@ -175,8 +175,10 @@
 		// Audio
 		public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
 		public static readonly Mime Aif		= new Mime("audio/aiff",			"aif");
+		public static readonly Mime Flac	= new Mime("audio/flac",			"flac");
 		public static readonly Mime Mp3		= new Mime("audio/mpeg",			"mp3");
 		public static readonly Mime M4a		= new Mime("audio/mp4",				"m4a");
+		public static readonly Mime Oga		= new Mime("audio/ogg",				"oga");
 		public static readonly Mime Opus	= new Mime("audio/opus",			"opus");
 		public static readonly Mime Ra		= new Mime("audio/x-realaudio",		new[] { "ra", "ram" });
 		public static readonly Mime Wav		= new Mime("audio/wav",				"wav");
@@ -186,9 +188,11 @@
 		public static readonly Mime Bmp		= new Mime("image/bmp",				"bmp");
 		public static readonly Mime Gif		= new Mime("image/gif",				"gif");
 		public static readonly Mime Ico		= new Mime("image/x-icon",			"ico");	// [0]
+		public static readonly Mime Jp2		= new Mime("image/jp2",				new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" });	
 		public static readonly Mime Jpeg	= new Mime("image/jpeg",			new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" });
-		public static readonly Mime Jxr		= new Mime("image/vnd.ms-photo",	new[] { "jxr", "wdp" });
+		public static readonly Mime Jxr		= new Mime("image/jxr",				new[] { "jxr", "hdp", "wdp" });
 		public static readonly Mime Png		= new Mime("image/png",				"png");
+		public static readonly Mime Psd		= new Mime("image/psd",				"psd");
 		public static readonly Mime Svg		= new Mime("image/svg+xml",			"svg");
 		public static readonly Mime Tiff	= new Mime("image/tiff",			new[] { "tiff", "tif" });
 		public static readonly Mime WebP	= new Mime("image/webp",			"webp");
@@ -200,8 +204,8 @@
 		public static readonly Mime Mov		= new Mime("video/quicktime",	"mov");
 		public static readonly Mime Mp4		= new Mime("video/mp4",			"mp4");
 		public static readonly Mime Mpeg	= new Mime("video/mpeg",		"mpeg");
-		public static readonly Mime Ogg		= new Mime("video/ogg",			"ogg");			// http://tools.ietf.org/html/rfc5334
-		public static readonly Mime Ts		= new Mime("video/MP2T",		"ts");
+		public static readonly Mime Ogv		= new Mime("video/ogg",			new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334
+        public static readonly Mime Ts		= new Mime("video/MP2T",		"ts");
 		public static readonly Mime WebM	= new Mime("video/webm",		"webm");
 		public static readonly Mime Wmv		= new Mime("video/x-ms-wmv",	"wmv");
 

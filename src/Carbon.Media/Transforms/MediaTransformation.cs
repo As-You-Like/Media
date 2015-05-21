@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Runtime.Serialization;
 	using System.Text;
 
 	public class MediaTransformation : ISize
@@ -35,31 +36,16 @@
 			Transform(orientation.GetTransforms());	
 		}
 
-		public IMediaInfo Source
-		{
-			get { return source; }
-		}
+		public IMediaInfo Source => source;
 
-		public string Format
-		{
-			get { return format; }
-		}
+		public string Format => format;
 
-		public int Width
-		{
-			get { return width; }
-		}
+		public int Width => width;
 
-		public int Height
-		{
-			get { return height; }
-		}
+		public int Height => height;
 
 		// TODO: Immutable
-		public IList<ITransform> GetTransforms()
-		{
-			return transforms.AsReadOnly();
-		}
+		public IList<ITransform> GetTransforms() => transforms.AsReadOnly();
 
 		public MediaTransformation Transform(params ITransform[] transformList)
 		{
@@ -160,10 +146,8 @@
 
 		#region Transform Helpers
 
-		public bool HasTransforms
-		{
-			get { return transforms.Count > 0; }
-		}
+		[IgnoreDataMember]
+		public bool HasTransforms => transforms.Count > 0;
 
 		#endregion
 
@@ -280,19 +264,10 @@
 	{
 		public int Id { get; set; }
 
-		public string Format
-		{
-			get { return null; }
-		}
+		public string Format => null;
 
-		public int Width
-		{
-			get { return 0; }
-		}
+		public int Width => 0;
 
-		public int Height
-		{
-			get { return 0; }
-		}
+		public int Height => 0;
 	}
 }

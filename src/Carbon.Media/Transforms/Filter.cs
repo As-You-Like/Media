@@ -11,15 +11,9 @@
 			this.value = value;
 		}
 
-		public string Name 
-		{
-			get { return name; }
-		}
+		public string Name => name;
 
-		public string Value
-		{
-			get { return value; }
-		}
+		public string Value => value;
 
 		public override string ToString()
 		{

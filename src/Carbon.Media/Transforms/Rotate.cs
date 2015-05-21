@@ -20,17 +20,11 @@
 			this.angle = angle;
 		}
 
-		public int Angle 
-		{
-			get { return angle; }
-		}
+		public int Angle => angle;
 
-		public override string ToString()
-		{
-			return "rotate(" + angle + ")";
-		}
+		public override string ToString() => "rotate(" + angle + ")";
 
-		public static Rotate Parse(string key)
+        public static Rotate Parse(string key)
 		{
 			#region Normalization
 

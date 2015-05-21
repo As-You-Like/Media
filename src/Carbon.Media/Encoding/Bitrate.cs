@@ -25,9 +25,6 @@
 			this.value = value;
 		}
 
-		public int Value
-		{
-			get { return value; }
-		}
+		public int Value => value;
 	}
 }

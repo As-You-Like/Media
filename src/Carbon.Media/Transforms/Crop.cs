@@ -28,20 +28,11 @@
 			this.rectangle = rectangle;
 		}
 
-		public Rectangle Rectangle
-		{
-			get { return rectangle; }
-		}
+		public Rectangle Rectangle => rectangle;
 
-		public int Width
-		{
-			get { return rectangle.Width; }
-		}
+		public int Width => rectangle.Width;
 
-		public int Height
-		{
-			get { return rectangle.Height; }
-		}
+		public int Height => rectangle.Height;
 
 		public override string ToString()
 		{

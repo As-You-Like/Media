@@ -28,20 +28,11 @@
 			this.Reduce();
 		}
 
-		public long Denominator 
-		{
-			get { return denominator; }
-		}
+		public long Denominator => denominator;
 
-		public long Numerator 
-		{
-			get { return numerator; }
-		}
+		public long Numerator => numerator;
 
-		public Rational Invert()
-		{
-			return new Rational(denominator, numerator);
-		}
+		public Rational Invert() => new Rational(denominator, numerator);
 
 		private void Reduce()
 		{

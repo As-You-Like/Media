@@ -2,38 +2,20 @@
 {
 	public struct Rectangle
 	{
-		private readonly int x;
-		private readonly int y;
-		private readonly int width;
-		private readonly int height;
-
 		public Rectangle(int x, int y, int width, int height)
 		{
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
+			X = x;
+			Y = y;
+			Width = width;
+			Height = height;
 		}
 
-		public int X
-		{
-			get { return x; }
-		}
+		public int X { get; }
 
-		public int Y
-		{
-			get { return y; }
-		}
+		public int Y { get; }
 
-		public int Width
-		{
-			get { return width; }
-		}
+		public int Width { get; }
 
-		public int Height
-		{
-			get { return height; }
-		}
-
+		public int Height { get; }
 	}
 }

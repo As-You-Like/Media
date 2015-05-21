@@ -2,10 +2,17 @@
 
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
-[assembly: AssemblyCopyright("© 2012 - 2013 Jason Nelson")]
-[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyCopyright("© 2012 - 2015 Jason Nelson")]
+[assembly: AssemblyVersion("1.1.0")]
+
+// TODO: Baseline & Progressive Encoding
 
 /*
+ 1.1.0 (2015-01-01)
+ -----------------------------------------------------
+ Make Mime a Class
+ Add ai, psd, and mpd formats
+ 
  1.0.0 (2014-06-10)
  -----------------------------------------------------
  Remove System.Drawing dependecy

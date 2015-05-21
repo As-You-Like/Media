@@ -55,7 +55,7 @@
     <Compile Include="Helpers\AlignmentExtensions.cs" />
     <Compile Include="Helpers\AlignmentHelper.cs" />
     <Compile Include="Helpers\MediaContainerExtensions.cs" />
-    <Compile Include="Helpers\MediaRenditionInfo.cs" />
+    <Compile Include="Models\MediaRenditionInfo.cs" />
     <Compile Include="Models\ColorModel.cs" />
     <Compile Include="Models\ColorProfile.cs" />
     <Compile Include="Models\ColorProfileParser.cs" />

@@ -4,41 +4,98 @@
 
 	using NUnit.Framework;
 
+	public class Signer : ISigner
+	{
+		private readonly string name;
+
+		public Signer(string name)
+		{
+			this.name = name;
+		}
+
+		public string Sign(string path)
+		{
+			return name;
+		}
+	}
+
 	[TestFixture]
 	public class ImageRendentionTests
 	{
 		[Test]
-		public void ScaleTest()
+		public void ScaleTest2()
 		{
-			var rendition = new MediaRenditionInfo(85, 20, "http://google.com/1045645/100x100/crop:0-0_85x20.png");
+			MediaRenditionInfo.Host = "google.com";
+
+			var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
 
 			var b = rendition.Scale(2f);
 
-			Assert.AreEqual("http://google.com/1045645/200x200/crop:0-0_170x40.png", b.Url);
+			Assert.AreEqual("200x200/crop:0-0_170x40.png", b.TransformString);
+
+			var c = b.Scale(2f);
+
+			Assert.AreEqual("400x400/crop:0-0_340x80.png", c.TransformString);
+
+
+			var d = c.WithFormat("gif");
+
+			Assert.AreEqual("400x400/crop:0-0_340x80.gif", d.TransformString);
+
+		}
+
+		[Test]
+		public void ScaleTest()
+		{
+			MediaRenditionInfo.Host = "google.com";
+
+			var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
+
+			var b = rendition.Scale(2f);
+
+			Assert.AreEqual("https://google.com/1045645/200x200/crop:0-0_170x40.png", b.Url);
 		}
 
 		[Test]
 		public void ResampleTest()
 		{
+			MediaRenditionInfo.Host = "google.com";
 
-			var rendition = new MediaRenditionInfo(85, 20, "http://google.com/1045645/100x100/crop:0-0_85x20.png");
+			var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
 
 			var b = rendition.Scale(2).Resample("abc");
 
-			Assert.AreEqual("http://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).png", b.Url);
+			Assert.AreEqual("https://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).png", b.Url);
 
+		}
+
+		[Test]
+		public void ResampleTest2()
+		{
+			MediaRenditionInfo.Host = "google.com";
+
+			var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
+
+			var b = rendition.Scale(2).Resample("abc");
+
+			MediaRenditionInfo.Signer = new Signer("hey");
+
+			Assert.AreEqual("https://google.com/hey/1045645/200x200/crop:0-0_170x40/resample(abc).png", b.Url);
+
+			MediaRenditionInfo.Signer = null;
 		}
 
 		[Test]
 		public void WithFormatTests()
 		{
+			MediaRenditionInfo.Host = "google.com";
 
-			var rendition = new MediaRenditionInfo(85, 20, "http://google.com/1045645/100x100/crop:0-0_85x20.png");
+			var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
 
 			var b = rendition.Scale(2).Resample("abc").WithFormat("jpeg");
 
-			Assert.AreEqual("http://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).jpeg", b.Url);
 
+			Assert.AreEqual("https://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).jpeg", b.Url);
 		}
 
 		[Test]

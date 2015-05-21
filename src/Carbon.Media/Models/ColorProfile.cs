@@ -43,34 +43,19 @@
 		}
 
 		[DataMember(Name = "type")]
-		public ColorProfileType Type
-		{
-			get { return type; }
-		}
+		public ColorProfileType Type => type;
 
 		[DataMember(Name = "version")]
-		public Version Version
-		{
-			get { return version; }
-		}
+		public Version Version => version;
 
 		[DataMember(Name = "colorSpace")]
-		public ColorSpace ColorSpace
-		{
-			get { return colorSpace; }
-		}
+		public ColorSpace ColorSpace => colorSpace;
 
 		[DataMember(Name = "targetDevice")]
-		public DeviceType TargetDevice
-		{
-			get { return deviceClass; }
-		}
+		public DeviceType TargetDevice => deviceClass;
 
 		[DataMember(Name = "data")]
-		public byte[] Data
-		{
-			get { return data; }
-		}
+		public byte[] Data => data;
 
 		[DataMember(Name = "key")]
 		public string Key

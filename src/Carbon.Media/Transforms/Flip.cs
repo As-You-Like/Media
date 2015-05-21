@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Media
 {
-	using System;
-
 	public class Flip : ITransform
 	{
 		public static readonly Flip Horizontally = new Flip(FlipAxis.X);
@@ -14,21 +12,16 @@
 			this.axis = axis;
 		}
 
-		public FlipAxis Angle 
-		{
-			get { return axis; }
-		}
+		public FlipAxis Axis => axis;
 
-		public override string ToString()
-		{
-			return "flip(" + axis.ToString().ToLower() + ")";
-		}
+		public override string ToString() => "flip(" + axis.ToString().ToLower() + ")";
 
 		public static Flip Parse(string key)
 		{
 			#region Normalization
 
-			if (key.StartsWith("flip(")) {
+			if (key.StartsWith("flip("))
+			{
 				key = key.Remove(0, 5).TrimEnd(')');
 			}
 

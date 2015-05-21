@@ -3,8 +3,6 @@
 	using System;
 	using System.Runtime.Serialization;
 
-	using Carbon.Helpers;
-
 	public class Resize : ITransform
 	{
 		private readonly int height;
@@ -29,26 +27,14 @@
 			this.height = height;
 		}
 
-		public int Height 
-		{
-			get { return height; }
-		}
+		public int Height => height;
 
-		public int Width 
-		{
-			get { return width; }
-		}
+		public int Width => width;
 
 		[IgnoreDataMember]
-		public Size Size 
-		{
-			get { return new Size(width, height); }
-		}
+		public Size Size => new Size(width, height);
 
-		public override string ToString()
-		{
-			return width + "x" + height;
-		}
+		public override string ToString() => width + "x" + height;
 
 		public static Resize Parse(string key)
 		{

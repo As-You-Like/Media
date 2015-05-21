@@ -76,7 +76,6 @@
 
 	public static class BinaryReaderExtensions
 	{
-
 		public static string ReadString(this BinaryReader binRdr, int length)
 		{
 			return text::Encoding.ASCII.GetString(binRdr.ReadBytes(length));

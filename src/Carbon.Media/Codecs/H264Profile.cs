@@ -20,15 +20,9 @@
 			this.type = type;
 		}
 
-		public H264ProfileType Type
-		{
-			get { return type; }
-		}
+		public H264ProfileType Type => type;
 
-		public override string ToString()
-		{
-			return name;
-		}
+		public override string ToString() => name;
 
 		#region Equality
 

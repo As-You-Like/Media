@@ -24,20 +24,11 @@
 			this.profile = profile;
 		}
 
-		public MediaCodecType Type
-		{
-			get { return type; }
-		}
+		public MediaCodecType Type => type;
 
-		public string Format
-		{
-			get { return type.ToString().ToLower(); }
-		}
+		public string Format => type.ToString().ToLower();
 
-		public MediaCodecProfile Profile
-		{
-			get { return profile; }
-		}
+		public MediaCodecProfile Profile => profile;
 
 		#region Equality
 
@@ -60,10 +51,7 @@
 
 		#endregion
 
-		public override string ToString()
-		{
-			return name;
-		}
+		public override string ToString() => name;
 
 		public static MediaCodec Parse(string name)
 		{

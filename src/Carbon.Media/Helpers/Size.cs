@@ -4,37 +4,25 @@
 
 	public struct Size : ISize
 	{
-		private readonly int width;
-		private readonly int height;
-
 		public Size(int width, int height)
 		{
-			this.width = width;
-			this.height = height;
+			Width = width;
+			Height = height;
 		}
 
-		public int Width
-		{
-			get { return width; }
-		}
+		public int Width { get; }
 
-		public int Height
-		{
-			get { return height; }
-		}
+		public int Height { get; }
 
-		public override string ToString()
-		{
-			return width + "x" + height;
-		}
+		public override string ToString() => Width + "x" + Height;
 
 		public static Size Parse(string size)
 		{
 			#region Preconditions
 
-			if (size == null)		throw new ArgumentNullException("size");
+			if (size == null)		throw new ArgumentNullException(nameof(size));
 
-			if (!size.Contains("x")) throw new ArgumentException(string.Format("Invalid size. Was '{0}'.", size));
+			if (!size.Contains("x")) throw new ArgumentException($"Invalid size. Was '{size}'.");
 
 			#endregion
 

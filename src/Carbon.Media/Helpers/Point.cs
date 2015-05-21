@@ -11,14 +11,8 @@
 			this.y = y;
 		}
 
-		public int X
-		{
-			get { return x; }
-		}
+		public int X => x;
 
-		public int Y
-		{
-			get { return y; }
-		}
+		public int Y => y;
 	}
 }

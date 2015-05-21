@@ -20,15 +20,9 @@
 			this.end = end;
 		}
 
-		public TimeSpan Start 
-		{
-			get { return start; }
-		}
+		public TimeSpan Start => start;
 
-		public TimeSpan End 
-		{
-			get { return end; }
-		}
+		public TimeSpan End => end;
 
 		public override string ToString() 
 		{
