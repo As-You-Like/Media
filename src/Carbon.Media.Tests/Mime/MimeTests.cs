@@ -18,11 +18,17 @@
 			Assert.AreEqual("jxr",	Mime.Parse("image/vnd.ms-photo").Format);
 			Assert.AreEqual("svg",	Mime.Parse("image/svg+xml").Format);
 
+			// Audio
+			Assert.AreEqual("flac", Mime.Parse("audio/flac").Format);
+			Assert.AreEqual("oga",  Mime.Parse("audio/ogg").Format);
+			Assert.AreEqual("opus", Mime.Parse("audio/opus").Format);
+
 			// Videos
 			Assert.AreEqual("wmv",	Mime.Parse("video/x-ms-wmv").Format);
 			Assert.AreEqual("mp4",	Mime.Parse("video/mp4").Format);
 			Assert.AreEqual("mov",	Mime.Parse("video/quicktime").Format);
-			
+			Assert.AreEqual("ogv",  Mime.Parse("video/ogg").Format);
+
 			Assert.AreEqual("zip",	Mime.Parse("application/zip").Format);
 		}
 
@@ -40,8 +46,11 @@
 			Assert.AreEqual("application/zip", Mime.FromFormat("zip").ToString());
 
 			// Audio
+			Assert.AreEqual("audio/flac", Mime.FromFormat("flac").ToString());
 			Assert.AreEqual("audio/mpeg", Mime.FromFormat("mp3").ToString());
 			Assert.AreEqual("audio/x-ms-wma", Mime.FromFormat("wma").ToString());
+			Assert.AreEqual("audio/ogg", Mime.FromFormat("oga").ToString());
+			Assert.AreEqual("audio/opus", Mime.FromFormat("opus").ToString());
 
 			// Documents
 			Assert.AreEqual("application/pdf", Mime.FromFormat("pdf").ToString());
@@ -71,6 +80,7 @@
 			Assert.AreEqual("video/quicktime", Mime.FromFormat("mov").ToString());
 			Assert.AreEqual("video/mp4", Mime.FromFormat("mp4").ToString());
 			Assert.AreEqual("video/mpeg", Mime.FromFormat("mpeg").ToString());
+			Assert.AreEqual("video/ogg", Mime.FromFormat("ogg").ToString());
 			Assert.AreEqual("video/quicktime", Mime.FromFormat("qt").ToString());
 			Assert.AreEqual("video/webm", Mime.FromFormat("webm").ToString());
 

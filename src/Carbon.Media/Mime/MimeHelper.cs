@@ -21,11 +21,13 @@
 			{ "application/x-silverlight-app",	Mime.Xap },		// Plugin			Silverlight
 			{ "application/x-font-woff",		Mime.Woff },	// Font				woff
 			{ "application/font-woff",			Mime.Woff },	// Font				woff
-			{ "application/zip",				Mime.Zip },		// Package			ZIP			
+			{ "application/zip",				Mime.Zip },     // Package			ZIP			
 
 			// Audio
+			{ "audio/flac",                     Mime.Flac },
 			{ "audio/mp4",						Mime.M4a },
 			{ "audio/mpeg",						Mime.Mp3 },
+			{ "audio/ogg",                      Mime.Oga },
 			{ "audio/opus",						Mime.Opus },
 			{ "audio/x-realaudio",				Mime.Ra },
 			{ "audio/wav",						Mime.Wav },
@@ -59,7 +61,7 @@
 			{ "video/quicktime",				Mime.Mov },
 			{ "video/mp4",						Mime.Mp4 },
 			{ "video/MP2T",						Mime.Ts },
-			{ "video/ogg",						Mime.Ogg },
+			{ "video/ogg",						Mime.Ogv },
 			{ "video/webm",						Mime.WebM },
 			{ "video/x-ms-wmv",					Mime.Wmv },
 		};
@@ -67,10 +69,12 @@
 		internal static readonly Dictionary<string, Mime> FormatToMimeMap = new Dictionary<string, Mime> {
 			
 			// Applications				   TYPE			NAME
+			{ "ai",		Mime.Ai },		//				Illustrator
 			{ "atom",	Mime.Atom },	// Document		Atom
 			{ "blob",	Mime.Blob },	// Data			Binary Blob
 			{ "doc",	Mime.Doc },		// Document		Word
 			{ "eot",	Mime.Eot },		// Font			EOT
+			{ "mpd",    Mime.Mpd },		// Dash
 			{ "js",		Mime.Js },		// Script		JavaScript
 			{ "json",	Mime.Json },	// Data			JSON
 			{ "swf",	Mime.Swf },		// Plugin		Flash
@@ -85,9 +89,10 @@
 			{ "aif",	Mime.Aif },
 			{ "aifc",	Mime.Aif },
 			{ "aiff",   Mime.Aif },
+			{ "flac",   Mime.Flac },
 			{ "m4a",    Mime.M4a },
 			{ "mp3",	Mime.Mp3 },
-			{ "ogg",	Mime.Ogg },
+			{ "oga",	Mime.Oga },
 			{ "opus",	Mime.Opus },
 			{ "ra",		Mime.Ra },
 			{ "wav",	Mime.Wav },
@@ -98,10 +103,12 @@
 			{ "gif",	Mime.Gif },
 			{ "hdp",	Mime.Jxr },
 			{ "ico",	Mime.Ico },
+			{ "jp2",	Mime.Jp2 },		// Jpeg 2000
 			{ "jpg",	Mime.Jpeg },
 			{ "jpeg",	Mime.Jpeg },
 			{ "jxr",	Mime.Jxr },		// Jpeg XR
 			{ "png",	Mime.Png },
+			{ "psd",	Mime.Psd },
 			{ "svg",	Mime.Svg },
 			{ "tif",	Mime.Tiff },
 			{ "tiff",	Mime.Tiff },
@@ -126,6 +133,8 @@
 			{ "mpeg",	Mime.Mpeg },
 			{ "mov",	Mime.Mov },
 			{ "mp4",	Mime.Mp4 },
+			{ "ogg",    Mime.Ogv },
+			{ "ogv",    Mime.Ogv },
 			{ "ts",		Mime.Ts },
 			{ "qt",		Mime.Mov },
 			{ "webm",	Mime.WebM },
