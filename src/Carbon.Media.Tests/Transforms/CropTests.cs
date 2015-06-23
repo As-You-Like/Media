@@ -2,31 +2,31 @@
 {
 	using System;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class CropTests
 	{
-		[Test]
+		[Fact]
 		public void FromFullKey()
 		{
 			var crop = Crop.Parse("crop:10-0_85x20");
 
-			Assert.AreEqual(10, crop.Rectangle.X);
-			Assert.AreEqual(0, crop.Rectangle.Y);
-			Assert.AreEqual(85, crop.Rectangle.Width);
-			Assert.AreEqual(20, crop.Rectangle.Height);
+			Assert.Equal(10, crop.Rectangle.X);
+			Assert.Equal(0, crop.Rectangle.Y);
+			Assert.Equal(85, crop.Rectangle.Width);
+			Assert.Equal(20, crop.Rectangle.Height);
 		}
 
-		[Test]
+		[Fact]
 		public void FromPartialKey()
 		{
 			var crop = Crop.Parse("0-0_85x20");
 
-			Assert.AreEqual(0, crop.Rectangle.X);
-			Assert.AreEqual(0, crop.Rectangle.Y);
-			Assert.AreEqual(85, crop.Rectangle.Width);
-			Assert.AreEqual(20, crop.Rectangle.Height);
+			Assert.Equal(0, crop.Rectangle.X);
+			Assert.Equal(0, crop.Rectangle.Y);
+			Assert.Equal(85, crop.Rectangle.Width);
+			Assert.Equal(20, crop.Rectangle.Height);
 		}
 	}
 }

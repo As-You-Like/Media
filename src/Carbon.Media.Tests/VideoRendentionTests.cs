@@ -4,15 +4,15 @@
 
 	using Carbon.Helpers;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	// [TestFixture]
+	// 
 	public class VideoendentionTests
 	{
 		// 600x400.mp4	[h264, mp4]
 
 		/*
-		[Test]
+		[Fact]
 		public void ResizeMp4()
 		{
 			var video = new VideoInfo { 
@@ -26,10 +26,10 @@
 				Transforms = { new Resize(1280, 720) }
 			};
 
-			Assert.AreEqual("1280x720.mp4", rendention.GetFileName());
+			Assert.Equal("1280x720.mp4", rendention.GetFileName());
 		}
 
-		[Test]
+		[Fact]
 		public void ResizeAndRotateMp4()
 		{
 			var video = new VideoInfo {
@@ -44,8 +44,8 @@
 				Transforms = { new Resize(1280, 720), new Rotate(90) }
 			};
 
-			Assert.AreEqual(VideoFormat.Mp4, video.Format);
-			Assert.AreEqual("1280x720-r90.mp4", rendention.GetFileName());
+			Assert.Equal(VideoFormat.Mp4, video.Format);
+			Assert.Equal("1280x720-r90.mp4", rendention.GetFileName());
 		}
 		*/
 	}

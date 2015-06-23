@@ -3,63 +3,63 @@
 	using Carbon.Math;
 	using Carbon.Media;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class VisualHelperTest
 	{
-		[Test]
+		[Fact]
 		public void GetDimensionsTest()
 		{
 			var imageSize = new Size(500, 500);
 
-			Assert.AreEqual(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.None));
-			Assert.AreEqual(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
-			Assert.AreEqual(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
-			Assert.AreEqual(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-			Assert.AreEqual(new Size(11, 11), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+			Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.None));
+			Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
+			Assert.Equal(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
+			Assert.Equal(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
+			Assert.Equal(new Size(11, 11), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
 
 			// Stretch
-			Assert.AreEqual(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.Stretch));
+			Assert.Equal(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.Stretch));
 
 			imageSize = new Size(5500, 1464);
 
-			Assert.AreEqual(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
-			Assert.AreEqual(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
-			Assert.AreEqual(new Size(235, 62), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-			Assert.AreEqual(new Size(11, 2), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+			Assert.Equal(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
+			Assert.Equal(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
+			Assert.Equal(new Size(235, 62), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
+			Assert.Equal(new Size(11, 2), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
 		}
 
-		[Test]
+		[Fact]
 		public void SquareImageTest()
 		{
 			var imageSize = new Size(500, 500);
 
-			Assert.AreEqual(new Size(500, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 1)));	// Width = Height
-			Assert.AreEqual(new Size(250, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 2)));	// Width = 1/2 height
-			Assert.AreEqual(new Size(125, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 4)));	// Width = 1/4 width
+			Assert.Equal(new Size(500, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 1)));	// Width = Height
+			Assert.Equal(new Size(250, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 2)));	// Width = 1/2 height
+			Assert.Equal(new Size(125, 500), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 4)));	// Width = 1/4 width
 
-			Assert.AreEqual(new Size(500, 250), VisualHelper.CalculateMaxSize(imageSize, new Rational(2, 1)));	// Width = 2x height
-			Assert.AreEqual(new Size(500, 125), VisualHelper.CalculateMaxSize(imageSize, new Rational(4, 1)));	// Width = 4x height
+			Assert.Equal(new Size(500, 250), VisualHelper.CalculateMaxSize(imageSize, new Rational(2, 1)));	// Width = 2x height
+			Assert.Equal(new Size(500, 125), VisualHelper.CalculateMaxSize(imageSize, new Rational(4, 1)));	// Width = 4x height
 		}
 
-		[Test]
+		[Fact]
 		public void RetangleImageTest()
 		{
 			Size imageSize = new Size(468, 60);
 
-			Assert.AreEqual(new Size(60, 60), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 1))); // Height = 1/1 Width
+			Assert.Equal(new Size(60, 60), VisualHelper.CalculateMaxSize(imageSize, new Rational(1, 1))); // Height = 1/1 Width
 		}
 
 
-		[Test]
+		[Fact]
 		public void OddSizedImageTest()
 		{
-			// Assert.AreEqual(new Size(1200, 225), VisualHelper.GetMaxSize(new Size(1200, 502), 5.32545));		// Height = 5.32545x Width
-			Assert.AreEqual(new Size(802, 3), VisualHelper.CalculateMaxSize(new Size(802, 570), new Rational(240, 1)));	// Height = 240x width
+			// Assert.Equal(new Size(1200, 225), VisualHelper.GetMaxSize(new Size(1200, 502), 5.32545));		// Height = 5.32545x Width
+			Assert.Equal(new Size(802, 3), VisualHelper.CalculateMaxSize(new Size(802, 570), new Rational(240, 1)));	// Height = 240x width
 		}
 
-		[Test]
+		[Fact]
 		public void CropRectTest()
 		{
 			var imageSize = new Size(1000, 1000);
@@ -68,14 +68,14 @@
 
 			var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, Alignment.Center);
 
-			//Assert.AreEqual(0, destinationR.Left);
-			// Assert.AreEqual(-250, destinationR.Top);
+			//Assert.Equal(0, destinationR.Left);
+			// Assert.Equal(-250, destinationR.Top);
 
-			Assert.AreEqual(0, destinationR.X);
-			Assert.AreEqual(-250, destinationR.Y);
+			Assert.Equal(0, destinationR.X);
+			Assert.Equal(-250, destinationR.Y);
 		}
 
-		[Test]
+		[Fact]
 		public void CalculateLargestSizeHavingAspect()
 		{
 			var size = new Size(1000, 1000);
@@ -84,7 +84,7 @@
 
 			result = VisualHelper.CalculateMaxSize(size, targetAspect);
 
-			Assert.AreEqual(new Size(1000, 1000), result);
+			Assert.Equal(new Size(1000, 1000), result);
 
 			// -----------------------------------------------------------------------------------------------
 
@@ -92,7 +92,7 @@
 
 			result = VisualHelper.CalculateMaxSize(size, targetAspect);
 
-			Assert.AreEqual(new Size(1000, 500), result);
+			Assert.Equal(new Size(1000, 500), result);
 
 			// -----------------------------------------------------------------------------------------------
 
@@ -100,7 +100,7 @@
 
 			result = VisualHelper.CalculateMaxSize(size, targetAspect);
 
-			Assert.AreEqual(new Size(1000, 333), result);  // 333.3 (round down)
+			Assert.Equal(new Size(1000, 333), result);  // 333.3 (round down)
 
 			// -----------------------------------------------------------------------------------------------
 
@@ -108,7 +108,7 @@
 
 			result = VisualHelper.CalculateMaxSize(size, targetAspect);
 
-			Assert.AreEqual(new Size(1000, 250), result);  // 333.3 (round down)
+			Assert.Equal(new Size(1000, 250), result);  // 333.3 (round down)
 
 			// -----------------------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@
 
 			result = VisualHelper.CalculateMaxSize(size, targetAspect);
 
-			Assert.AreEqual(new Size(500, 1000), result);  // 333.3 (round down)
+			Assert.Equal(new Size(500, 1000), result);  // 333.3 (round down)
 		}
 	}
 }

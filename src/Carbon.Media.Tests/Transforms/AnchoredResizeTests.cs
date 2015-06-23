@@ -2,29 +2,29 @@
 {
 	using System;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class AnchoredResizeTests
 	{
-		[Test]
+		[Fact]
 		public void FromFullKey()
 		{
 			var resize = AnchoredResize.Parse("resize:85x20-c");
 
-			Assert.AreEqual(85, resize.Width);
-			Assert.AreEqual(20, resize.Height);
-			Assert.AreEqual(Alignment.Center, resize.Anchor);
+			Assert.Equal(85, resize.Width);
+			Assert.Equal(20, resize.Height);
+			Assert.Equal(Alignment.Center, resize.Anchor);
 		}
 
-		[Test]
+		[Fact]
 		public void FromPartialKey()
 		{
 			var resize = AnchoredResize.Parse("85x20-l");
 
-			Assert.AreEqual(85, resize.Width);
-			Assert.AreEqual(20, resize.Height);
-			Assert.AreEqual(Alignment.Left, resize.Anchor);
+			Assert.Equal(85, resize.Width);
+			Assert.Equal(20, resize.Height);
+			Assert.Equal(Alignment.Left, resize.Anchor);
 		}
 	}
 }

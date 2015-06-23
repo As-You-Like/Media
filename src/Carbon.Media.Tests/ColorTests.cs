@@ -3,14 +3,14 @@
 
 
 	/*
-	   [TestFixture]
+	   
 	   public class ColorExtensionsTests
 	   {
-		   [Test]
+		   [Fact]
 		   public void ToHex()
 		   {
-			   Assert.AreEqual("000000", Color.Black.ToHex());
-			   Assert.AreEqual("FFFFFF", Color.White.ToHex());
+			   Assert.Equal("000000", Color.Black.ToHex());
+			   Assert.Equal("FFFFFF", Color.White.ToHex());
 		   }
 	   }
 	   */

@@ -2,25 +2,25 @@
 {
 	using System;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class RotateTests
 	{
-		[Test]
+		[Fact]
 		public void FromFullKey()
 		{
 			var rotate = Rotate.Parse("360");
 
-			Assert.AreEqual(360, rotate.Angle);
+			Assert.Equal(360, rotate.Angle);
 		}
 
-		[Test]
+		[Fact]
 		public void FromPartialKey()
 		{
 			var rotate = Rotate.Parse("rotate(360)");
 
-			Assert.AreEqual(360, rotate.Angle);
+			Assert.Equal(360, rotate.Angle);
 		}
 	}
 }

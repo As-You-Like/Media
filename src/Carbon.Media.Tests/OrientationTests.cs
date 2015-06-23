@@ -2,18 +2,18 @@
 {
 	using System;
 
-	using NUnit.Framework;
+	using Xunit;
 
-	[TestFixture]
+	
 	public class OrientationTests
 	{
-		[Test]
+		[Fact]
 		public void OrientationParse()
 		{
 			var orientation = (MediaOrientation)Enum.Parse(typeof(MediaOrientation), "1");
 
-			Assert.AreEqual(MediaOrientation.Horizontal, orientation);
-			Assert.AreEqual(MediaOrientation.Horizontal, OrientationHelper.Parse("1"));
+			Assert.Equal(MediaOrientation.Horizontal, orientation);
+			Assert.Equal(MediaOrientation.Horizontal, OrientationHelper.Parse("1"));
 		}
 	}
 }
