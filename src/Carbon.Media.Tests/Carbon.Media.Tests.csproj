@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorTests.cs" />
+    <Compile Include="Geometry\PolygonTests.cs" />
     <Compile Include="PixelFormatTests.cs" />
     <Compile Include="Math\FractionTest.cs" />
     <Compile Include="Mime\MediaTypeTests.cs" />
