@@ -1,17 +1,17 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-	using System;
+    public interface IVideoInfo
+    {
+        MediaCodec Codec { get; }
 
-	public interface IVideoInfo
-	{
-		MediaCodec Codec { get; }
+        TimeSpan Duration { get; }
 
-		TimeSpan Duration { get; }
+        int Width { get; }
 
-		int Width { get; }
+        int Height { get; }
 
-		int Height { get; }
-
-		double FrameRate { get; }
-	}
+        double FrameRate { get; }
+    }
 }

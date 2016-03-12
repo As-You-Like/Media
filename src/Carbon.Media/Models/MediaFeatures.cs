@@ -1,8 +1,7 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-	using System;
-
-
 	[Flags]
 	public enum MediaFeatures : byte
 	{

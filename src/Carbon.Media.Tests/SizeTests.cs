@@ -4,7 +4,7 @@
 
 	using Xunit;
 
-	public class SizeExtensionTests
+	public class SizeTests
 	{
 		[Fact]
 		public void WithinTests()
@@ -18,6 +18,13 @@
 			Assert.False(new Size(50, 50).FitsIn(new Size(49, 50)));
 			Assert.False(new Size(51, 50).FitsIn(new Size(50, 50)));
 			Assert.False(new Size(50, 51).FitsIn(new Size(50, 50)));
+		}
+
+		[Fact]
+		public void ToStringTests()
+		{
+			Assert.Equal("50x51", new Size(50, 51).ToString());
+			Assert.Equal("0x0", new Size(0, 0).ToString());
 		}
 	}
 }

@@ -1,100 +1,101 @@
 ﻿namespace Carbon.Math
 {
-	using System;
+    using System;
+    using static System.Math;
 
-	public struct Rational : IFormattable
-	{
-		private long numerator;
-		private long denominator;
+    public struct Rational : IFormattable
+    {
+        private long numerator;
+        private long denominator;
 
-		public Rational(long value)
-		{
-			this.numerator = value;
-			this.denominator = 1;
-		}
+        public Rational(long value)
+        {
+            this.numerator = value;
+            this.denominator = 1;
+        }
 
-		public Rational(long numerator, long denominator)
-		{
-			#region Preconditions
+        public Rational(long numerator, long denominator)
+        {
+            #region Preconditions
 
-			if (denominator == 0)
-				throw new DivideByZeroException("Denominator may not be 0");
+            if (denominator == 0)
+                throw new DivideByZeroException("Denominator may not be 0");
 
-			#endregion
+            #endregion
 
-			this.numerator = numerator;
-			this.denominator = denominator;
+            this.numerator = numerator;
+            this.denominator = denominator;
 
-			this.Reduce();
-		}
+            this.Reduce();
+        }
 
-		public long Denominator => denominator;
+        public long Denominator => denominator;
 
-		public long Numerator => numerator;
+        public long Numerator => numerator;
 
-		public Rational Invert() => new Rational(denominator, numerator);
+        public Rational Invert() => new Rational(denominator, numerator);
 
-		private void Reduce()
-		{
-			if (this.numerator == 0) 
-			{
-				this.denominator = 1;
+        private void Reduce()
+        {
+            if (numerator == 0)
+            {
+                denominator = 1;
 
-				return;
-			}
+                return;
+            }
 
-			var gcd = CalculateGcd(this.numerator, this.denominator);
+            var gcd = CalculateGcd(numerator, denominator);
 
-			this.numerator /= gcd;
-			this.denominator /= gcd;
+            numerator /= gcd;
+            denominator /= gcd;
 
-			if (this.denominator < 0)
-			{
-				this.numerator *= -1;
-				this.denominator *= -1;
-			}
-		}
+            if (denominator < 0)
+            {
+                numerator *= -1;
+                denominator *= -1;
+            }
+        }
 
-		public double ToDouble()
-		{
-			return ((double)this.numerator / (double)this.denominator);
-		}
+        public double ToDouble()
+        {
+            return ((double)this.numerator / (double)this.denominator);
+        }
 
-		public override string ToString()
-		{
-			if (denominator == 1) 
-			{
-				return numerator.ToString();
-			}
+        public override string ToString()
+        {
+            if (denominator == 1)
+            {
+                return numerator.ToString();
+            }
 
-			return numerator + "∶" + denominator;
-		}
+            return numerator + "∶" + denominator;
+        }
 
-		/// <summary>
-		/// The function returns GCD of two numbers (used for reducing a Fraction)
-		/// </summary>
-		private static long CalculateGcd(long a, long b)
-		{
-			// Normalize the values
-			a = Math.Abs(a);
-			b = Math.Abs(b);
+        /// <summary>
+        /// The function returns GCD of two numbers (used for reducing a Fraction)
+        /// </summary>
+        private static long CalculateGcd(long a, long b)
+        {
+            // Normalize the values
+            a = Abs(a);
+            b = Abs(b);
 
-			long remainder;
+            long remainder;
 
-			while (b != 0) 
-			{
-				remainder = a % b;
-				a = b;
-				b = remainder;
-			}
+            while (b != 0)
+            {
+                remainder = a % b;
+                a = b;
+                b = remainder;
+            }
 
-			return a;
-		}
+            return a;
+        }
 
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
-			return ToDouble().ToString(format);
-		}
-	}
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return ToDouble().ToString(format);
+        }
+    }
 }
 

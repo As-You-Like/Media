@@ -12,6 +12,7 @@
 			Assert.Equal("pdf", FileFormat.FromPath("holiday_gift_center_1998.pdf"));
 		}
 
+		
 		[Fact]
 		public void CompressableTests()
 		{
@@ -23,7 +24,6 @@
 			Assert.False(FileFormat.IsCompressible("jpeg"));
 			Assert.False(FileFormat.IsCompressible("gif"));
 		}
-
 
 		[Fact]
 		public void ColorChannelTests()

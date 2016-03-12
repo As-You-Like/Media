@@ -1,236 +1,245 @@
-﻿namespace Carbon.Media
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text;
+
+namespace Carbon.Media
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using System.Text;
+    using Geometry;
 
-	public class MediaTransformation : ISize
-	{
-		protected readonly IMediaInfo source;
-		protected readonly string format;
-		protected readonly List<ITransform> transforms = new List<ITransform>();
+    public class MediaTransformation : ISize
+    {
+        protected readonly IMediaInfo source;
+        protected readonly string format;
+        protected readonly List<ITransform> transforms = new List<ITransform>();
 
-		private int width;
-		private int height;
+        private int width;
+        private int height;
 
-		public MediaTransformation(IMediaInfo source, string format)
-		{
-			#region Preconditions
+        public MediaTransformation(IMediaInfo source, string format)
+        {
+            #region Preconditions
 
-			if (source == null) throw new ArgumentNullException("source");
-			if (format == null) throw new ArgumentNullException("format");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (format == null) throw new ArgumentNullException(nameof(format));
 
-			#endregion
+            #endregion
 
-			this.source = source;
-			this.format = format;
+            this.source = source;
+            this.format = format;
 
-			this.width = source.Width;
-			this.height = source.Height;
-		}
+            this.width = source.Width;
+            this.height = source.Height;
+        }
 
-		public MediaTransformation(IMediaInfo source, MediaOrientation orientation, string format)
-			: this(source, format)
-		{
-			Transform(orientation.GetTransforms());	
-		}
+        public MediaTransformation(IMediaInfo source, MediaOrientation orientation, string format)
+            : this(source, format)
+        {
+            Transform(orientation.GetTransforms());
+        }
 
-		public IMediaInfo Source => source;
+        public IMediaInfo Source => source;
 
-		public string Format => format;
+        public string Format => format;
 
-		public int Width => width;
+        public int Width => width;
 
-		public int Height => height;
+        public int Height => height;
 
-		// TODO: Immutable
-		public IList<ITransform> GetTransforms() => transforms.AsReadOnly();
+        // TODO: Immutable
+        public IList<ITransform> GetTransforms() => transforms.AsReadOnly();
 
-		public MediaTransformation Transform(params ITransform[] transformList)
-		{
-			#region Preconditions
+        public MediaTransformation Transform(params ITransform[] transformList)
+        {
+            #region Preconditions
 
-			if (transformList == null) throw new ArgumentNullException("transformList");
+            if (transformList == null) throw new ArgumentNullException("transformList");
 
-			#endregion
+            #endregion
 
-			if (transformList.Length == 0) return this;
+            if (transformList.Length == 0) return this;
 
-			foreach (var transform in transformList)
-			{
-				#region Update the Current Size
+            foreach (var transform in transformList)
+            {
+                #region Update the Current Size
 
-				if (transform is AnchoredResize)
-				{
-					var anchoredResize = (AnchoredResize)transform;
+                if (transform is AnchoredResize)
+                {
+                    var anchoredResize = (AnchoredResize)transform;
 
-					width = anchoredResize.Width;
-					height = anchoredResize.Height;
-				}
-				else if (transform is Resize)
-				{
-					var resize = (Resize)transform;
+                    width = anchoredResize.Width;
+                    height = anchoredResize.Height;
+                }
+                else if (transform is Resize)
+                {
+                    var resize = (Resize)transform;
 
-					width = resize.Width;
-					height = resize.Height;
-				}
-				else if (transform is Crop)
-				{
-					var crop = (Crop)transform;
+                    width = resize.Width;
+                    height = resize.Height;
+                }
+                else if (transform is Crop)
+                {
+                    var crop = (Crop)transform;
 
-					this.width = crop.Width;
-					this.height = crop.Height;
-				}
-				else if (transform is Rotate)
-				{
-					var rotate = (Rotate)transform;
+                    this.width = crop.Width;
+                    this.height = crop.Height;
+                }
+                else if (transform is Rotate)
+                {
+                    var rotate = (Rotate)transform;
 
-					// Flip the height & width
-					if (rotate.Angle == 90 || rotate.Angle == 270)
-					{
-						var oldWidth = width;
-						var oldHeight = height;
+                    // Flip the height & width
+                    if (rotate.Angle == 90 || rotate.Angle == 270)
+                    {
+                        var oldWidth = width;
+                        var oldHeight = height;
 
-						width = oldHeight;
-						height = oldWidth;
-					}
-				}
+                        width = oldHeight;
+                        height = oldWidth;
+                    }
+                }
 
-				#endregion
+                #endregion
 
-				this.transforms.Add(transform);
-			}
+                this.transforms.Add(transform);
+            }
 
-			return this;
-		}
+            return this;
+        }
 
-		#region Builders
+        #region Builders
 
-		public MediaTransformation Rotate(int angle)
-		{
-			Transform(new Rotate(angle));
+        public MediaTransformation Rotate(int angle)
+        {
+            Transform(new Rotate(angle));
 
-			return this;
-		}
+            return this;
+        }
 
-		public MediaTransformation Crop(int x, int y, int width, int height)
-		{
-			Transform(new Crop(x, y, width, height));
+        public MediaTransformation Crop(Rectangle rect)
+        {
+            Transform(new Crop(rect));
 
-			return this;
-		}
+            return this;
+        }
 
-		public MediaTransformation Resize(int width, int height)
-		{
-			Transform(new Resize(width, height));
+        public MediaTransformation Crop(int x, int y, int width, int height)
+        {
+            Transform(new Crop(x, y, width, height));
 
-			return this;
-		}
+            return this;
+        }
 
-		public MediaTransformation ApplyFilter(string name, int value)
-		{
-			Transform(new ApplyFilter(name, value.ToString()));
+        public MediaTransformation Resize(int width, int height)
+        {
+            Transform(new Resize(width, height));
 
-			return this;
-		}
+            return this;
+        }
 
-		public MediaTransformation ApplyFilter(string name, string value)
-		{
-			Transform(new ApplyFilter(name, value));
+        public MediaTransformation ApplyFilter(string name, int value)
+        {
+            Transform(new ApplyFilter(name, value.ToString()));
 
-			return this;
-		}
+            return this;
+        }
 
-		#endregion
+        public MediaTransformation ApplyFilter(string name, string value)
+        {
+            Transform(new ApplyFilter(name, value));
 
-		#region Transform Helpers
+            return this;
+        }
 
-		[IgnoreDataMember]
-		public bool HasTransforms => transforms.Count > 0;
+        #endregion
 
-		#endregion
+        #region Transform Helpers
 
-		#region Helpers
+        [IgnoreDataMember]
+        public bool HasTransforms => transforms.Count > 0;
 
-		public static MediaTransformation ParsePath(string path)
-		{
-			// 100/transform/transform.format
+        #endregion
 
-			var lastDotIndex = path.LastIndexOf('.');
-			var format = (lastDotIndex > 0) ? path.Substring(lastDotIndex + 1): null;
+        #region Helpers
 
-			if (lastDotIndex > 0)
-			{
-				path = path.Substring(0, lastDotIndex);
-			}
+        public static MediaTransformation ParsePath(string path)
+        {
+            // 100/transform/transform.format
 
-			var parts = path.TrimStart('/').Split('/');
+            var lastDotIndex = path.LastIndexOf('.');
+            var format = (lastDotIndex > 0) ? path.Substring(lastDotIndex + 1) : null;
 
-			int i = 1;
+            if (lastDotIndex > 0)
+            {
+                path = path.Substring(0, lastDotIndex);
+            }
 
-			var id = 0;
-			var transforms = new List<ITransform>();
+            var parts = path.TrimStart('/').Split('/');
 
-			foreach (var part in parts)
-			{
-				if (i == 1) 
-				{
-					id = Int32.Parse(part);
-				}
-				else
-				{
-					ITransform transform;
+            int i = 1;
 
-					var transformName = part.Split('(', ':')[0];
+            var id = 0;
+            var transforms = new List<ITransform>();
 
-					if (Char.IsDigit(part[0]))
-					{
-						if (part.Contains("-"))
-						{
-							transform = Carbon.Media.AnchoredResize.Parse(part);
-						}
-						else
-						{
-							transform = Carbon.Media.Resize.Parse(part);
-						}
-					}
-					else
-					{
+            foreach (var part in parts)
+            {
+                if (i == 1)
+                {
+                    id = int.Parse(part);
+                }
+                else
+                {
+                    ITransform transform;
 
-						switch (transformName)
-						{
-							case "crop"   : transform = Carbon.Media.Crop.Parse(part);        break;
-							case "rotate" : transform = Carbon.Media.Rotate.Parse(part);      break;
-							case "flip"   : transform = Carbon.Media.Flip.Parse(part);        break;
-							default       : transform = Carbon.Media.ApplyFilter.Parse(part); break;
-						}
-					}
+                    var transformName = part.Split('(', ':')[0];
 
-					transforms.Add(transform);
-				}
+                    if (char.IsDigit(part[0]))
+                    {
+                        if (part.Contains("-"))
+                        {
+                            transform = AnchoredResize.Parse(part);
+                        }
+                        else
+                        {
+                            transform = Media.Resize.Parse(part);
+                        }
+                    }
+                    else
+                    {
 
-				i++;
-			}
+                        switch (transformName)
+                        {
+                            case "crop": transform = Carbon.Media.Crop.Parse(part); break;
+                            case "rotate": transform = Carbon.Media.Rotate.Parse(part); break;
+                            case "flip": transform = Carbon.Media.Flip.Parse(part); break;
+                            default: transform = Carbon.Media.ApplyFilter.Parse(part); break;
+                        }
+                    }
 
-			var rendition = new MediaTransformation(new MediaMock { Id = id }, format);
+                    transforms.Add(transform);
+                }
 
-			foreach (var t in transforms)
-			{
-				rendition.Transform(t);
-			}
+                i++;
+            }
 
-			return rendition;
-		}
+            var rendition = new MediaTransformation(new MediaMock { Id = id }, format);
 
-		public string GetPath()
-		{
-			return source.Id + "/" + GetFullName();
-		}
+            foreach (var t in transforms)
+            {
+                rendition.Transform(t);
+            }
 
-		public string GetFullName()
-		{
-			/* 
+            return rendition;
+        }
+
+        public string GetPath()
+        {
+            return source.Id + "/" + GetFullName();
+        }
+
+        public string GetFullName()
+        {
+            /* 
 			10x10.gif			
 			crop:0-0_10x10.jpeg		// A cropped image rendention (x=0,y=0,width=100,height=100)
 			10x10-c/rotate(90).png	// A 10x10 image (anchored at it's center when resized) rotated 90 degrees
@@ -238,36 +247,36 @@
 			640x480.mp4
 			*/
 
-			var sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-			foreach (var transform in transforms)
-			{
-				if(sb.Length != 0)
-				{
-					sb.Append("/");
-				}
+            foreach (var transform in transforms)
+            {
+                if (sb.Length != 0)
+                {
+                    sb.Append("/");
+                }
 
-				sb.Append(transform.ToString());
-			}
+                sb.Append(transform.ToString());
+            }
 
-			sb.Append(".");
+            sb.Append(".");
 
-			sb.Append(format);
+            sb.Append(format);
 
-			return sb.ToString();
-		}
+            return sb.ToString();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 
-	internal class MediaMock : IMediaInfo
-	{
-		public int Id { get; set; }
+    internal class MediaMock : IMediaInfo
+    {
+        public int Id { get; set; }
 
-		public string Format => null;
+        public string Format => null;
 
-		public int Width => 0;
+        public int Width => 0;
 
-		public int Height => 0;
-	}
+        public int Height => 0;
+    }
 }

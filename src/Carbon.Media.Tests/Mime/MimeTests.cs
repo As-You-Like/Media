@@ -11,25 +11,31 @@
 		public void MimesFromNames()
 		{
 			// Images
-			Assert.Equal("png",	Mime.Parse("image/png").Format);
+			Assert.Equal("png",		Mime.Parse("image/png").Format);
 			Assert.Equal("tiff",	Mime.Parse("image/tiff").Format);
-			Assert.Equal("gif",	Mime.Parse("image/gif").Format);
+			Assert.Equal("gif",		Mime.Parse("image/gif").Format);
 			Assert.Equal("jpeg",	Mime.Parse("image/jpeg").Format);
-			Assert.Equal("jxr",	Mime.Parse("image/vnd.ms-photo").Format);
-			Assert.Equal("svg",	Mime.Parse("image/svg+xml").Format);
+			Assert.Equal("jxr",		Mime.Parse("image/vnd.ms-photo").Format);
+			Assert.Equal("svg",		Mime.Parse("image/svg+xml").Format);
 
 			// Audio
-			Assert.Equal("flac", Mime.Parse("audio/flac").Format);
-			Assert.Equal("oga",  Mime.Parse("audio/ogg").Format);
-			Assert.Equal("opus", Mime.Parse("audio/opus").Format);
+			Assert.Equal("flac",	Mime.Parse("audio/flac").Format);
+			Assert.Equal("oga",		Mime.Parse("audio/ogg").Format);
+			Assert.Equal("opus",	Mime.Parse("audio/opus").Format);
 
 			// Videos
-			Assert.Equal("wmv",	Mime.Parse("video/x-ms-wmv").Format);
-			Assert.Equal("mp4",	Mime.Parse("video/mp4").Format);
-			Assert.Equal("mov",	Mime.Parse("video/quicktime").Format);
-			Assert.Equal("ogv",  Mime.Parse("video/ogg").Format);
+			Assert.Equal("wmv",		Mime.Parse("video/x-ms-wmv").Format);
+			Assert.Equal("mp4",		Mime.Parse("video/mp4").Format);
+			Assert.Equal("mov",		Mime.Parse("video/quicktime").Format);
+			Assert.Equal("ogv",		Mime.Parse("video/ogg").Format);
 
-			Assert.Equal("zip",	Mime.Parse("application/zip").Format);
+			// Application
+			Assert.Equal("js",		Mime.Parse("application/javascript").Format);
+			Assert.Equal("json",	Mime.Parse("application/json").Format);
+			Assert.Equal("zip",		Mime.Parse("application/zip").Format);
+
+			// Text
+			Assert.Equal("css",		Mime.Parse("text/css").Format);
 		}
 
 		[Fact]
@@ -42,8 +48,10 @@
 		public void MimeFromFileFormatTests()
 		{
 			// Applications
-			Assert.Equal("application/x-shockwave-flash", Mime.FromFormat("swf").ToString());
-			Assert.Equal("application/zip", Mime.FromFormat("zip").ToString());
+			Assert.Equal("application/javascript",			Mime.FromFormat("js").ToString());
+			Assert.Equal("application/x-shockwave-flash",	Mime.FromFormat("swf").ToString());
+			Assert.Equal("application/zip",					Mime.FromFormat("zip").ToString());
+
 
 			// Audio
 			Assert.Equal("audio/flac", Mime.FromFormat("flac").ToString());
@@ -99,8 +107,14 @@
 		[Fact]
 		public void StaticMimeMappingTests()
 		{
-			Assert.Equal("application/javascript", Mime.Js.ToString());
-			Assert.Equal("application/x-shockwave-flash", Mime.Swf.ToString());
+			// Applications
+			Assert.Equal("application/json",				Mime.Json.ToString());
+			Assert.Equal("application/javascript",			Mime.Js.ToString());
+			Assert.Equal("application/x-shockwave-flash",	Mime.Swf.ToString());
+
+			// Text
+			Assert.Equal("text/css",						Mime.Css.ToString());
+
 		}
 	}
 }

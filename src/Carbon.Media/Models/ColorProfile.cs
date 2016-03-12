@@ -1,92 +1,92 @@
-﻿namespace Carbon.Media
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Security.Cryptography;
+
+namespace Carbon.Media
 {
-	using System;
-	using System.IO;
-	using System.Runtime.Serialization;
-	using System.Security.Cryptography;
+    public class ColorProfile
+    {
+        private readonly byte[] data;
 
-	public class ColorProfile
-	{
-		private readonly byte[] data;
+        private readonly ColorProfileType type;
+        private readonly Version version;
+        private readonly ColorSpace colorSpace;
+        private readonly DeviceType deviceClass;
 
-		private readonly ColorProfileType type;
-		private readonly Version version;
-		private readonly ColorSpace colorSpace;
-		private readonly DeviceType deviceClass;
+        public ColorProfile(byte[] data)
+        {
+            this.data = data;
 
-		public ColorProfile(byte[] data)
-		{
-			this.data = data;
+            try
+            {
+                using (var ms = new MemoryStream(data))
+                {
+                    using (var parser = new ColorProfileParser(ms))
+                    {
+                        var header = parser.ReadHeader();
 
-			try
-			{
-				using (var ms = new MemoryStream(data))
-				{
-					using (var parser = new ColorProfileParser(ms))
-					{
-						var header = parser.ReadHeader();
+                        this.type = ColorProfileType.ICC;
+                        this.version = header.ProfileVersionNumber;
+                        this.colorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
 
-						this.type = ColorProfileType.ICC;
-						this.version = header.ProfileVersionNumber;
-						this.colorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
+                        switch (header.ProfileDeviceClass)
+                        {
+                            case "scnr": this.deviceClass = DeviceType.Scanner; break;
+                            case "mntr": this.deviceClass = DeviceType.Monitor; break;
+                            case "prtr": this.deviceClass = DeviceType.Printer; break;
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
 
-						switch (header.ProfileDeviceClass)
-						{
-							case "scnr": this.deviceClass = DeviceType.Scanner; break;
-							case "mntr": this.deviceClass = DeviceType.Monitor; break;
-							case "prtr": this.deviceClass = DeviceType.Printer; break;
-						}
-					}
-				}
-			}
-			catch { }
-		}
+        [DataMember(Name = "type")]
+        public ColorProfileType Type => type;
 
-		[DataMember(Name = "type")]
-		public ColorProfileType Type => type;
+        [DataMember(Name = "version")]
+        public Version Version => version;
 
-		[DataMember(Name = "version")]
-		public Version Version => version;
+        [DataMember(Name = "colorSpace")]
+        public ColorSpace ColorSpace => colorSpace;
 
-		[DataMember(Name = "colorSpace")]
-		public ColorSpace ColorSpace => colorSpace;
+        [DataMember(Name = "targetDevice")]
+        public DeviceType TargetDevice => deviceClass;
 
-		[DataMember(Name = "targetDevice")]
-		public DeviceType TargetDevice => deviceClass;
+        [DataMember(Name = "data")]
+        public byte[] Data => data;
 
-		[DataMember(Name = "data")]
-		public byte[] Data => data;
+        [DataMember(Name = "key")]
+        public string Key
+        {
+            get
+            {
+                // A SHA1 Hash of the ColorProfile Data in Hex Format
+                if (data == null) return null;
 
-		[DataMember(Name = "key")]
-		public string Key
-		{
-			get
-			{
-				// A SHA1 Hash of the ColorProfile Data in Hex Format
-				if (data == null) return null;
+                using (var sha = SHA1.Create())
+                {
+                    return BitConverter.ToString(sha.ComputeHash(Data)).Replace("-", string.Empty);
+                }
+            }
+        }
+    }
 
-				using (var sha = SHA1.Create())
-				{
-					return BitConverter.ToString(sha.ComputeHash(Data)).Replace("-", string.Empty);
-				}
-			}
-		}
-	}
+    public enum DeviceType
+    {
+        Unknown = 0,
+        Scanner = 1,
+        Monitor = 2,
+        Printer = 3
+    }
 
-	public enum DeviceType
-	{
-		Unknown = 0,
-		Scanner = 1,
-		Monitor = 2,
-		Printer = 3
-	}
-
-	public enum ColorProfileType
-	{
-		Unknown = 0,
-		ICC = 1,
-		ICM = 2
-	}
+    public enum ColorProfileType
+    {
+        Unknown = 0,
+        ICC = 1,
+        ICM = 2
+    }
 }
 
 /*

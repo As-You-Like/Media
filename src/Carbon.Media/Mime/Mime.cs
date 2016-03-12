@@ -1,8 +1,8 @@
-﻿namespace Carbon.Media
-{
-	using System;
-	using System.IO;
+﻿using System;
+using System.IO;
 
+namespace Carbon.Media
+{
 	public class Mime
 	{
 		private readonly string name;
@@ -16,14 +16,12 @@
 		{
 			#region Preconditions
 
-			if (name == null)
-				throw new ArgumentNullException("name");
+			if (name == null) throw new ArgumentNullException(nameof(name));
 
-			if (formats == null) 
-				throw new ArgumentNullException("formats");
+			if (formats == null) throw new ArgumentNullException(nameof(formats));
 
 			if (formats.Length == 0) 
-				throw new ArgumentException("Must not be empty", paramName: "formats");
+				throw new ArgumentException("Must not be empty", paramName: nameof(formats));
 
 			#endregion
 
@@ -32,30 +30,15 @@
 			this.type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
 		}
 
-		public string Name
-		{
-			get { return name; }
-		}
+        public string Name => name;
 
-		public MediaType Type
-		{
-			get { return type; }
-		}
+        public MediaType Type => type;
 
-		public string Format
-		{
-			get { return formats[0]; }
-		}
+        public string Format => formats[0];
 
-		public string[] Formats
-		{
-			get { return formats; }
-		}
+        public string[] Formats => formats;
 
-		public override string ToString()
-		{
-			return name;
-		}
+        public override string ToString() => name;
 
 		#region Equality
 
@@ -103,13 +86,13 @@
 			}
 			else 
 			{
-				if(MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
+				if (MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
 				{
 					return mime;
 				}
 			}
 
-			throw new Exception(string.Format("No mime found for '{0}'.", name));
+			throw new Exception($"No mime found for '{name}'.");
 		}
 
 		public static Mime FromPath(string path)

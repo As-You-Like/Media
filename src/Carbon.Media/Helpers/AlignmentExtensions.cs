@@ -1,12 +1,13 @@
-﻿namespace Carbon.Media
-{
-	using System;
+﻿using System;
 
+namespace Carbon.Media
+{
 	public static class AlignmentExtensions
 	{
 		public static string ToAbbreviation(this Alignment alignment)
 		{
-			switch (alignment) {
+			switch (alignment)
+            {
 				case Alignment.Bottom		: return "b";
 				case Alignment.BottomLeft	: return "bl";
 				case Alignment.BottomRight	: return "br";
@@ -17,7 +18,7 @@
 				case Alignment.TopLeft		: return "tl";
 				case Alignment.TopRight		: return "tr";
 
-				default: throw new ArgumentException(string.Format("Invalid alignment. Was '{0}'", alignment));
+				default: throw new ArgumentException($"Invalid alignment. Was '{alignment}'");
 			}
 		}
 	}

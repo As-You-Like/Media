@@ -1,7 +1,7 @@
-﻿namespace Carbon.Media
-{
-	using System;
+﻿using System;
 
+namespace Carbon.Media
+{
 	public static class OrientationHelper
 	{
 		public static Size GetOrientatedSize(IMediaInfo media, MediaOrientation orientation)
