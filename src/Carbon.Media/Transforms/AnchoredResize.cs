@@ -4,10 +4,6 @@ namespace Carbon.Media
 {
     public class AnchoredResize : ITransform
     {
-        private readonly int width;
-        private readonly int height;
-        private readonly Alignment anchor;
-
         public AnchoredResize(Size size, Alignment anchor)
             : this(size.Width, size.Height, anchor)
         { }
@@ -24,18 +20,18 @@ namespace Carbon.Media
 
             #endregion
 
-            this.width = width;
-            this.height = height;
-            this.anchor = anchor;
+            Width = width;
+            Height = height;
+            Anchor = anchor;
         }
 
-        public int Width => width;
+        public int Width { get; }
 
-        public int Height => height;
+        public int Height { get; }
 
-        public Size Size => new Size(width, height);
+        public Size Size => new Size(Width, Height);
 
-        public Alignment Anchor => anchor;
+        public Alignment Anchor { get; }
 
         public override string ToString()
         {
@@ -46,9 +42,9 @@ namespace Carbon.Media
             // fit: cover,contain,crop,pad
 
             return string.Format("{0}x{1}-{2}",
-                /*0*/ width,
-                /*1*/ height,
-                /*2*/ anchor.ToAbbreviation()
+                /*0*/ Width,
+                /*1*/ Height,
+                /*2*/ Anchor.ToAbbreviation()
             );
         }
 

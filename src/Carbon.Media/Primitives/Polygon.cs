@@ -3,17 +3,17 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
 
+// TODO: Move to Carbon.Geometry
+
 namespace Carbon.Geometry
 {
     using Media;
 
     public struct Polygon
     {
-        private readonly Vector2f[] _vertices;
-
         public Polygon(Vector2f[] vertices)
         {
-            this._vertices = vertices;
+            Vertices = vertices;
         }
 
         public Polygon ToPercentages(Vector2f max)
@@ -22,7 +22,7 @@ namespace Carbon.Geometry
 
             var i = 0;
 
-            foreach (var vector in _vertices)
+            foreach (var vector in Vertices)
             {
                 scaled[i] = Vector2f.Create(vector.X / max.X, vector.Y / max.Y);
 
@@ -40,7 +40,7 @@ namespace Carbon.Geometry
 
             var i = 0;
 
-            foreach (var vector in _vertices)
+            foreach (var vector in Vertices)
             {
                 scaled[i] = Vector2f.Create(vector.X * bounds.X, vector.Y * bounds.Y);
 
@@ -50,7 +50,7 @@ namespace Carbon.Geometry
             return new Polygon(scaled);
         }
 
-        public Vector2f[] Vertices => _vertices;
+        public Vector2f[] Vertices { get; }
 
         public static Polygon FromData(byte[] data)
         {
@@ -77,14 +77,14 @@ namespace Carbon.Geometry
                 var centerX = 0.0f;
                 var centerY = 0.0f;
 
-                for (int i = 0, j = _vertices.Length - 1; i < _vertices.Length; j = i++)
+                for (int i = 0, j = Vertices.Length - 1; i < Vertices.Length; j = i++)
                 {
-                    var temp = _vertices[i].X * _vertices[j].Y - _vertices[j].X * _vertices[i].Y;
+                    var temp = Vertices[i].X * Vertices[j].Y - Vertices[j].X * Vertices[i].Y;
 
                     accumulatedArea += temp;
 
-                    centerX += (_vertices[i].X + _vertices[j].X) * temp;
-                    centerY += (_vertices[i].Y + _vertices[j].Y) * temp;
+                    centerX += (Vertices[i].X + Vertices[j].X) * temp;
+                    centerY += (Vertices[i].Y + Vertices[j].Y) * temp;
                 }
 
                 if (accumulatedArea == 0f)
@@ -111,7 +111,7 @@ namespace Carbon.Geometry
                       minY = -1f,
                       maxY = -1f;
 
-                foreach (var vertex in _vertices)
+                foreach (var vertex in Vertices)
                 {
                     if (minX == -1f || vertex.X < minX) minX = vertex.X;
                     if (minY == -1f || vertex.Y < minY) minY = vertex.Y;
@@ -143,6 +143,7 @@ namespace Carbon.Geometry
             => string.Join(" ", Vertices.Select(v => v.ToString()));
     }
 
+    // TODO: Use System.Numerics
     public struct Vector2f
     {
         [Column("x")]
@@ -160,6 +161,5 @@ namespace Carbon.Geometry
             => new Vector2f { X = x, Y = y };
 
         public override string ToString() => X + "," + Y;
-
     }
 }

@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    using Helpers;
     using Geometry;
 
     public sealed class MediaRenditionInfo : ISize
@@ -11,8 +10,6 @@ namespace Carbon.Media
         public static string Host = "";
         public static ISigner Signer = null;
 
-        private readonly int width;
-        private readonly int height;
         private readonly string path;
 
         public MediaRenditionInfo(MediaTransformation transformation)
@@ -25,17 +22,17 @@ namespace Carbon.Media
 
         public MediaRenditionInfo(int width, int height, string path)
         {
-            this.width = width;
-            this.height = height;
+            Width = width;
+            Height = height;
             this.path = path;
         }
 
-        public int Width => width;
+        public int Width { get; }
 
-        public int Height => height;
+        public int Height { get; }
 
         [IgnoreDataMember]
-        public bool IsEmpty => width == 0 || height == 0;
+        public bool IsEmpty => Width == 0 || Height == 0;
 
         public string TransformString => string.Join("/", path.Split('/').Skip(1));
 
@@ -49,7 +46,7 @@ namespace Carbon.Media
 
             var newPath = $"{spec}/bg({hex}).{format}";
 
-            return new MediaRenditionInfo(width, height, newPath);
+            return new MediaRenditionInfo(Width, Height, newPath);
         }
 
         public MediaRenditionInfo Resample(string name)
@@ -60,7 +57,7 @@ namespace Carbon.Media
 
             var newPath = $"{spec}/resample({name}).{format}";
 
-            return new MediaRenditionInfo(width, height, newPath);
+            return new MediaRenditionInfo(Width, Height, newPath);
         }
 
         public MediaRenditionInfo Blur(int radius)
@@ -71,7 +68,7 @@ namespace Carbon.Media
 
             var newPath = $"{spec}/blur({radius}).{format}";
 
-            return new MediaRenditionInfo(width, height, newPath);
+            return new MediaRenditionInfo(Width, Height, newPath);
         }
 
         public MediaRenditionInfo Crop(Rectangle rect)
@@ -89,7 +86,7 @@ namespace Carbon.Media
 
             var newPath = path.Substring(0, dotIndex) + "." + format;
 
-            return new MediaRenditionInfo(width, height, newPath);
+            return new MediaRenditionInfo(Width, Height, newPath);
         }
 
         public MediaRenditionInfo Scale(float scale)

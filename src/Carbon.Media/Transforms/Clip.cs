@@ -1,12 +1,9 @@
-﻿namespace Carbon.Media
-{
-    using System;
+﻿using System;
 
+namespace Carbon.Media
+{
     public class Clip : ITransform
     {
-        private readonly TimeSpan start;
-        private readonly TimeSpan end;
-
         public Clip(TimeSpan start, TimeSpan end)
         {
             #region Preconditions
@@ -16,16 +13,16 @@
 
             #endregion
 
-            this.start = start;
-            this.end = end;
+            Start = start;
+            End = end;
         }
 
-        public TimeSpan Start => start;
+        public TimeSpan Start { get; }
 
-        public TimeSpan End => end;
+        public TimeSpan End { get; }
 
         public override string ToString()
-            => $"clip:{start.TotalSeconds}-{end.TotalSeconds}";
+            => $"clip:{Start.TotalSeconds}-{End.TotalSeconds}";
 
         // clip:0-30
 

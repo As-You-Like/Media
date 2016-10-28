@@ -1,0 +1,39 @@
+﻿{
+  "version": "1.0.0",
+
+  "authors": [ "iamcarbon" ],
+
+  "dependencies": {
+
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.ComponentModel.Annotations": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
+    },
+    "net461": {
+      "frameworkAssemblies": {
+        "System.ComponentModel.DataAnnotations": "4.0.0.0",
+        "System.Runtime.Serialization": "4.0.0.0"
+      }
+    }
+  },
+
+
+  "packOptions": {
+    "summary": "Multimedia abstractions",
+    "owners": [ "Jason Nelson" ],
+    "licenseUrl": "https://opensource.org/licenses/MIT",
+    "requireLicenseAcceptance": false,
+    "tags": [ "colorprofile", "media", "mimes" ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/carbon/Media"
+    }
+  }
+}

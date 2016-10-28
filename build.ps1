@@ -1,0 +1,1 @@
+dotnet pack ./src/Carbon.Media -o ./build/Carbon.Media/

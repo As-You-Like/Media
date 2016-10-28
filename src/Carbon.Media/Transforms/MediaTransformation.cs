@@ -9,8 +9,6 @@ namespace Carbon.Media
 
     public class MediaTransformation : ISize
     {
-        protected readonly IMediaSource source;
-        protected readonly string format;
         protected readonly List<ITransform> transforms = new List<ITransform>();
 
         private int width;
@@ -25,8 +23,8 @@ namespace Carbon.Media
 
             #endregion
 
-            this.source = source;
-            this.format = format;
+            Source = source;
+            Format = format;
 
             this.width = source.Width;
             this.height = source.Height;
@@ -38,9 +36,9 @@ namespace Carbon.Media
             Transform(orientation.GetTransforms());
         }
 
-        public IMediaSource Source => source;
+        public IMediaSource Source { get; }
 
-        public string Format => format;
+        public string Format { get; }
 
         public int Width => width;
 
@@ -122,7 +120,6 @@ namespace Carbon.Media
 
             return this;
         }
-
 
         public MediaTransformation Clip(TimeSpan start, TimeSpan end)
         {
@@ -250,9 +247,7 @@ namespace Carbon.Media
         }
 
         public string GetPath()
-        {
-            return source.Key + "/" + GetFullName();
-        }
+            => Source.Key + "/" + GetFullName();
 
         public string GetFullName()
         {
@@ -278,7 +273,7 @@ namespace Carbon.Media
 
             sb.Append(".");
 
-            sb.Append(format);
+            sb.Append(Format);
 
             return sb.ToString();
         }

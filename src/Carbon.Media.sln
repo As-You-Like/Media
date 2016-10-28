@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Media", "Carbon.Media\Carbon.Media.csproj", "{C7B6747D-9269-4C89-855B-32268EEEC1AF}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Carbon.Media", "Carbon.Media\Carbon.Media.xproj", "{2E62E005-7D9F-4C0E-810B-59F0F5F40295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.csproj", "{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.xproj", "{5C50330F-45A2-4380-BE20-1BE589BCD903}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7B6747D-9269-4C89-855B-32268EEEC1AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{860AC9B5-A6B2-4C6B-807D-178D144E5A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E62E005-7D9F-4C0E-810B-59F0F5F40295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E62E005-7D9F-4C0E-810B-59F0F5F40295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E62E005-7D9F-4C0E-810B-59F0F5F40295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E62E005-7D9F-4C0E-810B-59F0F5F40295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C50330F-45A2-4380-BE20-1BE589BCD903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C50330F-45A2-4380-BE20-1BE589BCD903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C50330F-45A2-4380-BE20-1BE589BCD903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C50330F-45A2-4380-BE20-1BE589BCD903}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

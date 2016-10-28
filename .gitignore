@@ -9,3 +9,6 @@
 /src/Carbon.Media.v12.suo
 .vs
 src/packages
+/src/Carbon.Media/Carbon.Media.xproj.user
+project.lock.json
+/build

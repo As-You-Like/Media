@@ -5,7 +5,6 @@ namespace Carbon.Media
     public class H264Profile : MediaCodecProfile
     {
         private readonly string name;
-        private readonly H264ProfileType type;
 
         public H264Profile(string name, H264ProfileType type)
         {
@@ -16,10 +15,10 @@ namespace Carbon.Media
             #endregion
 
             this.name = name;
-            this.type = type;
+            Type = type;
         }
 
-        public H264ProfileType Type => type;
+        public H264ProfileType Type { get; }
 
         public override string ToString() => name;
 
@@ -38,10 +37,10 @@ namespace Carbon.Media
 
         #endregion
 
-        public static readonly H264Profile Baseline  = new H264Profile("avc1.42E01E", H264ProfileType.Baseline);
-        public static readonly H264Profile Main      = new H264Profile("avc1.4D401E", H264ProfileType.Main);
-        public static readonly H264Profile Extended  = new H264Profile("avc1.58A01E", H264ProfileType.Extended);
-        public static readonly H264Profile High      = new H264Profile("avc1.64001E", H264ProfileType.High);
+        public static readonly H264Profile Baseline = new H264Profile("avc1.42E01E", H264ProfileType.Baseline);
+        public static readonly H264Profile Main     = new H264Profile("avc1.4D401E", H264ProfileType.Main);
+        public static readonly H264Profile Extended = new H264Profile("avc1.58A01E", H264ProfileType.Extended);
+        public static readonly H264Profile High     = new H264Profile("avc1.64001E", H264ProfileType.High);
     }
 
     public enum H264ProfileType

@@ -3,18 +3,17 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 - 2016 Jason Nelson")]
-[assembly: AssemblyVersion("1.3.1")]
+[assembly: AssemblyVersion("1.0.0")]
 
 /*
- 1.1.0 (2015-01-01)
- -----------------------------------------------------
- Make Mime a Class
- Add ai, psd, and mpd formats
  
- 1.0.0 (2014-06-10)
+ 1.0.0 (2016-10-27)
  -----------------------------------------------------
  Remove System.Drawing dependecy
- 
+ Make Mime a Class
+ Add ai, psd, and mpd formats
+ dotnetcore support
+
  0.1.1 (2013-10-10)
  -----------------------------------------------------
  Calculate the size correctly when rotating

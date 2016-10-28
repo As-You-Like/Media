@@ -2,8 +2,6 @@
 {
     public class Rotate : ITransform
     {
-        private readonly int angle;
-
         public Rotate(int angle)
         {
             #region Preconditions
@@ -15,12 +13,12 @@
 
             #endregion
 
-            this.angle = angle;
+            Angle = angle;
         }
 
-        public int Angle => angle;
+        public int Angle { get; }
 
-        public override string ToString() => $"rotate({angle})";
+        public override string ToString() => $"rotate({Angle})";
 
         public static Rotate Parse(string key)
         {

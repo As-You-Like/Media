@@ -7,8 +7,8 @@
 
         public static Size Scale(this ISize size, float scale)
             => new Size(
-                width: (int)(size.Width * scale),
-                height: (int)(size.Height * scale)
+                width  : (int)(size.Width * scale),
+                height : (int)(size.Height * scale)
             );
 
         public static Rational ToRational(this ISize size)

@@ -6,8 +6,6 @@ namespace Carbon.Media
 
     public struct Crop : ITransform
     {
-        private readonly Rectangle rectangle;
-
         public Crop(Vector2f origin, Size size)
             : this(new Rectangle((int)origin.X, (int)origin.Y, size.Width, size.Height))
         { }
@@ -24,29 +22,29 @@ namespace Carbon.Media
 
             #endregion
 
-            this.rectangle = new Rectangle(x, y, width, height);
+            Rectangle = new Rectangle(x, y, width, height);
         }
 
         public Crop(Rectangle rectangle)
         {
-            this.rectangle = rectangle;
+            Rectangle = rectangle;
         }
 
-        public Rectangle Rectangle => rectangle;
+        public Rectangle Rectangle { get; }
 
-        public int Width => rectangle.Width;
+        public int Width => Rectangle.Width;
 
-        public int Height => rectangle.Height;
+        public int Height => Rectangle.Height;
 
         public override string ToString()
         {
             // crop:0-0_100x100
 
             return string.Format("crop:{0}-{1}_{2}x{3}",
-                /*0*/ rectangle.X,
-                /*1*/ rectangle.Y,
-                /*2*/ rectangle.Width,
-                /*3*/ rectangle.Height
+                /*0*/ Rectangle.X,
+                /*1*/ Rectangle.Y,
+                /*2*/ Rectangle.Width,
+                /*3*/ Rectangle.Height
             );
         }
 

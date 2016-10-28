@@ -5,9 +5,6 @@ namespace Carbon.Media
 {
     public class Resize : ITransform
     {
-        private readonly int height;
-        private readonly int width;
-
         public Resize(Size size)
             : this(size.Width, size.Height)
         { }
@@ -24,18 +21,18 @@ namespace Carbon.Media
 
             #endregion
 
-            this.width = width;
-            this.height = height;
+            Width = width;
+            Height = height;
         }
 
-        public int Height => height;
+        public int Height { get; }
 
-        public int Width => width;
+        public int Width { get; }
 
         [IgnoreDataMember]
-        public Size Size => new Size(width, height);
+        public Size Size => new Size(Width, Height);
 
-        public override string ToString() => width + "x" + height;
+        public override string ToString() => Width + "x" + Height;
 
         public static Resize Parse(string key)
         {
@@ -63,11 +60,6 @@ namespace Carbon.Media
 500x500+x:100+y:200 
 
 500x500(fit:crop anchor:center)
-
-HTTP HEADER SYNTAX
-
-compress;q=0.5, gzip;q=1.0
-text/html; charset=ISO-8859-4
  
 Image Magic : 
 -resize 64x64

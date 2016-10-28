@@ -3,209 +3,197 @@ using System.IO;
 
 namespace Carbon.Media
 {
-	public class Mime
-	{
-		private readonly string name;
-		private readonly MediaType type;
-		private readonly string[] formats;
+    public class Mime
+    {
+        internal Mime(string name, string format = null)
+            : this(name, new[] { format }) { }
 
-		internal Mime(string name, string format = null)
-			: this(name, new[] { format }) { }
+        internal Mime(string name, string[] formats)
+        {
+            #region Preconditions
 
-		internal Mime(string name, string[] formats)
-		{
-			#region Preconditions
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
 
-			if (name == null) throw new ArgumentNullException(nameof(name));
+            if (formats == null)
+                throw new ArgumentNullException(nameof(formats));
 
-			if (formats == null) throw new ArgumentNullException(nameof(formats));
+            if (formats.Length == 0)
+                throw new ArgumentException("Must not be empty", paramName: nameof(formats));
 
-			if (formats.Length == 0) 
-				throw new ArgumentException("Must not be empty", paramName: nameof(formats));
+            #endregion
 
-			#endregion
+            Name = name;
+            Formats = formats;
+            Type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
+        }
 
-			this.name = name;
-			this.formats = formats;			
-			this.type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
-		}
+        public string Name { get; }
 
-        public string Name => name;
+        public MediaType Type { get; }
 
-        public MediaType Type => type;
+        public string[] Formats { get; }
 
-        public string Format => formats[0];
+        public string Format => Formats[0];
+        
+        public override string ToString() => Name;
 
-        public string[] Formats => formats;
+        #region Equality
 
-        public override string ToString() => name;
+        public override int GetHashCode()
+            => Name.GetHashCode();
 
-		#region Equality
+        public override bool Equals(object obj)
+            => (obj as Mime)?.Name == Name;
 
-		public override int GetHashCode()
-		{
-			return name.GetHashCode();
-		}
+        #endregion
 
-		public override bool Equals(object obj)
-		{
-			if (obj == null) return false;
+        #region Casts
 
-			return this.name == ((Mime)obj).name;
-		}
+        public static implicit operator string(Mime mime)
+            => mime.Name;
 
-		#endregion
+        #endregion
 
-		#region Casts
+        #region Static Constructors
 
-		public static implicit operator string(Mime mime)
-		{
-			return mime.Name;
-		}
+        public static Mime Parse(string name)
+        {
+            #region Preconditions
 
-		#endregion
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
-		#region Static Constructors
+            #endregion
 
-		public static Mime Parse(string name)
-		{
-			#region Preconditions
+            Mime mime;
 
-			if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name.Contains("/"))
+            {
+                if (MimeHelper.NameToMimeMap.TryGetValue(name, out mime))
+                {
+                    return mime;
+                }
+            }
+            else
+            {
+                if (MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
+                {
+                    return mime;
+                }
+            }
 
-			#endregion
+            throw new Exception($"No mime found for '{name}'.");
+        }
 
-			Mime mime;
+        public static Mime FromPath(string path)
+            => FromExtension(Path.GetExtension(path));
 
-			if (name.Contains("/"))
-			{
-				if (MimeHelper.NameToMimeMap.TryGetValue(name, out mime))
-				{
-					return mime;
-				}
-			}
-			else 
-			{
-				if (MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
-				{
-					return mime;
-				}
-			}
+        public static Mime FromExtension(string extension)
+        {
+            #region Preconditions
 
-			throw new Exception($"No mime found for '{name}'.");
-		}
+            if (extension == null) throw new ArgumentNullException("extension");
 
-		public static Mime FromPath(string path)
-		{
-			return FromExtension(Path.GetExtension(path));
-		}
+            #endregion
 
-		public static Mime FromExtension(string extension)
-		{
-			#region Preconditions
+            return FromFormat(extension.TrimStart('.'));
+        }
 
-			if (extension == null) throw new ArgumentNullException("extension");
+        public static Mime FromFormat(string format)
+        {
+            #region Preconditions
 
-			#endregion
+            if (format == null) throw new ArgumentNullException(nameof(format));
 
-			return FromFormat(extension.TrimStart('.'));
-		}
+            #endregion
 
-		public static Mime FromFormat(string format)
-		{
-			#region Preconditions
+            Mime mime;
 
-			if (format == null) throw new ArgumentNullException(nameof(format));
+            if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out mime))
+            {
+                return mime;
+            }
 
-			#endregion
+            throw new Exception($"No mime match for '{format}'.");
+        }
 
-			Mime mime;
+        #endregion
 
-			if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out mime))
-			{
-				return mime;
-			}
+        // Binary Blob
+        public static readonly Mime Blob = new Mime("application/octet-stream", "blob");
 
-			throw new Exception(string.Format("No mime match for '{0}'.", format));
-		}
+        // Applications
+        public static readonly Mime Ai = new Mime("application/illustrator", "ai");
+        public static readonly Mime Atom = new Mime("application/atom+xml", "atom");
+        public static readonly Mime Doc = new Mime("application/msword", "doc");
+        public static readonly Mime Js = new Mime("application/javascript", "js");
+        public static readonly Mime Json = new Mime("application/json", "json"); // http://tools.ietf.org/html/rfc4627
+        public static readonly Mime M3u8 = new Mime("application/x-mpegURL", "m3u8");
+        public static readonly Mime Mpd = new Mime("application/dash+xml", "mpd");
+        public static readonly Mime Pdf = new Mime("application/pdf", "pdf");
+        public static readonly Mime Swf = new Mime("application/x-shockwave-flash", "swf");
+        public static readonly Mime Xap = new Mime("application/x-silverlight-app", "xap");
+        public static readonly Mime Zip = new Mime("application/zip", "zip");
 
-		#endregion
+        // Applications - Fonts
+        public static readonly Mime Eot = new Mime("application/vnd.ms-fontobject", "eot");
+        public static readonly Mime Ttf = new Mime("application/x-font-ttf", "ttf");
+        public static readonly Mime Woff = new Mime("application/font-woff", "woff");
 
-		// Binary Blob
-		public static readonly Mime Blob	= new Mime("application/octet-stream",		"blob");
-
-		// Applications
-		public static readonly Mime Ai		= new Mime("application/illustrator",		"ai");
-		public static readonly Mime Atom	= new Mime("application/atom+xml",			"atom");
-		public static readonly Mime Doc		= new Mime("application/msword",			"doc");
-		public static readonly Mime Js		= new Mime("application/javascript",		"js");
-		public static readonly Mime Json	= new Mime("application/json",				"json"); // http://tools.ietf.org/html/rfc4627
-		public static readonly Mime M3u8	= new Mime("application/x-mpegURL",			"m3u8");
-		public static readonly Mime Mpd		= new Mime("application/dash+xml",			"mpd");
-		public static readonly Mime Pdf		= new Mime("application/pdf",				"pdf");
-		public static readonly Mime Swf		= new Mime("application/x-shockwave-flash", "swf");
-		public static readonly Mime Xap		= new Mime("application/x-silverlight-app", "xap");
-		public static readonly Mime Zip		= new Mime("application/zip",				"zip");
-
-		// Applications - Fonts
-		public static readonly Mime Eot		= new Mime("application/vnd.ms-fontobject", "eot");
-		public static readonly Mime Ttf		= new Mime("application/x-font-ttf",		"ttf");
-		public static readonly Mime Woff	= new Mime("application/font-woff",			"woff");
-
-		// Applications - Color PRofiles
-		public static readonly Mime Icc		= new Mime("application/vnd.iccprofile",	"icc");
+        // Applications - Color PRofiles
+        public static readonly Mime Icc = new Mime("application/vnd.iccprofile", "icc");
 
 
         // Applications - Archives
-        public static readonly Mime Tar           = new Mime("application/x-tar", "tar");
+        public static readonly Mime Tar = new Mime("application/x-tar", "tar");
         public static readonly Mime CompressedTar = new Mime("application/x-gzip", "tar.gz");
 
 
         // Audio
-        public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
-		public static readonly Mime Aif		= new Mime("audio/aiff",			"aif");
-		public static readonly Mime Flac	= new Mime("audio/flac",			"flac");
-		public static readonly Mime Mp3		= new Mime("audio/mpeg",			"mp3");
-		public static readonly Mime M4a		= new Mime("audio/mp4",				"m4a");
-		public static readonly Mime Oga		= new Mime("audio/ogg",				"oga");
-		public static readonly Mime Opus	= new Mime("audio/opus",			"opus");
-		public static readonly Mime Ra		= new Mime("audio/x-realaudio",		new[] { "ra", "ram" });
-		public static readonly Mime Wav		= new Mime("audio/wav",				"wav");
-		public static readonly Mime Wma		= new Mime("audio/x-ms-wma",		"wma");
+        public static readonly Mime Aac = new Mime("audio/mp4", "aac");
+        public static readonly Mime Aif = new Mime("audio/aiff", "aif");
+        public static readonly Mime Flac = new Mime("audio/flac", "flac");
+        public static readonly Mime Mp3 = new Mime("audio/mpeg", "mp3");
+        public static readonly Mime M4a = new Mime("audio/mp4", "m4a");
+        public static readonly Mime Oga = new Mime("audio/ogg", "oga");
+        public static readonly Mime Opus = new Mime("audio/opus", "opus");
+        public static readonly Mime Ra = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
+        public static readonly Mime Wav = new Mime("audio/wav", "wav");
+        public static readonly Mime Wma = new Mime("audio/x-ms-wma", "wma");
 
-		// Image
-		public static readonly Mime Bmp		= new Mime("image/bmp",				"bmp");
-		public static readonly Mime Gif		= new Mime("image/gif",				"gif");
-		public static readonly Mime Ico		= new Mime("image/x-icon",			"ico");	// [0]
-		public static readonly Mime Jp2		= new Mime("image/jp2",				new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" });	
-		public static readonly Mime Jpeg	= new Mime("image/jpeg",			new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" });
-		public static readonly Mime Jxr		= new Mime("image/jxr",				new[] { "jxr", "hdp", "wdp" });
-		public static readonly Mime Png		= new Mime("image/png",				"png");
-		public static readonly Mime Psd		= new Mime("image/psd",				"psd");
-		public static readonly Mime Svg		= new Mime("image/svg+xml",			"svg");
-		public static readonly Mime Tiff	= new Mime("image/tiff",			new[] { "tiff", "tif" });
-		public static readonly Mime WebP	= new Mime("image/webp",			"webp");
+        // Image
+        public static readonly Mime Bmp = new Mime("image/bmp", "bmp");
+        public static readonly Mime Gif = new Mime("image/gif", "gif");
+        public static readonly Mime Ico = new Mime("image/x-icon", "ico");  // [0]
+        public static readonly Mime Jp2 = new Mime("image/jp2", new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" });
+        public static readonly Mime Jpeg = new Mime("image/jpeg", new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" });
+        public static readonly Mime Jxr = new Mime("image/jxr", new[] { "jxr", "hdp", "wdp" });
+        public static readonly Mime Png = new Mime("image/png", "png");
+        public static readonly Mime Psd = new Mime("image/psd", "psd");
+        public static readonly Mime Svg = new Mime("image/svg+xml", "svg");
+        public static readonly Mime Tiff = new Mime("image/tiff", new[] { "tiff", "tif" });
+        public static readonly Mime WebP = new Mime("image/webp", "webp");
 
-		// Video
-		public static readonly Mime Avi		= new Mime("video/x-msvideo",	"avi");
-		public static readonly Mime F4v		= new Mime("video/mp4",			"mp4");
-		public static readonly Mime Flv		= new Mime("video/x-flv",		"flv");
-		public static readonly Mime Mov		= new Mime("video/quicktime",	"mov");
-		public static readonly Mime Mp4		= new Mime("video/mp4",			"mp4");
-		public static readonly Mime Mpeg	= new Mime("video/mpeg",		"mpeg");
-		public static readonly Mime Ogv		= new Mime("video/ogg",			new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334
-        public static readonly Mime Ts		= new Mime("video/MP2T",		"ts");
-		public static readonly Mime WebM	= new Mime("video/webm",		"webm");
-		public static readonly Mime Wmv		= new Mime("video/x-ms-wmv",	"wmv");
+        // Video
+        public static readonly Mime Avi = new Mime("video/x-msvideo", "avi");
+        public static readonly Mime F4v = new Mime("video/mp4", "mp4");
+        public static readonly Mime Flv = new Mime("video/x-flv", "flv");
+        public static readonly Mime Mov = new Mime("video/quicktime", "mov");
+        public static readonly Mime Mp4 = new Mime("video/mp4", "mp4");
+        public static readonly Mime Mpeg = new Mime("video/mpeg", "mpeg");
+        public static readonly Mime Ogv = new Mime("video/ogg", new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334
+        public static readonly Mime Ts = new Mime("video/MP2T", "ts");
+        public static readonly Mime WebM = new Mime("video/webm", "webm");
+        public static readonly Mime Wmv = new Mime("video/x-ms-wmv", "wmv");
 
-		// Text
-		public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
-		public static readonly Mime Css		 = new Mime("text/css",				"css");
-		public static readonly Mime Csv		 = new Mime("text/csv",				"csv");
-		public static readonly Mime Html	 = new Mime("text/html",			"html");
-		public static readonly Mime Txt		 = new Mime("text/plain",			"plain");
-		public static readonly Mime Xml		 = new Mime("text/xml",				"xml");
-	}
+        // Text
+        public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
+        public static readonly Mime Css = new Mime("text/css", "css");
+        public static readonly Mime Csv = new Mime("text/csv", "csv");
+        public static readonly Mime Html = new Mime("text/html", "html");
+        public static readonly Mime Txt = new Mime("text/plain", "plain");
+        public static readonly Mime Xml = new Mime("text/xml", "xml");
+    }
 }
 
 

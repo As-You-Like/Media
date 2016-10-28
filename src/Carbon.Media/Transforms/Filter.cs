@@ -2,20 +2,17 @@
 {
     public class ApplyFilter : ITransform
     {
-        private readonly string name;
-        private readonly string value;
-
         public ApplyFilter(string name, string value)
         {
-            this.name = name;
-            this.value = value;
+            Name = name;
+            Value = value;
         }
 
-        public string Name => name;
+        public string Name { get; }
 
-        public string Value => value;
+        public string Value { get; }
 
-        public override string ToString() => $"{name}({value})";
+        public override string ToString() => $"{Name}({Value})";
 
         public static ApplyFilter Parse(string key)
         {
