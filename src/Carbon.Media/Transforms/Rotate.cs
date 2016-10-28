@@ -20,7 +20,7 @@
 
         public int Angle => angle;
 
-        public override string ToString() => "rotate(" + angle + ")";
+        public override string ToString() => $"rotate({angle})";
 
         public static Rotate Parse(string key)
         {

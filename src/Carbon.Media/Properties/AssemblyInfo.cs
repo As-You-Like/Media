@@ -2,10 +2,8 @@
 
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
-[assembly: AssemblyCopyright("© 2012 - 2015 Jason Nelson")]
-[assembly: AssemblyVersion("1.1.0")]
-
-// TODO: Baseline & Progressive Encoding
+[assembly: AssemblyCopyright("© 2012 - 2016 Jason Nelson")]
+[assembly: AssemblyVersion("1.3.1")]
 
 /*
  1.1.0 (2015-01-01)
@@ -16,7 +14,6 @@
  1.0.0 (2014-06-10)
  -----------------------------------------------------
  Remove System.Drawing dependecy
- 
  
  0.1.1 (2013-10-10)
  -----------------------------------------------------

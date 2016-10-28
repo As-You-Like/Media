@@ -8,7 +8,7 @@
 		sRGB		= 1,	// The sRGB color space is based on the ITU-R BT.709 standard. It specifies a gamma of 2.2 and a white point of 6500 degrees K.
 		
 		/// <summary>
-		/// // scRGB is a wide color gamut RGB (Red Green Blue) color space created  by Microsoft 
+		/// scRGB is a wide color gamut RGB (Red Green Blue) color space created  by Microsoft 
 		/// and HP that uses the same color primaries and white/black points as the sRGB color space 
 		/// but allows coordinates below zero and greater than one. 
 		/// The full range is -0.5 through just less than +7.5.
@@ -53,7 +53,7 @@
 		YDbDr		= 93,	// *IM
 		YPbPr		= 94,	// *IM 
 		YUV			= 95,	// *IM
-		Yxy			= 96,	// ICC		Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. The coordinates are shown in the following formulas, used to convert XYZ into Yxy:
+		Yxy			= 96,	// ICC		Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. 
 		XYZ			= 97	// ICC		XYZ space allows colors to be expressed as a mixture of the three tristimulus values X, Y, and Z. The term tristimulus comes from the fact that color perception results from the retina of the eye responding to three types of stimuli. After experimentation, the CIE set up a hypothetical set of primaries, XYZ, that correspond to the way the eye’s retina behaves.
 	}
 

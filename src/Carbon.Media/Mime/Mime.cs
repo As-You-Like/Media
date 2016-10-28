@@ -139,7 +139,7 @@ namespace Carbon.Media
 		public static readonly Mime Atom	= new Mime("application/atom+xml",			"atom");
 		public static readonly Mime Doc		= new Mime("application/msword",			"doc");
 		public static readonly Mime Js		= new Mime("application/javascript",		"js");
-		public static readonly Mime Json	= new Mime("application/json",				"json");	 // http://tools.ietf.org/html/rfc4627
+		public static readonly Mime Json	= new Mime("application/json",				"json"); // http://tools.ietf.org/html/rfc4627
 		public static readonly Mime M3u8	= new Mime("application/x-mpegURL",			"m3u8");
 		public static readonly Mime Mpd		= new Mime("application/dash+xml",			"mpd");
 		public static readonly Mime Pdf		= new Mime("application/pdf",				"pdf");
@@ -155,8 +155,14 @@ namespace Carbon.Media
 		// Applications - Color PRofiles
 		public static readonly Mime Icc		= new Mime("application/vnd.iccprofile",	"icc");
 
-		// Audio
-		public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
+
+        // Applications - Archives
+        public static readonly Mime Tar           = new Mime("application/x-tar", "tar");
+        public static readonly Mime CompressedTar = new Mime("application/x-gzip", "tar.gz");
+
+
+        // Audio
+        public static readonly Mime Aac		= new Mime("audio/mp4",				"aac");
 		public static readonly Mime Aif		= new Mime("audio/aiff",			"aif");
 		public static readonly Mime Flac	= new Mime("audio/flac",			"flac");
 		public static readonly Mime Mp3		= new Mime("audio/mpeg",			"mp3");

@@ -19,8 +19,8 @@ namespace Carbon.Media
         BlackWhite = 10,   // Black and white pixel format which displays one bit of data per pixel as either black or white.
 
         // CMYK
-        Cmyk32 = 20,  // 32 bits per pixel (BPP) with each color channel (cyan, magenta, yellow, and black) allocated 8 bits per pixel (BPP).
-        Cmyk64 = 21,  // Future
+        Cmyk32      = 20,  // 32 bits per pixel (BPP) with each color channel (cyan, magenta, yellow, and black) allocated 8 bits per pixel (BPP).
+        Cmyk64      = 21,  // Future
         CmykAlpha40 = 22,  // Future
         CmykAlpha80 = 23,  // Future
 
@@ -111,7 +111,7 @@ namespace Carbon.Media
         {
             PixelFormatType format;
 
-            Enum.TryParse<PixelFormatType>(text, out format);
+            Enum.TryParse(text, out format);
 
             return format;
         }

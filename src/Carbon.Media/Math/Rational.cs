@@ -1,8 +1,9 @@
-﻿namespace Carbon.Math
-{
-    using System;
-    using static System.Math;
+﻿using System;
 
+using static System.Math;
+
+namespace Carbon.Media
+{
     public struct Rational : IFormattable
     {
         private long numerator;
@@ -57,9 +58,7 @@
         }
 
         public double ToDouble()
-        {
-            return ((double)this.numerator / (double)this.denominator);
-        }
+            => numerator / (double)denominator;
 
         public override string ToString()
         {
@@ -71,12 +70,8 @@
             return numerator + "∶" + denominator;
         }
 
-        /// <summary>
-        /// The function returns GCD of two numbers (used for reducing a Fraction)
-        /// </summary>
         private static long CalculateGcd(long a, long b)
         {
-            // Normalize the values
             a = Abs(a);
             b = Abs(b);
 
@@ -93,9 +88,6 @@
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return ToDouble().ToString(format);
-        }
+            => ToDouble().ToString(format);
     }
 }
-

@@ -9,11 +9,6 @@ namespace Carbon.Media
     {
         private readonly byte[] data;
 
-        private readonly ColorProfileType type;
-        private readonly Version version;
-        private readonly ColorSpace colorSpace;
-        private readonly DeviceType deviceClass;
-
         public ColorProfile(byte[] data)
         {
             this.data = data;
@@ -26,15 +21,15 @@ namespace Carbon.Media
                     {
                         var header = parser.ReadHeader();
 
-                        this.type = ColorProfileType.ICC;
-                        this.version = header.ProfileVersionNumber;
-                        this.colorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
+                        Type = ColorProfileType.ICC;
+                        Version = header.ProfileVersionNumber;
+                        ColorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
 
                         switch (header.ProfileDeviceClass)
                         {
-                            case "scnr": this.deviceClass = DeviceType.Scanner; break;
-                            case "mntr": this.deviceClass = DeviceType.Monitor; break;
-                            case "prtr": this.deviceClass = DeviceType.Printer; break;
+                            case "scnr": TargetDevice = DeviceType.Scanner; break;
+                            case "mntr": TargetDevice = DeviceType.Monitor; break;
+                            case "prtr": TargetDevice = DeviceType.Printer; break;
                         }
                     }
                 }
@@ -43,16 +38,16 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "type")]
-        public ColorProfileType Type => type;
+        public ColorProfileType Type { get; }
 
         [DataMember(Name = "version")]
-        public Version Version => version;
+        public Version Version { get; }
 
         [DataMember(Name = "colorSpace")]
-        public ColorSpace ColorSpace => colorSpace;
+        public ColorSpace ColorSpace { get; }
 
         [DataMember(Name = "targetDevice")]
-        public DeviceType TargetDevice => deviceClass;
+        public DeviceType TargetDevice { get; }
 
         [DataMember(Name = "data")]
         public byte[] Data => data;

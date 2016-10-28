@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Carbon.Media
 {
     public class AudioProfile
     {
@@ -9,10 +11,10 @@
 
         public MediaCodec Codec { get; set; }
 
-        // [Range(0, 48000)]
+        [Range(0, 48000)]
         public int? SampleRate { get; set; }
 
-        // [Range(0, 32)]
+        [Range(0, 32)]
         public int? BitsPerSample { get; set; }
     }
 }

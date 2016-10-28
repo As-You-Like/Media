@@ -1,123 +1,112 @@
-﻿namespace Carbon.Media
+﻿using System;
+using System.IO;
+
+namespace Carbon.Media
 {
-	using System;
-	using System.IO;
+    using text = System.Text;
 
-	using text = System.Text;
+    public class ColorProfileParser : IDisposable
+    {
+        private readonly BinaryReader reader;
 
-	public class ColorProfileParser : IDisposable
-	{
-		private readonly BinaryReader reader;
+        public ColorProfileParser(MemoryStream stream)
+        {
+            this.reader = new BinaryReader(stream);
+        }
 
-		public ColorProfileParser(MemoryStream stream)
-		{
-			this.reader = new BinaryReader(stream);
-		}
+        public ICCHeader ReadHeader()
+        {
+            var header = new ICCHeader();
 
-		public ICCHeader ReadHeader()
-		{
-			var header = new ICCHeader();
+            header.ProfileSize = reader.ReadUInt32BE();
+            header.CMMType = reader.ReadString(4);
 
-			header.ProfileSize			= reader.ReadUInt32BE();
-			header.CMMType				= reader.ReadString(4);
+            header.ProfileVersionNumber = new Version((int)reader.ReadByte(), (int)reader.ReadByte()); reader.ReadBytes(2);
 
-			header.ProfileVersionNumber = new Version((int)reader.ReadByte(), (int)reader.ReadByte()); reader.ReadBytes(2);
-				
-			header.ProfileDeviceClass	= reader.ReadString(4);
-			header.ColorSpaceOfData		= reader.ReadString(4).TrimEnd(' ');
-			header.PCS					= reader.ReadInt32BE(); 
-			
-			return header;
-		}
+            header.ProfileDeviceClass = reader.ReadString(4);
+            header.ColorSpaceOfData = reader.ReadString(4).TrimEnd(' ');
+            header.PCS = reader.ReadInt32BE();
 
-		public void Dispose()
-		{
-			reader.Dispose();
-		}
-	}
+            return header;
+        }
 
-	public class ICCHeader
-	{
-		// 0-3		(4)
-		public UInt32 ProfileSize { get; set; }
+        public void Dispose()
+        {
+            reader.Dispose();
+        }
+    }
 
-		// 4-7		(4)
-		public string CMMType { get; set; }
+    public class ICCHeader
+    {
+        // 0-3		(4)
+        public UInt32 ProfileSize { get; set; }
 
-		/* Profile version number where the first 8 bits are the major version number and
+        // 4-7		(4)
+        public string CMMType { get; set; }
+
+        /* Profile version number where the first 8 bits are the major version number and
 		the next 8 bits are for the minor version number. The major and minor version
 		numbers are set by the International Color Consortium and will match up with
 		the profile format revisions. The current version number is 02h with a minor
 		version number of 00h.
 		*/
-		// 8-11		(4)
-		public Version ProfileVersionNumber { get; set; }
+        // 8-11		(4)
+        public Version ProfileVersionNumber { get; set; }
 
-		// 12-15	(4)
-		public string ProfileDeviceClass { get; set; }
+        // 12-15	(4)
+        public string ProfileDeviceClass { get; set; }
 
-		// 16-19
-		public string ColorSpaceOfData { get; set; }
+        // 16-19
+        public string ColorSpaceOfData { get; set; }
 
-		// 20-23	(4)
-		public int PCS { get; set; }
-		
-		// 24-35	(12)
-		public DateTime DateTime { get ;set ;}
+        // 20-23	(4)
+        public int PCS { get; set; }
 
-		// 36-39	(4)
-		public string FileSignature { get; set; }
+        // 24-35	(12)
+        public DateTime DateTime { get; set; }
 
-		// 40-43	(4)
-		public string PlatformTarget { get; set; }
+        // 36-39	(4)
+        public string FileSignature { get; set; }
 
-	}
+        // 40-43	(4)
+        public string PlatformTarget { get; set; }
+    }
 
+    public static class BinaryReaderExtensions
+    {
+        public static string ReadString(this BinaryReader binRdr, int length)
+            => text::Encoding.ASCII.GetString(binRdr.ReadBytes(length));
 
-	public static class BinaryReaderExtensions
-	{
-		public static string ReadString(this BinaryReader binRdr, int length)
-		{
-			return text::Encoding.ASCII.GetString(binRdr.ReadBytes(length));
-		}
+        public static UInt16 ReadUInt16BE(this BinaryReader binRdr)
+            => BitConverter.ToUInt16(binRdr.ReadBytesRequired(sizeof(UInt16)).Reverse(), 0);
 
-		public static UInt16 ReadUInt16BE(this BinaryReader binRdr)
-		{
-			return BitConverter.ToUInt16(binRdr.ReadBytesRequired(sizeof(UInt16)).Reverse(), 0);
-		}
+        public static Int16 ReadInt16BE(this BinaryReader binRdr)
+            => BitConverter.ToInt16(binRdr.ReadBytesRequired(sizeof(Int16)).Reverse(), 0);
 
-		public static Int16 ReadInt16BE(this BinaryReader binRdr)
-		{
-			return BitConverter.ToInt16(binRdr.ReadBytesRequired(sizeof(Int16)).Reverse(), 0);
-		}
+        public static UInt32 ReadUInt32BE(this BinaryReader binRdr)
+            => BitConverter.ToUInt32(binRdr.ReadBytesRequired(sizeof(UInt32)).Reverse(), 0);
 
-		public static UInt32 ReadUInt32BE(this BinaryReader binRdr)
-		{
-			return BitConverter.ToUInt32(binRdr.ReadBytesRequired(sizeof(UInt32)).Reverse(), 0);
-		}
+        public static Int32 ReadInt32BE(this BinaryReader binRdr)
+            => BitConverter.ToInt32(binRdr.ReadBytesRequired(sizeof(Int32)).Reverse(), 0);
 
-		public static Int32 ReadInt32BE(this BinaryReader binRdr)
-		{
-			return BitConverter.ToInt32(binRdr.ReadBytesRequired(sizeof(Int32)).Reverse(), 0);
-		}
+        private static byte[] ReadBytesRequired(this BinaryReader binRdr, int byteCount)
+        {
+            var result = binRdr.ReadBytes(byteCount);
 
-		private static byte[] ReadBytesRequired(this BinaryReader binRdr, int byteCount)
-		{
-			var result = binRdr.ReadBytes(byteCount);
+            if (result.Length != byteCount)
+                throw new EndOfStreamException(string.Format("{0} bytes required from stream, but only {1} returned.", byteCount, result.Length));
 
-			if (result.Length != byteCount)
-				throw new EndOfStreamException(string.Format("{0} bytes required from stream, but only {1} returned.", byteCount, result.Length));
+            return result;
+        }
 
-			return result;
-		}
+        // Note this MODIFIES THE GIVEN ARRAY then returns a reference to the modified array.
+        private static byte[] Reverse(this byte[] b)
+        {
+            Array.Reverse(b);
 
-		// Note this MODIFIES THE GIVEN ARRAY then returns a reference to the modified array.
-		private static byte[] Reverse(this byte[] b)
-		{
-			Array.Reverse(b);
-			return b;
-		}
-	}
+            return b;
+        }
+    }
 }
 
 /*

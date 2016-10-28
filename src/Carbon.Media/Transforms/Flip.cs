@@ -1,41 +1,39 @@
 ﻿namespace Carbon.Media
 {
-	public class Flip : ITransform
-	{
-		public static readonly Flip Horizontally = new Flip(FlipAxis.X);
-		public static readonly Flip Vertically	 = new Flip(FlipAxis.Y);
+    public class Flip : ITransform
+    {
+        public static readonly Flip Horizontally = new Flip(FlipAxis.X);
+        public static readonly Flip Vertically   = new Flip(FlipAxis.Y);
 
-		private readonly FlipAxis axis;
+        public Flip(FlipAxis axis)
+        {
+            Axis = axis;
+        }
 
-		public Flip(FlipAxis axis)
-		{
-			this.axis = axis;
-		}
+        public FlipAxis Axis { get; }
 
-		public FlipAxis Axis => axis;
+        public override string ToString() => "flip(" + Axis.ToString().ToLower() + ")";
 
-		public override string ToString() => "flip(" + axis.ToString().ToLower() + ")";
+        public static Flip Parse(string key)
+        {
+            #region Normalization
 
-		public static Flip Parse(string key)
-		{
-			#region Normalization
+            if (key.StartsWith("flip("))
+            {
+                key = key.Remove(0, 5).TrimEnd(')');
+            }
 
-			if (key.StartsWith("flip("))
-			{
-				key = key.Remove(0, 5).TrimEnd(')');
-			}
+            #endregion
 
-			#endregion
+            var axis = key;
 
-			var axis = key;
+            return new Flip(axis.ToEnum<FlipAxis>(true));
+        }
+    }
 
-			return new Flip(axis.ToEnum<FlipAxis>(true));
-		}
-	}
-
-	public enum FlipAxis
-	{
-		X,	// Horizontally
-		Y	// Veritical
-	}
+    public enum FlipAxis
+    {
+        X,  // Horizontally
+        Y   // Veritical
+    }
 }

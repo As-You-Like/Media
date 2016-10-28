@@ -63,8 +63,10 @@ namespace Carbon.Media
 
             #endregion
 
-            return new AnchoredResize(size: Size.Parse(key.Split('-')[0]),
-                                      anchor: AlignmentHelper.ParseAlignment(key.Split('-')[1]));
+            return new AnchoredResize(
+                size   : Size.Parse(key.Split('-')[0]),
+                anchor : AlignmentHelper.ParseAlignment(key.Split('-')[1])
+            );
         }
     }
 }

@@ -9,14 +9,14 @@ namespace Carbon.Media
 
     public class MediaTransformation : ISize
     {
-        protected readonly IMediaInfo source;
+        protected readonly IMediaSource source;
         protected readonly string format;
         protected readonly List<ITransform> transforms = new List<ITransform>();
 
         private int width;
         private int height;
 
-        public MediaTransformation(IMediaInfo source, string format)
+        public MediaTransformation(IMediaSource source, string format)
         {
             #region Preconditions
 
@@ -32,13 +32,13 @@ namespace Carbon.Media
             this.height = source.Height;
         }
 
-        public MediaTransformation(IMediaInfo source, MediaOrientation orientation, string format)
+        public MediaTransformation(IMediaSource source, MediaOrientation orientation, string format)
             : this(source, format)
         {
             Transform(orientation.GetTransforms());
         }
 
-        public IMediaInfo Source => source;
+        public IMediaSource Source => source;
 
         public string Format => format;
 
@@ -123,6 +123,14 @@ namespace Carbon.Media
             return this;
         }
 
+
+        public MediaTransformation Clip(TimeSpan start, TimeSpan end)
+        {
+            Transform(new Clip(start, end));
+
+            return this;
+        }
+
         public MediaTransformation Crop(int x, int y, int width, int height)
         {
             Transform(new Crop(x, y, width, height));
@@ -178,26 +186,34 @@ namespace Carbon.Media
 
             int i = 1;
 
-            var id = 0;
+            string id = "";
             var transforms = new List<ITransform>();
 
             foreach (var part in parts)
             {
                 if (i == 1)
                 {
-                    id = int.Parse(part);
+                    id = part;
                 }
                 else
                 {
                     ITransform transform;
 
-                    var transformName = part.Split('(', ':')[0];
 
                     if (char.IsDigit(part[0]))
                     {
+
                         if (part.Contains("-"))
                         {
                             transform = AnchoredResize.Parse(part);
+                        }
+                        else if (part.Contains(":"))
+                        {
+                            // 1:00
+
+                            var time = TimeSpan.Parse(part);
+
+                            transform = new Clip(time, time);
                         }
                         else
                         {
@@ -206,13 +222,14 @@ namespace Carbon.Media
                     }
                     else
                     {
+                        var transformName = part.Split('(', ':')[0];
 
                         switch (transformName)
                         {
-                            case "crop": transform = Carbon.Media.Crop.Parse(part); break;
-                            case "rotate": transform = Carbon.Media.Rotate.Parse(part); break;
-                            case "flip": transform = Carbon.Media.Flip.Parse(part); break;
-                            default: transform = Carbon.Media.ApplyFilter.Parse(part); break;
+                            case "crop"   : transform = Media.Crop.Parse(part);        break;
+                            case "rotate" : transform = Media.Rotate.Parse(part);      break;
+                            case "flip"   : transform = Flip.Parse(part);              break;
+                            default       : transform = Media.ApplyFilter.Parse(part); break;
                         }
                     }
 
@@ -222,7 +239,7 @@ namespace Carbon.Media
                 i++;
             }
 
-            var rendition = new MediaTransformation(new MediaMock { Id = id }, format);
+            var rendition = new MediaTransformation(new MediaSource(id), format);
 
             foreach (var t in transforms)
             {
@@ -234,7 +251,7 @@ namespace Carbon.Media
 
         public string GetPath()
         {
-            return source.Id + "/" + GetFullName();
+            return source.Key + "/" + GetFullName();
         }
 
         public string GetFullName()
@@ -269,14 +286,17 @@ namespace Carbon.Media
         #endregion
     }
 
-    internal class MediaMock : IMediaInfo
+    internal class MediaSource : IMediaSource
     {
-        public int Id { get; set; }
+        public MediaSource(string key)
+        {
+            Key = key;
+        }
 
-        public string Format => null;
+        public string Key { get; }
 
-        public int Width => 0;
+        public int Width { get; set; }
 
-        public int Height => 0;
+        public int Height { get; set; }
     }
 }

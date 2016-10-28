@@ -2,7 +2,6 @@
 
 namespace Carbon.Helpers
 {
-    using Math;
     using Media;
     using Geometry;
 
@@ -22,7 +21,7 @@ namespace Carbon.Helpers
             );
         }
 
-        public static Size CalculateScaledSize(IMediaInfo source, Size maxSize)
+        public static Size CalculateScaledSize(ISize source, Size maxSize)
         {
             #region Preconditions
 
@@ -114,7 +113,7 @@ namespace Carbon.Helpers
 
             if (currentAspect > targetAspect) // Shrink the width
             {
-                int newWidth = (int)((double)sourceSize.Height * targetAspect);
+                int newWidth = (int)(sourceSize.Height * targetAspect);
 
                 return new Size(newWidth, sourceSize.Height);
             }
