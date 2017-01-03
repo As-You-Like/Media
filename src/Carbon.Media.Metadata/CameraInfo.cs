@@ -2,10 +2,10 @@
 {
     public struct CameraInfo
     {
-        // Canon
+        // e.g. Canon
         public string Make { get; set; }
 
-        // EOS5
+        // e.g. EOS5
         public string Model { get; set; }
 
         // TODO: Canonicalize
