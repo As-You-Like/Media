@@ -6,12 +6,16 @@ namespace Carbon.Media.Metadata
 {
     public class MetadataItemConverter
     {
+        public static readonly MetadataItemConverter Default = new MetadataItemConverter();
+
         public virtual object Normalize(object value) 
             => value.ToString();
     }
 
     public sealed class IntegerConverter : MetadataItemConverter
     {
+        public static readonly IntegerConverter Default = new IntegerConverter();
+
         public override object Normalize(object value)
             => int.Parse(value.ToString());
     }
@@ -19,12 +23,16 @@ namespace Carbon.Media.Metadata
 
     public sealed class BooleanConverter : MetadataItemConverter
     {
+        public static readonly BooleanConverter Default = new BooleanConverter();
+
         public override object Normalize(object value)
             => int.Parse(value.ToString().ToLower());
     }
 
     public sealed class SignedRational : MetadataItemConverter
     {
+        public static readonly SignedRational Default = new SignedRational();
+
         public override object Normalize(object value)
         {
             if (value == null) return "null";
@@ -40,7 +48,7 @@ namespace Carbon.Media.Metadata
 
             if (denominator != 0)
             {
-                x = ((double)numberator / (double)denominator);
+                x = ((double)numberator / denominator);
             }
 
             // NaN Check
@@ -56,6 +64,8 @@ namespace Carbon.Media.Metadata
 
     public sealed class UnsignedRational : MetadataItemConverter
     {
+        public static readonly UnsignedRational Default = new UnsignedRational();
+
         public override object Normalize(object value)
         {
             if (value == null) return "null";
@@ -107,6 +117,8 @@ namespace Carbon.Media.Metadata
 
     public sealed class DateNormalizer : MetadataItemConverter
     {
+        public static readonly DateNormalizer Default = new DateNormalizer();
+
         public override object Normalize(object value)
         {
             // 2010:07:24 15:05:03

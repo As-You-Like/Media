@@ -1,9 +1,9 @@
 ﻿{
   "authors": [ "iamcarbon" ],
-  "version": "1.0.0",
+  "version": "1.1.0",
 
   "dependencies": {
-    "Carbon.Media": "1.0.0"
+    "Carbon.Media": "1.1.0"
   },
 
   "frameworks": {
