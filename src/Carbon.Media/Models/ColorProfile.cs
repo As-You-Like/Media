@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Security.Cryptography;
 
 namespace Carbon.Media
 {
     public class ColorProfile
     {
-        private readonly byte[] data;
-
         public ColorProfile(byte[] data)
         {
-            this.data = data;
+            Data = data;
 
             try
             {
@@ -50,22 +47,7 @@ namespace Carbon.Media
         public DeviceType TargetDevice { get; }
 
         [DataMember(Name = "data")]
-        public byte[] Data => data;
-
-        [DataMember(Name = "key")]
-        public string Key
-        {
-            get
-            {
-                // A SHA1 Hash of the ColorProfile Data in Hex Format
-                if (data == null) return null;
-
-                using (var sha = SHA1.Create())
-                {
-                    return BitConverter.ToString(sha.ComputeHash(Data)).Replace("-", string.Empty);
-                }
-            }
-        }
+        public byte[] Data { get; }
     }
 
     public enum DeviceType

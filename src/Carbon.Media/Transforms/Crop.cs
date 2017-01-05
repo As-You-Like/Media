@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Carbon.Media
 {
@@ -6,7 +7,7 @@ namespace Carbon.Media
 
     public struct Crop : ITransform
     {
-        public Crop(Vector2f origin, Size size)
+        public Crop(Vector2 origin, Size size)
             : this(new Rectangle((int)origin.X, (int)origin.Y, size.Width, size.Height))
         { }
 

@@ -7,6 +7,8 @@ namespace Carbon.Media
 
     public sealed class MediaRenditionInfo : ISize
     {
+        private static readonly char[] forwardSlash = { '/' };
+
         public static string Host = "";
         public static ISigner Signer = null;
 
@@ -34,11 +36,16 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool IsEmpty => Width == 0 || Height == 0;
 
-        public string TransformString => string.Join("/", path.Split('/').Skip(1));
+        // TODO: Remove Linq
+        public string TransformString 
+            => string.Join("/", path.Split(forwardSlash).Skip(1));
 
         public MediaRenditionInfo WithBackground(string hex)
         {
-            if (hex.StartsWith("#")) hex = hex.Trim('#');
+            if (hex.StartsWith("#"))
+            {
+                hex = hex.Substring(1);
+            }
 
             var dotIndex = path.LastIndexOf('.');
             var spec = path.Substring(0, dotIndex);

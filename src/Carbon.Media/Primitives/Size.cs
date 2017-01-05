@@ -14,7 +14,8 @@ namespace Carbon.Media
 
         public int Height { get; }
 
-        public override string ToString() => Width + "x" + Height;
+        public override string ToString() 
+            => Width + "x" + Height;
 
         public static Size Parse(string size)
         {

@@ -2,8 +2,8 @@
 
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
-[assembly: AssemblyCopyright("© 2012 - 2016 Jason Nelson")]
-[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyCopyright("© 2012 - 2017 Jason Nelson")]
+[assembly: AssemblyVersion("1.1.0")]
 
 /*
  
