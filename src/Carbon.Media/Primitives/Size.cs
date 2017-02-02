@@ -17,6 +17,12 @@ namespace Carbon.Media
         public override string ToString() 
             => Width + "x" + Height;
 
+        public static Size operator *(Size size, double scale)
+            => new Size(
+                width  : (int)(size.Height * scale),
+                height : (int)(size.Width * scale)
+            );
+
         public static Size Parse(string size)
         {
             #region Preconditions
@@ -26,12 +32,11 @@ namespace Carbon.Media
 
             #endregion
 
-            var parts = size.Split('x');
+            var parts = size.Split(Seperators.x);
 
             if (parts.Length != 2)
             {
                 throw new ArgumentException($"Invalid size. Was '{size}'.");
-
             }
 
             return new Size(int.Parse(parts[0]), int.Parse(parts[1]));

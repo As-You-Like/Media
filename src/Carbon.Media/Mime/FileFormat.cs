@@ -12,13 +12,21 @@ namespace Carbon.Media
             #region Preconditions
 
             if (format == null)
-                throw new ArgumentNullException("format");
+                throw new ArgumentNullException(nameof(format));
 
             #endregion
 
-            // Strip any leading periods and convert to lowercase
-            format = format.TrimStart('.').ToLower();
+            if (format[0] == '.')
+            {
+                format = format.Substring(1);
+            }
 
+            // Ensure the file is lowercased
+            if (!format.IsLowercase())
+            {
+                format = format.ToLower();
+            }
+            
             switch (format)
             {
                 case "jpg": return "jpeg";
@@ -27,6 +35,16 @@ namespace Carbon.Media
 
                 default: return format;
             }
+        }
+
+        private static bool IsLowercase(this string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (!char.IsLower(input[i])) return false;
+            }
+
+            return true;
         }
 
         public static bool IsCompressible(string format)
