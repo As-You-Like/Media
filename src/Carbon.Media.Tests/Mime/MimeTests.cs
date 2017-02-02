@@ -1,9 +1,6 @@
 ﻿namespace Carbon.Media.Tests
 {
 	using Xunit;
-
-	using Carbon.Media;
-
 	
 	public class MimeTests
 	{

@@ -1,8 +1,8 @@
-﻿namespace Carbon.Media.Tests
-{
-    using System;
-    using Xunit;
+﻿using System;
+using Xunit;
 
+namespace Carbon.Media.Tests
+{
     public class Signer : ISigner
     {
         private readonly string name;
@@ -18,8 +18,6 @@
         }
     }
 
-
-   
     public class ImageRendentionTests
     {
         [Fact]
@@ -62,7 +60,6 @@
             var d = c.WithFormat("gif");
 
             Assert.Equal("400x400/crop:0-0_340x80.gif", d.TransformString);
-
         }
 
         [Fact]
@@ -114,7 +111,6 @@
             var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
 
             var b = rendition.Scale(2).Resample("abc").WithFormat("jpeg");
-
 
             Assert.Equal("https://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).jpeg", b.Url);
         }
@@ -189,8 +185,7 @@
         public void CenterAnchoredResizePng()
         {
             var rendition = new MediaTransformation(new MediaSource("1045645"), "png")
-                .Transform(new AnchoredResize(100, 50, Alignment.Center));
-
+                .Transform(new Resize(100, 50, ScaleMode.None, CropAnchor.Center));
 
             Assert.Equal(100, rendition.Width);
             Assert.Equal(50, rendition.Height);
@@ -222,7 +217,7 @@
         public void LeftAnchoredResizeAndRotate90()
         {
             var transformation = new MediaTransformation(new MediaSource("1045645"), "jpeg")
-                .Transform(new AnchoredResize(150, 50, Alignment.Left))
+                .Transform(new Resize(150, 50, anchor: CropAnchor.Left))
                 .Rotate(90);
 
             Assert.Equal("150x50-l/rotate(90).jpeg", transformation.GetFullName());
@@ -232,7 +227,7 @@
         public void LeftAnchoredResizeAndRotatationTiff()
         {
             var rendition = new MediaTransformation(new MediaSource("1045645"), "tiff")
-                .Transform(new AnchoredResize(50, 50, Alignment.Left))
+                .Transform(new Resize(50, 50, anchor: CropAnchor.Left))
                 .Rotate(180);
 
             Assert.Equal("50x50-l/rotate(180).tiff", rendition.GetFullName());
@@ -241,11 +236,13 @@
         [Fact]
         public void AnchoredResizeHasValidFileName()
         {
-            var rendition = new MediaTransformation(new MediaSource("100"), "jpeg").Transform(new AnchoredResize(100, 100, Alignment.Center));
+            var rendition = new MediaTransformation(new MediaSource("100"), "jpeg")
+                .Transform(new Resize(100, 100, anchor: CropAnchor.Center));
+
             Assert.Equal(@"100x100-c.jpeg", rendition.GetFullName());
 
             rendition = new MediaTransformation(new MediaSource("254565"), "jpeg")
-                .Transform(new AnchoredResize(500, 100, Alignment.Center));
+                .Transform(new Resize(500, 100, anchor: CropAnchor.Center));
 
             Assert.Equal(@"500x100-c.jpeg", rendition.GetFullName());
         }

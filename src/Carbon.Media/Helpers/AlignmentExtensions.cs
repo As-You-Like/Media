@@ -2,23 +2,25 @@
 
 namespace Carbon.Media
 {
-    public static class AlignmentExtensions
-    {
-        public static string ToAbbreviation(this Alignment alignment)
-        {
-            switch (alignment)
-            {
-                case Alignment.Bottom       : return "b";
-                case Alignment.BottomLeft   : return "bl";
-                case Alignment.BottomRight  : return "br";
-                case Alignment.Center       : return "c";
-                case Alignment.Left         : return "l";
-                case Alignment.Right        : return "r";
-                case Alignment.Top          : return "t";
-                case Alignment.TopLeft      : return "tl";
-                case Alignment.TopRight     : return "tr";
+    using static CropAnchor;
 
-                default: throw new ArgumentException($"Invalid alignment. Was '{alignment}'");
+    public static class CropAnchorExtensions
+    {
+        public static string ToAbbreviation(this CropAnchor anchor)
+        {
+            switch (anchor)
+            {
+                case Bottom       : return "b";
+                case BottomLeft   : return "bl";
+                case BottomRight  : return "br";
+                case Center       : return "c";
+                case Left         : return "l";
+                case Right        : return "r";
+                case Top          : return "t";
+                case TopLeft      : return "tl";
+                case TopRight     : return "tr";
+
+                default: throw new ArgumentException($"Invalid anchor. Was '{anchor}'");
             }
         }
     }

@@ -1,10 +1,9 @@
-﻿namespace Carbon.Media
+﻿using System;
+using System.IO;
+
+namespace Carbon.Media.Tests
 {
 	using Xunit;
-
-	using System;
-	using System.IO;
-
 	
 	public class ColorProfileTests
 	{

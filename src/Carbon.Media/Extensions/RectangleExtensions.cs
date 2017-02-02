@@ -2,7 +2,9 @@
 {
     public static class RectangleExtensions
     {
-        public static Rectangle Scale(this Rectangle rect, float scale)
+        // TODO: Origin
+
+        public static Rectangle Scale(this Rectangle rect, double scale)
         {
             return new Rectangle(
                 x      : (int)(rect.X * scale),
@@ -13,3 +15,5 @@
         }
     }
 }
+
+// Move this to Carbon.Geometry...

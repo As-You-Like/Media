@@ -1,9 +1,7 @@
-﻿namespace Carbon.Helpers.Tests
+﻿using Xunit;
+
+namespace Carbon.Media.Tests
 {
-	using Carbon.Media;
-
-	using Xunit;
-
 	public class SizeTests
 	{
 		[Fact]

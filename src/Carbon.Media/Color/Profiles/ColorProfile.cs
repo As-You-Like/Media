@@ -6,48 +6,50 @@ namespace Carbon.Media
 {
     public class ColorProfile
     {
-        public ColorProfile(byte[] data)
+        [DataMember(Name = "type")]
+        public ColorProfileType Type { get; set; }
+
+        [DataMember(Name = "version")]
+        public Version Version { get; set; }
+
+        [DataMember(Name = "colorSpace")]
+        public ColorSpace ColorSpace { get; set; }
+
+        [DataMember(Name = "targetDevice")]
+        public DeviceType TargetDevice { get; set; }
+
+        [DataMember(Name = "data")]
+        public byte[] Data { get; set; }
+
+        public static ColorProfile Parse(byte[] data)
         {
-            Data = data;
+            var result = new ColorProfile {
+                Type = ColorProfileType.ICC,
+                Data = data
+            };
 
             try
             {
                 using (var ms = new MemoryStream(data))
+                using (var parser = new ColorProfileParser(ms))
                 {
-                    using (var parser = new ColorProfileParser(ms))
+                    var header = parser.ReadHeader();
+
+                    result.Version    = header.ProfileVersionNumber;
+                    result.ColorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
+
+                    switch (header.ProfileDeviceClass)
                     {
-                        var header = parser.ReadHeader();
-
-                        Type = ColorProfileType.ICC;
-                        Version = header.ProfileVersionNumber;
-                        ColorSpace = ICCColorSpace.Parse(header.ColorSpaceOfData);
-
-                        switch (header.ProfileDeviceClass)
-                        {
-                            case "scnr": TargetDevice = DeviceType.Scanner; break;
-                            case "mntr": TargetDevice = DeviceType.Monitor; break;
-                            case "prtr": TargetDevice = DeviceType.Printer; break;
-                        }
+                        case "scnr": result.TargetDevice = DeviceType.Scanner; break;
+                        case "mntr": result.TargetDevice = DeviceType.Monitor; break;
+                        case "prtr": result.TargetDevice = DeviceType.Printer; break;
                     }
                 }
             }
             catch { }
+
+            return result;
         }
-
-        [DataMember(Name = "type")]
-        public ColorProfileType Type { get; }
-
-        [DataMember(Name = "version")]
-        public Version Version { get; }
-
-        [DataMember(Name = "colorSpace")]
-        public ColorSpace ColorSpace { get; }
-
-        [DataMember(Name = "targetDevice")]
-        public DeviceType TargetDevice { get; }
-
-        [DataMember(Name = "data")]
-        public byte[] Data { get; }
     }
 
     public enum DeviceType
@@ -56,13 +58,6 @@ namespace Carbon.Media
         Scanner = 1,
         Monitor = 2,
         Printer = 3
-    }
-
-    public enum ColorProfileType
-    {
-        Unknown = 0,
-        ICC = 1,
-        ICM = 2
     }
 }
 

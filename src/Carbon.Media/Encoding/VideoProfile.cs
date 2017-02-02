@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
-
 namespace Carbon.Media
 {
     public class VideoProfile
@@ -46,7 +45,7 @@ namespace Carbon.Media
         [DefaultValue(false)]
         public bool Upscale { get; set; }
 
-        [DefaultValue(ScaleMode.Preserve)]
+        [DefaultValue(ScaleMode.Fit)]
         public ScaleMode ScaleMode { get; set; }
 
         #region Helpers

@@ -1,10 +1,9 @@
-﻿namespace Carbon.Media.Tests
-{
-	using System;
+﻿using System;
 
-	using Xunit;
+using Xunit;
 
-	
+namespace Carbon.Media.Tests
+{	
 	public class CropTests
 	{
 		[Fact]

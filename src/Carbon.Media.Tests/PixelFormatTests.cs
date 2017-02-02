@@ -1,9 +1,7 @@
-﻿namespace Carbon.Helpers.Tests
-{
-	using Xunit;
+﻿using Xunit;
 
-	using Carbon.Media;
-	
+namespace Carbon.Media.Tests
+{	
 	public class FormatTests
 	{
 		[Fact]
@@ -11,7 +9,6 @@
 		{
 			Assert.Equal("pdf", FileFormat.FromPath("holiday_gift_center_1998.pdf"));
 		}
-
 		
 		[Fact]
 		public void CompressableTests()

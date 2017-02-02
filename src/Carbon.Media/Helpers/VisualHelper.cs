@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Carbon.Helpers
+namespace Carbon.Media
 {
-    using Media;
     using Geometry;
 
     public static class VisualHelper
@@ -11,7 +10,8 @@ namespace Carbon.Helpers
         {
             #region Preconditions
 
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
 
             #endregion
 
@@ -26,21 +26,21 @@ namespace Carbon.Helpers
             #region Preconditions
 
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             #endregion
 
             return CalculateScaledSize(new Size(source.Width, source.Height), maxSize);
         }
 
-        public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ScaleMode scaleMode = ScaleMode.None)
+        public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ScaleMode mode = ScaleMode.None)
         {
             var aspect = sourceSize.ToRational();
 
             var calculatedSize = CalculateMaxSize(maxSize, aspect);
 
             // If we are not stretching the image, make sure the result is not bigger then the sourceSize
-            if (scaleMode == ScaleMode.None)
+            if (mode == ScaleMode.None)
             {
                 if (calculatedSize.Height > sourceSize.Height || calculatedSize.Width > sourceSize.Width)
                 {
@@ -51,12 +51,12 @@ namespace Carbon.Helpers
             return calculatedSize;
         }
 
-        public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize targetSize, Alignment anchor)
+        public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize targetSize, CropAnchor anchor)
         {
-            var x = 0d;
-            var y = 0d;
-
-            var nPercent = 0d;
+            double x = 0d,
+                   y = 0d,
+                   nPercent = 0d;
+            
             double nPercentW = (double)targetSize.Width / (double)sourceSize.Width;
             double nPercentH = (double)targetSize.Height / (double)sourceSize.Height;
 
@@ -66,10 +66,10 @@ namespace Carbon.Helpers
 
                 switch (anchor)
                 {
-                    case Alignment.Top:
+                    case CropAnchor.Top:
                         y = 0;
                         break;
-                    case Alignment.Bottom:
+                    case CropAnchor.Bottom:
                         y = targetSize.Height - (sourceSize.Height * nPercent);
                         break;
                     default:
@@ -83,10 +83,10 @@ namespace Carbon.Helpers
 
                 switch (anchor)
                 {
-                    case Alignment.Left:
+                    case CropAnchor.Left:
                         y = 0;
                         break;
-                    case Alignment.Right:
+                    case CropAnchor.Right:
                         x = targetSize.Width - (sourceSize.Width * nPercent);
                         break;
                     default:
@@ -96,10 +96,10 @@ namespace Carbon.Helpers
             }
 
             return new Rectangle(
-                x: (int)x,
-                y: (int)y,
-                width: (int)(sourceSize.Width * nPercent),
-                height: (int)(sourceSize.Height * nPercent)
+                x       : (int)x,
+                y       : (int)y,
+                width   : (int)(sourceSize.Width * nPercent),
+                height  : (int)(sourceSize.Height * nPercent)
             );
         }
 

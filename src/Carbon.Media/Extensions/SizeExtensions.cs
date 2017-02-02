@@ -5,7 +5,7 @@
         public static bool FitsIn(this ISize source, ISize target)
             => source.Width <= target.Width && source.Height <= target.Height;
 
-        public static Size Scale(this ISize size, float scale)
+        public static Size Scale(this ISize size, double scale)
             => new Size(
                 width  : (int)(size.Width * scale),
                 height : (int)(size.Height * scale)

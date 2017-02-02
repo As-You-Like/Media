@@ -1,11 +1,11 @@
 ﻿namespace Carbon.Media
 {
-	public enum ColorSpace : byte
+	public enum ColorSpace
 	{
-		Unknown		= 0,
+		Unknown	    = 0,
 
 		// RGB
-		sRGB		= 1,	// The sRGB color space is based on the ITU-R BT.709 standard. It specifies a gamma of 2.2 and a white point of 6500 degrees K.
+		sRGB		= 1,    // The sRGB color space is based on the ITU-R BT.709 standard. It specifies a gamma of 2.2 and a white point of 6500 degrees K.
 		
 		/// <summary>
 		/// scRGB is a wide color gamut RGB (Red Green Blue) color space created  by Microsoft 
@@ -13,49 +13,54 @@
 		/// but allows coordinates below zero and greater than one. 
 		/// The full range is -0.5 through just less than +7.5.
 		/// </summary>
-		scRGB		= 2,	
+		scRGB		    = 2,	
 
-		RGB			= 3,
+		RGB			    = 3,
 
-		CMY			= 10,	// CMY,		uncommon expect on low-end color printers
-		CMYK		= 11,	// CMYK,	which models the way inks or dyes are applied to paper in printing
+		CMY			    = 10, // CMY   | uncommon expect on low-end color printers
+		CMYK		    = 11, // CMYK  | which models the way inks or dyes are applied to paper in printing
+                          
+		Gray		    = 20, // Gray spaces are used for black-and-white and grayscale display and printing. A properly plotted gray space should have a fifty percent value as its midpoint.       
+		                  
+		HCL			    = 30, // *IM			http://bl.ocks.org/mbostock/3014589
+		HCLp		    = 31, // *IM
+		HLS			    = 32, // ICC
+		HSB			    = 33, // *IM
+		HSI			    = 34, // *IM
+		HSL			    = 35, // *IM
+		HSV			    = 36, // ICC
+		HWB			    = 37, // *IM
+                              
+		Lab			    = 40, // ICC    | The CIE L*a*b* color model (Lab) is based on the human perception of color. 
+		LCHab		    = 41, // *IM
+		LCHuv		    = 41, // *IM
+		LMS			    = 42, // *IM
+		Log			    = 43, // *IM
+		Luv			    = 44,
 
-		Gray		= 20,	// Gray spaces are used for black-and-white and grayscale display and printing. A properly plotted gray space should have a fifty percent value as its midpoint.
-		
-		HCL			= 30,	// *IM			http://bl.ocks.org/mbostock/3014589
-		HCLp		= 31,	// *IM
-		HLS			= 32,	// ICC
-		HSB			= 33,	// *IM
-		HSI			= 34,   // *IM
-		HSL			= 35,	// *IM
-		HSV			= 36,	// ICC
-		HWB			= 37,	// *IM
+		Multichannel     = 50,	// Multichannel mode images contain 256 levels of gray in each channel and are useful for specialized printing. 
 
-		Lab			= 40,	// ICC		The CIE L*a*b* color model (Lab) is based on the human perception of color. 
-		LCHab		= 41,	// *IM
-		LCHuv		= 41,	// *IM
-		LMS			= 42,	// *IM
-		Log			= 43,	// *IM
-		Luv			= 44,
+		OHTA		    = 60,	// IM*
 
-		Multichannel = 50,	// Multichannel mode images contain 256 levels of gray in each channel and are useful for specialized printing. 
+		Rec601YCbCr     = 70,	// *IM
+		Rec709YCbCr     = 71,	// *IM
+        Rec2000         = 75,
 
-		OHTA		= 60,	// IM*
+		Transparent	    = 80,	// *IM
 
-		Rec601YCbCr = 70,	// *IM
-		Rec709YCbCr = 71,	// *IM
+		YCbCr		    = 90,	// YCbr
+		YCC			    = 91,	// *IM
+		YIQ			    = 92,	// *IM
+		YDbDr		    = 93,	// *IM
+		YPbPr		    = 94,	// *IM 
+		YUV			    = 95,	// *IM
+		Yxy			    = 96,	// ICC | Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. 
+		XYZ			    = 97,	// ICC	| XYZ space allows colors to be expressed as a mixture of the three tristimulus values X, Y, and Z. The term tristimulus comes from the fact that color perception results from the retina of the eye responding to three types of stimuli. After experimentation, the CIE set up a hypothetical set of primaries, XYZ, that correspond to the way the eye’s retina behaves.
 
-		Transparent	= 80,	// *IM
 
-		YCbCr		= 90,	// YCbr
-		YCC			= 91,	// *IM
-		YIQ			= 92,	// *IM
-		YDbDr		= 93,	// *IM
-		YPbPr		= 94,	// *IM 
-		YUV			= 95,	// *IM
-		Yxy			= 96,	// ICC		Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. 
-		XYZ			= 97	// ICC		XYZ space allows colors to be expressed as a mixture of the three tristimulus values X, Y, and Z. The term tristimulus comes from the fact that color perception results from the retina of the eye responding to three types of stimuli. After experimentation, the CIE set up a hypothetical set of primaries, XYZ, that correspond to the way the eye’s retina behaves.
-	}
+        // DCI_P3_D65      = 200,
+        // DCI_P3_Theater = 201
+    }
 
 
 	public static class ICCColorSpace
@@ -76,7 +81,6 @@
 				case "YXY"  : return ColorSpace.Yxy;
 				case "XYZ"	: return ColorSpace.XYZ;
 				default		: return ColorSpace.Unknown;
-
 			}
 		}
 	}

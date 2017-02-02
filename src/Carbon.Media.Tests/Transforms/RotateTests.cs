@@ -1,10 +1,7 @@
-﻿namespace Carbon.Media.Tests
-{
-	using System;
+﻿using Xunit;
 
-	using Xunit;
-
-	
+namespace Carbon.Media.Tests
+{	
 	public class RotateTests
 	{
 		[Fact]

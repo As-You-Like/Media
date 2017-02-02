@@ -1,10 +1,7 @@
-﻿namespace Carbon.Helpers.Tests
+﻿using Xunit;
+
+namespace Carbon.Media.Tests
 {
-    using Carbon.Media;
-
-    using Xunit;
-
-
     public class VisualHelperTest
     {
         [Fact]
@@ -16,7 +13,7 @@
             Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
             Assert.Equal(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
             Assert.Equal(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-            Assert.Equal(new Size(11, 11), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+            Assert.Equal(new Size(11, 11),   VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
 
             // Stretch
             Assert.Equal(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.Stretch));
@@ -25,8 +22,8 @@
 
             Assert.Equal(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
             Assert.Equal(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
-            Assert.Equal(new Size(235, 62), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-            Assert.Equal(new Size(11, 2), VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+            Assert.Equal(new Size(235, 62),  VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
+            Assert.Equal(new Size(11, 2),    VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
         }
 
         [Fact]
@@ -65,7 +62,7 @@
 
             var targetSize = new Size(1000, 500);
 
-            var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, Alignment.Center);
+            var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, CropAnchor.Center);
 
             //Assert.Equal(0, destinationR.Left);
             // Assert.Equal(-250, destinationR.Top);

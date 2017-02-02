@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Carbon.Media
 {
-    using text = System.Text;
+    using Extensions;
 
     public class ColorProfileParser : IDisposable
     {
@@ -11,6 +11,13 @@ namespace Carbon.Media
 
         public ColorProfileParser(MemoryStream stream)
         {
+            #region Preconditions
+
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            #endregion
+
             this.reader = new BinaryReader(stream);
         }
 
@@ -18,14 +25,16 @@ namespace Carbon.Media
         {
             var header = new ICCHeader();
 
-            header.ProfileSize = reader.ReadUInt32BE();
-            header.CMMType = reader.ReadString(4);
+            header.ProfileSize  = reader.ReadUInt32BE();
+            header.CMMType      = reader.ReadString(4);
 
-            header.ProfileVersionNumber = new Version((int)reader.ReadByte(), (int)reader.ReadByte()); reader.ReadBytes(2);
+            header.ProfileVersionNumber = new Version(reader.ReadByte(), reader.ReadByte());
+
+            reader.ReadBytes(2);
 
             header.ProfileDeviceClass = reader.ReadString(4);
-            header.ColorSpaceOfData = reader.ReadString(4).TrimEnd(' ');
-            header.PCS = reader.ReadInt32BE();
+            header.ColorSpaceOfData   = reader.ReadString(4).TrimEnd(' ');
+            header.PCS                = reader.ReadInt32BE();
 
             return header;
         }
@@ -70,42 +79,6 @@ namespace Carbon.Media
 
         // 40-43	(4)
         public string PlatformTarget { get; set; }
-    }
-
-    public static class BinaryReaderExtensions
-    {
-        public static string ReadString(this BinaryReader binRdr, int length)
-            => text::Encoding.ASCII.GetString(binRdr.ReadBytes(length));
-
-        public static UInt16 ReadUInt16BE(this BinaryReader binRdr)
-            => BitConverter.ToUInt16(binRdr.ReadBytesRequired(sizeof(UInt16)).Reverse(), 0);
-
-        public static Int16 ReadInt16BE(this BinaryReader binRdr)
-            => BitConverter.ToInt16(binRdr.ReadBytesRequired(sizeof(Int16)).Reverse(), 0);
-
-        public static UInt32 ReadUInt32BE(this BinaryReader binRdr)
-            => BitConverter.ToUInt32(binRdr.ReadBytesRequired(sizeof(UInt32)).Reverse(), 0);
-
-        public static Int32 ReadInt32BE(this BinaryReader binRdr)
-            => BitConverter.ToInt32(binRdr.ReadBytesRequired(sizeof(Int32)).Reverse(), 0);
-
-        private static byte[] ReadBytesRequired(this BinaryReader binRdr, int byteCount)
-        {
-            var result = binRdr.ReadBytes(byteCount);
-
-            if (result.Length != byteCount)
-                throw new EndOfStreamException($"{byteCount} bytes required from stream, but only {result.Length} returned.");
-
-            return result;
-        }
-
-        // Note this MODIFIES THE GIVEN ARRAY then returns a reference to the modified array.
-        private static byte[] Reverse(this byte[] b)
-        {
-            Array.Reverse(b);
-
-            return b;
-        }
     }
 }
 

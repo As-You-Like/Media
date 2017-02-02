@@ -2,29 +2,29 @@
 {
     public static class AlignmentHelper
     {
-        public static Alignment ParseAlignment(string text)
+        public static CropAnchor ParseAlignment(string text)
         {
             switch (text)
             {
                 case "b":
-                case "bottom": return Alignment.Bottom;
+                case "bottom": return CropAnchor.Bottom;
 
-                case "bl": return Alignment.BottomLeft;
-                case "br": return Alignment.BottomRight;
+                case "bl": return CropAnchor.BottomLeft;
+                case "br": return CropAnchor.BottomRight;
 
                 case "c":
-                case "center": return Alignment.Center;
+                case "center": return CropAnchor.Center;
 
-                case "l": return Alignment.Left;
-                case "r": return Alignment.Right;
+                case "l": return CropAnchor.Left;
+                case "r": return CropAnchor.Right;
 
                 case "t":
-                case "top": return Alignment.Top;
+                case "top": return CropAnchor.Top;
 
-                case "tl": return Alignment.TopLeft;
-                case "tr": return Alignment.TopRight;
+                case "tl": return CropAnchor.TopLeft;
+                case "tr": return CropAnchor.TopRight;
 
-                default: return Alignment.Unknown;
+                default: return CropAnchor.Unknown;
             }
         }
     }

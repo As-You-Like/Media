@@ -1,11 +1,5 @@
 ﻿namespace Carbon.Media.Tests
 {
-	using System;
-
-	using Carbon.Helpers;
-
-	using Xunit;
-
 	// 
 	public class VideoendentionTests
 	{

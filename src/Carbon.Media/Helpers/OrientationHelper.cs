@@ -17,9 +17,8 @@ namespace Carbon.Media
         }
 
         public static MediaOrientation Parse(string text)
-        {
-            return (MediaOrientation)Enum.Parse(typeof(MediaOrientation), text);
-        }
+            => (MediaOrientation)Enum.Parse(typeof(MediaOrientation), text);
+        
 
         public static ITransform[] GetTransforms(this MediaOrientation orientation)
         {
