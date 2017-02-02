@@ -7,8 +7,6 @@ namespace Carbon.Media
 
     public sealed class MediaRenditionInfo : ISize
     {
-        private static readonly char[] forwardSlash = { '/' };
-
         public static string Host = "";
         public static ISigner Signer = null;
 
@@ -38,7 +36,7 @@ namespace Carbon.Media
 
         // TODO: Remove Linq
         public string TransformString 
-            => string.Join("/", path.Split(forwardSlash).Skip(1));
+            => string.Join("/", path.Split(Seperators.ForwardSlash).Skip(1));
 
         public MediaRenditionInfo WithBackground(string hex)
         {
@@ -108,13 +106,7 @@ namespace Carbon.Media
                 {
                     var resize = (Resize)transform;
 
-                    b.Transform(new Resize(resize.Size.Scale(scale)));
-                }
-                else if (transform is AnchoredResize)
-                {
-                    var resize = (AnchoredResize)transform;
-
-                    b.Transform(new AnchoredResize(resize.Size.Scale(scale), resize.Anchor));
+                    b.Transform(resize * scale);
                 }
                 else if (transform is Crop)
                 {
