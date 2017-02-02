@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class Flip : ITransform
+    public sealed class Flip : ITransform
     {
         public static readonly Flip Horizontally = new Flip(FlipAxis.X);
         public static readonly Flip Vertically   = new Flip(FlipAxis.Y);
@@ -12,7 +12,8 @@
 
         public FlipAxis Axis { get; }
 
-        public override string ToString() => "flip(" + Axis.ToString().ToLower() + ")";
+        public override string ToString() 
+            => "flip(" + Axis.Lowercased() + ")";
 
         public static Flip Parse(string key)
         {
@@ -25,9 +26,20 @@
 
             #endregion
 
-            var axis = key;
+            return new Flip(key.ToEnum<FlipAxis>(true));
+        }
+    }
 
-            return new Flip(axis.ToEnum<FlipAxis>(true));
+    internal static class FlipAxisExtensions
+    {
+        public static string Lowercased(this FlipAxis axis)
+        {
+            switch (axis)
+            {
+                case FlipAxis.X : return "x";
+                case FlipAxis.Y : return "y";
+                default         : return "unknown";
+            }
         }
     }
 

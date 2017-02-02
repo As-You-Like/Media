@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class Rotate : ITransform
+    public sealed class Rotate : ITransform
     {
         public Rotate(int angle)
         {
@@ -8,7 +8,7 @@
 
             /*
 			if (!angle.InRange(0, 360))
-				throw new ArgumentOutOfRangeException("Angle must be between 0 and 360. Was {0}".FormatWith(angle));
+				throw new ArgumentOutOfRangeException($"Angle must be between 0 and 360. Was {angle}");
 			*/
 
             #endregion
@@ -18,7 +18,8 @@
 
         public int Angle { get; }
 
-        public override string ToString() => $"rotate({Angle})";
+        public override string ToString() 
+            => $"rotate({Angle})";
 
         public static Rotate Parse(string key)
         {
@@ -31,9 +32,7 @@
 
             #endregion
 
-            var angle = int.Parse(key);
-
-            return new Rotate(angle);
+            return new Rotate(angle: int.Parse(key));
         }
     }
 }

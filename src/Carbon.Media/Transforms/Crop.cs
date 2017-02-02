@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Numerics;
 
 namespace Carbon.Media
 {
     using Geometry;
 
-    public struct Crop : ITransform
+    public sealed class Crop : ITransform
     {
-        public Crop(Vector2 origin, Size size)
-            : this(new Rectangle((int)origin.X, (int)origin.Y, size.Width, size.Height))
-        { }
-
         public Crop(int x, int y, int width, int height)
         {
             #region Preconditions
 
             if (width <= 0)
-                throw new ArgumentOutOfRangeException("width", width, "Must be greater than 0");
+                throw new ArgumentOutOfRangeException(nameof(width), width, "Must be greater than 0");
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height", height, "Must be greater than 0");
+                throw new ArgumentOutOfRangeException(nameof(height), height, "Must be greater than 0");
 
             #endregion
 
@@ -33,24 +28,21 @@ namespace Carbon.Media
 
         public Rectangle Rectangle { get; }
 
+        public int X => Rectangle.X;
+
+        public int Y => Rectangle.Y;
+
         public int Width => Rectangle.Width;
 
         public int Height => Rectangle.Height;
 
+        // crop:0-0_100x100
         public override string ToString()
-        {
-            // crop:0-0_100x100
-
-            return string.Format("crop:{0}-{1}_{2}x{3}",
-                /*0*/ Rectangle.X,
-                /*1*/ Rectangle.Y,
-                /*2*/ Rectangle.Width,
-                /*3*/ Rectangle.Height
-            );
-        }
+            => $"crop:{X}-{Y}_{Width}x{Height}";
 
         public static Crop Parse(string key)
         {
+            // crop:0-0_100x100
             #region Normalization
 
             if (key.StartsWith("crop:"))
@@ -60,17 +52,17 @@ namespace Carbon.Media
 
             #endregion
 
-            // crop:0-0_100x100
+            // 0-0_100x100
 
-            var locationString = key.Split('_')[0];
-            var sizeString = key.Split('_')[1];
+            var parts = key.Split(Seperators.Underscore); // '_'
 
-            int x = int.Parse(locationString.Split('-')[0]);
-            int y = int.Parse(locationString.Split('-')[1]);
-            int width = int.Parse(sizeString.Split('x')[0]);
-            int height = int.Parse(sizeString.Split('x')[1]);
+            var locationString = parts[0];
+            var size = Size.Parse(parts[1]);
 
-            return new Crop(x, y, width, height);
+            int x = int.Parse(locationString.Split(Seperators.Dash)[0]), // '-'
+                y = int.Parse(locationString.Split(Seperators.Dash)[1]);
+
+            return new Crop(x, y, size.Width, size.Height);
         }
     }
 }

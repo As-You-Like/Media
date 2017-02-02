@@ -60,15 +60,8 @@ namespace Carbon.Media
             foreach (var transform in transformList)
             {
                 #region Update the Current Size
-
-                if (transform is AnchoredResize)
-                {
-                    var anchoredResize = (AnchoredResize)transform;
-
-                    width = anchoredResize.Width;
-                    height = anchoredResize.Height;
-                }
-                else if (transform is Resize)
+                
+                if (transform is Resize)
                 {
                     var resize = (Resize)transform;
 
@@ -79,8 +72,8 @@ namespace Carbon.Media
                 {
                     var crop = (Crop)transform;
 
-                    this.width = crop.Width;
-                    this.height = crop.Height;
+                    width = crop.Width;
+                    height = crop.Height;
                 }
                 else if (transform is Rotate)
                 {
@@ -135,6 +128,13 @@ namespace Carbon.Media
             return this;
         }
 
+        public MediaTransformation Resize(int width, int height, CropAnchor anchor)
+        {
+            Transform(new Resize(width, height, ScaleMode.None, anchor));
+
+            return this;
+        }
+
         public MediaTransformation Resize(int width, int height)
         {
             Transform(new Resize(width, height));
@@ -167,8 +167,15 @@ namespace Carbon.Media
 
         #region Helpers
 
+        private static readonly char[] forwardSlash = { '/' };
+
         public static MediaTransformation ParsePath(string path)
         {
+            if (path[0] == '/')
+            {
+                path = path.Substring(1);
+            }
+
             // 100/transform/transform.format
 
             var lastDotIndex = path.LastIndexOf('.');
@@ -179,11 +186,12 @@ namespace Carbon.Media
                 path = path.Substring(0, lastDotIndex);
             }
 
-            var parts = path.TrimStart('/').Split('/');
+            var parts = path.Split(forwardSlash);
 
             int i = 1;
 
-            string id = "";
+            var id = string.Empty;
+
             var transforms = new List<ITransform>();
 
             foreach (var part in parts)
@@ -196,15 +204,9 @@ namespace Carbon.Media
                 {
                     ITransform transform;
 
-
                     if (char.IsDigit(part[0]))
                     {
-
-                        if (part.Contains("-"))
-                        {
-                            transform = AnchoredResize.Parse(part);
-                        }
-                        else if (part.Contains(":"))
+                        if (part.Contains(":"))
                         {
                             // 1:00
 
@@ -236,7 +238,7 @@ namespace Carbon.Media
                 i++;
             }
 
-            var rendition = new MediaTransformation(new MediaSource(id), format);
+            var rendition = new MediaTransformation(new MediaSource(id, 0, 0), format);
 
             foreach (var t in transforms)
             {
@@ -283,15 +285,17 @@ namespace Carbon.Media
 
     internal class MediaSource : IMediaSource
     {
-        public MediaSource(string key)
+        public MediaSource(string key, int width, int height)
         {
             Key = key;
+            Width = width;
+            Height = height;
         }
 
         public string Key { get; }
 
-        public int Width { get; set; }
+        public int Width { get; }
 
-        public int Height { get; set; }
+        public int Height { get; }
     }
 }
