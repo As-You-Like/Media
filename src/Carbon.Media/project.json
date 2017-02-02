@@ -1,12 +1,8 @@
 ﻿{
   "title": "Carbon Media",
-  "version": "1.1.0",
-
+  "description": "Media primitives.",
+  "version": "1.2.0",
   "authors": [ "iamcarbon" ],
-
-  "dependencies": {
-    "System.Numerics.Vectors": "4.3.0"
-  },
 
   "frameworks": {
     "netstandard1.6": {
@@ -29,13 +25,12 @@
     }
   },
 
-
   "packOptions": {
     "summary": "Multimedia abstractions",
     "owners": [ "Jason Nelson" ],
     "licenseUrl": "https://opensource.org/licenses/MIT",
     "requireLicenseAcceptance": false,
-    "tags": [ "colorprofile", "media", "mimes" ],
+    "tags": [ "colorprofile", "media", "mimes", "carbon" ],
     "repository": {
       "type": "git",
       "url": "https://github.com/carbon/Media"

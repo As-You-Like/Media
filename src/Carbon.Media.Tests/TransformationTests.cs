@@ -21,6 +21,21 @@ namespace Carbon.Media.Tests
     public class ImageRendentionTests
     {
         [Fact]
+        public void DrawTextTests()
+        {
+            // 1045645/1:00/100x100.jpeg
+            var transformation = MediaTransformation.ParsePath("1045645/text(Hello World,font:12px Helvetica)/100x100.jpeg");
+
+            var text = (DrawText)transformation.GetTransforms()[0];
+
+
+            Assert.Equal("Hello World", text.Text);
+            Assert.Equal(12, text.Font.Size);
+            Assert.Equal("Helvetica", text.Font.Name);
+        }
+
+
+        [Fact]
         public void ClipTest1()
         {
             MediaRenditionInfo.Host = "google.com";

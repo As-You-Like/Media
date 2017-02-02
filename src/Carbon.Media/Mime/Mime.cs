@@ -26,7 +26,7 @@ namespace Carbon.Media
             Name = name;
             Formats = formats;
             Type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
-            Signatures = Array.Empty<MagicNumber>();
+            Signatures = null; // Array.Empty<MagicNumber>();
         }
 
         internal Mime(string name, string format, MagicNumber[] magicNumbers)
@@ -136,7 +136,7 @@ namespace Carbon.Media
         public static readonly Mime Atom = new Mime("application/atom+xml", "atom");
         public static readonly Mime Doc  = new Mime("application/msword", "doc");
         public static readonly Mime Js   = new Mime("application/javascript", "js");
-        public static readonly Mime Json = new Mime("application/json", "json"); // http://tools.ietf.org/html/rfc4627
+        public static readonly Mime Json = new Mime("application/json", "json");
         public static readonly Mime M3u8 = new Mime("application/x-mpegURL", "m3u8");
         public static readonly Mime Mpd  = new Mime("application/dash+xml", "mpd");
         public static readonly Mime Pdf  = new Mime("application/pdf", "pdf", new[] { MagicNumber.Pdf });

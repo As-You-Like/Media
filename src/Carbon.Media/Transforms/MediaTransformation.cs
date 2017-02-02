@@ -44,56 +44,59 @@ namespace Carbon.Media
 
         public int Height => height;
 
-        // TODO: Immutable
-        public IList<ITransform> GetTransforms() => transforms.AsReadOnly();
+        public IReadOnlyList<ITransform> GetTransforms() => transforms.AsReadOnly();
 
-        public MediaTransformation Transform(params ITransform[] transformList)
+        public MediaTransformation Transform(params ITransform[] transforms)
         {
             #region Preconditions
 
-            if (transformList == null) throw new ArgumentNullException("transformList");
+            if (transforms == null)
+                throw new ArgumentNullException(nameof(transforms));
 
             #endregion
 
-            if (transformList.Length == 0) return this;
+            if (transforms.Length == 0) return this;
 
-            foreach (var transform in transformList)
+            foreach (var transform in transforms)
             {
-                #region Update the Current Size
-                
-                if (transform is Resize)
-                {
-                    var resize = (Resize)transform;
-
-                    width = resize.Width;
-                    height = resize.Height;
-                }
-                else if (transform is Crop)
-                {
-                    var crop = (Crop)transform;
-
-                    width = crop.Width;
-                    height = crop.Height;
-                }
-                else if (transform is Rotate)
-                {
-                    var rotate = (Rotate)transform;
-
-                    // Flip the height & width
-                    if (rotate.Angle == 90 || rotate.Angle == 270)
-                    {
-                        var oldWidth = width;
-                        var oldHeight = height;
-
-                        width = oldHeight;
-                        height = oldWidth;
-                    }
-                }
-
-                #endregion
-
-                this.transforms.Add(transform);
+                Transform(transform);
             }
+
+            return this;
+        }
+
+        private MediaTransformation Transform(ITransform transform)
+        {
+            if (transform is Resize)
+            {
+                var resize = (Resize)transform;
+
+                width = resize.Width;
+                height = resize.Height;
+            }
+            else if (transform is Crop)
+            {
+                var crop = (Crop)transform;
+
+                width = crop.Width;
+                height = crop.Height;
+            }
+            else if (transform is Rotate)
+            {
+                var rotate = (Rotate)transform;
+
+                // Flip the height & width
+                if (rotate.Angle == 90 || rotate.Angle == 270)
+                {
+                    var oldWidth = width;
+                    var oldHeight = height;
+
+                    width = oldHeight;
+                    height = oldWidth;
+                }
+            }
+
+            this.transforms.Add(transform);
 
             return this;
         }
@@ -117,6 +120,13 @@ namespace Carbon.Media
         public MediaTransformation Clip(TimeSpan start, TimeSpan end)
         {
             Transform(new Clip(start, end));
+
+            return this;
+        }
+
+        public MediaTransformation DrawText(string text)
+        {
+            Transform(new DrawText(text));
 
             return this;
         }
@@ -167,8 +177,6 @@ namespace Carbon.Media
 
         #region Helpers
 
-        private static readonly char[] forwardSlash = { '/' };
-
         public static MediaTransformation ParsePath(string path)
         {
             if (path[0] == '/')
@@ -186,56 +194,49 @@ namespace Carbon.Media
                 path = path.Substring(0, lastDotIndex);
             }
 
-            var parts = path.Split(forwardSlash);
+            var parts = path.Split(Seperators.ForwardSlash);
 
-            int i = 1;
+            var id = parts[0];
 
-            var id = string.Empty;
+            var transforms = new ITransform[parts.Length - 1];
 
-            var transforms = new List<ITransform>();
-
-            foreach (var part in parts)
+            for (var i = 1; i < parts.Length; i++)
             {
-                if (i == 1)
-                {
-                    id = part;
-                }
-                else
-                {
-                    ITransform transform;
+                var part = parts[i];
 
-                    if (char.IsDigit(part[0]))
+                ITransform transform;
+
+                if (char.IsDigit(part[0]))
+                {
+                    if (part.Contains(":"))
                     {
-                        if (part.Contains(":"))
-                        {
-                            // 1:00
+                        // 1:00
 
-                            var time = TimeSpan.Parse(part);
+                        var time = TimeSpan.Parse(part);
 
-                            transform = new Clip(time, time);
-                        }
-                        else
-                        {
-                            transform = Media.Resize.Parse(part);
-                        }
+                        transform = new Clip(time, time);
                     }
                     else
                     {
-                        var transformName = part.Split('(', ':')[0];
-
-                        switch (transformName)
-                        {
-                            case "crop"   : transform = Media.Crop.Parse(part);        break;
-                            case "rotate" : transform = Media.Rotate.Parse(part);      break;
-                            case "flip"   : transform = Flip.Parse(part);              break;
-                            default       : transform = Media.ApplyFilter.Parse(part); break;
-                        }
+                        transform = Media.Resize.Parse(part);
                     }
+                }
+                else
+                {
+                    var transformName = part.Split('(', ':')[0];
 
-                    transforms.Add(transform);
+                    switch (transformName)
+                    {
+                        case "crop"     : transform = Media.Crop.Parse(part);        break;
+                        case "rotate"   : transform = Media.Rotate.Parse(part);      break;
+                        case "flip"     : transform = Flip.Parse(part);              break;
+                        case "text"     : transform = Media.DrawText.Parse(part);    break;
+                        case "overlay"  : transform = Media.Overlay.Parse(part);     break;
+                        default         : transform = Media.ApplyFilter.Parse(part); break;
+                    }
                 }
 
-                i++;
+                transforms[i - 1] = transform;
             }
 
             var rendition = new MediaTransformation(new MediaSource(id, 0, 0), format);

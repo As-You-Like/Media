@@ -19,7 +19,7 @@ namespace Carbon.Media
             for (var i = 0; i <= data.Length; i++)
             {
                 // Null matches can match anything
-                if (this.Data[i] == null) continue;
+                if (Data[i] == null) continue;
 
                 if (data[i] != this.Data[i].Value)
                 {
@@ -33,10 +33,8 @@ namespace Carbon.Media
         public static MagicNumber FromHex(int offset, string text)
             => new MagicNumber(new byte?[0]);
 
-
         public static MagicNumber FromASCII(string text, int offset = 0)
             => new MagicNumber(new byte?[0]);
-
 
         public readonly static MagicNumber Flv = new MagicNumber(new byte?[] { 0x46, 0x4C, 0x56, 0x01 });
 
@@ -57,14 +55,13 @@ namespace Carbon.Media
         public static readonly MagicNumber Jpeg4 = FromASCII("ÿØÿá");
         public static readonly MagicNumber Jpeg5 = FromASCII("x if");
 
-        // public static readonly MimeSignature Exe = Ansi("MZ", Mime.Jpeg);
+        public static readonly MagicNumber Exe = FromASCII("MZ");
 
         public static readonly MagicNumber Png = FromASCII(".PNG");
 
 
         public static readonly MagicNumber Pdf = FromASCII("%PDF");  // new byte[] { 0x25, 0x50, 0x44, 0x46 }
         public static readonly MagicNumber Ogg = FromASCII("OggS"); // TODO: specific type
-        // public readonly static MagicNumber Gif = new MimeSignature(new byte?[] { 0x47, 0x49, 0x46, 0x38, null, 0x61 }, Mime.Gif);
 
         public readonly static MagicNumber Psd = new MagicNumber(new byte?[] { 0x38, 0x42, 0x50, 0x53 });
 
