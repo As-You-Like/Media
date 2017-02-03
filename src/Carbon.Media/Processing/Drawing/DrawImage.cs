@@ -1,20 +1,31 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-    public sealed class DrawColor : DrawBase
+    public sealed class DrawImage : DrawBase
     {
-        public DrawColor(
-            string color,
+        public DrawImage(       
+            string src,
             Box box,
-            BlendMode mode = BlendMode.Normal,
-            Alignment? align = null)
-            : base(box, align, mode)
+            BlendMode blendMode = BlendMode.Normal,
+            Alignment align = Alignment.Left)
+            : base(box, align, blendMode, ScaleMode.None)
         {
-            Color = color;
+            #region Preconditions
+
+            if (src == null)
+                throw new ArgumentNullException(nameof(src));
+ 
+            #endregion
+
+            Src = src;
         }
 
-        public string Color { get; set; }
+        public string Src { get; set; }
 
-        public static DrawColor Parse(string key)
+        // image(src.jpeg,width:100,x:0,y:0,align:center)
+        
+        public static DrawImage Parse(string key)
         {
             #region Normalization
 
@@ -29,7 +40,7 @@
 
             var parts = key.Split(Seperators.Comma);
 
-            var color = parts[0];
+            var name = parts[0];
 
             var mode  = BlendMode.Normal;
             var align = Alignment.Left;
@@ -47,15 +58,15 @@
                 {
                     case "mode"   : mode = v.ToEnum<BlendMode>(true);   break;
                     case "align"  : align = v.ToEnum<Alignment>(true);  break;
-                    case "x"      : box.X       = Unit.Parse(v);        break;
-                    case "y"      : box.Y       = Unit.Parse(v);        break;
-                    case "width"  : box.Width   = Unit.Parse(v);        break;
-                    case "height" : box.Height  = Unit.Parse(v);        break;
+                    case "x"      : box.X = Unit.Parse(v);              break;
+                    case "y"      : box.Y = Unit.Parse(v);              break;
+                    case "width"  : box.Width = Unit.Parse(v);          break;
+                    case "height" : box.Height = Unit.Parse(v);         break;
                     case "padding": box.Padding = Padding.Parse(v);     break;
                 }
             }
 
-            return new DrawColor(color, box, mode, align);
+            return new DrawImage(name, box, mode, align);
         }
     }
 }

@@ -6,9 +6,9 @@ namespace Carbon.Media
     {
         public DrawBase(
             Box box,
-            Alignment? align = null,
-            BlendMode blendMode = BlendMode.Normal,
-            ScaleMode scaleMode = ScaleMode.None)
+            Alignment? align,
+            BlendMode blendMode,
+            ScaleMode scaleMode)
         {
             Box = box;
             Align = align;

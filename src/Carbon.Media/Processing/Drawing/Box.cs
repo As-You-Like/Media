@@ -14,6 +14,8 @@ namespace Carbon.Media
             Height = height;
         }
 
+        // Alignment?
+
         public Unit? X          { get; set; }  
         public Unit? Y          { get; set; }
         public Unit? Width      { get; set; } // e.g. 50% || 50px

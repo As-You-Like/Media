@@ -6,8 +6,8 @@
             string o,
             Box box,
             BlendMode blendMode = BlendMode.Normal,
-            Alignment align = Alignment.Left)
-            : base(box, align, blendMode)
+            Alignment? align = null)
+            : base(box, align, blendMode, ScaleMode.None)
         {
             Gradient = o;
         }

@@ -118,23 +118,23 @@ namespace Carbon.Media
 
             var b = new MediaTransformation(a.Source, a.Format);
 
-            foreach (var transform in a.GetTransforms())
+            foreach (var processor in a.GetTransforms())
             {
-                if (transform is Resize)
+                if (processor is Resize)
                 {
-                    var resize = (Resize)transform;
+                    var resize = (Resize)processor;
 
                     b.Transform(resize * scale);
                 }
-                else if (transform is Crop)
+                else if (processor is Crop)
                 {
-                    var crop = (Crop)transform;
+                    var crop = (Crop)processor;
 
                     b.Transform(new Crop(crop.Rectangle.Scale(scale)));
                 }
                 else
                 {
-                    b.Transform(transform);
+                    b.Transform(processor);
                 }
             }
 
