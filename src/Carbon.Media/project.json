@@ -1,9 +1,8 @@
-﻿{
+{
   "title": "Carbon Media",
   "description": "Media primitives.",
   "version": "1.2.0",
   "authors": [ "iamcarbon" ],
-
   "frameworks": {
     "netstandard1.6": {
       "imports": "dnxcore50",
@@ -23,7 +22,6 @@
       }
     }
   },
-
   "packOptions": {
     "summary": "Multimedia abstractions",
     "owners": [ "Jason Nelson" ],
@@ -34,5 +32,8 @@
       "type": "git",
       "url": "https://github.com/carbon/Media"
     }
+  },
+  "dependencies": {
+    "Carbon.Color": "1.2.0"
   }
 }

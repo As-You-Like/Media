@@ -5,6 +5,7 @@ namespace Carbon.Media.Tests
 {
 	using Xunit;
 	
+    /*
 	public class ColorProfileTests
 	{
 		[Fact]
@@ -26,4 +27,5 @@ namespace Carbon.Media.Tests
 			}
 		}
 	}
+    */
 }

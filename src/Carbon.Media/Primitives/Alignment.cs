@@ -14,7 +14,7 @@
 
     // Justify?
 
-    public static class AlignExtensions
+    public static class AlignmentExtensions
     {
         public static string ToLower(this Alignment alignment)
         {

@@ -3,6 +3,8 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
+    using Color;
+
     public class MediaMetadata
     {
         [DataMember(Name = "type")]
@@ -20,8 +22,11 @@ namespace Carbon.Media
         [DataMember(Name = "colorSpace", EmitDefaultValue = false)]
         public ColorSpace ColorSpace { get; set; }
 
+        // TODO: what if it has mutiple profiles?
+        [DataMember(Name = "colorProfile", EmitDefaultValue = false)]
         public ColorProfile ColorProfile { get; set; }
 
+        [DataMember(Name = "dateTime")]
         public DateTime? DateTime { get; set; } // Timestamp?
     }
 
