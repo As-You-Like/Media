@@ -18,12 +18,9 @@
         {
             #region Normalization
 
-            var argStart = key.IndexOf('(') + 1;
+            int argStart = key.IndexOf('(') + 1;
 
-            if (argStart > 0)
-            {
-                key = key.Substring(argStart, key.Length - argStart - 1);
-            }
+            key = key.Substring(argStart, key.Length - argStart - 1);
 
             #endregion
 

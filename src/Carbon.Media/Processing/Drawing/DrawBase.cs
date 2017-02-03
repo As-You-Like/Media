@@ -23,7 +23,7 @@ namespace Carbon.Media
         public BlendMode BlendMode { get; }
 
         public ScaleMode ScaleMode { get; set; } // Scale within the box
-
+        
         // TODO: Use tuple w/ C# 7
         internal virtual IEnumerable<KeyValuePair<string, string>> Args()
         {

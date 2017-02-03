@@ -3,8 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    using Color;
-
     public class MediaMetadata
     {
         [DataMember(Name = "type")]

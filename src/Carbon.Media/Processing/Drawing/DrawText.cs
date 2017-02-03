@@ -72,11 +72,8 @@ namespace Carbon.Media
 
             var argStart = key.IndexOf('(') + 1;
 
-            if (argStart > 0)
-            {
-                key = key.Substring(argStart, key.Length - argStart - 1);
-            }
-
+            key = key.Substring(argStart, key.Length - argStart - 1);
+            
             #endregion
 
             var parts = key.Split(Seperators.Comma);

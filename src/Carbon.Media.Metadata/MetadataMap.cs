@@ -63,7 +63,7 @@ namespace Carbon.Media.Metadata
 
     public sealed class UnsignedRational : MetadataItemConverter
     {
-        public static readonly UnsignedRational Default = new UnsignedRational();
+        public new static readonly UnsignedRational Default = new UnsignedRational();
 
         public override object Normalize(object value)
         {
@@ -235,7 +235,7 @@ namespace Carbon.Media.Metadata
             { 37520,    new MetadataItemInfo("SubsecTime",              MetaFormat.Long, 37520, "A tag used to record fractions of seconds for the DateTime tag.") },
             { 37522,    new MetadataItemInfo("SubsecTimeDigitized",     MetaFormat.Long, 37522) },
             { 40960,    new MetadataItemInfo("FlashpixVersion" ) },
-            { 40961,    new MetadataItemInfo("ColorSpace",              new NumberToEnum<ColorSpace>()) },
+            // { 40961,    new MetadataItemInfo("ColorSpace",              new NumberToEnum<ColorSpace>()) }, 1 = sRGB, 65535 = Uncalibrated
             { 40962,    new MetadataItemInfo("PixelXDimension") },
             { 40963,    new MetadataItemInfo("PixelYDimension") },
             { 41483,    new MetadataItemInfo("FlashEnergy") },
