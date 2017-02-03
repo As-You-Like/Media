@@ -87,6 +87,10 @@ namespace Carbon.Media
             return a;
         }
 
+
+        public static implicit operator double(Rational rational)
+            => rational.ToDouble();
+
         public string ToString(string format, IFormatProvider formatProvider)
             => ToDouble().ToString(format);
     }

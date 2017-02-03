@@ -28,21 +28,47 @@ namespace Carbon.Media
 
         public Rectangle Rectangle { get; }
 
-        public int X => Rectangle.X;
+        public int X => (int)Rectangle.X;
 
-        public int Y => Rectangle.Y;
+        public int Y => (int)Rectangle.Y;
 
-        public int Width => Rectangle.Width;
+        public int Width => (int)Rectangle.Width;
 
-        public int Height => Rectangle.Height;
+        public int Height => (int)Rectangle.Height;
 
-        // crop:0-0_100x100
+        // OLD: crop:0-0_100x100
+        // NEW: crop(0,0,100,100)
         public override string ToString()
-            => $"crop:{X}-{Y}_{Width}x{Height}";
+            => $"crop({X},{Y},{Width},{Height})";
 
         public static Crop Parse(string key)
         {
+            string[] parts;
+
+            // New Format
+            // crop(0,0,100,100)
+            // crop(0.5,0.5,0.5,0.5)
+            // crop(x:10,y:100)
+
+            if (key.StartsWith("crop("))
+            {
+                key = key.Remove(0, 5);
+
+                key = key.Substring(0, key.Length - 1);
+
+                parts = key.Split(Seperators.Comma);
+
+                return new Crop(
+                    x      : int.Parse(parts[0]),
+                    y      : int.Parse(parts[1]),
+                    width  : int.Parse(parts[2]),
+                    height : int.Parse(parts[3])
+                );
+            }
+
+            // Legacy FORMAT
             // crop:0-0_100x100
+
             #region Normalization
 
             if (key.StartsWith("crop:"))
@@ -54,7 +80,7 @@ namespace Carbon.Media
 
             // 0-0_100x100
 
-            var parts = key.Split(Seperators.Underscore); // '_'
+            parts = key.Split(Seperators.Underscore); // '_'
 
             var locationString = parts[0];
             var size = Size.Parse(parts[1]);

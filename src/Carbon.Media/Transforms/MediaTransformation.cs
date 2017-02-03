@@ -256,7 +256,7 @@ namespace Carbon.Media
         {
             /* 
 			10x10.gif			
-			crop:0-0_10x10.jpeg		// A cropped image rendention (x=0,y=0,width=100,height=100)
+			crop(0,0,10,10).jpeg	// A cropped image rendention (x=0,y=0,width=100,height=100)
 			10x10-c/rotate(90).png	// A 10x10 image (anchored at it's center when resized) rotated 90 degrees
 			200x100/rotate(90).png
 			640x480.mp4

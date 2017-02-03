@@ -11,6 +11,7 @@ namespace Carbon.Media
             Unit? x = null,
             Unit? y= null,
             Unit? width = null, 
+            Unit? padding = null,
             string color = null)
         {
             Text = text;
@@ -60,6 +61,7 @@ namespace Carbon.Media
             Unit? x = null;
             Unit? y = null;
             Unit? width = null;
+            Unit? padding = null;
             string color = null;
             Alignment align = Alignment.Left;
             Font? font = null;
@@ -77,13 +79,14 @@ namespace Carbon.Media
                     case "x"        : x = Unit.Parse(v);                                         break;
                     case "y"        : y = Unit.Parse(v);                                         break;
                     case "width"    : width = Unit.Parse(v);                                     break;
+                    case "padding"  : padding = Unit.Parse(v);                                   break;
                     case "font"     : font = Media.Font.Parse(v);                                break;
                     case "color"    : color = v;                                                 break;
                 }
 
             }
 
-            return new DrawText(text, font, align, x, y, width, color);
+            return new DrawText(text, font, align, x, y, width, padding, color);
         }
     }
 

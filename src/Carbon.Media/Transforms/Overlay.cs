@@ -9,6 +9,7 @@ namespace Carbon.Media
             Unit? y = null,
             Unit? width = null,
             Unit? height = null,
+            Unit? padding = null,
             BlendMode mode = BlendMode.Normal,
             Alignment align = Alignment.Left)
         {
@@ -17,6 +18,7 @@ namespace Carbon.Media
             Y = y;
             Width = width;
             Height = height;
+            Padding = padding;
             BlendMode = mode;
             Align = align;
         }
@@ -44,6 +46,8 @@ namespace Carbon.Media
 
         public Unit? Height { get; set; }
 
+        public Unit? Padding { get; set; } // padding:5
+
         // overlay(hello,width:100,x:0,y:0,align:center)
         
         public static Overlay Parse(string key)
@@ -70,6 +74,7 @@ namespace Carbon.Media
             Unit? y = null;
             Unit? width = null;
             Unit? height = null;
+            Unit? padding = null;
 
             for (var i = 1; i < parts.Length; i++)
             {
@@ -86,10 +91,11 @@ namespace Carbon.Media
                     case "y"      : y = Unit.Parse(v); break;
                     case "width"  : width = Unit.Parse(v); break;
                     case "height" : height = Unit.Parse(v); break;
+                    case "padding": padding = Unit.Parse(v); break;
                 }
             }
 
-            return new Overlay(name, x, y, width, height, mode, align);
+            return new Overlay(name, x, y, width, height, padding, mode, align);
         }
     }
 

@@ -22,9 +22,9 @@ namespace Carbon.Media
         public TimeSpan End { get; }
 
         public override string ToString()
-            => $"clip:{Start.TotalSeconds}-{End.TotalSeconds}";
+            => $"clip({Start.TotalSeconds},{End.TotalSeconds})";
 
-        // clip:0-30
+        // clip(0,30)
 
     }
 }

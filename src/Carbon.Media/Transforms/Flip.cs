@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public sealed class Flip : ITransform
     {
@@ -12,8 +14,9 @@
 
         public FlipAxis Axis { get; }
 
+        // flip(x | y)
         public override string ToString() 
-            => "flip(" + Axis.Lowercased() + ")";
+            => "flip(" + Axis.ToLower() + ")";
 
         public static Flip Parse(string key)
         {
@@ -26,13 +29,18 @@
 
             #endregion
 
-            return new Flip(key.ToEnum<FlipAxis>(true));
+            switch (key)
+            {
+                case "x" : return Horizontally;
+                case "y" : return Vertically;
+                default  : throw new ArgumentException("Unexpected axis:" + key);
+            }
         }
     }
 
     internal static class FlipAxisExtensions
     {
-        public static string Lowercased(this FlipAxis axis)
+        public static string ToLower(this FlipAxis axis)
         {
             switch (axis)
             {

@@ -61,20 +61,20 @@ namespace Carbon.Media.Tests
         {
             MediaRenditionInfo.Host = "google.com";
 
-            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
+            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop(0,0,85,20).png");
 
             var b = rendition.Scale(2f);
 
-            Assert.Equal("200x200/crop:0-0_170x40.png", b.TransformString);
+            Assert.Equal("200x200/crop(0,0,170,40).png", b.TransformString);
 
             var c = b.Scale(2f);
 
-            Assert.Equal("400x400/crop:0-0_340x80.png", c.TransformString);
+            Assert.Equal("400x400/crop(0,0,340,80).png", c.TransformString);
 
 
             var d = c.WithFormat("gif");
 
-            Assert.Equal("400x400/crop:0-0_340x80.gif", d.TransformString);
+            Assert.Equal("400x400/crop(0,0,340,80).gif", d.TransformString);
         }
 
         [Fact]
@@ -82,11 +82,11 @@ namespace Carbon.Media.Tests
         {
             MediaRenditionInfo.Host = "google.com";
 
-            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
+            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop(0,0,85,20).png");
 
             var b = rendition.Scale(2f);
 
-            Assert.Equal("https://google.com/1045645/200x200/crop:0-0_170x40.png", b.Url);
+            Assert.Equal("https://google.com/1045645/200x200/crop(0,0,170,40).png", b.Url);
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace Carbon.Media.Tests
 
             var b = rendition.Scale(2).Resample("abc");
 
-            Assert.Equal("https://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).png", b.Url);
+            Assert.Equal("https://google.com/1045645/200x200/crop(0,0,170,40)/resample(abc).png", b.Url);
 
         }
 
@@ -113,7 +113,7 @@ namespace Carbon.Media.Tests
 
             MediaRenditionInfo.Signer = new Signer("hey");
 
-            Assert.Equal("https://google.com/hey/1045645/200x200/crop:0-0_170x40/resample(abc).png", b.Url);
+            Assert.Equal("https://google.com/hey/1045645/200x200/crop(0,0,170,40)/resample(abc).png", b.Url);
 
             MediaRenditionInfo.Signer = null;
         }
@@ -123,11 +123,11 @@ namespace Carbon.Media.Tests
         {
             MediaRenditionInfo.Host = "google.com";
 
-            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop:0-0_85x20.png");
+            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop(0,0,85,20).png");
 
             var b = rendition.Scale(2).Resample("abc").WithFormat("jpeg");
 
-            Assert.Equal("https://google.com/1045645/200x200/crop:0-0_170x40/resample(abc).jpeg", b.Url);
+            Assert.Equal("https://google.com/1045645/200x200/crop(0,0,170,40)/resample(abc).jpeg", b.Url);
         }
 
         [Fact]
@@ -184,8 +184,8 @@ namespace Carbon.Media.Tests
                 .Resize(100, 100)
                 .Crop(0, 0, 85, 20);
 
-            Assert.Equal("100x100/crop:0-0_85x20.png", rendition.GetFullName());
-            Assert.Equal("1045645/100x100/crop:0-0_85x20.png", rendition.GetPath());
+            Assert.Equal("100x100/crop(0,0,85,20).png", rendition.GetFullName());
+            Assert.Equal("1045645/100x100/crop(0,0,85,20).png", rendition.GetPath());
 
             var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
 
@@ -193,7 +193,7 @@ namespace Carbon.Media.Tests
             Assert.Equal("png", rendition2.Format);
             Assert.Equal(2, rendition2.GetTransforms().Count);
             Assert.Equal("100x100", rendition2.GetTransforms()[0].ToString());
-            Assert.Equal("crop:0-0_85x20", rendition2.GetTransforms()[1].ToString());
+            Assert.Equal("crop(0,0,85,20)", rendition2.GetTransforms()[1].ToString());
         }
 
         [Fact]
@@ -216,7 +216,7 @@ namespace Carbon.Media.Tests
                 .Crop(0, 0, 85, 20)
                 .Rotate(90);
 
-            Assert.Equal("50x50/crop:0-0_85x20/rotate(90).jpeg", rendition.GetFullName());
+            Assert.Equal("50x50/crop(0,0,85,20)/rotate(90).jpeg", rendition.GetFullName());
 
             var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
 

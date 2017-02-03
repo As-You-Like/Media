@@ -54,16 +54,26 @@ namespace Carbon.Media
             return $"{Width}x{Height}-{anchor}";
         }
 
+        // 100x100,anchor:center,mode:stretch
+
         public static Resize Parse(string key)
         {
             #region Normalization
 
-            if (key.StartsWith("resize:"))
+            if (key.StartsWith("resize("))
             {
                 key = key.Remove(0, 7);
+
+                key = key.Substring(0, key.Length - 1); // Trim )
             }
 
             #endregion
+
+            if (key.Contains(","))
+            {
+                // anchor
+                // mode
+            }
 
             if (key.Contains("-"))
             {

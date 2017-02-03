@@ -51,14 +51,14 @@ namespace Carbon.Media
             return calculatedSize;
         }
 
-        public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize targetSize, CropAnchor anchor)
+        public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize box, CropAnchor anchor)
         {
             double x = 0d,
                    y = 0d,
                    nPercent = 0d;
             
-            double nPercentW = (double)targetSize.Width / (double)sourceSize.Width;
-            double nPercentH = (double)targetSize.Height / (double)sourceSize.Height;
+            double nPercentW = (double)box.Width / sourceSize.Width;
+            double nPercentH = (double)box.Height / sourceSize.Height;
 
             if (nPercentH < nPercentW)
             {
@@ -70,10 +70,10 @@ namespace Carbon.Media
                         y = 0;
                         break;
                     case CropAnchor.Bottom:
-                        y = targetSize.Height - (sourceSize.Height * nPercent);
+                        y = box.Height - (sourceSize.Height * nPercent);
                         break;
                     default:
-                        y = (targetSize.Height - (sourceSize.Height * nPercent)) / 2d;
+                        y = (box.Height - (sourceSize.Height * nPercent)) / 2d;
                         break;
                 }
             }
@@ -87,19 +87,19 @@ namespace Carbon.Media
                         y = 0;
                         break;
                     case CropAnchor.Right:
-                        x = targetSize.Width - (sourceSize.Width * nPercent);
+                        x = box.Width - (sourceSize.Width * nPercent);
                         break;
                     default:
-                        x = (targetSize.Width - (sourceSize.Width * nPercent)) / 2d;
+                        x = (box.Width - (sourceSize.Width * nPercent)) / 2d;
                         break;
                 }
             }
 
             return new Rectangle(
-                x       : (int)x,
-                y       : (int)y,
-                width   : (int)(sourceSize.Width * nPercent),
-                height  : (int)(sourceSize.Height * nPercent)
+                x       : x,
+                y       : y,
+                width   : sourceSize.Width * nPercent,
+                height  : sourceSize.Height * nPercent
             );
         }
 
@@ -108,8 +108,8 @@ namespace Carbon.Media
         /// </summary>
         public static Size CalculateMaxSize(Size sourceSize, Rational aspect)
         {
-            var targetAspect = aspect.ToDouble();
-            var currentAspect = sourceSize.ToRational().ToDouble();
+            double targetAspect = aspect;
+            double currentAspect = sourceSize.ToRational();
 
             if (currentAspect > targetAspect) // Shrink the width
             {
@@ -117,14 +117,12 @@ namespace Carbon.Media
 
                 return new Size(newWidth, sourceSize.Height);
             }
-
             else if (currentAspect < targetAspect) // Shrink the height
             {
                 int newHeight = (int)(sourceSize.Width / targetAspect);
 
                 return new Size(sourceSize.Width, newHeight);
             }
-
             else // The source and target aspect are the same
             {
                 return sourceSize;

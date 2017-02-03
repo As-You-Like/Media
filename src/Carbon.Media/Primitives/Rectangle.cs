@@ -2,7 +2,7 @@
 {
     public struct Rectangle
     {
-        public Rectangle(int x, int y, int width, int height)
+        public Rectangle(double x, double y, double width, double height)
         {
             X = x;
             Y = y;
@@ -10,12 +10,12 @@
             Height = height;
         }
 
-        public int X { get; }
+        public double X { get; }
 
-        public int Y { get; }
+        public double Y { get; }
 
-        public int Width { get; }
+        public double Width { get; }
 
-        public int Height { get; }
+        public double Height { get; }
     }
 }
