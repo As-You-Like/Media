@@ -36,12 +36,12 @@ namespace Carbon.Media
         // TODO: Use tuple w/ C# 7
         internal override IEnumerable<KeyValuePair<string, string>> Args()
         {
+            if (Color != null) yield return new KeyValuePair<string, string>("color", Color);
+
             foreach (var arg in base.Args())
             {
                 yield return arg;
             }
-
-            if (Color != null)   yield return new KeyValuePair<string, string>("color"   , Color);            
         }
 
         // text(hello+world,font:12px Tacoma,align:center)
@@ -70,11 +70,11 @@ namespace Carbon.Media
         {
             #region Normalization
 
-            if (key.StartsWith("text("))
+            var argStart = key.IndexOf('(') + 1;
+
+            if (argStart > 0)
             {
-                key = key.Remove(0, 5); // text(
-                
-                key = key.Substring(0, key.Length - 1); // )
+                key = key.Substring(argStart, key.Length - argStart - 1);
             }
 
             #endregion
@@ -106,7 +106,7 @@ namespace Carbon.Media
                     case "y"        : box.Y       = Unit.Parse(v);          break;
                     case "width"    : box.Width   = Unit.Parse(v);          break;
                     case "height"   : box.Height  = Unit.Parse(v);          break;
-                    case "padding"  : box.Padding = Unit.Parse(v);          break;
+                    case "padding"  : box.Padding = Padding.Parse(v);       break;
                     case "font"     : font = Media.Font.Parse(v);           break;
                     case "color"    : color = v;                            break;
                 }

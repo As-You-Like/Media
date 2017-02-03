@@ -1,7 +1,11 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-    public struct Unit
+    public struct Unit : IEquatable<Unit>
     {
+        public static readonly Unit Zero = new Unit(0, UnitType.Px);
+
         public Unit(double value, UnitType type = UnitType.Px)
         {
             Value = value;
@@ -37,6 +41,11 @@
             }
 
             return new Unit(double.Parse(text));
+        }
+
+        public bool Equals(Unit other)
+        {
+            return Type == other.Type && Value == other.Value;
         }
     }
 

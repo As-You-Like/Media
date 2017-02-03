@@ -18,11 +18,11 @@
         {
             #region Normalization
 
-            if (key.StartsWith("overlay("))
-            {
-                key = key.Remove(0, 8); // text(
+            var argStart = key.IndexOf('(') + 1;
 
-                key = key.Substring(0, key.Length - 1); // )
+            if (argStart > 0)
+            {
+                key = key.Substring(argStart, key.Length - argStart - 1);
             }
 
             #endregion
@@ -51,7 +51,7 @@
                     case "y"      : box.Y       = Unit.Parse(v);        break;
                     case "width"  : box.Width   = Unit.Parse(v);        break;
                     case "height" : box.Height  = Unit.Parse(v);        break;
-                    case "padding": box.Padding = Unit.Parse(v);        break;
+                    case "padding": box.Padding = Padding.Parse(v);     break;
                 }
             }
 
