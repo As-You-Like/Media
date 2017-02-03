@@ -4,14 +4,29 @@ namespace Carbon.Media
 {
     public sealed class Overlay : ITransform
     {
-        public Overlay(string o, BlendMode mode = BlendMode.Normal, Alignment align = Alignment.Left)
+        public Overlay(string o,
+            Unit? x = null,
+            Unit? y = null,
+            Unit? width = null,
+            Unit? height = null,
+            BlendMode mode = BlendMode.Normal,
+            Alignment align = Alignment.Left)
         {
             Key = o;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
             BlendMode = mode;
             Align = align;
         }
 
-        // Color, Text, Image
+        // color:
+        // gradient:
+        // image:
+        // text:
+
+        // Color, Gradient, Text, Image
 
         public string Key { get; set; }
 
@@ -21,9 +36,15 @@ namespace Carbon.Media
 
         public ScaleMode ScaleMode { get; set; } // Scale within the box
 
-        public Size BoxSize { get; set; }
+        public Unit? X { get; set; }
 
-        // overlay(hello, 100x100)
+        public Unit? Y { get; set; }
+
+        public Unit? Width { get; set; }
+
+        public Unit? Height { get; set; }
+
+        // overlay(hello,width:100,x:0,y:0,align:center)
         
         public static Overlay Parse(string key)
         {
@@ -45,6 +66,11 @@ namespace Carbon.Media
             var mode = BlendMode.Normal;
             var align = Alignment.Left;
 
+            Unit? x = null;
+            Unit? y = null;
+            Unit? width = null;
+            Unit? height = null;
+
             for (var i = 1; i < parts.Length; i++)
             {
                 var part = parts[i];
@@ -54,17 +80,50 @@ namespace Carbon.Media
 
                 switch (k)
                 {
-                    case "mode"  : mode   = (BlendMode)Enum.Parse(typeof(BlendMode), v, true); break;
-                    case "align" : align = (Alignment)Enum.Parse(typeof(Alignment), v, true); break;
+                    case "mode"   : mode   = (BlendMode)Enum.Parse(typeof(BlendMode), v, true); break;
+                    case "align"  : align = (Alignment)Enum.Parse(typeof(Alignment), v, true); break;
+                    case "x"      : x = Unit.Parse(v); break;
+                    case "y"      : y = Unit.Parse(v); break;
+                    case "width"  : width = Unit.Parse(v); break;
+                    case "height" : height = Unit.Parse(v); break;
                 }
             }
 
-            return new Overlay(name, mode);
+            return new Overlay(name, x, y, width, height, mode, align);
         }
     }
 
 
-    // box:(0,0,100,100)
+    public struct Unit
+    {
+        public Unit(double value, UnitType type = UnitType.Px)
+        {
+            Value = value;
+            Type = type;
+        }
+
+        public double Value { get; }
+
+        public UnitType Type { get; }
+
+        
+        public static Unit Parse(string text)
+        {
+            if (text.EndsWith("px"))
+            {
+                text = text.Substring(0, text.Length - 2);
+            }
+
+            return new Unit(double.Parse(text));
+        }
+        
+    }
+
+    public enum UnitType
+    {
+        Px,
+        Percent
+    }
 }
 
 /*

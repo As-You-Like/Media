@@ -8,9 +8,9 @@ namespace Carbon.Media
             string text,
             Font? font = null,
             Alignment align = Alignment.Left,
-            int? x = null,
-            int? y= null, 
-            int? width = null, 
+            Unit? x = null,
+            Unit? y= null,
+            Unit? width = null, 
             string color = null)
         {
             Text = text;
@@ -24,11 +24,13 @@ namespace Carbon.Media
 
         public string Text { get; }
 
-        public int? X { get; }
+        public Unit? X { get; }
 
-        public int? Y { get; }
+        public Unit? Y { get; }
 
-        public int? Width { get; }
+        public Unit? Width { get; }
+
+        public BlendMode BlendMode { get; set; }
 
         public string Color { get; }
 
@@ -37,7 +39,7 @@ namespace Carbon.Media
         public Font Font { get; }
         
         // text(hello+world,font:12px Tacoma,align:center)
-
+        
         public static DrawText Parse(string key)
         {
             #region Normalization
@@ -55,9 +57,9 @@ namespace Carbon.Media
 
             var text = parts[0];
 
-            int? x = null;
-            int? y = null;
-            int? width = null;
+            Unit? x = null;
+            Unit? y = null;
+            Unit? width = null;
             string color = null;
             Alignment align = Alignment.Left;
             Font? font = null;
@@ -72,10 +74,10 @@ namespace Carbon.Media
                 switch (k)
                 {
                     case "align"    : align = (Alignment)Enum.Parse(typeof(Alignment), v, true); break;
-                    case "x"        : x = int.Parse(v);                                          break;
-                    case "y"        : y = int.Parse(v);                                          break;
+                    case "x"        : x = Unit.Parse(v);                                         break;
+                    case "y"        : y = Unit.Parse(v);                                         break;
+                    case "width"    : width = Unit.Parse(v);                                     break;
                     case "font"     : font = Media.Font.Parse(v);                                break;
-                    case "width"    : width = int.Parse(v);                                      break;
                     case "color"    : color = v;                                                 break;
                 }
 

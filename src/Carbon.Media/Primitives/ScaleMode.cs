@@ -11,7 +11,7 @@ namespace Carbon.Media
         Fit      = 1 << 1,  // Fill the box while retaining the aspect ratio. Won't upscale unless provided with upscale flag.
         Crop     = 1 << 2,  // Fill the box, clipping as needed. background-sizing: cover. AKA fill
         Pad      = 1 << 3,  // Center within the box, padding as needed
-        Stretch  = 1 << 4,  // Fill the box
+        Stretch  = 1 << 4,  // Fill the box without maintaining the aspect ratio
         Carve    = 1 << 5,  // Fill the box, carving as needed
 
         Upscale  = 1 << 6

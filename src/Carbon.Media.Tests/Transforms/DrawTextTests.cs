@@ -11,9 +11,9 @@ namespace Carbon.Media.Tests
 
             Assert.Equal("Hello World", draw.Text);
             Assert.Equal(Alignment.Middle, draw.Align);
-            Assert.Equal(10, draw.Y.Value);
-            Assert.Equal(0, draw.X.Value);
-            Assert.Equal(100, draw.Width.Value);
+            Assert.Equal(10, draw.Y.Value.Value);
+            Assert.Equal(0, draw.X.Value.Value);
+            Assert.Equal(100, draw.Width.Value.Value);
             Assert.Equal("red", draw.Color);
         }
 	}
