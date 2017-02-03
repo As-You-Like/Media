@@ -1,5 +1,7 @@
 ﻿namespace Carbon.Media
 {
+    // TODO: Move to Carbon.Color
+
     public enum ColorProfileType
     {
         Unknown = 0,
@@ -7,3 +9,5 @@
         ICM     = 2
     }
 }
+
+// Carbon.Color.Profiles

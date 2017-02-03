@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Carbon.Media
+﻿namespace Carbon.Media
 {
     public sealed class Overlay : ITransform
     {
@@ -85,8 +83,8 @@ namespace Carbon.Media
 
                 switch (k)
                 {
-                    case "mode"   : mode   = (BlendMode)Enum.Parse(typeof(BlendMode), v, true); break;
-                    case "align"  : align = (Alignment)Enum.Parse(typeof(Alignment), v, true); break;
+                    case "mode"   : mode = v.ToEnum<BlendMode>(true);   break;
+                    case "align"  : align = v.ToEnum<Alignment>(true);  break;
                     case "x"      : x = Unit.Parse(v); break;
                     case "y"      : y = Unit.Parse(v); break;
                     case "width"  : width = Unit.Parse(v); break;
@@ -97,47 +95,6 @@ namespace Carbon.Media
 
             return new Overlay(name, x, y, width, height, padding, mode, align);
         }
-    }
-
-
-    public struct Unit
-    {
-        public Unit(double value, UnitType type = UnitType.Px)
-        {
-            Value = value;
-            Type = type;
-        }
-
-        public double Value { get; }
-
-        public UnitType Type { get; }
-
-        public static implicit operator double(Unit unit)
-            => unit.Value;
-        
-        public static Unit Parse(string text)
-        {
-            if (text.EndsWith("px"))
-            {
-                text = text.Substring(0, text.Length - 2);
-
-                return new Unit(double.Parse(text));
-            }
-
-            if (text.Contains("."))
-            {
-                return new Unit(double.Parse(text), UnitType.Percent);
-            }
-
-            return new Unit(double.Parse(text));
-        }
-        
-    }
-
-    public enum UnitType
-    {
-        Px,
-        Percent
     }
 }
 

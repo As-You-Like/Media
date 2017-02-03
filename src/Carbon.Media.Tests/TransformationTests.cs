@@ -23,16 +23,15 @@ namespace Carbon.Media.Tests
         [Fact]
         public void DrawTextTests()
         {
-            // 1045645/1:00/100x100.jpeg
-            var transformation = MediaTransformation.ParsePath("1045645/text(Hello World,font:12px Helvetica)/100x100.jpeg");
+            var transformation = MediaTransformation.ParsePath("1045645/text(Hello World,font:14px Helvetica)/100x100.jpeg");
 
             var text = (DrawText)transformation.GetTransforms()[0];
 
             Assert.Equal("Hello World", text.Text);
-            Assert.Equal(12, text.Font.Size);
-            Assert.Equal("Helvetica", text.Font.Name);
+            Assert.Equal(14, text.Font?.Size.Value);
+            Assert.Equal(UnitType.Px, text.Font?.Size.Type);
+            Assert.Equal("Helvetica", text.Font?.Name);
         }
-
 
         [Fact]
         public void ClipTest1()
@@ -52,7 +51,6 @@ namespace Carbon.Media.Tests
 
             Assert.Equal(TimeSpan.FromSeconds(60), clip.Start);
             Assert.Equal(TimeSpan.FromSeconds(60), clip.End);
-
         }
 
         [Fact]
@@ -69,7 +67,6 @@ namespace Carbon.Media.Tests
             var c = b.Scale(2f);
 
             Assert.Equal("400x400/crop(0,0,340,80).png", c.TransformString);
-
 
             var d = c.WithFormat("gif");
 

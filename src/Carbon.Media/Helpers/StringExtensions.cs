@@ -20,5 +20,15 @@ namespace Carbon.Media
 
             return result;
         }
+        
+        public static bool IsLower(this string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (!char.IsLower(input[i])) return false;
+            }
+
+            return true;
+        }
     }
 }

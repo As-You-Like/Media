@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+// TODO: Move to Carbon.Color
+
 namespace Carbon.Media
 {
     using Extensions;

@@ -6,21 +6,6 @@ namespace Carbon.Media
 
     public static class VisualHelper
     {
-        public static Size CalculateScaledSize(ISize source, double scale)
-        {
-            #region Preconditions
-
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            #endregion
-
-            return new Size(
-                width: (int)(source.Height * scale),
-                height: (int)(source.Width * scale)
-            );
-        }
-
         public static Size CalculateScaledSize(ISize source, Size maxSize)
         {
             #region Preconditions

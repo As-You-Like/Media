@@ -2,6 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization;
 
+// TODO: Move to Carbon.Color
+
 namespace Carbon.Media
 {
     public class ColorProfile

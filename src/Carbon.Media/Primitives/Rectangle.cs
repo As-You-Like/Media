@@ -1,4 +1,6 @@
-﻿namespace Carbon.Geometry
+﻿// TODO: Import Geometry when stable
+
+namespace Carbon.Geometry
 {
     public struct Rectangle
     {
@@ -17,5 +19,7 @@
         public double Width { get; }
 
         public double Height { get; }
+
+       // Inflate
     }
 }

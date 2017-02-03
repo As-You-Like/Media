@@ -36,7 +36,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void Scaled()
         {
-            var resize = Resize.Parse("resize(85x20-l)") * 2;
+            var resize = Resize.Parse("resize(85x20-l)") * 2d;
 
             Assert.Equal(85 * 2, resize.Width);
             Assert.Equal(20 * 2, resize.Height);

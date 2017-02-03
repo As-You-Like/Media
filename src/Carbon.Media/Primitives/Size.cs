@@ -19,8 +19,8 @@ namespace Carbon.Media
 
         public static Size operator *(Size size, double scale)
             => new Size(
-                width  : (int)(size.Height * scale),
-                height : (int)(size.Width * scale)
+                width  : (int)(size.Width * scale),
+                height : (int)(size.Height * scale)
             );
 
         public static Size Parse(string size)
@@ -62,6 +62,5 @@ namespace Carbon.Media
         public override int GetHashCode() => Width ^ Height;
 
         #endregion
-
     }
 }

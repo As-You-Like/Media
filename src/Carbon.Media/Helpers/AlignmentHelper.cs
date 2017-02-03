@@ -1,8 +1,8 @@
 ﻿namespace Carbon.Media
 {
-    public static class AlignmentHelper
+    public static class AnchorHelper
     {
-        public static CropAnchor ParseAlignment(string text)
+        public static CropAnchor Parse(string text)
         {
             switch (text)
             {

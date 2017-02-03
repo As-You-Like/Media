@@ -14,6 +14,9 @@ namespace Carbon.Media
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
+            if (format.Length == 0)
+                throw new ArgumentException("Must not be empty", nameof(format));
+
             #endregion
 
             if (format[0] == '.')
@@ -21,8 +24,8 @@ namespace Carbon.Media
                 format = format.Substring(1);
             }
 
-            // Ensure the file is lowercased
-            if (!format.IsLowercase())
+            // Ensure the format is in lowercase
+            if (!format.IsLower())
             {
                 format = format.ToLower();
             }
@@ -35,16 +38,6 @@ namespace Carbon.Media
 
                 default: return format;
             }
-        }
-
-        private static bool IsLowercase(this string input)
-        {
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (!char.IsLower(input[i])) return false;
-            }
-
-            return true;
         }
 
         public static bool IsCompressible(string format)

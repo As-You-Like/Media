@@ -49,9 +49,7 @@ namespace Carbon.Media
                 return Width + "x" + Height;
             }
 
-            var anchor = Anchor.Value.ToAbbreviation();
-
-            return $"{Width}x{Height}-{anchor}";
+            return $"{Width}x{Height}-{Anchor?.ToCode()}";
         }
 
         // 100x100,anchor:center,mode:stretch
@@ -83,7 +81,7 @@ namespace Carbon.Media
 
                 return new Resize(
                     size   : Size.Parse(parts[0]),
-                    anchor : AlignmentHelper.ParseAlignment(parts[1])
+                    anchor : AnchorHelper.Parse(parts[1])
                 );
             }
 
@@ -93,7 +91,9 @@ namespace Carbon.Media
 
         public static Resize operator * (Resize left, double scale)
         {
-            return new Resize(left.Size.Scale(scale), left.Anchor);
+            var newSize = left.Size * scale;
+
+            return new Resize(newSize, left.Anchor);
         }
     }
 }
