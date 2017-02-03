@@ -56,6 +56,7 @@ namespace Carbon.Media
 
             var parts = key.Split(Seperators.Comma);
 
+            // TODO: Base64 support
             var text = parts[0];
 
             Unit? x = null;

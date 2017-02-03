@@ -1,11 +1,9 @@
-﻿namespace Carbon.Media.Tests
-{
-	using System.Linq;
+﻿using System.Linq;
 
+using Xunit;
 
-	using Xunit;
-
-	
+namespace Carbon.Media.Tests
+{	
 	public class MediaTypeTests
 	{
 		[Fact]

@@ -28,7 +28,6 @@ namespace Carbon.Media.Tests
 
             var text = (DrawText)transformation.GetTransforms()[0];
 
-
             Assert.Equal("Hello World", text.Text);
             Assert.Equal(12, text.Font.Size);
             Assert.Equal("Helvetica", text.Font.Name);

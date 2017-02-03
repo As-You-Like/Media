@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Text;
 
 namespace Carbon.Media
 {
@@ -34,9 +34,27 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool IsEmpty => Width == 0 || Height == 0;
 
-        // TODO: Remove Linq
-        public string TransformString 
-            => string.Join("/", path.Split(Seperators.ForwardSlash).Skip(1));
+        public string TransformString
+        {
+            get
+            {
+                var parts = path.Split(Seperators.ForwardSlash);
+
+                var sb = new StringBuilder();
+
+                for (var i = 1; i < parts.Length; i++)
+                {
+                    if (i > 1)
+                    {
+                        sb.Append("/");
+                    }
+
+                    sb.Append(parts[i]);
+                }
+
+                return sb.ToString();
+            }
+        }
 
         public MediaRenditionInfo WithBackground(string hex)
         {
