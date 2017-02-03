@@ -19,12 +19,12 @@ namespace Carbon.Media
         [DataMember(Name = "orientation", EmitDefaultValue = false)]
         public MediaOrientation Orientation { get; set; }
 
-        [DataMember(Name = "colorSpace", EmitDefaultValue = false)]
-        public ColorSpace ColorSpace { get; set; }
+        // [DataMember(Name = "colorSpace", EmitDefaultValue = false)]
+       //  public ColorSpace ColorSpace { get; set; }
 
         // TODO: what if it has mutiple profiles?
-        [DataMember(Name = "colorProfile", EmitDefaultValue = false)]
-        public ColorProfile ColorProfile { get; set; }
+        // [DataMember(Name = "colorProfile", EmitDefaultValue = false)]
+        // public ColorProfile ColorProfile { get; set; }
 
         [DataMember(Name = "dateTime")]
         public DateTime? DateTime { get; set; } // Timestamp?

@@ -20,7 +20,6 @@ namespace Carbon.Media.Metadata
             => int.Parse(value.ToString());
     }
 
-
     public sealed class BooleanConverter : MetadataItemConverter
     {
         public static readonly BooleanConverter Default = new BooleanConverter();
@@ -95,17 +94,7 @@ namespace Carbon.Media.Metadata
         }
     }
 
-    public enum MetaFormat
-    {
-        Ansi,
-        Boolean,
-        Byte,
-        Date,
-        Short,
-        Long,
-        Rational, // Unsigned
-        SRational
-    }
+ 
 
     public sealed class NumberToEnum<T> : MetadataItemConverter
     {
