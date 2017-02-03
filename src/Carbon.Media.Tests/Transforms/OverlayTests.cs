@@ -11,9 +11,9 @@ namespace Carbon.Media.Tests
 
             Assert.Equal("red", overlay.Key);
             Assert.Equal(BlendMode.Burn, overlay.BlendMode);
-            Assert.Equal(1, overlay.X.Value.Value);
-            Assert.Equal(2, overlay.Y.Value.Value);
-            Assert.Equal(100, overlay.Width.Value.Value);
+            Assert.Equal(1d, overlay.X.Value);
+            Assert.Equal(2d, overlay.Y.Value);
+            Assert.Equal(100d, overlay.Width.Value);
             Assert.Equal(Alignment.Middle, overlay.Align);
         }
 	}
