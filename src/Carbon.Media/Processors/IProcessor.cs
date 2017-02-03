@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public interface ITransform { }
+    public interface IProcessor { }
 }
 
 

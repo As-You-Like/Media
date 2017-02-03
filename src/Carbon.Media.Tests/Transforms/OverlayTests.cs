@@ -7,7 +7,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void FromFullKey()
         {
-            var overlay = Overlay.Parse("overlay(red,mode:burn,x:1,y:2,width:100,height:300,align:middle,padding:10px)");
+            var overlay = DrawSolidColor.Parse("overlay(red,mode:burn,x:1,y:2,width:100,height:300,align:middle,padding:10px)");
 
             Assert.Equal("red", overlay.Key);
             Assert.Equal(BlendMode.Burn, overlay.BlendMode);

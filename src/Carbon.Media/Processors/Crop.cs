@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     using Geometry;
 
-    public sealed class Crop : ITransform
+    public sealed class Crop : IProcessor
     {
         public Crop(int x, int y, int width, int height)
         {

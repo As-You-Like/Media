@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public sealed class Clip : ITransform
+    public sealed class Clip : IProcessor
     {
         public Clip(TimeSpan start, TimeSpan end)
         {

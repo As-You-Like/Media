@@ -4,17 +4,16 @@ using System.Text;
 
 namespace Carbon.Media
 {
-    public sealed class DrawText : ITransform
+    public sealed class DrawText : DrawBase
     {
         public DrawText(
             string text,
+            Box box,
             Font? font = null,
             Alignment? align = null,
-            Unit? x = null,
-            Unit? y= null,
-            Unit? width = null, 
-            Unit? padding = null,
+            BlendMode blendMode = BlendMode.Normal,
             string color = null)
+            : base(box, align, blendMode)
         {
             #region Preconditions
 
@@ -25,41 +24,24 @@ namespace Carbon.Media
 
             Text = text;
             Font = font;
-            Align = align;
-            X = x;
-            Y = y;
-            Width = width;
-            Padding = padding;
             Color = color;
         }
 
         public string Text { get; }
 
-        public Unit? X { get; }
-
-        public Unit? Y { get; }
-
-        public Unit? Width { get; }
-
-        public Unit? Padding { get; }
-
-        public BlendMode BlendMode { get; set; }
-
         public string Color { get; }
-
-        public Alignment? Align { get; }
 
         public Font? Font { get; }
 
         // TODO: Use tuple w/ C# 7
-        private IEnumerable<KeyValuePair<string, string>> Args()
+        internal override IEnumerable<KeyValuePair<string, string>> Args()
         {
-            if (Color != null)   yield return new KeyValuePair<string, string>("color"   , Color);
-            if (X != null)       yield return new KeyValuePair<string, string>("x"       , X.Value.ToString());
-            if (Y != null)       yield return new KeyValuePair<string, string>("y"       , Y.Value.ToString());
-            if (Width != null)   yield return new KeyValuePair<string, string>("width"   , Width.Value.ToString());
-            if (Align != null)   yield return new KeyValuePair<string, string>("align"   , Align.Value.ToLower());
-            if (Padding != null) yield return new KeyValuePair<string, string>("padding" , Padding.Value.ToString());
+            foreach (var arg in base.Args())
+            {
+                yield return arg;
+            }
+
+            if (Color != null)   yield return new KeyValuePair<string, string>("color"   , Color);            
         }
 
         // text(hello+world,font:12px Tacoma,align:center)
@@ -102,13 +84,12 @@ namespace Carbon.Media
             // TODO: Base64 support
             var text = parts[0];
 
-            Unit? x = null;
-            Unit? y = null;
-            Unit? width = null;
-            Unit? padding = null;
+            var box = new Box();
+
             string color = null;
             Alignment? align = null;
             Font? font = null;
+            BlendMode mode = BlendMode.Normal;
 
             for (var i = 1; i < parts.Length; i++)
             {
@@ -119,18 +100,20 @@ namespace Carbon.Media
 
                 switch (k)
                 {
-                    case "align"    : align = v.ToEnum<Alignment>(true); break;
-                    case "x"        : x = Unit.Parse(v);                 break;
-                    case "y"        : y = Unit.Parse(v);                 break;
-                    case "width"    : width = Unit.Parse(v);             break;
-                    case "padding"  : padding = Unit.Parse(v);           break;
-                    case "font"     : font = Media.Font.Parse(v);        break;
-                    case "color"    : color = v;                         break;
+                    case "align"    : align = v.ToEnum<Alignment>(true);    break;
+                    case "mode"     : mode = v.ToEnum<BlendMode>(true);     break;
+                    case "x"        : box.X       = Unit.Parse(v);          break;
+                    case "y"        : box.Y       = Unit.Parse(v);          break;
+                    case "width"    : box.Width   = Unit.Parse(v);          break;
+                    case "height"   : box.Height  = Unit.Parse(v);          break;
+                    case "padding"  : box.Padding = Unit.Parse(v);          break;
+                    case "font"     : font = Media.Font.Parse(v);           break;
+                    case "color"    : color = v;                            break;
                 }
 
             }
 
-            return new DrawText(text, font, align, x, y, width, padding, color);
+            return new DrawText(text, box, font, align, mode, color);
         }
     }
 

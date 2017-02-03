@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public sealed class Flip : ITransform
+    public sealed class Flip : IProcessor
     {
         public static readonly Flip Horizontally = new Flip(FlipAxis.X);
         public static readonly Flip Vertically   = new Flip(FlipAxis.Y);

@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public sealed class ApplyFilter : ITransform
+    public sealed class ApplyFilter : IProcessor
     {
         public ApplyFilter(string name, string value)
         {

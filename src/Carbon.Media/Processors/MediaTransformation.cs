@@ -9,7 +9,7 @@ namespace Carbon.Media
 
     public class MediaTransformation : ISize
     {
-        protected readonly List<ITransform> transforms = new List<ITransform>();
+        protected readonly List<IProcessor> transforms = new List<IProcessor>();
 
         private int width;
         private int height;
@@ -44,9 +44,9 @@ namespace Carbon.Media
 
         public int Height => height;
 
-        public IReadOnlyList<ITransform> GetTransforms() => transforms.AsReadOnly();
+        public IReadOnlyList<IProcessor> GetTransforms() => transforms.AsReadOnly();
 
-        public MediaTransformation Transform(params ITransform[] transforms)
+        public MediaTransformation Transform(params IProcessor[] transforms)
         {
             #region Preconditions
 
@@ -65,7 +65,7 @@ namespace Carbon.Media
             return this;
         }
 
-        private MediaTransformation Transform(ITransform transform)
+        private MediaTransformation Transform(IProcessor transform)
         {
             if (transform is Resize)
             {
@@ -126,7 +126,7 @@ namespace Carbon.Media
 
         public MediaTransformation DrawText(string text)
         {
-            Transform(new DrawText(text));
+            Transform(new DrawText(text, new Box()));
 
             return this;
         }
@@ -198,13 +198,13 @@ namespace Carbon.Media
 
             var id = parts[0];
 
-            var transforms = new ITransform[parts.Length - 1];
+            var processors = new IProcessor[parts.Length - 1];
 
             for (var i = 1; i < parts.Length; i++)
             {
                 var part = parts[i];
 
-                ITransform transform;
+                IProcessor processor;
 
                 if (char.IsDigit(part[0]))
                 {
@@ -214,11 +214,11 @@ namespace Carbon.Media
 
                         var time = TimeSpan.Parse(part);
 
-                        transform = new Clip(time, time);
+                        processor = new Clip(time, time);
                     }
                     else
                     {
-                        transform = Media.Resize.Parse(part);
+                        processor = Media.Resize.Parse(part);
                     }
                 }
                 else
@@ -227,21 +227,22 @@ namespace Carbon.Media
 
                     switch (transformName)
                     {
-                        case "crop"     : transform = Media.Crop.Parse(part);        break;
-                        case "rotate"   : transform = Media.Rotate.Parse(part);      break;
-                        case "flip"     : transform = Flip.Parse(part);              break;
-                        case "text"     : transform = Media.DrawText.Parse(part);    break;
-                        case "overlay"  : transform = Media.Overlay.Parse(part);     break;
-                        default         : transform = Media.ApplyFilter.Parse(part); break;
+                        case "crop"     : processor = Media.Crop.Parse(part);        break;
+                        case "rotate"   : processor = Media.Rotate.Parse(part);      break;
+                        case "flip"     : processor = Flip.Parse(part);              break;
+                        case "text"     : processor = Media.DrawText.Parse(part);    break;
+                        case "gradient" : processor = DrawGradient.Parse(part);      break;
+                        case "overlay"  : processor = DrawColor.Parse(part);         break;
+                        default         : processor = Media.ApplyFilter.Parse(part); break;
                     }
                 }
 
-                transforms[i - 1] = transform;
+                processors[i - 1] = processor;
             }
 
             var rendition = new MediaTransformation(new MediaSource(id, 0, 0), format);
 
-            foreach (var t in transforms)
+            foreach (var t in processors)
             {
                 rendition.Transform(t);
             }

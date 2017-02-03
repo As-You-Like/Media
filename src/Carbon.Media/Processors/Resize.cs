@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    public sealed class Resize : ITransform
+    public sealed class Resize : IProcessor
     {
         public Resize(Size size)
             : this(size.Width, size.Height)

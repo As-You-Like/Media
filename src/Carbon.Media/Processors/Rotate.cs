@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public sealed class Rotate : ITransform
+    public sealed class Rotate : IProcessor
     {
         public Rotate(int angle)
         {
