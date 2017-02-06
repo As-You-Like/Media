@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carbon.Media
+namespace Carbon.Imaging
 {
     // NOTE: Avoid conflict with System.Windows.PixelFormat
 

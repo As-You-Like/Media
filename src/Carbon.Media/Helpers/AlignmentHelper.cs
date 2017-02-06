@@ -9,8 +9,8 @@
                 case "b":
                 case "bottom": return CropAnchor.Bottom;
 
-                case "bl": return CropAnchor.BottomLeft;
-                case "br": return CropAnchor.BottomRight;
+                case "bl": return CropAnchor.Bottom | CropAnchor.Left;
+                case "br": return CropAnchor.Bottom | CropAnchor.Right;
 
                 case "c":
                 case "center": return CropAnchor.Center;
@@ -21,8 +21,8 @@
                 case "t":
                 case "top": return CropAnchor.Top;
 
-                case "tl": return CropAnchor.TopLeft;
-                case "tr": return CropAnchor.TopRight;
+                case "tl": return CropAnchor.Top | CropAnchor.Left;
+                case "tr": return CropAnchor.Top | CropAnchor.Right;
 
                 default: return CropAnchor.Unknown;
             }

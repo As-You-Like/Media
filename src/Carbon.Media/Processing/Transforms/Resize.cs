@@ -109,7 +109,7 @@ namespace Carbon.Media
                         {
                             case "anchor"     : anchor = AnchorHelper.Parse(v); break;
                             case "background" : background = v;                 break;
-                            default: throw new Exception("Unknown arg:" + k);
+                            default           : throw new Exception("Unknown arg:" + k);
                         }
                     }
                     else
@@ -141,7 +141,7 @@ namespace Carbon.Media
         {
             var newSize = left.Size * scale;
 
-            return new Resize(newSize, left.Anchor);
+            return new Resize(newSize.Width, newSize.Height, left.Anchor, left.Background, left.Flags);
         }
     }
 }

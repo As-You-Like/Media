@@ -1,7 +1,9 @@
 ﻿using Xunit;
 
 namespace Carbon.Media.Tests
-{	
+{
+    using Imaging;
+
 	public class FormatTests
 	{
 		[Fact]

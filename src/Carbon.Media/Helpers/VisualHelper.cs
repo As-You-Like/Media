@@ -6,7 +6,7 @@ namespace Carbon.Media
 
     public static class VisualHelper
     {
-        public static Size CalculateScaledSize(ISize source, Size maxSize)
+        public static Size CalculateSize(ISize source, Size maxSize)
         {
             #region Preconditions
 
@@ -15,10 +15,10 @@ namespace Carbon.Media
 
             #endregion
 
-            return CalculateScaledSize(new Size(source.Width, source.Height), maxSize);
+            return CalculateSize(new Size(source.Width, source.Height), maxSize);
         }
 
-        public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ResizeFlags mode = ResizeFlags.None)
+        public static Size CalculateSize(Size sourceSize, Size maxSize, ResizeFlags mode = ResizeFlags.None)
         {
             var aspect = sourceSize.ToRational();
 

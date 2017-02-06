@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media
+﻿namespace Carbon.Imaging
 {
     public struct PixelFormatInfo
     {
@@ -54,8 +54,7 @@
 
     public static class PixelFormatTypeExtensions
     {
-        public static PixelFormatInfo GetInfo(this PixelFormatType format)
-            => PixelFormatInfo.Get(format);
+        public static PixelFormatInfo GetInfo(this PixelFormatType format) => PixelFormatInfo.Get(format);
     }
 
 }

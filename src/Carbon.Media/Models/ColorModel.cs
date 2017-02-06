@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media
+﻿namespace Carbon.Imaging
 {
     public enum ColorModel
     {

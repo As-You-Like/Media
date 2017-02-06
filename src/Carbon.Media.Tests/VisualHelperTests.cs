@@ -9,21 +9,21 @@ namespace Carbon.Media.Tests
         {
             var imageSize = new Size(500, 500);
 
-            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600)));
-            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500)));
-            Assert.Equal(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400)));
-            Assert.Equal(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290)));
-            Assert.Equal(new Size(11, 11),   VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15)));
+            Assert.Equal(new Size(500, 500), VisualHelper.CalculateSize(imageSize, new Size(600, 600)));
+            Assert.Equal(new Size(500, 500), VisualHelper.CalculateSize(imageSize, new Size(500, 500)));
+            Assert.Equal(new Size(400, 400), VisualHelper.CalculateSize(imageSize, new Size(400, 400)));
+            Assert.Equal(new Size(235, 235), VisualHelper.CalculateSize(imageSize, new Size(235, 290)));
+            Assert.Equal(new Size(11, 11),   VisualHelper.CalculateSize(imageSize, new Size(11, 15)));
 
             // Stretch
-            Assert.Equal(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ResizeFlags.Exact));
+            Assert.Equal(new Size(600, 600), VisualHelper.CalculateSize(imageSize, new Size(600, 600), ResizeFlags.Exact));
 
             imageSize = new Size(5500, 1464);
 
-            Assert.Equal(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500)));
-            Assert.Equal(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400)));
-            Assert.Equal(new Size(235, 62),  VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290)));
-            Assert.Equal(new Size(11, 2),    VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15)));
+            Assert.Equal(new Size(500, 133), VisualHelper.CalculateSize(imageSize, new Size(500, 500)));
+            Assert.Equal(new Size(400, 106), VisualHelper.CalculateSize(imageSize, new Size(400, 400)));
+            Assert.Equal(new Size(235, 62),  VisualHelper.CalculateSize(imageSize, new Size(235, 290)));
+            Assert.Equal(new Size(11, 2),    VisualHelper.CalculateSize(imageSize, new Size(11, 15)));
         }
 
         [Fact]
@@ -64,11 +64,38 @@ namespace Carbon.Media.Tests
 
             var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, CropAnchor.Center);
 
-            //Assert.Equal(0, destinationR.Left);
-            // Assert.Equal(-250, destinationR.Top);
-
             Assert.Equal(0, destinationR.X);
             Assert.Equal(-250, destinationR.Y);
+        }
+
+
+        [Fact]
+        public void CropRectTest2()
+        {
+            var imageSize = new Size(1000, 1000);
+
+            var targetSize = new Size(1000, 500);
+
+            var destinationR = VisualHelper.CalculateCropRectangle(imageSize, targetSize, CropAnchor.Bottom);
+
+            Assert.Equal(0, destinationR.X);
+            Assert.Equal(-500, destinationR.Y);
+        }
+
+        [Fact]
+        public void ActualSizeCrop()
+        {
+            var imageSize = new Size(500, 500);
+
+            var box = new Size(500, 500);
+
+            foreach (var anchor in new[] { CropAnchor.Top, CropAnchor.Left, CropAnchor.Right, CropAnchor.Bottom, CropAnchor.Center })
+            {
+                var position = VisualHelper.CalculateCropRectangle(imageSize, box, anchor);
+
+                Assert.Equal(0, position.X);
+                Assert.Equal(0, position.Y);
+            }
         }
 
         [Fact]
