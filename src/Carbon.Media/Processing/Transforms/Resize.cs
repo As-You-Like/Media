@@ -48,8 +48,35 @@ namespace Carbon.Media
 
         public string Background { get; }
 
-        [IgnoreDataMember]
-        public Size Size => new Size((int)Width.Value, (int)Height.Value);
+        public Size CalcuateSize(Size source)
+        {
+            int width = source.Width;
+            int height = source.Height;
+
+            if (Width == Unit.None) // auto
+            {
+                double scale = Height.Value / source.Height;
+
+                width = (int)(width * scale);
+            }
+            else
+            {
+                width = Width.Type == UnitType.Px ? (int)Width : (int)(width * Width);
+            }
+
+            if (Height == Unit.None) // auto
+            {
+                double scale = Width.Value / source.Width;
+
+                height = (int)(height * scale);
+            }
+            else
+            {
+                height = Height.Type == UnitType.Px ? (int)Height : (int)(height * Height);
+            }
+
+            return new Size(width, height);
+        }
 
         #region Flags
 
@@ -164,9 +191,7 @@ namespace Carbon.Media
 
         public static Resize operator * (Resize left, double scale)
         {
-            var newSize = left.Size * scale;
-
-            return new Resize(newSize.Width, newSize.Height, left.Anchor, left.Background, left.Flags);
+            return new Resize(left.Width * scale, left.Height * scale, left.Anchor, left.Background, left.Flags);
         }
     }
 }

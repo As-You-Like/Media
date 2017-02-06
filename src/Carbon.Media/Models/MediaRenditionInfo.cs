@@ -112,7 +112,7 @@ namespace Carbon.Media
             return new MediaRenditionInfo(Width, Height, newPath);
         }
 
-        public MediaRenditionInfo Scale(float scale)
+        public MediaRenditionInfo Scale(double scale)
         {
             var a = MediaTransformation.ParsePath(path);
 

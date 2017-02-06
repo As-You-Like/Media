@@ -44,6 +44,8 @@ namespace Carbon.Media
 
         public int Height => height;
 
+        public Size Size => new Size(width, height);
+
         public IReadOnlyList<IProcessor> GetTransforms() => transforms.AsReadOnly();
 
         public MediaTransformation Transform(params IProcessor[] transforms)
@@ -69,34 +71,12 @@ namespace Carbon.Media
         {
             if (transform is Resize)
             {
-                var ow = width;
-                var oh = height;
-
                 var resize = (Resize)transform;
 
-                if (resize.Width.Type == UnitType.None) // auto
-                {
-                    double scale = resize.Height.Value / oh;
+                var newSize = resize.CalcuateSize(Size);
 
-                    width = (int)(width * scale);
-                    
-                }
-                else
-                {
-                    width = resize.Width.Type == UnitType.Px ? (int)resize.Width : (int)(width * resize.Width);
-                }
-
-                if (resize.Height.Type == UnitType.None) // auto
-                { 
-                    double scale = resize.Width.Value / ow;
-
-                    height = (int)(height * scale);
-                }
-                else
-                {
-                    height = resize.Height.Type == UnitType.Px ? (int)resize.Height : (int)(height * resize.Height);
-                }
-
+                width = newSize.Width;
+                height = newSize.Height;
             }
             else if (transform is Crop)
             {
