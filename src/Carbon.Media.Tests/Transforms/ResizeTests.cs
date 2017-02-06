@@ -28,6 +28,14 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
+        public void ToString1()
+        {
+            var resize = Resize.Parse("85x20,carve|pad,anchor:center,background:red");
+
+            Assert.Equal("85x20,pad|carve,anchor:c,background:red", resize.ToString());
+        }
+
+        [Fact]
         public void NamedArgs2()
         {
             var resize = Resize.Parse("960x540,fit|upscale,background:red");

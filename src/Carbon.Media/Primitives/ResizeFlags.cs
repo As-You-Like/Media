@@ -7,8 +7,8 @@ namespace Carbon.Media
     {
         None      = 0,
         Exact     = 1 << 1, // Resize to the exact dimensions without regard to the aspect ratio
-        Fit       = 1 << 2, // Fill the box while retaining the aspect ratio. Won't upscale unless upscale is also set
-        Crop      = 1 << 3, // Fill the box, clipping as needed. background-sizing: cover. AKA fill
+        Fit       = 1 << 2, // Fill the box while retaining the aspect ratio. Won't upscale unless upscale is also set, AKA CSS:contain
+        Crop      = 1 << 3, // Fill the box, clipping as needed. background-sizing: cover. AKA Fill || CSS:cover
         Pad       = 1 << 4, // Center within the box, padding as needed
 
         // Portrait  = 1 << 5, // Resize to the height maintaing aspect
@@ -18,6 +18,14 @@ namespace Carbon.Media
 
         Carve    = 1 << 10,  // Fill the box, carving as needed
         Upscale  = 1 << 11
+    }
+    
+    public static class ResizeFlagsExtensions
+    {
+        public static string ToLower(this ResizeFlags flags)
+        {
+            return flags.ToString().Replace(", ", "|").ToLower();
+        }
     }
 
     public static class ResizeFlagsHelper
@@ -58,12 +66,6 @@ namespace Carbon.Media
             }
         }
     }
-
-    // 100x100,x:0,y:100
-    // 100x100,anchor:center
-    // 100x100,carve
-    // 100x100,background:red
-    // 100x100,upscale|carve
 
 
     // CSS Background Size Notes:

@@ -4,7 +4,6 @@ namespace Carbon.Media
 {
     public enum CropAnchor
     {
-        Unknown     = 0,
         Top         = 1 << 1,
         Right       = 1 << 2,
         Bottom      = 1 << 3,

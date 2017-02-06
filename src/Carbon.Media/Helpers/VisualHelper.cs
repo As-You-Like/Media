@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     using Geometry;
 
-    public static class VisualHelper
+    public static class ResizeHelper
     {
         public static Size CalculateSize(ISize source, Size maxSize)
         {
@@ -40,51 +40,51 @@ namespace Carbon.Media
         {
             double x = 0d,
                    y = 0d,
-                   nPercent = 0d;
+                   scale = 0d;
             
-            double nPercentW = (double)box.Width / sourceSize.Width;
-            double nPercentH = (double)box.Height / sourceSize.Height;
+            double widthP  = (double)box.Width / sourceSize.Width;
+            double heightP = (double)box.Height / sourceSize.Height;
 
-            if (nPercentH < nPercentW)
+            if (heightP < widthP)
             {
-                nPercent = nPercentW;
+                scale = widthP;
 
-                switch (anchor)
+                if (anchor.HasFlag(CropAnchor.Top))
                 {
-                    case CropAnchor.Top:
-                        y = 0;
-                        break;
-                    case CropAnchor.Bottom:
-                        y = box.Height - (sourceSize.Height * nPercent);
-                        break;
-                    default:
-                        y = (box.Height - (sourceSize.Height * nPercent)) / 2d;
-                        break;
+                    y = 0;
+                }
+                else if (anchor.HasFlag(CropAnchor.Bottom))
+                {
+                    y = box.Height - (sourceSize.Height * scale);
+                }
+                else // Center
+                {
+                    y = (box.Height - (sourceSize.Height * scale)) / 2d;
                 }
             }
             else
             {
-                nPercent = nPercentH;
+                scale = heightP;
 
-                switch (anchor)
+                if (anchor.HasFlag(CropAnchor.Left))
                 {
-                    case CropAnchor.Left:
-                        y = 0;
-                        break;
-                    case CropAnchor.Right:
-                        x = box.Width - (sourceSize.Width * nPercent);
-                        break;
-                    default:
-                        x = (box.Width - (sourceSize.Width * nPercent)) / 2d;
-                        break;
+                    x = 0;
+                }
+                if (anchor.HasFlag(CropAnchor.Right))
+                {
+                    x = box.Width - (sourceSize.Width * scale);
+                }
+                else // center
+                {
+                    x = (box.Width - (sourceSize.Width * scale)) / 2d;
                 }
             }
 
             return new Rectangle(
                 x       : x,
                 y       : y,
-                width   : sourceSize.Width * nPercent,
-                height  : sourceSize.Height * nPercent
+                width   : sourceSize.Width * scale,
+                height  : sourceSize.Height * scale
             );
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace Carbon.Media
 {
@@ -62,6 +63,27 @@ namespace Carbon.Media
 
         public override string ToString()
         {
+           
+            if (Flags != ResizeFlags.None)
+            {
+                var sb = new StringBuilder(Width + "x" + Height);
+
+                sb.Append("," + Flags.ToLower());
+
+                if (Anchor != null)
+                {
+                    sb.Append(",anchor:");
+                    sb.Append(Anchor.Value.ToCode());
+                }
+                if (Background != null)
+                {
+                    sb.Append(",background:");
+                    sb.Append(Background);
+                }
+
+                return sb.ToString();
+            }
+
             if (Anchor == null)
             {
                 return Width + "x" + Height;
@@ -70,7 +92,7 @@ namespace Carbon.Media
             return $"{Width}x{Height}-{Anchor?.ToCode()}";
         }
 
-        // 100x100,anchor:center,flags:stretch
+        // 100x100,stretch,anchor:center,background:red
 
         public static Resize Parse(string segment)
         {
