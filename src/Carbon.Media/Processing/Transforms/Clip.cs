@@ -21,8 +21,8 @@ namespace Carbon.Media
 
         public TimeSpan End { get; }
 
-        public override string ToString()
-            => $"clip({Start.TotalSeconds},{End.TotalSeconds})";
+        public override string ToString() =>
+            $"clip({Start.TotalSeconds},{End.TotalSeconds})";
 
         // clip(0,30)
 

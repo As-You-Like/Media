@@ -7,17 +7,17 @@ namespace Carbon.Media
     public sealed class Resize : IProcessor
     {
         public Resize(Size size)
-            : this(size.Width, size.Height, null, null, ResizeFlags.None)
+            : this(new Unit(size.Width), new Unit(size.Height), null, null, ResizeFlags.None)
         { }
 
         public Resize(Size size, CropAnchor? anchor)
-            : this(size.Width, size.Height, anchor, null, ResizeFlags.None)
+            : this(new Unit(size.Width), new Unit(size.Height), anchor, null, ResizeFlags.None)
         { }
 
-        public Resize(int width, int height, ResizeFlags flags = ResizeFlags.None)
+        public Resize(Unit width, Unit height, ResizeFlags flags = ResizeFlags.None)
             : this(width, height, null, null, flags) { }
 
-        public Resize(int width, int height, CropAnchor? anchor, string background, ResizeFlags flags)
+        public Resize(Unit width, Unit height, CropAnchor? anchor, string background, ResizeFlags flags)
         {
             // 16384 * 16384 * 4 = 1GB bitmap
 
@@ -38,9 +38,9 @@ namespace Carbon.Media
             Flags = flags;
         }
 
-        public int Height { get; }
+        public Unit Height { get; }
 
-        public int Width { get; }
+        public Unit Width { get; }
 
         public ResizeFlags Flags { get; }
 
@@ -49,7 +49,7 @@ namespace Carbon.Media
         public string Background { get; }
 
         [IgnoreDataMember]
-        public Size Size => new Size(Width, Height);
+        public Size Size => new Size((int)Width.Value, (int)Height.Value);
 
         #region Flags
 
@@ -63,7 +63,6 @@ namespace Carbon.Media
 
         public override string ToString()
         {
-           
             if (Flags != ResizeFlags.None)
             {
                 var sb = new StringBuilder(Width + "x" + Height);
@@ -107,11 +106,15 @@ namespace Carbon.Media
 
             #endregion
 
-            if (segment.Contains(","))
+            if (segment.Contains(",") || segment.Contains("×") || segment.Contains("％"))
             {
                 var parts = segment.Split(Seperators.Comma);
 
-                var size = Size.Parse(parts[0]);
+                var size = parts[0].Split('x', '×');
+
+                var width  = Unit.Parse(size[0]);
+                var height = Unit.Parse(size[1]);
+
                 var flags = ResizeFlags.None;
                 string background = null;
                 CropAnchor? anchor = null;
@@ -140,7 +143,7 @@ namespace Carbon.Media
                     }
                 }
 
-                return new Resize(size.Width, size.Height, anchor, background, flags);
+                return new Resize(width, height, anchor, background, flags);
             }
 
             else if (segment.Contains("-"))
@@ -171,10 +174,10 @@ namespace Carbon.Media
 /* 
 
 
-100x100;fit=contain;anchor=center/
+100×100,contain;anchor:center
 
-500x0
-0x500
+500×0
+0×500
 
 500x500;fit:crop;anchor:center
 500x500(fit:crop;anchor:center)

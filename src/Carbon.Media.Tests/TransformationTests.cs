@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Xunit;
 
 namespace Carbon.Media.Tests
@@ -20,6 +21,35 @@ namespace Carbon.Media.Tests
 
     public class ImageRendentionTests
     {
+        private static readonly MediaSource jpeg_85x20 = new MediaSource("a", 85, 20);
+
+        [Fact]
+        public void ResizePercent()
+        {
+
+            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+                .Resize(Unit.Parse("300％"), Unit.Parse("200％"));
+
+            Assert.Equal(85 * 3, rendition.Width);
+            Assert.Equal(20 * 2, rendition.Height);
+        }
+
+        [Fact]
+        public void ResizeAuto()
+        {
+            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+                .Resize(Unit.Parse("_"), Unit.Parse("40"));
+
+            Assert.Equal(170, rendition.Width);
+            Assert.Equal(40, rendition.Height);
+
+            rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+                .Resize(Unit.Parse("170px"), Unit.Parse("_"));
+
+            Assert.Equal(170, rendition.Width);
+            Assert.Equal(40, rendition.Height);
+        }
+
         [Fact]
         public void DrawTextTests()
         {

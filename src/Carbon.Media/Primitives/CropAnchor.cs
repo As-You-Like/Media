@@ -2,6 +2,8 @@
 
 namespace Carbon.Media
 {
+    using static CropAnchor;
+
     public enum CropAnchor
     {
         Top         = 1 << 1,
@@ -17,15 +19,15 @@ namespace Carbon.Media
         {
             switch (anchor)
             {
-                case CropAnchor.Bottom                     : return "b";
-                case CropAnchor.Bottom | CropAnchor.Left   : return "bl";
-                case CropAnchor.Bottom | CropAnchor.Right  : return "br";
-                case CropAnchor.Center                     : return "c";
-                case CropAnchor.Left                       : return "l";
-                case CropAnchor.Right                      : return "r";
-                case CropAnchor.Top                        : return "t";
-                case CropAnchor.Top | CropAnchor.Left      : return "tl";
-                case CropAnchor.Top | CropAnchor.Right     : return "tr";
+                case Bottom         : return "b";
+                case Bottom | Left  : return "bl";
+                case Bottom | Right : return "br";
+                case Center         : return "c";
+                case Left           : return "l";
+                case Right          : return "r";
+                case Top            : return "t";
+                case Top | Left     : return "tl";
+                case Top | Right    : return "tr";
 
                 default: throw new ArgumentException($"Invalid anchor. Was '{anchor}'");
             }

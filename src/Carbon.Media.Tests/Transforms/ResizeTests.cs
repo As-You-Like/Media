@@ -4,13 +4,31 @@ namespace Carbon.Media.Tests
 {	
 	public class ResizeTests
 	{
+        // 100x100
+        // _x100
+        // 100x_
+        // 100×100
+        // 100×100,anchor:c
+        // 0.5×0.5
+        // 50﹪,
+        // 50％×50％
+
+        [Fact]
+        public void FromPercentages()
+        {
+            var resize = Resize.Parse("50％×50％");
+
+            Assert.Equal(0.5, resize.Width);
+            Assert.Equal(0.5, resize.Height);
+
+        }
         [Fact]
         public void FromFullKey1()
         {
             var resize = Resize.Parse("resize(85x20-c)");
 
-            Assert.Equal(85, resize.Width);
-            Assert.Equal(20, resize.Height);
+            Assert.Equal(85d, resize.Width);
+            Assert.Equal(20d, resize.Height);
             Assert.Equal(CropAnchor.Center, resize.Anchor);
         }
 
@@ -19,8 +37,8 @@ namespace Carbon.Media.Tests
         {
             var resize = Resize.Parse("85x20,carve|pad,anchor:center");
 
-            Assert.Equal(85, resize.Width);
-            Assert.Equal(20, resize.Height);
+            Assert.Equal(85d, resize.Width);
+            Assert.Equal(20d, resize.Height);
             Assert.Equal(CropAnchor.Center, resize.Anchor);
             
             Assert.Equal(ResizeFlags.Carve | ResizeFlags.Pad, resize.Flags);

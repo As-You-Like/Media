@@ -69,10 +69,34 @@ namespace Carbon.Media
         {
             if (transform is Resize)
             {
+                var ow = width;
+                var oh = height;
+
                 var resize = (Resize)transform;
 
-                width = resize.Width;
-                height = resize.Height;
+                if (resize.Width.Type == UnitType.None) // auto
+                {
+                    double scale = resize.Height.Value / oh;
+
+                    width = (int)(width * scale);
+                    
+                }
+                else
+                {
+                    width = resize.Width.Type == UnitType.Px ? (int)resize.Width : (int)(width * resize.Width);
+                }
+
+                if (resize.Height.Type == UnitType.None) // auto
+                { 
+                    double scale = resize.Width.Value / ow;
+
+                    height = (int)(height * scale);
+                }
+                else
+                {
+                    height = resize.Height.Type == UnitType.Px ? (int)resize.Height : (int)(height * resize.Height);
+                }
+
             }
             else if (transform is Crop)
             {
@@ -141,6 +165,13 @@ namespace Carbon.Media
         public MediaTransformation Resize(int width, int height, CropAnchor anchor)
         {
             Transform(new Resize(new Size(width, height), anchor));
+
+            return this;
+        }
+
+        public MediaTransformation Resize(Unit width, Unit height)
+        {
+            Transform(new Resize(width, height));
 
             return this;
         }

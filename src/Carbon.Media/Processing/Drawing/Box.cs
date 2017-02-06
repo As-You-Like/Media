@@ -43,15 +43,11 @@ namespace Carbon.Media
 
         public Unit Bottom { get; }
 
-        public override string ToString()
-        {
-            return Left.Value.ToString();
-        }
+        public override string ToString() =>
+            Left.Value.ToString();
 
-        public static Padding Parse(string text)
-        {
-            return new Padding(Unit.Parse(text));
-        }
+        public static Padding Parse(string text) =>
+            new Padding(Unit.Parse(text));
 
         public bool Equals(Padding other)
         {
