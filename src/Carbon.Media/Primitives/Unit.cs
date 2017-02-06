@@ -16,8 +16,7 @@ namespace Carbon.Media
 
         public UnitType Type { get; }
 
-        public static implicit operator double(Unit unit)
-            => unit.Value;
+        public static implicit operator double(Unit unit) => unit.Value;
 
         public override string ToString()
         {
@@ -43,10 +42,8 @@ namespace Carbon.Media
             return new Unit(double.Parse(text));
         }
 
-        public bool Equals(Unit other)
-        {
-            return Type == other.Type && Value == other.Value;
-        }
+        public bool Equals(Unit other) => 
+            Type == other.Type && Value == other.Value;
     }
 
     public enum UnitType

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    public class MediaMetadata
+    public class ImageMetadata
     {
         [DataMember(Name = "type")]
         public string Type { get; set; }

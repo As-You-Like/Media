@@ -8,7 +8,7 @@ namespace Carbon.Media
             Box box,
             Alignment? align,
             BlendMode blendMode,
-            ScaleMode scaleMode)
+            ResizeFlags scaleMode)
         {
             Box = box;
             Align = align;
@@ -22,7 +22,7 @@ namespace Carbon.Media
 
         public BlendMode BlendMode { get; }
 
-        public ScaleMode ScaleMode { get; set; } // Scale within the box
+        public ResizeFlags ScaleMode { get; set; } // Scale within the box
         
         // TODO: Use tuple w/ C# 7
         internal virtual IEnumerable<KeyValuePair<string, string>> Args()

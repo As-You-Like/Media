@@ -196,7 +196,7 @@ namespace Carbon.Media.Tests
         public void CenterAnchoredResizePng()
         {
             var rendition = new MediaTransformation(new MediaSource("1045645"), "png")
-                .Transform(new Resize(100, 50, ScaleMode.None, CropAnchor.Center));
+                .Transform(new Resize(new Size(100, 50), CropAnchor.Center));
 
             Assert.Equal(100, rendition.Width);
             Assert.Equal(50, rendition.Height);
@@ -228,7 +228,7 @@ namespace Carbon.Media.Tests
         public void LeftAnchoredResizeAndRotate90()
         {
             var transformation = new MediaTransformation(new MediaSource("1045645"), "jpeg")
-                .Transform(new Resize(150, 50, anchor: CropAnchor.Left))
+                .Transform(new Resize(new Size(150, 50), anchor: CropAnchor.Left))
                 .Rotate(90);
 
             Assert.Equal("150x50-l/rotate(90).jpeg", transformation.GetFullName());
@@ -238,7 +238,7 @@ namespace Carbon.Media.Tests
         public void LeftAnchoredResizeAndRotatationTiff()
         {
             var rendition = new MediaTransformation(new MediaSource("1045645"), "tiff")
-                .Transform(new Resize(50, 50, anchor: CropAnchor.Left))
+                .Transform(new Resize(new Size(50, 50), anchor: CropAnchor.Left))
                 .Rotate(180);
 
             Assert.Equal("50x50-l/rotate(180).tiff", rendition.GetFullName());
@@ -248,12 +248,12 @@ namespace Carbon.Media.Tests
         public void AnchoredResizeHasValidFileName()
         {
             var rendition = new MediaTransformation(new MediaSource("100"), "jpeg")
-                .Transform(new Resize(100, 100, anchor: CropAnchor.Center));
+                .Transform(new Resize(new Size(100, 100), anchor: CropAnchor.Center));
 
             Assert.Equal(@"100x100-c.jpeg", rendition.GetFullName());
 
             rendition = new MediaTransformation(new MediaSource("254565"), "jpeg")
-                .Transform(new Resize(500, 100, anchor: CropAnchor.Center));
+                .Transform(new Resize(new Size(500, 100), anchor: CropAnchor.Center));
 
             Assert.Equal(@"500x100-c.jpeg", rendition.GetFullName());
         }

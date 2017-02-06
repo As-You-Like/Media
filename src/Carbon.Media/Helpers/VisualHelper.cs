@@ -18,14 +18,14 @@ namespace Carbon.Media
             return CalculateScaledSize(new Size(source.Width, source.Height), maxSize);
         }
 
-        public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ScaleMode mode = ScaleMode.None)
+        public static Size CalculateScaledSize(Size sourceSize, Size maxSize, ResizeFlags mode = ResizeFlags.None)
         {
             var aspect = sourceSize.ToRational();
 
             var calculatedSize = CalculateMaxSize(maxSize, aspect);
 
             // If we are not stretching the image, make sure the result is not bigger then the sourceSize
-            if (mode == ScaleMode.None)
+            if (mode == ResizeFlags.None)
             {
                 if (calculatedSize.Height > sourceSize.Height || calculatedSize.Width > sourceSize.Width)
                 {

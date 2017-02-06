@@ -140,7 +140,7 @@ namespace Carbon.Media
 
         public MediaTransformation Resize(int width, int height, CropAnchor anchor)
         {
-            Transform(new Resize(width, height, ScaleMode.None, anchor));
+            Transform(new Resize(new Size(width, height), anchor));
 
             return this;
         }

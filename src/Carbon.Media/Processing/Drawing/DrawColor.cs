@@ -9,7 +9,7 @@ namespace Carbon.Media
             Box box,
             BlendMode mode = BlendMode.Normal,
             Alignment? align = null)
-            : base(box, align, mode, ScaleMode.None)
+            : base(box, align, mode, ResizeFlags.None)
         {
             #region Preconditions
 

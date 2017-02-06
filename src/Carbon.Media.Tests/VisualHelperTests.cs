@@ -9,21 +9,21 @@ namespace Carbon.Media.Tests
         {
             var imageSize = new Size(500, 500);
 
-            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.None));
-            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
-            Assert.Equal(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
-            Assert.Equal(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-            Assert.Equal(new Size(11, 11),   VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600)));
+            Assert.Equal(new Size(500, 500), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500)));
+            Assert.Equal(new Size(400, 400), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400)));
+            Assert.Equal(new Size(235, 235), VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290)));
+            Assert.Equal(new Size(11, 11),   VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15)));
 
             // Stretch
-            Assert.Equal(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ScaleMode.Stretch));
+            Assert.Equal(new Size(600, 600), VisualHelper.CalculateScaledSize(imageSize, new Size(600, 600), ResizeFlags.Exact));
 
             imageSize = new Size(5500, 1464);
 
-            Assert.Equal(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500), ScaleMode.None));
-            Assert.Equal(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400), ScaleMode.None));
-            Assert.Equal(new Size(235, 62),  VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290), ScaleMode.None));
-            Assert.Equal(new Size(11, 2),    VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15), ScaleMode.None));
+            Assert.Equal(new Size(500, 133), VisualHelper.CalculateScaledSize(imageSize, new Size(500, 500)));
+            Assert.Equal(new Size(400, 106), VisualHelper.CalculateScaledSize(imageSize, new Size(400, 400)));
+            Assert.Equal(new Size(235, 62),  VisualHelper.CalculateScaledSize(imageSize, new Size(235, 290)));
+            Assert.Equal(new Size(11, 2),    VisualHelper.CalculateScaledSize(imageSize, new Size(11, 15)));
         }
 
         [Fact]

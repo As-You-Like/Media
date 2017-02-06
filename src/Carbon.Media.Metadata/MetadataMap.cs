@@ -14,7 +14,7 @@ namespace Carbon.Media.Metadata
 
     public sealed class IntegerConverter : MetadataItemConverter
     {
-        public static readonly IntegerConverter Default = new IntegerConverter();
+        public static new readonly IntegerConverter Default = new IntegerConverter();
 
         public override object Normalize(object value)
             => int.Parse(value.ToString());
@@ -22,7 +22,7 @@ namespace Carbon.Media.Metadata
 
     public sealed class BooleanConverter : MetadataItemConverter
     {
-        public static readonly BooleanConverter Default = new BooleanConverter();
+        public static new readonly BooleanConverter Default = new BooleanConverter();
 
         public override object Normalize(object value)
             => int.Parse(value.ToString().ToLower());
@@ -30,7 +30,7 @@ namespace Carbon.Media.Metadata
 
     public sealed class SignedRational : MetadataItemConverter
     {
-        public static readonly SignedRational Default = new SignedRational();
+        public static readonly new SignedRational Default = new SignedRational();
 
         public override object Normalize(object value)
         {
@@ -106,7 +106,7 @@ namespace Carbon.Media.Metadata
 
     public sealed class DateNormalizer : MetadataItemConverter
     {
-        public static readonly DateNormalizer Default = new DateNormalizer();
+        public static readonly new DateNormalizer Default = new DateNormalizer();
 
         public override object Normalize(object value)
         {

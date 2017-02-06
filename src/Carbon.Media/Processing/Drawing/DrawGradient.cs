@@ -7,7 +7,7 @@
             Box box,
             BlendMode blendMode = BlendMode.Normal,
             Alignment? align = null)
-            : base(box, align, blendMode, ScaleMode.None)
+            : base(box, align, blendMode, ResizeFlags.None)
         {
             Gradient = o;
         }

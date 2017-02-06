@@ -6,15 +6,20 @@ namespace Carbon.Media
     public sealed class Resize : IProcessor
     {
         public Resize(Size size)
-            : this(size.Width, size.Height)
+            : this(size.Width, size.Height, null, null, ResizeFlags.None)
         { }
 
         public Resize(Size size, CropAnchor? anchor)
-            : this(size.Width, size.Height, ScaleMode.None, anchor)
+            : this(size.Width, size.Height, anchor, null, ResizeFlags.None)
         { }
 
-        public Resize(int width, int height, ScaleMode mode = ScaleMode.None, CropAnchor? anchor = null)
+        public Resize(int width, int height, ResizeFlags flags = ResizeFlags.None)
+            : this(width, height, null, null, flags) { }
+
+        public Resize(int width, int height, CropAnchor? anchor, string background, ResizeFlags flags)
         {
+            // 16384 * 16384 * 4 = 1GB bitmap
+
             #region Preconditions
 
             if (width < 0 || width > 6000)
@@ -27,20 +32,33 @@ namespace Carbon.Media
 
             Width  = width;
             Height = height;
-            Mode   = mode;
             Anchor = anchor;
+            Background = background;
+            Flags = flags;
         }
 
         public int Height { get; }
 
         public int Width { get; }
 
-        public ScaleMode Mode { get; }
+        public ResizeFlags Flags { get; }
 
         public CropAnchor? Anchor { get; }
 
+        public string Background { get; }
+
         [IgnoreDataMember]
         public Size Size => new Size(Width, Height);
+
+        #region Flags
+
+        public ResizeFlags Mode => Flags & ResizeFlags.Modes;
+
+        public bool Carve => Flags.HasFlag(ResizeFlags.Carve);
+
+        public bool Upscale => Flags.HasFlag(ResizeFlags.Upscale);
+
+        #endregion
 
         public override string ToString()
         {
@@ -52,32 +70,62 @@ namespace Carbon.Media
             return $"{Width}x{Height}-{Anchor?.ToCode()}";
         }
 
-        // 100x100,anchor:center,mode:stretch
+        // 100x100,anchor:center,flags:stretch
 
-        public static Resize Parse(string key)
+        public static Resize Parse(string segment)
         {
             #region Normalization
 
-            if (key.StartsWith("resize("))
-            {
-                key = key.Remove(0, 7);
+            int argStart = segment.IndexOf('(') + 1;
 
-                key = key.Substring(0, key.Length - 1); // Trim )
+            if (argStart > 0)
+            {
+                segment = segment.Substring(argStart, segment.Length - argStart - 1);
             }
 
             #endregion
 
-            if (key.Contains(","))
+            if (segment.Contains(","))
             {
-                // anchor
-                // mode
+                var parts = segment.Split(Seperators.Comma);
+
+                var size = Size.Parse(parts[0]);
+                var flags = ResizeFlags.None;
+                string background = null;
+                CropAnchor? anchor = null;
+
+                for (var i = 1; i < parts.Length; i++)
+                {
+                    var part = parts[i];
+
+                    if (part.Contains(":"))
+                    {
+                        var arg = part.Split(Seperators.Colon);
+
+                        var k = arg[0];
+                        var v = arg[1];
+
+                        switch (k)
+                        {
+                            case "anchor"     : anchor = AnchorHelper.Parse(v); break;
+                            case "background" : background = v;                 break;
+                            default: throw new Exception("Unknown arg:" + k);
+                        }
+                    }
+                    else
+                    {
+                        flags = ResizeFlagsHelper.Parse(part);
+                    }
+                }
+
+                return new Resize(size.Width, size.Height, anchor, background, flags);
             }
 
-            if (key.Contains("-"))
+            else if (segment.Contains("-"))
             {
                 // {width}x{height}-{anchor}
 
-                var parts = key.Split(Seperators.Dash);
+                var parts = segment.Split(Seperators.Dash);
 
                 return new Resize(
                     size   : Size.Parse(parts[0]),
@@ -86,7 +134,7 @@ namespace Carbon.Media
             }
 
             // 100x100
-            return new Resize(Size.Parse(key));
+            return new Resize(Size.Parse(segment));
         }
 
         public static Resize operator * (Resize left, double scale)

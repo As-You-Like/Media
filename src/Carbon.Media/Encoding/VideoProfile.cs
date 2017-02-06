@@ -45,8 +45,8 @@ namespace Carbon.Media
         [DefaultValue(false)]
         public bool Upscale { get; set; }
 
-        [DefaultValue(ScaleMode.Fit)]
-        public ScaleMode ScaleMode { get; set; }
+        [DefaultValue(ResizeFlags.Fit)]
+        public ResizeFlags ScaleMode { get; set; }
 
         #region Helpers
 
