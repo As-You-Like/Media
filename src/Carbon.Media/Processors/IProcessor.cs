@@ -1,6 +1,10 @@
 ﻿namespace Carbon.Media
 {
-    public interface IProcessor { }
+    public interface IProcessor
+    {
+        string Canonicalize();
+
+    }
 }
 
 

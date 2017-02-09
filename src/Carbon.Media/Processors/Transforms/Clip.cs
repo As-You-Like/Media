@@ -11,6 +11,14 @@ namespace Carbon.Media
             if (end > start)
                 throw new ArgumentException("end may not be after the start");
 
+
+            if (start < TimeSpan.Zero)
+                throw new ArgumentException("Must be Zero or greater", nameof(start));
+
+            if (end <= TimeSpan.Zero)
+                throw new ArgumentException("Must be greater than Zero", nameof(start));
+
+
             #endregion
 
             Start = start;
@@ -21,10 +29,10 @@ namespace Carbon.Media
 
         public TimeSpan End { get; }
 
-        public override string ToString() =>
-            $"clip({Start.TotalSeconds},{End.TotalSeconds})";
+        // clip(0s,30s)
 
-        // clip(0,30)
+        public string Canonicalize() => $"clip({Start.TotalSeconds},{End.TotalSeconds})";
 
+        public override string ToString() => Canonicalize();
     }
 }

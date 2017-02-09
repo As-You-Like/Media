@@ -24,7 +24,10 @@ namespace Carbon.Media
         public string Src { get; set; }
 
         // image(src.jpeg,width:100,x:0,y:0,align:center)
-        
+
+        public override string Canonicalize() =>
+            null;
+
         public static DrawImage Parse(string key)
         {
             #region Normalization

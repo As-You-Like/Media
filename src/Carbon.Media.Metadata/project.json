@@ -1,10 +1,8 @@
 ﻿{
   "authors": [ "iamcarbon" ],
-  "version": "1.2.0",
+  "version": "1.3.0",
 
-  "dependencies": {
-    "Carbon.Media": "1.2.0"
-  },
+
 
   "frameworks": {
     "netstandard1.6": {

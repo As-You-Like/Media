@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Carbon.Media
@@ -48,6 +47,8 @@ namespace Carbon.Media
 
         public string Background { get; }
 
+        // TODO: Calculate rectangle
+
         public Size CalcuateSize(Size source)
         {
             int width = source.Width;
@@ -87,6 +88,24 @@ namespace Carbon.Media
         public bool Upscale => Flags.HasFlag(ResizeFlags.Upscale);
 
         #endregion
+
+        // resize(100,100,anchor:center)
+        // resize(100,100,flags:fit)
+
+        public string Canonicalize()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("resize(");
+
+            sb.Append(Width.Value);
+            sb.Append(",");
+            sb.Append(Height.Value);
+
+            sb.Append(")");
+
+            return sb.ToString();
+        }
 
         public override string ToString()
         {

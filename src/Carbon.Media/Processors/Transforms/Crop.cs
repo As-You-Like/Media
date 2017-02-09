@@ -6,7 +6,7 @@ namespace Carbon.Media
 
     public sealed class Crop : IProcessor
     {
-        public Crop(int x, int y, int width, int height)
+        public Crop(Unit x, Unit y, Unit width, Unit height)
         {
             #region Preconditions
 
@@ -18,28 +18,46 @@ namespace Carbon.Media
 
             #endregion
 
-            Rectangle = new Rectangle(x, y, width, height);
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
         }
 
         public Crop(Rectangle rectangle)
         {
-            Rectangle = rectangle;
+            X       = new Unit(rectangle.X);
+            Y       = new Unit(rectangle.Y);
+            Width   = new Unit(rectangle.Width);
+            Height  = new Unit(rectangle.Height);
         }
 
-        public Rectangle Rectangle { get; }
+        public Unit X { get; }
 
-        public int X => (int)Rectangle.X;
+        public Unit Y { get; }
 
-        public int Y => (int)Rectangle.Y;
+        public Unit Width { get; }
 
-        public int Width => (int)Rectangle.Width;
+        public Unit Height { get; }
 
-        public int Height => (int)Rectangle.Height;
+        public Rectangle GetRectangle(Size source) =>
+            new Rectangle(X, Y, Width, Height);
+
+        public Crop Scale(double scale) =>
+            new Crop(
+                x       : (X * scale),
+                y       : (Y * scale),
+                width   : (Width * scale),
+                height  : (Height * scale)
+            );
+
+
+        public string Canonicalize() =>
+            $"crop({X},{Y},{Width},{Height})";
 
         // OLD: crop:0-0_100x100
         // NEW: crop(0,0,100,100)
-        public override string ToString()
-            => $"crop({X},{Y},{Width},{Height})";
+        public override string ToString() => Canonicalize();
 
         public static Crop Parse(string key)
         {
@@ -58,12 +76,11 @@ namespace Carbon.Media
 
                 parts = key.Split(Seperators.Comma);
 
-
                 return new Crop(
-                    x      : int.Parse(parts[0]),
-                    y      : int.Parse(parts[1]),
-                    width  : int.Parse(parts[2]),
-                    height : int.Parse(parts[3])
+                    x      : Unit.Parse(parts[0]),
+                    y      : Unit.Parse(parts[1]),
+                    width  : Unit.Parse(parts[2]),
+                    height : Unit.Parse(parts[3])
                 );
             }
 
@@ -86,8 +103,8 @@ namespace Carbon.Media
             var locationString = parts[0];
             var size = Size.Parse(parts[1]);
 
-            int x = int.Parse(locationString.Split(Seperators.Dash)[0]), // '-'
-                y = int.Parse(locationString.Split(Seperators.Dash)[1]);
+            Unit x = Unit.Parse(locationString.Split(Seperators.Dash)[0]), // '-'
+                 y = Unit.Parse(locationString.Split(Seperators.Dash)[1]);
 
             return new Crop(x, y, size.Width, size.Height);
         }

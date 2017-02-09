@@ -15,8 +15,11 @@ namespace Carbon.Media
         public FlipAxis Axis { get; }
 
         // flip(x | y)
-        public override string ToString() 
-            => "flip(" + Axis.ToLower() + ")";
+        public string Canonicalize() =>
+            "flip(" + Axis.ToLower() + ")";
+     
+        public override string ToString() =>
+            Canonicalize();
 
         public static Flip Parse(string key)
         {

@@ -24,6 +24,9 @@ namespace Carbon.Media
         }
 
         public string Color { get; set; }
+            
+        public override string Canonicalize() =>
+            null;
 
         public static DrawColor Parse(string key)
         {

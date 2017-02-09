@@ -82,8 +82,8 @@ namespace Carbon.Media
             {
                 var crop = (Crop)transform;
 
-                width = crop.Width;
-                height = crop.Height;
+                width  = (int)crop.Width.Value;
+                height = (int)crop.Height.Value;
             }
             else if (transform is Rotate)
             {
@@ -165,14 +165,14 @@ namespace Carbon.Media
 
         public MediaTransformation ApplyFilter(string name, int value)
         {
-            Transform(new ApplyFilter(name, value.ToString()));
+            Transform(new UnknownFilter(name, value.ToString()));
 
             return this;
         }
 
         public MediaTransformation ApplyFilter(string name, string value)
         {
-            Transform(new ApplyFilter(name, value));
+            Transform(new UnknownFilter(name, value));
 
             return this;
         }
@@ -190,6 +190,13 @@ namespace Carbon.Media
 
         public static MediaTransformation ParsePath(string path)
         {
+            #region Preconditions
+
+            if (path == null)
+                throw new ArgumentNullException(nameof(path));
+
+            #endregion
+
             if (path[0] == '/')
             {
                 path = path.Substring(1);
@@ -234,17 +241,30 @@ namespace Carbon.Media
                 }
                 else
                 {
+                    // TODO: Remove colon once crop has been migrated to new syntax.
+
                     var transformName = part.Split('(', ':')[0];
 
                     switch (transformName)
                     {
-                        case "crop"     : processor = Media.Crop.Parse(part);        break;
-                        case "rotate"   : processor = Media.Rotate.Parse(part);      break;
-                        case "flip"     : processor = Flip.Parse(part);              break;
-                        case "text"     : processor = Media.DrawText.Parse(part);    break;
-                        case "gradient" : processor = DrawGradient.Parse(part);      break;
-                        case "overlay"  : processor = DrawColor.Parse(part);         break;
-                        default         : processor = Media.ApplyFilter.Parse(part); break;
+                        case "crop"       : processor = Media.Crop.Parse(part);              break;
+                        case "rotate"     : processor = Media.Rotate.Parse(part);            break;
+                        case "flip"       : processor = Flip.Parse(part);                    break;
+                        case "text"       : processor = Media.DrawText.Parse(part);          break;
+                        case "gradient"   : processor = DrawGradient.Parse(part);            break;
+                        case "overlay"    : processor = DrawColor.Parse(part);               break;
+
+                        // filters
+                        case "hue-rotate" : processor = HueRotateFilter.Parse(part);         break;
+                        case "saturate"   : processor = SaturateFilter.Parse(part);          break;
+                        case "sepia"      : processor = SepiaFilter.Parse(part);             break;
+                        case "brightness" : processor = BrightnessFilter.Parse(part);        break;
+                        case "grayscale"  : processor = GrayscaleFilter.Parse(part);         break;
+                        case "blur"       : processor = BlurEffect.Parse(part);              break;
+                        case "invert"     : processor = InvertFilter.Parse(part);            break;
+                        case "contrast"   : processor = ContrastFilter.Parse(part);          break;
+                        case "opacity"    : processor = OpacityFilter.Parse(part);           break;
+                        default           : processor = UnknownFilter.Parse(part);           break;
                     }
                 }
 
@@ -260,11 +280,38 @@ namespace Carbon.Media
 
             return rendition;
         }
+        
+        // blob#100 |> resize(100,100) |> sepia(1)
 
-        public string GetPath()
-            => Source.Key + "/" + GetFullName();
+        public string GetScript()
+        {
+            var sb = new StringBuilder();
 
-        public string GetFullName()
+            sb.Append(Source.Key);
+            
+            foreach (var processor in transforms)
+            {
+                sb.Append("|>");
+                
+                sb.Append(processor.Canonicalize());
+            }
+
+            sb.Append("|>");
+
+            sb.Append("encode(");
+            sb.Append(Format);
+            sb.Append(")");
+
+            return sb.ToString();
+        }
+
+        public string GetPath() => 
+            Source.Key + "/" + GetFullName("/");
+
+        public string GetFullName() =>
+            GetFullName("/");
+
+        public string GetFullName(string seperator)
         {
             /* 
 			10x10.gif			
@@ -280,7 +327,7 @@ namespace Carbon.Media
             {
                 if (sb.Length != 0)
                 {
-                    sb.Append("/");
+                    sb.Append(seperator);
                 }
 
                 sb.Append(transform.ToString());

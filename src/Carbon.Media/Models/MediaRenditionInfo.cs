@@ -130,7 +130,7 @@ namespace Carbon.Media
                 {
                     var crop = (Crop)processor;
 
-                    b.Transform(new Crop(crop.Rectangle.Scale(scale)));
+                    b.Transform(crop.Scale(scale));
                 }
                 else
                 {

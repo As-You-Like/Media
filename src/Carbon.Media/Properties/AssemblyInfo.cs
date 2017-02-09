@@ -3,10 +3,9 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 - 2017 Jason Nelson")]
-[assembly: AssemblyVersion("1.2.0")]
+[assembly: AssemblyVersion("1.3.0")]
 
-/*
- 
+/* 
  1.0.0 (2016-10-27)
  -----------------------------------------------------
  Remove System.Drawing dependecy

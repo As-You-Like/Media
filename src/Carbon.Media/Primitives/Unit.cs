@@ -20,10 +20,8 @@ namespace Carbon.Media
 
         public static implicit operator Unit(int quantity) => new Unit(quantity);
 
-
         public static Unit operator *(Unit left, double right) =>
             new Unit(left.Value * right, left.Type);
-
 
         // ％ = large unicode
         public override string ToString()

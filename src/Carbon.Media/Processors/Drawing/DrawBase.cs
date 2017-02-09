@@ -23,7 +23,9 @@ namespace Carbon.Media
         public BlendMode BlendMode { get; }
 
         public ResizeFlags ScaleMode { get; set; } // Scale within the box
-        
+
+        public abstract string Canonicalize();
+
         // TODO: Use tuple w/ C# 7
         internal virtual IEnumerable<KeyValuePair<string, string>> Args()
         {

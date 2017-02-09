@@ -30,6 +30,8 @@ namespace Carbon.Media.Tests
             Assert.Equal(85d, resize.Width);
             Assert.Equal(20d, resize.Height);
             Assert.Equal(CropAnchor.Center, resize.Anchor);
+
+            Assert.Equal("85x20-c", resize.ToString());
         }
 
         [Fact]

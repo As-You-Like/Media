@@ -12,5 +12,14 @@ namespace Carbon.Media.Tests
         {
             Assert.Equal(normalized, FileFormat.Normalize(input));
         }
+
+
+        [Theory]
+        [InlineData("a/asfasdf.GIF", "gif")]
+        [InlineData("234234(adasf.gif)/a/asfasdf.pNg", "png")]
+        public void FromPaths(string input, string normalized)
+        {
+            Assert.Equal(normalized, FileFormat.FromPath(input));
+        }
     }
 }

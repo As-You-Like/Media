@@ -18,8 +18,9 @@
 
         public int Angle { get; }
 
-        public override string ToString() 
-            => $"rotate({Angle})";
+        public string Canonicalize() => $"rotate({Angle}deg)";
+
+        public override string ToString() => $"rotate({Angle})";
 
         public static Rotate Parse(string key)
         {

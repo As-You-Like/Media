@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Carbon.Media.Tests
 {
-    public class Signer : ISigner
+    public sealed class Signer : ISigner
     {
         private readonly string name;
 
@@ -21,6 +21,7 @@ namespace Carbon.Media.Tests
 
     public class ImageRendentionTests
     {
+        private static readonly MediaSource jpeg_50x50 = new MediaSource("1045645", 100, 50);
         private static readonly MediaSource jpeg_85x20 = new MediaSource("a", 85, 20);
 
         [Fact]
@@ -213,6 +214,10 @@ namespace Carbon.Media.Tests
             Assert.Equal("100x100/crop(0,0,85,20).png", rendition.GetFullName());
             Assert.Equal("1045645/100x100/crop(0,0,85,20).png", rendition.GetPath());
 
+            Assert.Equal("100x100|crop(0,0,85,20).png", rendition.GetFullName("|"));
+
+            Assert.Equal("1045645|>resize(100,100)|>crop(0,0,85,20)|>encode(png)", rendition.GetScript());
+
             var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
 
             Assert.Equal("1045645", rendition2.Source.Key);
@@ -220,6 +225,9 @@ namespace Carbon.Media.Tests
             Assert.Equal(2, rendition2.GetTransforms().Count);
             Assert.Equal("100x100", rendition2.GetTransforms()[0].ToString());
             Assert.Equal("crop(0,0,85,20)", rendition2.GetTransforms()[1].ToString());
+
+
+
         }
 
         [Fact]
@@ -291,29 +299,35 @@ namespace Carbon.Media.Tests
         [Fact]
         public void Filters()
         {
-            var transformation = new MediaTransformation(new MediaSource("1045645", 100, 50), "jpeg")
-                .Transform(new ApplyFilter("contrast", "2"))
-                .Transform(new ApplyFilter("grayscale", "1"))
-                .Transform(new ApplyFilter("sepia", "1"));
-
+            var transformation = new MediaTransformation(jpeg_50x50, "jpeg")
+                .Transform(new ContrastFilter(2f))
+                .Transform(new GrayscaleFilter(1f))
+                .Transform(new SepiaFilter(1f))
+                .Transform(new OpacityFilter(1f))
+                .Transform(new SaturateFilter(1f))
+                .Transform(new HueRotateFilter(90));
 
             Assert.Equal(100, transformation.Width);
             Assert.Equal(50, transformation.Height);
 
-            Assert.Equal("contrast(2)/grayscale(1)/sepia(1).jpeg", transformation.GetFullName());
+            Assert.Equal("contrast(2)/grayscale(1)/sepia(1)/opacity(1)/saturate(1)/hue-rotate(90deg).jpeg", transformation.GetFullName());
 
             var rendition2 = MediaTransformation.ParsePath(transformation.GetPath());
-            Assert.Equal(3, rendition2.GetTransforms().Count);
+            Assert.Equal(6, rendition2.GetTransforms().Count);
 
-            Assert.Equal("contrast", ((ApplyFilter)rendition2.GetTransforms()[0]).Name);
-            Assert.Equal("grayscale", ((ApplyFilter)rendition2.GetTransforms()[1]).Name);
-            Assert.Equal("sepia", ((ApplyFilter)rendition2.GetTransforms()[2]).Name);
+            Assert.Equal(2f, ((ContrastFilter)rendition2.GetTransforms()[0]).Amount);
+            Assert.Equal(1f, ((GrayscaleFilter)rendition2.GetTransforms()[1]).Amount);
+            Assert.Equal(1f, ((SepiaFilter)rendition2.GetTransforms()[2]).Amount);
+            Assert.Equal(1f, ((OpacityFilter)rendition2.GetTransforms()[3]).Amount);
+            Assert.Equal(1f, ((SaturateFilter)rendition2.GetTransforms()[4]).Amount);
+            Assert.Equal(90, ((HueRotateFilter)rendition2.GetTransforms()[5]).Degrees);
+
         }
 
         [Fact]
         public void BuilderTests()
         {
-            var transformation = new MediaTransformation(new MediaSource("1045645", 50, 50), "jpeg")
+            var transformation = new MediaTransformation(jpeg_50x50, "jpeg")
                 .Resize(100, 100)
                 .Rotate(90)
                 .ApplyFilter("sepia", 1);

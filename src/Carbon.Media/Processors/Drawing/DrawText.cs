@@ -44,6 +44,9 @@ namespace Carbon.Media
             }
         }
 
+        public override string Canonicalize() =>
+            ToString();
+
         // text(hello+world,font:12px Tacoma,align:center)
 
         public override string ToString()
