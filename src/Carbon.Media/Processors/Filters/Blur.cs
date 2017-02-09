@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class BlurEffect : IProcessor
+    public class BlurEffect : IFilter
     {
         public BlurEffect(float amount)
         {

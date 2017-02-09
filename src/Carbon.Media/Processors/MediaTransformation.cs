@@ -30,7 +30,7 @@ namespace Carbon.Media
             this.height = source.Height;
         }
 
-        public MediaTransformation(IMediaSource source, MediaOrientation orientation, string format)
+        public MediaTransformation(IMediaSource source, ImageOrientation orientation, string format)
             : this(source, format)
         {
             Transform(orientation.GetTransforms());
@@ -78,11 +78,18 @@ namespace Carbon.Media
                 width = newSize.Width;
                 height = newSize.Height;
             }
+            else if (transform is Scale)
+            {
+                var scale = (Scale)transform;
+
+                width = scale.Width;
+                height = scale.Height;
+            }
             else if (transform is Crop)
             {
                 var crop = (Crop)transform;
 
-                width  = (int)crop.Width.Value;
+                width = (int)crop.Width.Value;
                 height = (int)crop.Height.Value;
             }
             else if (transform is Rotate)
@@ -98,6 +105,13 @@ namespace Carbon.Media
                     width = oldHeight;
                     height = oldWidth;
                 }
+            }
+            else if (transform is Pad)
+            {
+                var pad = (Pad)transform;
+
+                width  += (pad.Left + pad.Right);
+                height += (pad.Top + pad.Bottom);
             }
 
             this.transforms.Add(transform);
@@ -204,12 +218,13 @@ namespace Carbon.Media
 
             // 100/transform/transform.format
 
-            var lastDotIndex = path.LastIndexOf('.');
-            var format = (lastDotIndex > 0) ? path.Substring(lastDotIndex + 1) : null;
+            int lastDotIndex = path.LastIndexOf('.');
+            string format = null;
 
             if (lastDotIndex > 0)
             {
-                path = path.Substring(0, lastDotIndex);
+                format = path.Substring(lastDotIndex + 1);
+                path   = path.Substring(0, lastDotIndex);
             }
 
             var parts = path.Split(Seperators.ForwardSlash);
@@ -220,51 +235,56 @@ namespace Carbon.Media
 
             for (var i = 1; i < parts.Length; i++)
             {
-                var part = parts[i];
+                var segment = parts[i];
 
                 IProcessor processor;
 
-                if (char.IsDigit(part[0]))
+                if (char.IsDigit(segment[0]))
                 {
-                    if (part.Contains(":"))
+                    if (segment.Contains(":"))
                     {
                         // 1:00
 
-                        var time = TimeSpan.Parse(part);
+                        var time = TimeSpan.Parse(segment);
 
                         processor = new Clip(time, time);
                     }
                     else
                     {
-                        processor = Media.Resize.Parse(part);
+                        processor = Media.Resize.Parse(segment);
                     }
                 }
                 else
                 {
                     // TODO: Remove colon once crop has been migrated to new syntax.
 
-                    var transformName = part.Split('(', ':')[0];
+                    var transformName = segment.Split('(', ':')[0];
 
                     switch (transformName)
                     {
-                        case "crop"       : processor = Media.Crop.Parse(part);              break;
-                        case "rotate"     : processor = Media.Rotate.Parse(part);            break;
-                        case "flip"       : processor = Flip.Parse(part);                    break;
-                        case "text"       : processor = Media.DrawText.Parse(part);          break;
-                        case "gradient"   : processor = DrawGradient.Parse(part);            break;
-                        case "overlay"    : processor = DrawColor.Parse(part);               break;
+                        case "resize"     : processor = Media.Resize.Parse(segment);            break;
+                        case "scale"      : processor = Media.Scale.Parse(segment);             break;
+                        case "crop"       : processor = Media.Crop.Parse(segment);              break;
+                        case "rotate"     : processor = Media.Rotate.Parse(segment);            break;
+                        case "flip"       : processor = Flip.Parse(segment);                    break;
+                        case "pad"        : processor = Pad.Parse(segment);                     break;
+                        
+                        // Drawing                       
+                        case "text"       : processor = Media.DrawText.Parse(segment);          break;
+                        case "overlay"    : processor = DrawColor.Parse(segment);               break;
+                        case "gradient"   : processor = DrawGradient.Parse(segment);            break;
 
                         // filters
-                        case "hue-rotate" : processor = HueRotateFilter.Parse(part);         break;
-                        case "saturate"   : processor = SaturateFilter.Parse(part);          break;
-                        case "sepia"      : processor = SepiaFilter.Parse(part);             break;
-                        case "brightness" : processor = BrightnessFilter.Parse(part);        break;
-                        case "grayscale"  : processor = GrayscaleFilter.Parse(part);         break;
-                        case "blur"       : processor = BlurEffect.Parse(part);              break;
-                        case "invert"     : processor = InvertFilter.Parse(part);            break;
-                        case "contrast"   : processor = ContrastFilter.Parse(part);          break;
-                        case "opacity"    : processor = OpacityFilter.Parse(part);           break;
-                        default           : processor = UnknownFilter.Parse(part);           break;
+                        case "hue-rotate" : processor = HueRotateFilter.Parse(segment);         break;
+                        case "saturate"   : processor = SaturateFilter.Parse(segment);          break;
+                        case "sepia"      : processor = SepiaFilter.Parse(segment);             break;
+                        case "brightness" : processor = BrightnessFilter.Parse(segment);        break;
+                        case "grayscale"  : processor = GrayscaleFilter.Parse(segment);         break;
+                        case "blur"       : processor = BlurEffect.Parse(segment);              break;
+                        case "invert"     : processor = InvertFilter.Parse(segment);            break;
+                        case "contrast"   : processor = ContrastFilter.Parse(segment);          break;
+                        case "opacity"    : processor = OpacityFilter.Parse(segment);           break;
+                        default           : processor = UnknownFilter.Parse(segment);           break;
                     }
                 }
 

@@ -32,6 +32,8 @@ namespace Carbon.Media.Tests
             Assert.Equal(CropAnchor.Center, resize.Anchor);
 
             Assert.Equal("85x20-c", resize.ToString());
+
+            Assert.Equal("resize(85,20,anchor:c)", resize.Canonicalize());
         }
 
         [Fact]
@@ -53,6 +55,8 @@ namespace Carbon.Media.Tests
             var resize = Resize.Parse("85x20,carve|pad,anchor:center,background:red");
 
             Assert.Equal("85x20,pad|carve,anchor:c,background:red", resize.ToString());
+
+            Assert.Equal("resize(85,20,pad|carve,anchor:c,background:red)", resize.Canonicalize());
         }
 
         [Fact]

@@ -91,6 +91,7 @@ namespace Carbon.Media
 
         // resize(100,100,anchor:center)
         // resize(100,100,flags:fit)
+        
 
         public string Canonicalize()
         {
@@ -102,9 +103,32 @@ namespace Carbon.Media
             sb.Append(",");
             sb.Append(Height.Value);
 
+            // Options
+            WriteOptions(sb);
+            
             sb.Append(")");
 
             return sb.ToString();
+        }
+
+        private void WriteOptions(StringBuilder sb)
+        {
+            if (Flags != ResizeFlags.None)
+            {
+                sb.Append("," + Flags.ToLower());
+            }
+
+            if (Anchor != null)
+            {
+                sb.Append(",anchor:");
+                sb.Append(Anchor.Value.ToCode());
+            }
+            
+            if (Background != null)
+            {
+                sb.Append(",background:");
+                sb.Append(Background);
+            }
         }
 
         public override string ToString()
@@ -113,18 +137,7 @@ namespace Carbon.Media
             {
                 var sb = new StringBuilder(Width + "x" + Height);
 
-                sb.Append("," + Flags.ToLower());
-
-                if (Anchor != null)
-                {
-                    sb.Append(",anchor:");
-                    sb.Append(Anchor.Value.ToCode());
-                }
-                if (Background != null)
-                {
-                    sb.Append(",background:");
-                    sb.Append(Background);
-                }
+                WriteOptions(sb);
 
                 return sb.ToString();
             }

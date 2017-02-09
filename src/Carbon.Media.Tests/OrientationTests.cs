@@ -9,10 +9,10 @@ namespace Carbon.Media.Tests
         [Fact]
         public void OrientationParse()
         {
-            var orientation = (MediaOrientation)Enum.Parse(typeof(MediaOrientation), "1");
+            var orientation = (ImageOrientation)Enum.Parse(typeof(ImageOrientation), "1");
 
-            Assert.Equal(MediaOrientation.Horizontal, orientation);
-            Assert.Equal(MediaOrientation.Horizontal, OrientationHelper.Parse("1"));
+            Assert.Equal(ImageOrientation.Horizontal, orientation);
+            Assert.Equal(ImageOrientation.Horizontal, OrientationHelper.Parse("1"));
         }
     }
 }

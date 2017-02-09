@@ -36,6 +36,29 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
+        public void Scale1()
+        {
+            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+                .Transform(new Scale(100, 200, InterpolaterMode.Cubic));
+               
+
+            Assert.Equal(100, rendition.Width);
+            Assert.Equal(200, rendition.Height);
+        }
+
+        [Fact]
+        public void Pad1()
+        {
+            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+                .Transform(new Pad(10));
+
+
+            Assert.Equal(105, rendition.Width);
+            Assert.Equal(40, rendition.Height);
+        }
+
+
+        [Fact]
         public void ResizeAuto()
         {
             var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
@@ -168,7 +191,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void OrientedPhotoHasCorrectThings()
         {
-            var rendition = new MediaTransformation(new MediaSource("1", 100, 50), MediaOrientation.Rotate90, "jpeg");
+            var rendition = new MediaTransformation(new MediaSource("1", 100, 50), ImageOrientation.Rotate90, "jpeg");
 
             Assert.Equal(50, rendition.Width);
             Assert.Equal(100, rendition.Height);
@@ -211,7 +234,7 @@ namespace Carbon.Media.Tests
                 .Resize(100, 100)
                 .Crop(0, 0, 85, 20);
 
-            Assert.Equal("100x100/crop(0,0,85,20).png", rendition.GetFullName());
+            Assert.Equal("100x100/crop(0,0,85,20).png",         rendition.GetFullName());
             Assert.Equal("1045645/100x100/crop(0,0,85,20).png", rendition.GetPath());
 
             Assert.Equal("100x100|crop(0,0,85,20).png", rendition.GetFullName("|"));
@@ -225,9 +248,6 @@ namespace Carbon.Media.Tests
             Assert.Equal(2, rendition2.GetTransforms().Count);
             Assert.Equal("100x100", rendition2.GetTransforms()[0].ToString());
             Assert.Equal("crop(0,0,85,20)", rendition2.GetTransforms()[1].ToString());
-
-
-
         }
 
         [Fact]

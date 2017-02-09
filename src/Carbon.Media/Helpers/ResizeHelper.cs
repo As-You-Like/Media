@@ -6,44 +6,91 @@ namespace Carbon.Media
 
     public static class ResizeHelper
     {
-        public static Size CalculateSize(ISize source, Size maxSize)
+        // Fit the image without changing the aspect
+
+        public static Size Fit(Size source, Size bounds, bool upscale = false)
         {
-            #region Preconditions
+            var aspect = source.ToRational();
 
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
+            var target = Max(bounds, aspect);
 
-            #endregion
+            // If we're not upscaling 
 
-            return CalculateSize(new Size(source.Width, source.Height), maxSize);
+            if (!upscale && (target.Height > source.Height || target.Width > source.Width))
+            {
+                return Max(source, aspect);
+            }
+
+            return target;
         }
 
-        public static Size CalculateSize(Size sourceSize, Size maxSize, ResizeFlags mode = ResizeFlags.None)
+        /*
+        // TODO: Determine how to distribute the padding based on the alignment...
+        public static void PadCrop(ref Rectangle box, Padding padding)
         {
-            var aspect = sourceSize.ToRational();
+            var size = new Size(box.Width, box.Height);
 
-            var calculatedSize = CalculateMaxSize(maxSize, aspect);
+            box.Width  -= (padding.Left + padding.Right);
+            box.Height -= (padding.Top + padding.Bottom);
 
-            // If we are not stretching the image, make sure the result is not bigger then the sourceSize
-            if (mode == ResizeFlags.None)
+            Align(ref box, size, CropAnchor.Center);
+        }
+        */
+
+        // Align the box within the bounds
+
+        public static void Align(ref Rectangle box, Size bounds, CropAnchor anchor)
+        {
+            var x = 0d;
+            var y = 0d;
+
+            // There's horizontal space
+            if (box.Width < bounds.Width)
             {
-                if (calculatedSize.Height > sourceSize.Height || calculatedSize.Width > sourceSize.Width)
+                if (anchor.HasFlag(CropAnchor.Left))
                 {
-                    calculatedSize = CalculateMaxSize(sourceSize, aspect);
+                    x = 0;
+                }
+                else if (anchor.HasFlag(CropAnchor.Right))
+                {
+                    x = bounds.Width - box.Width;
+                }
+                else // center
+                {
+                    x = (bounds.Width - box.Width) / 2d;
+                }
+            }
+            
+            // There's vertical space
+            if (box.Height < bounds.Height)
+            {
+                if (anchor.HasFlag(CropAnchor.Top))
+                {
+                    y = 0;
+                }
+                else if (anchor.HasFlag(CropAnchor.Bottom))
+                {
+                    y = bounds.Height - box.Height;
+                }
+                else // Center
+                {
+                    y = (bounds.Height - box.Height) / 2d;
                 }
             }
 
-            return calculatedSize;
+            box.X = x;
+            box.Y = y;
         }
 
-        public static Rectangle CalculateCropRectangle(ISize sourceSize, ISize box, CropAnchor anchor)
+        public static Rectangle CalculateCropRectangle(Size sourceSize, Size bounds, CropAnchor anchor)
         {
             double x = 0d,
                    y = 0d,
+
                    scale = 0d;
             
-            double widthP  = (double)box.Width / sourceSize.Width;
-            double heightP = (double)box.Height / sourceSize.Height;
+            double widthP  = (double)bounds.Width / sourceSize.Width;
+            double heightP = (double)bounds.Height / sourceSize.Height;
 
             if (heightP < widthP)
             {
@@ -55,11 +102,11 @@ namespace Carbon.Media
                 }
                 else if (anchor.HasFlag(CropAnchor.Bottom))
                 {
-                    y = box.Height - (sourceSize.Height * scale);
+                    y = bounds.Height - (sourceSize.Height * scale);
                 }
                 else // Center
                 {
-                    y = (box.Height - (sourceSize.Height * scale)) / 2d;
+                    y = (bounds.Height - (sourceSize.Height * scale)) / 2d;
                 }
             }
             else
@@ -70,13 +117,13 @@ namespace Carbon.Media
                 {
                     x = 0;
                 }
-                if (anchor.HasFlag(CropAnchor.Right))
+                else if (anchor.HasFlag(CropAnchor.Right))
                 {
-                    x = box.Width - (sourceSize.Width * scale);
+                    x = bounds.Width - (sourceSize.Width * scale);
                 }
                 else // center
                 {
-                    x = (box.Width - (sourceSize.Width * scale)) / 2d;
+                    x = (bounds.Width - (sourceSize.Width * scale)) / 2d;
                 }
             }
 
@@ -89,28 +136,28 @@ namespace Carbon.Media
         }
 
         /// <summary>
-        /// Returns the maximium dimensions of an image w/ a specific aspect
+        /// Gets the biggest rectangle that fits within the box at a specific aspect
         /// </summary>
-        public static Size CalculateMaxSize(Size sourceSize, Rational aspect)
+        public static Size Max(Size bounds, Rational aspect)
         {
             double targetAspect = aspect;
-            double currentAspect = sourceSize.ToRational();
+            double currentAspect = bounds.ToRational();
 
             if (currentAspect > targetAspect) // Shrink the width
             {
-                int newWidth = (int)(sourceSize.Height * targetAspect);
+                int newWidth = (int)(bounds.Height * targetAspect);
 
-                return new Size(newWidth, sourceSize.Height);
+                return new Size(newWidth, bounds.Height);
             }
             else if (currentAspect < targetAspect) // Shrink the height
             {
-                int newHeight = (int)(sourceSize.Width / targetAspect);
+                int newHeight = (int)(bounds.Width / targetAspect);
 
-                return new Size(sourceSize.Width, newHeight);
+                return new Size(bounds.Width, newHeight);
             }
-            else // The source and target aspect are the same
+            else // Aspects are the same
             {
-                return sourceSize;
+                return new Size(bounds.Width, bounds.Height);
             }
         }
     }

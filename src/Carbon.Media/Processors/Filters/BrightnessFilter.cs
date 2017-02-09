@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class BrightnessFilter : IProcessor
+    public class BrightnessFilter : IFilter
     {
         public BrightnessFilter(float amount)
         {

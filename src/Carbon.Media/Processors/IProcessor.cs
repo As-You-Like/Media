@@ -7,6 +7,10 @@
     }
 }
 
+// crop
+// scale(x,y)
+
+
 
 /*
 resize                   (padding, ...)         500x500(fit:pad)

@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class HueRotateFilter : IProcessor
+    public class HueRotateFilter : IFilter
     {
         public HueRotateFilter(int degrees)
         {

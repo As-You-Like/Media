@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public sealed class UnknownFilter : IProcessor
+    public sealed class UnknownFilter : IFilter
     {
         public UnknownFilter(string name, string value)
         {

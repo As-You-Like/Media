@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class OpacityFilter : IProcessor
+    public class OpacityFilter : IFilter
     {
         public OpacityFilter(float amount)
         {

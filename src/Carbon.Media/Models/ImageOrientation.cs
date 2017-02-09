@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum MediaOrientation : byte
+    public enum ImageOrientation : byte
     {
         None            = 0, // None
         Horizontal      = 1, // None

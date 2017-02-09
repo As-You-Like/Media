@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class PixelateFilter : IProcessor
+    public class PixelateFilter : IFilter
     {
         public PixelateFilter(float amount)
         {

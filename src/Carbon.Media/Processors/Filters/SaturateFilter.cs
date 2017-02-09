@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class SaturateFilter : IProcessor
+    public class SaturateFilter : IFilter
     {
         public SaturateFilter(float amount)
         {

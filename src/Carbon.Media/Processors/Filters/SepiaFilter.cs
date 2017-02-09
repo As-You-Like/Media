@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class SepiaFilter : ColorMatrix, IProcessor
+    public class SepiaFilter : ColorMatrix, IFilter
     {
         public SepiaFilter(float amount)
         {

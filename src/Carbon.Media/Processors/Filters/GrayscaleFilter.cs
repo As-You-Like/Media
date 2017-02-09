@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class GrayscaleFilter : ColorMatrix, IProcessor
+    public class GrayscaleFilter : ColorMatrix, IFilter
     {
         public GrayscaleFilter(float amount)
         {

@@ -7,36 +7,36 @@ namespace Carbon.Media.Tests
         [Fact]
         public void GetDimensionsTest()
         {
-            var imageSize = new Size(500, 500);
+            var source = new Size(500, 500);
 
-            Assert.Equal(new Size(500, 500), ResizeHelper.CalculateSize(imageSize, new Size(600, 600)));
-            Assert.Equal(new Size(500, 500), ResizeHelper.CalculateSize(imageSize, new Size(500, 500)));
-            Assert.Equal(new Size(400, 400), ResizeHelper.CalculateSize(imageSize, new Size(400, 400)));
-            Assert.Equal(new Size(235, 235), ResizeHelper.CalculateSize(imageSize, new Size(235, 290)));
-            Assert.Equal(new Size(11, 11),   ResizeHelper.CalculateSize(imageSize, new Size(11, 15)));
+            Assert.Equal(new Size(500, 500), ResizeHelper.Fit(source, bounds: new Size(600, 600)));
+            Assert.Equal(new Size(500, 500), ResizeHelper.Fit(source, bounds: new Size(500, 500)));
+            Assert.Equal(new Size(400, 400), ResizeHelper.Fit(source, bounds: new Size(400, 400)));
+            Assert.Equal(new Size(235, 235), ResizeHelper.Fit(source, bounds: new Size(235, 290)));
+            Assert.Equal(new Size(11, 11),   ResizeHelper.Fit(source, bounds: new Size(11, 15)));
 
-            // Stretch
-            Assert.Equal(new Size(600, 600), ResizeHelper.CalculateSize(imageSize, new Size(600, 600), ResizeFlags.Exact));
+            // Upscale
+            Assert.Equal(new Size(600, 600), ResizeHelper.Fit(source, new Size(600, 600), upscale: true));
 
-            imageSize = new Size(5500, 1464);
 
-            Assert.Equal(new Size(500, 133), ResizeHelper.CalculateSize(imageSize, new Size(500, 500)));
-            Assert.Equal(new Size(400, 106), ResizeHelper.CalculateSize(imageSize, new Size(400, 400)));
-            Assert.Equal(new Size(235, 62),  ResizeHelper.CalculateSize(imageSize, new Size(235, 290)));
-            Assert.Equal(new Size(11, 2),    ResizeHelper.CalculateSize(imageSize, new Size(11, 15)));
+            source = new Size(5500, 1464);
+
+            Assert.Equal(new Size(500, 133), ResizeHelper.Fit(source, new Size(500, 500)));
+            Assert.Equal(new Size(400, 106), ResizeHelper.Fit(source, new Size(400, 400)));
+            Assert.Equal(new Size(235, 62),  ResizeHelper.Fit(source, new Size(235, 290)));
+            Assert.Equal(new Size(11, 2),    ResizeHelper.Fit(source, new Size(11, 15)));
         }
 
         [Fact]
         public void SquareImageTest()
         {
-            var imageSize = new Size(500, 500);
+            var source = new Size(500, 500);
 
-            Assert.Equal(new Size(500, 500), ResizeHelper.CalculateMaxSize(imageSize, new Rational(1, 1))); // Width = Height
-            Assert.Equal(new Size(250, 500), ResizeHelper.CalculateMaxSize(imageSize, new Rational(1, 2))); // Width = 1/2 height
-            Assert.Equal(new Size(125, 500), ResizeHelper.CalculateMaxSize(imageSize, new Rational(1, 4))); // Width = 1/4 width
-
-            Assert.Equal(new Size(500, 250), ResizeHelper.CalculateMaxSize(imageSize, new Rational(2, 1))); // Width = 2x height
-            Assert.Equal(new Size(500, 125), ResizeHelper.CalculateMaxSize(imageSize, new Rational(4, 1))); // Width = 4x height
+            Assert.Equal(new Size(500, 500), ResizeHelper.Max(source, new Rational(1, 1))); // Width = Height
+            Assert.Equal(new Size(250, 500), ResizeHelper.Max(source, new Rational(1, 2))); // Width = 1/2 height
+            Assert.Equal(new Size(125, 500), ResizeHelper.Max(source, new Rational(1, 4))); // Width = 1/4 width                    
+            Assert.Equal(new Size(500, 250), ResizeHelper.Max(source, new Rational(2, 1))); // Width = 2x height
+            Assert.Equal(new Size(500, 125), ResizeHelper.Max(source, new Rational(4, 1))); // Width = 4x height
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Carbon.Media.Tests
         {
             Size imageSize = new Size(468, 60);
 
-            Assert.Equal(new Size(60, 60), ResizeHelper.CalculateMaxSize(imageSize, new Rational(1, 1))); // Height = 1/1 Width
+            Assert.Equal(new Size(60, 60), ResizeHelper.Max(imageSize, new Rational(1, 1))); // Height = 1/1 Width
         }
 
 
@@ -52,7 +52,7 @@ namespace Carbon.Media.Tests
         public void OddSizedImageTest()
         {
             // Assert.Equal(new Size(1200, 225), VisualHelper.GetMaxSize(new Size(1200, 502), 5.32545));		// Height = 5.32545x Width
-            Assert.Equal(new Size(802, 3), ResizeHelper.CalculateMaxSize(new Size(802, 570), new Rational(240, 1)));    // Height = 240x width
+            Assert.Equal(new Size(802, 3), ResizeHelper.Max(new Size(802, 570), new Rational(240, 1)));    // Height = 240x width
         }
 
         [Fact]
@@ -67,7 +67,6 @@ namespace Carbon.Media.Tests
             Assert.Equal(0, destinationR.X);
             Assert.Equal(-250, destinationR.Y);
         }
-
 
         [Fact]
         public void CropRectTest2()
@@ -105,7 +104,7 @@ namespace Carbon.Media.Tests
             var targetAspect = new Rational(1, 1); // 1:1
             var result = new Size(0, 0);
 
-            result = ResizeHelper.CalculateMaxSize(size, targetAspect);
+            result = ResizeHelper.Max(size, targetAspect);
 
             Assert.Equal(new Size(1000, 1000), result);
 
@@ -113,7 +112,7 @@ namespace Carbon.Media.Tests
 
             targetAspect = new Rational(2, 1); // 2:1 (width 2x height)
 
-            result = ResizeHelper.CalculateMaxSize(size, targetAspect);
+            result = ResizeHelper.Max(size, targetAspect);
 
             Assert.Equal(new Size(1000, 500), result);
 
@@ -121,7 +120,7 @@ namespace Carbon.Media.Tests
 
             targetAspect = new Rational(3, 1); // 3:1 (width 3x height)
 
-            result = ResizeHelper.CalculateMaxSize(size, targetAspect);
+            result = ResizeHelper.Max(size, targetAspect);
 
             Assert.Equal(new Size(1000, 333), result);  // 333.3 (round down)
 
@@ -129,7 +128,7 @@ namespace Carbon.Media.Tests
 
             targetAspect = new Rational(4, 1); // 3:1 (width 3x height)
 
-            result = ResizeHelper.CalculateMaxSize(size, targetAspect);
+            result = ResizeHelper.Max(size, targetAspect);
 
             Assert.Equal(new Size(1000, 250), result);  // 333.3 (round down)
 
@@ -137,7 +136,7 @@ namespace Carbon.Media.Tests
 
             targetAspect = new Rational(1, 2); // 1:2 (width 0.5 height)
 
-            result = ResizeHelper.CalculateMaxSize(size, targetAspect);
+            result = ResizeHelper.Max(size, targetAspect);
 
             Assert.Equal(new Size(500, 1000), result);  // 333.3 (round down)
         }

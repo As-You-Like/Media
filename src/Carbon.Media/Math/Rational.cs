@@ -57,6 +57,17 @@ namespace Carbon.Media
             }
         }
 
+
+        public static bool operator >(Rational left, Rational right)
+        {
+            return left.ToDouble() > right.ToDouble();
+        }
+
+        public static bool operator <(Rational left, Rational right)
+        {
+            return left.ToDouble() < right.ToDouble();
+        }
+
         public double ToDouble()
             => numerator / (double)denominator;
 

@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class InvertFilter : IProcessor
+    public class InvertFilter : IFilter
     {
         public InvertFilter(float amount)
         {

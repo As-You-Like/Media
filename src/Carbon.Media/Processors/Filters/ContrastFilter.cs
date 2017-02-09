@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class ContrastFilter : IProcessor
+    public class ContrastFilter : IFilter
     {
         public ContrastFilter(float amount)
         {
