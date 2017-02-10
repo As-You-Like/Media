@@ -43,6 +43,15 @@ namespace Carbon.Media
         public Rectangle GetRectangle(Size source) =>
             new Rectangle(X, Y, Width, Height);
 
+
+        public Crop Scale(double xScale, double yScale) =>
+            new Crop(
+                x      : (X * xScale),
+                y      : (Y * yScale),
+                width  : (Width * xScale),
+                height : (Height * yScale)
+            );
+
         public Crop Scale(double scale) =>
             new Crop(
                 x       : (X * scale),

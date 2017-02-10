@@ -34,6 +34,22 @@ namespace Carbon.Media.Tests
             Assert.Equal("blob#1|>crop(0,0,25,25)|>scale(50,50,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
         }
 
+        // Not sure if this is right... 
+
+        [Fact]
+        public void CropAndScale2()
+        {
+            // We need to apply the "Scale" operations to the crop in reverse...
+
+            var rendition = new MediaTransformation(jpeg_100x50, ImageFormat.Jpeg)
+                .Resize(50, 25) // 50%
+                .Crop(0, 0, 25, 25);
+
+            var pipe = Pipeline.From(rendition);
+
+            Assert.Equal("blob#1|>crop(0,0,50,50)|>scale(25,25,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+        }
+
         [Fact]
         public void Filters()
         {
@@ -71,8 +87,6 @@ namespace Carbon.Media.Tests
         {
             var rendition = new MediaTransformation(jpeg_100x50, "jpeg")
                 .Apply(Resize.Parse("resize(200x200,fit|upscale)"));
-
-
             
             var pipe = Pipeline.From(rendition);
 

@@ -63,17 +63,22 @@ namespace Carbon.Media
             
             foreach (var transform in transformation.GetTransforms())
             {
-                // What happens if the crop comes after a scale operation???
-
                 if (transform is Crop)
                 {
+                    var xScale = (double)pipeline.Source.Width / f.Width;
+                    var yScale = (double)pipeline.Source.Height / f.Height;
+
                     var c = ((Crop)transform).GetRectangle(f.Size);
 
                     f.Width  = (int)c.Width;
                     f.Height = (int)c.Height;
 
-                    crop = c;
+                    if (xScale != 1d || yScale != 1d)
+                    {
+                        c = c.Scale(xScale, yScale);
+                    }
 
+                    crop = c;
                 }
                 else if (transform is Resize)
                 {
