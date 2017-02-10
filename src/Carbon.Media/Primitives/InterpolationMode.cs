@@ -2,23 +2,21 @@
 {
     public enum InterpolaterMode
     {
-        Point,
-        Box,
-        Linear,
-        Gaussian,
-        Quadratic,
-        Cubic,
-        Lanczos3,
-        Spline36
+        Unknown     = 0,
+        Point       = 1,
+        Box         = 2,
+        Linear      = 3,
+        Gaussian    = 4,
+        Quadratic   = 5,
+        Cubic       = 6,
+        Lanczos3    = 7,
+        Spline36    = 8
     }
-
 
     public static class InterpolaterExtensions
     {
-        public static string ToLower(this InterpolaterMode value)
-        {
-            return value.ToString().ToLower();
-        }
+        public static string ToLower(this InterpolaterMode value) =>
+            value.ToString().ToLower();
     }
 
     public static class InterpolaterHelper

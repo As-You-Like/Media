@@ -27,7 +27,9 @@ namespace Carbon.Media
         public int Height { get; }
 
         public InterpolaterMode Mode { get; }
-        
+
+        public Size Size => new Size(Width, Height);
+
         // scale(100,100,lanczos3)
         public string Canonicalize()
         {

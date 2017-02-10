@@ -5,6 +5,66 @@ namespace Carbon.Media.Tests
     public class VisualHelperTest
     {
         [Fact]
+        public void PadTests()
+        {
+            var source = new Size(500, 500);
+            var bounds = new Size(1000, 1000);
+
+            var box = ResizeHelper.Pad(source, bounds, CropAnchor.Center, upscale: false);
+
+            Assert.Equal(500d, box.Width);
+            Assert.Equal(500d, box.Height);
+
+            Assert.Equal(250, box.Padding.Top);
+            Assert.Equal(250, box.Padding.Right);
+            Assert.Equal(250, box.Padding.Bottom);
+            Assert.Equal(250, box.Padding.Left);
+            
+            Assert.Equal(1000d, box.OuterWidth);
+            Assert.Equal(1000d, box.OuterHeight);
+
+            box = ResizeHelper.Pad(source, bounds, CropAnchor.Left, upscale: false);
+
+            Assert.Equal(250, box.Padding.Top);
+            Assert.Equal(500, box.Padding.Right);
+            Assert.Equal(250, box.Padding.Bottom);
+            Assert.Equal(0, box.Padding.Left);
+
+  
+            box = ResizeHelper.Pad(source, bounds, CropAnchor.Top | CropAnchor.Right, upscale: false);
+
+            Assert.Equal(0, box.Padding.Top);
+            Assert.Equal(0, box.Padding.Right);
+            Assert.Equal(500, box.Padding.Bottom);
+            Assert.Equal(500, box.Padding.Left);
+        }
+
+        [Fact]
+        public void PadTests2()
+        {
+            var source = new Size(100, 200);  // 1x2            500x1000
+            var bounds = new Size(1000, 1000);
+
+            var box = ResizeHelper.Pad(source, bounds, CropAnchor.Center, upscale: true);
+
+            Assert.Equal(500d, box.Width);
+            Assert.Equal(1000d, box.Height);
+
+            Assert.Equal(0, box.Padding.Top);
+            Assert.Equal(250, box.Padding.Right);
+            Assert.Equal(0, box.Padding.Bottom);
+            Assert.Equal(250, box.Padding.Left);
+
+            Assert.Equal(1000d, box.OuterWidth);
+            Assert.Equal(1000d, box.OuterHeight);
+
+            box = ResizeHelper.Pad(source, bounds, CropAnchor.Right, upscale: true);
+
+            Assert.Equal(500, box.Padding.Left);
+            Assert.Equal(0, box.Padding.Right);
+        }
+
+        [Fact]
         public void GetDimensionsTest()
         {
             var source = new Size(500, 500);

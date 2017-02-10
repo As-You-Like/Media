@@ -15,4 +15,23 @@
 		Tiff     = 11,
 		WebP     = 12,
     }
+
+
+    public static class ImageFormatExtensions
+    {
+        public static string ToLower(this ImageFormat value)
+        {
+            switch (value)
+
+            {
+                case ImageFormat.Gif  : return "gif";
+                case ImageFormat.Jpeg : return "jpeg";
+                case ImageFormat.Png  : return "png";
+                case ImageFormat.WebP : return "webp";
+            }
+
+            return value.ToString().ToLower();
+
+        }
+    }
 }

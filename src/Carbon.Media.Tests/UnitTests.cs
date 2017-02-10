@@ -22,5 +22,13 @@ namespace Carbon.Media.Tests
             Assert.Equal(value, unit.Value);
             Assert.Equal(type, unit.Type);
         }
+
+        [Fact]
+        public void Equality()
+        {
+            Assert.Equal(new Unit(1), new Unit(1));
+            Assert.True(new Unit(1) == new Unit(1));
+            Assert.True(new Unit(1) != new Unit(2));
+        }
     }
 }

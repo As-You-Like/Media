@@ -124,17 +124,17 @@ namespace Carbon.Media
                 {
                     var resize = (Resize)processor;
 
-                    b.Transform(resize * scale);
+                    b.Apply(resize * scale);
                 }
                 else if (processor is Crop)
                 {
                     var crop = (Crop)processor;
 
-                    b.Transform(crop.Scale(scale));
+                    b.Apply(crop.Scale(scale));
                 }
                 else
                 {
-                    b.Transform(processor);
+                    b.Apply(processor);
                 }
             }
 

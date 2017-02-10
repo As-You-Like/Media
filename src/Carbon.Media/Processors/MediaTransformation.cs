@@ -14,6 +14,15 @@ namespace Carbon.Media
         private int width;
         private int height;
 
+        public MediaTransformation(IMediaSource source, ImageFormat format)
+        {
+            Source = source;
+            Format = format.ToLower();
+
+            width  = source.Width;
+            height = source.Height;
+        }
+
         public MediaTransformation(IMediaSource source, string format)
         {
             #region Preconditions
@@ -33,7 +42,7 @@ namespace Carbon.Media
         public MediaTransformation(IMediaSource source, ImageOrientation orientation, string format)
             : this(source, format)
         {
-            Transform(orientation.GetTransforms());
+            Apply(orientation.GetTransforms());
         }
 
         public IMediaSource Source { get; }
@@ -48,7 +57,7 @@ namespace Carbon.Media
 
         public IReadOnlyList<IProcessor> GetTransforms() => transforms.AsReadOnly();
 
-        public MediaTransformation Transform(params IProcessor[] transforms)
+        public MediaTransformation Apply(params IProcessor[] transforms)
         {
             #region Preconditions
 
@@ -69,7 +78,14 @@ namespace Carbon.Media
 
         private MediaTransformation Transform(IProcessor transform)
         {
-            if (transform is Resize)
+            if (transform is Crop)
+            {
+                var crop = ((Crop)transform).GetRectangle(Size);
+
+                width  = (int)crop.Width;
+                height = (int)crop.Height;
+            }
+            else if (transform is Resize)
             {
                 var resize = (Resize)transform;
 
@@ -84,13 +100,6 @@ namespace Carbon.Media
 
                 width = scale.Width;
                 height = scale.Height;
-            }
-            else if (transform is Crop)
-            {
-                var crop = (Crop)transform;
-
-                width = (int)crop.Width.Value;
-                height = (int)crop.Height.Value;
             }
             else if (transform is Rotate)
             {
@@ -165,7 +174,7 @@ namespace Carbon.Media
 
         public MediaTransformation Resize(Unit width, Unit height)
         {
-            Transform(new Resize(width, height));
+            Transform(new Resize(width, height, ResizeFlags.Exact));
 
             return this;
         }
@@ -280,7 +289,7 @@ namespace Carbon.Media
                         case "sepia"      : processor = SepiaFilter.Parse(segment);             break;
                         case "brightness" : processor = BrightnessFilter.Parse(segment);        break;
                         case "grayscale"  : processor = GrayscaleFilter.Parse(segment);         break;
-                        case "blur"       : processor = BlurEffect.Parse(segment);              break;
+                        case "blur"       : processor = BlurFilter.Parse(segment);              break;
                         case "invert"     : processor = InvertFilter.Parse(segment);            break;
                         case "contrast"   : processor = ContrastFilter.Parse(segment);          break;
                         case "opacity"    : processor = OpacityFilter.Parse(segment);           break;
@@ -303,28 +312,7 @@ namespace Carbon.Media
         
         // blob#100 |> resize(100,100) |> sepia(1)
 
-        public string GetScript()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(Source.Key);
-            
-            foreach (var processor in transforms)
-            {
-                sb.Append("|>");
-                
-                sb.Append(processor.Canonicalize());
-            }
-
-            sb.Append("|>");
-
-            sb.Append("encode(");
-            sb.Append(Format);
-            sb.Append(")");
-
-            return sb.ToString();
-        }
-
+       
         public string GetPath() => 
             Source.Key + "/" + GetFullName("/");
 

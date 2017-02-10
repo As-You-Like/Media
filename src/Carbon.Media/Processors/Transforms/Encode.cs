@@ -24,7 +24,7 @@ namespace Carbon.Media
 
             sb.Append("encode(");
 
-            sb.Append(Encoder);
+            sb.Append(Encoder.ToString().ToUpper());
             
             if (Quality != 0)
             {

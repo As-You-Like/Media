@@ -45,6 +45,8 @@ namespace Carbon.Media
 
         public CropAnchor? Anchor { get; }
 
+        public InterpolaterMode InterpolaterMode { get; } = InterpolaterMode.Lanczos3;
+
         public string Background { get; }
 
         // TODO: Calculate rectangle

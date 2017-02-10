@@ -14,7 +14,7 @@ namespace Carbon.Media
         // Portrait  = 1 << 5, // Resize to the height maintaing aspect
         // Landscape = 1 << 6, // Resize to the width maintaing aspect
 
-        Modes    = Fit | Crop | Pad | Exact,
+        Modes    = Exact | Fit | Crop | Pad,
 
         Carve    = 1 << 10,  // Fill the box, carving as needed
         Upscale  = 1 << 11

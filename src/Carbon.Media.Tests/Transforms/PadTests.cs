@@ -18,7 +18,7 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
-        public void Shorthand()
+        public void Shorthand1()
         {
             var pad = Pad.Parse("pad(1)");
             
@@ -28,6 +28,19 @@ namespace Carbon.Media.Tests
             Assert.Equal(1, pad.Left);
 
             Assert.Equal("pad(1)", pad.Canonicalize());
+        }
+
+        [Fact]
+        public void Shorthand2()
+        {
+            var pad = Pad.Parse("pad(10,20)");
+
+            Assert.Equal(10, pad.Top);
+            Assert.Equal(20, pad.Right);
+            Assert.Equal(10, pad.Bottom);
+            Assert.Equal(20, pad.Left);
+
+            Assert.Equal("pad(10,20)", pad.Canonicalize());
         }
     }
 }

@@ -16,45 +16,79 @@ namespace Carbon.Media
 
         // Alignment?
 
-        public Unit? X          { get; set; }  
-        public Unit? Y          { get; set; }
-        public Unit? Width      { get; set; } // e.g. 50% || 50px
-        public Unit? Height     { get; set; }
-        public Padding Padding  { get; set; } = Padding.Zero;
+        public Unit? X         { get; set; }  
+        public Unit? Y         { get; set; }
+        public Unit? Width     { get; set; } // 50% || 50px
+        public Unit? Height    { get; set; }
+        public Padding Padding { get; set; } = Padding.Zero;
     }
 
     public struct Padding : IEquatable<Padding>
     {
-        public static Padding Zero = new Padding();
+        public static readonly Padding Zero = new Padding();
 
         public Padding(Unit value)
         {
-            Left = value;
-            Right = value;
+            #region Preconditions
+
+            if (value < 0) throw new ArgumentOutOfRangeException(nameof(value), value.Value, "Must be >= 0");
+
+            #endregion
+
             Top = value;
+            Right = value;            
             Bottom = value;
+            Left = value;
         }
 
-        public Unit Left { get; }
+        public Padding(Unit top, Unit right, Unit bottom, Unit left)
+        {
+            #region Preconditions
 
-        public Unit Right { get; }
+            if (top < 0)    throw new ArgumentOutOfRangeException(nameof(top),    top.Value,    "Must be >= 0");
+            if (right < 0)  throw new ArgumentOutOfRangeException(nameof(right),  right.Value,  "Must be >= 0");
+            if (bottom < 0) throw new ArgumentOutOfRangeException(nameof(bottom), bottom.Value, "Must be >= 0");
+            if (left < 0)   throw new ArgumentOutOfRangeException(nameof(left),   left.Value,   "Must be >= 0");
+
+            #endregion
+
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+            Left = left;
+        }
 
         public Unit Top { get; }
 
+        public Unit Right { get; }
+
         public Unit Bottom { get; }
 
-        public override string ToString() =>
-            Left.Value.ToString();
+        public Unit Left { get; }
 
+        public override string ToString()
+        {
+            if (Top == Left && Top == Right && Top == Bottom)
+            {
+                return Top.ToString();
+            }
+            else if (Top == Bottom && Right == Left)
+            {
+                return Top.ToString() + "," + Right.ToString();
+            }
+
+            return $"{Top},{Right},{Bottom},{Left}";
+        }
+        
         public static Padding Parse(string text) =>
             new Padding(Unit.Parse(text));
 
         public bool Equals(Padding other)
         {
-            return Left.Equals(other.Left)
-                && Right.Equals(other.Right)
-                && Top.Equals(other.Right)
-                && Bottom.Equals(other.Right);
+            return Left   == other.Left
+                && Right  == other.Right
+                && Top    == other.Top
+                && Bottom == other.Bottom;
         }
     }
 }

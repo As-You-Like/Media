@@ -1,8 +1,8 @@
 ﻿namespace Carbon.Media
 {
-    public class BlurEffect : IFilter
+    public class BlurFilter : IFilter
     {
-        public BlurEffect(float amount)
+        public BlurFilter(float amount)
         {
             Amount = amount;
         }
@@ -13,13 +13,13 @@
 
         public override string ToString() => Canonicalize();
 
-        public static BlurEffect Parse(string segment)
+        public static BlurFilter Parse(string segment)
         {
             int argStart = segment.IndexOf('(') + 1;
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
-            return new BlurEffect(float.Parse(segment));
+            return new BlurFilter(float.Parse(segment));
         }
     }
 }

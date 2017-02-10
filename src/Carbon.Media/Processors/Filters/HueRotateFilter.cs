@@ -11,9 +11,9 @@
 
         // hue-rotate(90deg)
        
-        public string Canonicalize() => $"hue-rotate({Degrees}deg)";
+        public string Canonicalize() => $"hueRotate({Degrees}deg)";
 
-        public override string ToString() => Canonicalize();
+        public override string ToString() => $"hue-rotate({Degrees}deg)";
 
         public static HueRotateFilter Parse(string segment)
         {

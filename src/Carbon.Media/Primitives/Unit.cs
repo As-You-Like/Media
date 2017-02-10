@@ -33,11 +33,9 @@ namespace Carbon.Media
             }
         }
 
-        public static Unit Percent(double value)
-            => new Unit(value, UnitType.Percent);
+        public static Unit Percent(double value) => new Unit(value, UnitType.Percent);
 
-        public static Unit Px(int value)
-            => new Unit(value);
+        public static Unit Px(int value) => new Unit(value);
 
         // 50％
 
@@ -55,7 +53,7 @@ namespace Carbon.Media
                 return new Unit(double.Parse(text));
             }
 
-            else if (text.EndsWith("％"))
+            else if (text.EndsWith("％") || text.EndsWith("%"))
             {
                 text = text.Substring(0, text.Length - 1);
 
@@ -70,8 +68,35 @@ namespace Carbon.Media
             return new Unit(double.Parse(text));
         }
 
+        #region Comparisions
+
+        public static bool operator >(Unit lhs, Unit rhs) =>
+            lhs.Value > rhs.Value;
+
+        public static bool operator <(Unit lhs, Unit rhs) =>
+            lhs.Value < rhs.Value;
+
+        #endregion
+
+        #region Equality
+
+        public override bool Equals(object obj) =>
+            obj is Unit && Equals((Unit)obj);
+         
         public bool Equals(Unit other) => 
             Type == other.Type && Value == other.Value;
+
+        public static bool operator ==(Unit lhs, Unit rhs) =>
+            lhs.Equals(rhs);
+
+        public static bool operator !=(Unit lhs, Unit rhs) =>
+            !lhs.Equals(rhs);
+
+        public override int GetHashCode() => 
+            Value.GetHashCode();
+        
+        #endregion
+
     }
 
     public enum UnitType

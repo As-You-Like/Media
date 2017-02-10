@@ -12,37 +12,84 @@ namespace Carbon.Media
         {
             var aspect = source.ToRational();
 
-            var target = Max(bounds, aspect);
+            var result = Max(bounds, aspect);
 
             // If we're not upscaling 
 
-            if (!upscale && (target.Height > source.Height || target.Width > source.Width))
+            if (!upscale && (result.Width > source.Width || result.Height > source.Height))
             {
                 return Max(source, aspect);
             }
 
-            return target;
+            return result;
         }
 
-        /*
-        // TODO: Determine how to distribute the padding based on the alignment...
-        public static void PadCrop(ref Rectangle box, Padding padding)
+        // Fits a padded rectangle into the bounds
+        public static void Fit(ref Box2 rect, Size bounds, bool upscale = false)
         {
-            var size = new Size(box.Width, box.Height);
+            var outerSize = new Size(rect.OuterWidth, rect.OuterHeight);
 
-            box.Width  -= (padding.Left + padding.Right);
-            box.Height -= (padding.Top + padding.Bottom);
+            var aspect = outerSize.ToRational();
 
-            Align(ref box, size, CropAnchor.Center);
+            var target = Max(bounds, aspect);
+
+            // If we're not upscaling 
+
+            if (!upscale && (target.Width > rect.OuterWidth || target.Height > rect.OuterHeight))
+            {
+                target = Max(outerSize, aspect);                
+            }
+
+            rect.Width = target.Width;
+            rect.Height = target.Height;
         }
-        */
+        
+        public static Box2 Pad(Size source, Size bounds, CropAnchor anchor = CropAnchor.Center, bool upscale = false)
+        {
+            var size = Fit(source, bounds, upscale); // Fit if it doesn't fit or needs upscaling...
+
+            // Distribute the padding
+            var extraWidth  = bounds.Width  - size.Width;
+            var extraHeight = bounds.Height - size.Height;
+        
+            int top = extraHeight / 2,
+                right = extraWidth / 2,
+                bottom = extraHeight / 2,
+                left = extraWidth / 2;
+
+            if (anchor.HasFlag(CropAnchor.Left))
+            {
+                right = extraWidth;
+                left = 0;
+            }
+            else if (anchor.HasFlag(CropAnchor.Right))
+            {
+                left = extraWidth;
+                right = 0;
+            }
+
+            if (anchor.HasFlag(CropAnchor.Top))
+            {
+                bottom = extraHeight;
+                top = 0;
+            }
+            else if (anchor.HasFlag(CropAnchor.Bottom))
+            {
+                top = extraHeight;
+                bottom = 0;
+            }
+
+            var padding = new Margin(top, right, bottom, left);
+
+            return new Box2(size, padding);
+        }
 
         // Align the box within the bounds
 
         public static void Align(ref Rectangle box, Size bounds, CropAnchor anchor)
         {
-            var x = 0d;
-            var y = 0d;
+            double x = 0d,
+                   y = 0d;
 
             // There's horizontal space
             if (box.Width < bounds.Width)
@@ -86,7 +133,6 @@ namespace Carbon.Media
         {
             double x = 0d,
                    y = 0d,
-
                    scale = 0d;
             
             double widthP  = (double)bounds.Width / sourceSize.Width;

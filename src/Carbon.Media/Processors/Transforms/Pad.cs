@@ -9,8 +9,7 @@ namespace Carbon.Media
         {
             #region Preconditions
 
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(value), value, "Must be 0 or greater");
+            if (value < 0) throw new ArgumentOutOfRangeException(nameof(value), value, "Must be >= 0");
 
             #endregion
 
@@ -24,17 +23,10 @@ namespace Carbon.Media
         {
             #region Preconditions
             
-            if (top < 0)
-                throw new ArgumentOutOfRangeException(nameof(top), top, "Must be 0 or greater");
-
-            if (right < 0)
-                throw new ArgumentOutOfRangeException(nameof(right), right, "Must be 0 or greater");
-
-            if (bottom <= 0)
-                throw new ArgumentOutOfRangeException(nameof(bottom), bottom, "Must be 0 or greater");
-
-            if (left <= 0)
-                throw new ArgumentOutOfRangeException(nameof(left), left, "Must be 0 or greater");
+            if (top < 0)     throw new ArgumentOutOfRangeException(nameof(top),    top,    "Must be >= 0");
+            if (right < 0)   throw new ArgumentOutOfRangeException(nameof(right),  right,  "Must be >= 0");
+            if (bottom <= 0) throw new ArgumentOutOfRangeException(nameof(bottom), bottom, "Must be >= 0");
+            if (left <= 0)   throw new ArgumentOutOfRangeException(nameof(left),   left,   "Must be >= 0");
 
             #endregion
 
@@ -52,19 +44,27 @@ namespace Carbon.Media
 
         public int Bottom { get; }        
        
+        // pad(10)
         // pad(0,0,0,0)
+        // pad(10,20)
         public string Canonicalize()
         {
             var sb = new StringBuilder();
 
             sb.Append("pad(");
-
+          
             if (Top == Left && Top == Right && Top == Bottom)
             {
                 sb.Append(Top);
             }
+            else if (Top == Bottom && Left == Right)
+            {
+                sb.Append(Top);
+                sb.Append(",");
+                sb.Append(Right);
+            }
             else
-                {
+            {
                 sb.Append(Top);
                 sb.Append(",");
                 sb.Append(Right);
@@ -91,32 +91,32 @@ namespace Carbon.Media
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
             #endregion
-  
-            if (segment.Contains(","))
-            {
-                var parts = segment.Split(Seperators.Comma);
             
-                int top = 0, right = 0, bottom = 0, left = 0;
+            if (!segment.Contains(","))
+            {       
+                return new Pad(int.Parse(segment));
+            }
 
-                for (var i = 0; i < parts.Length; i++)
-                {
-                    var part = parts[i];
-
-                    switch (i)
-                    {
-                        case 0: top    = int.Parse(part); break;
-                        case 1: right  = int.Parse(part); break;
-                        case 2: bottom = int.Parse(part); break;
-                        case 3: left   = int.Parse(part);  break;
-                    }
-                }
+            string[] parts = segment.Split(Seperators.Comma);
+                       
+            if (parts.Length == 2)
+            {
+                var a = int.Parse(parts[0]); // Top & Bottom
+                var b = int.Parse(parts[1]); // Left & Right
+                
+                return new Pad(a, b, a, b);
+            }
+            else if (parts.Length == 4)
+            {                              
+                int top    = int.Parse(parts[0]); 
+                int right  = int.Parse(parts[1]); 
+                int bottom = int.Parse(parts[2]);
+                int left   = int.Parse(parts[3]); 
 
                 return new Pad(top, right, bottom, left);
             }
-            else
-            {
-                return new Pad(int.Parse(segment));
-            }
+
+            throw new Exception("Unexpected");
         }
     }
 }
