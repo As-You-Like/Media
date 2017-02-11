@@ -18,21 +18,20 @@ namespace Carbon.Media.Processors
         public IMediaSource Source { get; set; }
 
         // 1. orient
+        public ImageOrientation Orient { get; set; }
 
         // 2. crop the source
         public Rectangle? Crop { get; set; }   // The crop applied to the source
 
         // 3. Scale the crop w/ interpolator
-        // Note: The padding should have shrunk the image
         public Scale Scale { get; set; }
 
-        // If the resize mode was set to pad... 
+        // If the resize mode was set to pad (or padding was added after) 
         public Padding Padding { get; set; } = Padding.Zero;
         
         public string Background { get; set; }
 
-        public Position Position
-            => new Position { X = Padding.Left, Y = Padding.Top };
+        public Position Position => new Position(Padding.Left, Padding.Top);
         
         public int FinalWidth => Scale.Width + Padding.Left + Padding.Right;
 
@@ -43,12 +42,13 @@ namespace Carbon.Media.Processors
         
         public Encode Encode { get; set; }
 
+        // blob#1 |> orient(x) |> crop(0,0,100,100) |> JPEG(quality:87)
+
         // blob#1 |> crop(0,0,100,100) |> JPEG(quality:87)
         // blob#1 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> WebP::encode
-
+        
+        // blob#1 |> crop(0,0,100,100) |> JPEG::encode(quality:87)
         // blob#1 |> JPEG::encode(quality:87)
-        // blob#1 |> GIF::encode
-        // blob#1 |> PNG::encode
         // blob#1 |> WebP::encode
 
         public static MediaPipeline From(MediaTransformation transformation)
@@ -208,7 +208,7 @@ namespace Carbon.Media.Processors
                 sb.Append(")");
             }
 
-            if (!Padding.Equals(Padding.Zero) || Background != null)
+            if (Background != null)
             {
                 // sb.Append("|>");
 
@@ -230,49 +230,19 @@ namespace Carbon.Media.Processors
 
             return sb.ToString();
         }
-
-        // Final Clip (we may overdraw for blurs)
-    }
-
-    public struct Draw
-    {
-        public Padding Margin { get; set; }
-
-        public string Background { get; set; }
-
-        public string Canonicalize()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append("draw(");
-
-            if (Background != null)
-            {
-                sb.Append(",background:");
-                sb.Append(Background);
-            }
-
-            if (!Margin.Equals(Padding.Zero))
-            {
-                sb.Append(",margin:");
-                sb.Append(Margin.ToString());
-            }
-            
-            sb.Append(")");
-
-            return sb.ToString();
-        }
     }
 
     public struct Position
     {
-        public int X;
-        public int Y;
-    }
+        public Position(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
 
-  
-
-  
+        public int X { get; }
+        public int Y { get; }
+    }  
 
     // how can we define a canvas?
 
