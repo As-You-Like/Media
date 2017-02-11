@@ -4,7 +4,7 @@
     {
         public DrawGradient(
             string o,
-            Box box,
+            UnboundBox box,
             BlendMode blendMode = BlendMode.Normal,
             Alignment? align = null)
             : base(box, align, blendMode, ResizeFlags.None)
@@ -34,7 +34,7 @@
             var mode  = BlendMode.Normal;
             var align = Alignment.Left;
 
-            var box = new Box();
+            var box = new UnboundBox();
 
             for (var i = 1; i < parts.Length; i++)
             {
@@ -51,7 +51,7 @@
                     case "y"      : box.Y       = Unit.Parse(v);             break;
                     case "width"  : box.Width   = Unit.Parse(v);             break;
                     case "height" : box.Height  = Unit.Parse(v);             break;
-                    case "padding": box.Padding = Padding.Parse(v);          break;
+                    case "padding": box.Padding = UnboundPadding.Parse(v);   break;
                 }
             }
 

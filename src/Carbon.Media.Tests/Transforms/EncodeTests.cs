@@ -4,6 +4,7 @@ namespace Carbon.Media.Processors.Tests
 {	
 	public class EncodeTests
 	{
+        /*
         [Theory]
         [InlineData("jpeg")]
         [InlineData("gif")]
@@ -12,7 +13,7 @@ namespace Carbon.Media.Processors.Tests
         // [InlineData("jxr")]
         public void A(string name)
         {
-            var encode = Encode.Parse($"encode({name}, quality:95)");
+            var encode = Encode.Parse($"{name}(quality:95)");
 
             Assert.Equal(95, encode.Quality);
 
@@ -20,9 +21,9 @@ namespace Carbon.Media.Processors.Tests
 
             // TODO: Finalize encoder case... leaning toward upper
 
-            Assert.Equal($"encode({e.Format.Canonicalize()},quality:95)", encode.Canonicalize());
+            Assert.Equal($"{e.Format.Canonicalize()}::encode(quality:95)", encode.Canonicalize());
         }
-
+        */
 
         // JPEG::encode(quality:100)
         // PNG::encode

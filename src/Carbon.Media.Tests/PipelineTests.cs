@@ -1,6 +1,4 @@
-﻿using Carbon.Media.Tests;
-
-using Xunit;
+﻿using Xunit;
 
 namespace Carbon.Media.Processors.Tests
 {
@@ -25,7 +23,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(780, pipe.FinalWidth);
             Assert.Equal(140, pipe.FinalHeight);
 
-            Assert.Equal("blob#23924858|>crop(307,288,669,120)|>scale(780,140,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#23924858|>crop(307,288,669,120)|>scale(780,140,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
 
@@ -49,7 +47,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(300, pipe.FinalWidth);
             Assert.Equal(300, pipe.FinalHeight);
 
-            Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipe.Canonicalize());
             // Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipe.Canonicalize());
 
         }
@@ -68,7 +66,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(100, pipe.FinalWidth);
             Assert.Equal(200, pipe.FinalHeight);
 
-            Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7)|>JPEG::encode", pipe.Canonicalize());
 
         }
 
@@ -80,7 +78,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>crop(0,0,25,25)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>crop(0,0,25,25)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -92,7 +90,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>crop(0,0,25,25)|>scale(50,50,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>crop(0,0,25,25)|>scale(50,50,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -106,7 +104,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>crop(0,0,50,50)|>scale(25,25,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>crop(0,0,50,50)|>scale(25,25,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -118,7 +116,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>crop(0,0,50,12)|>scale(25,25,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>crop(0,0,50,12)|>scale(25,25,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -139,7 +137,7 @@ namespace Carbon.Media.Processors.Tests
               
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>scale(255,40,lanczos3)|>blur(5)|>brightness(0.5)|>contrast(0.5)|>invert(0.5)|>grayscale(0.5)|>hueRotate(45deg)|>opacity(0.5)|>pixelate(20)|>saturate(0.5)|>sepia(0.5)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(255,40,lanczos3)|>blur(5)|>brightness(0.5)|>contrast(0.5)|>invert(0.5)|>grayscale(0.5)|>hueRotate(45deg)|>opacity(0.5)|>pixelate(20)|>saturate(0.5)|>sepia(0.5)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -150,7 +148,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>scale(25,12,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(25,12,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -161,7 +159,7 @@ namespace Carbon.Media.Processors.Tests
             
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>scale(200,100,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(200,100,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
 
@@ -173,7 +171,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
             
-            Assert.Equal("blob#1|>scale(255,40,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(255,40,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -184,7 +182,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>scale(100,200,cubic)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(100,200,cubic)|>JPEG::encode", pipe.Canonicalize());
 
         }
 
@@ -199,7 +197,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal("blob#1|>scale(170,40,lanczos3)|>encode(JPEG)", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(170,40,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }      
     }
 

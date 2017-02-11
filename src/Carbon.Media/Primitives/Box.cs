@@ -2,28 +2,36 @@
 
 namespace Carbon.Geometry
 {
-    public struct PaddedSize
+    public struct Box
     {
-        public PaddedSize(Size size)
-            : this( size.Width, size.Height) { }
+        public Box(Size size)
+            : this(size.Width, size.Height) { }
 
-        public PaddedSize(Size size, Margin margin)
+        public Box(Size size, Padding margin)
             : this(size.Width, size.Height)
         {
             Padding = margin;
         }
 
-        public PaddedSize(int width, int height)
+        public Box(int width, int height)
         {
+            X = 0;
+            Y = 0;
             Width = width;
             Height = height;
-            Padding = Margin.Zero;
+            Padding = Padding.Zero;
         }
         
-        public Margin Padding;
+        public Padding Padding;
   
+        public int X;
+
+        public int Y;
+
+        // excluding padding
         public int Width;
 
+        // excluding padding
         public int Height;
 
         public Size Size => new Size(Width, Height);
@@ -31,8 +39,5 @@ namespace Carbon.Geometry
         public int OuterWidth  => Width + Padding.Left + Padding.Right;
 
         public int OuterHeight => Height + Padding.Top + Padding.Bottom;
-
-
-       // Inflate
     }
 }

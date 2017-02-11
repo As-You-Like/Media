@@ -2,11 +2,11 @@
 
 namespace Carbon.Media
 {
-    public struct Margin : IEquatable<Margin>
+    public struct Padding : IEquatable<Padding>
     {
-        public static readonly Margin Zero = new Margin(0);
+        public static readonly Padding Zero = new Padding(0);
 
-        public Margin(int top, int right, int bottom, int left)
+        public Padding(int top, int right, int bottom, int left)
         {
             Top = top;
             Right = right;
@@ -14,7 +14,7 @@ namespace Carbon.Media
             Left = left;
         }
 
-        public Margin(int topAndBottom, int leftAndRight)
+        public Padding(int topAndBottom, int leftAndRight)
         {
             Top = topAndBottom;
             Right = leftAndRight;
@@ -22,7 +22,7 @@ namespace Carbon.Media
             Left = leftAndRight;
         }
 
-        public Margin(int value)
+        public Padding(int value)
         {
             Top = value;
             Right = value;
@@ -37,7 +37,16 @@ namespace Carbon.Media
         public int Bottom { get; }
 
         public int Left { get; }
-
+        
+        public static Padding operator +(Padding lhs, Padding rhs) 
+        {
+            return new Padding(
+                top    : lhs.Top + rhs.Top,
+                right  : lhs.Right + rhs.Right,
+                bottom : lhs.Bottom + rhs.Bottom,
+                left   : lhs.Left + rhs.Left
+            );
+        }
         public override string ToString()
         {
             var same = Top == Right && Top == Bottom && Top == Left;
@@ -53,7 +62,7 @@ namespace Carbon.Media
             return $"{Top},{Right},{Bottom},{Left}";
         }
 
-        public bool Equals(Margin other)
+        public bool Equals(Padding other)
         {
             return Top == other.Top
                 && Right == other.Right

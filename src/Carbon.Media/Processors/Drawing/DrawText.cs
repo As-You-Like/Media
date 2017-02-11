@@ -8,7 +8,7 @@ namespace Carbon.Media.Processors
     {
         public DrawText(
             string text,
-            Box box,
+            UnboundBox box,
             Font? font = null,
             Alignment? align = null,
             BlendMode blendMode = BlendMode.Normal,
@@ -84,7 +84,7 @@ namespace Carbon.Media.Processors
             // TODO: Base64 support
             var text = parts[0];
 
-            var box = new Box();
+            var box = new UnboundBox();
 
             string color = null;
             Alignment? align = null;
@@ -106,7 +106,7 @@ namespace Carbon.Media.Processors
                     case "y"        : box.Y       = Unit.Parse(v);          break;
                     case "width"    : box.Width   = Unit.Parse(v);          break;
                     case "height"   : box.Height  = Unit.Parse(v);          break;
-                    case "padding"  : box.Padding = Padding.Parse(v);       break;
+                    case "padding"  : box.Padding = UnboundPadding.Parse(v);       break;
                     case "font"     : font = Processors.Font.Parse(v);      break;
                     case "color"    : color = v;                            break;
                 }

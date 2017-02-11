@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromPercentages()
         {
-            var resize = Resize.Parse("50％×50％");
+            var resize = Resize.Parse("50%×50%");
 
             Assert.Equal(0.5, resize.Width);
             Assert.Equal(0.5, resize.Height);

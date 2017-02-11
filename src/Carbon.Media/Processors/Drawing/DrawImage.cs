@@ -6,7 +6,7 @@ namespace Carbon.Media.Processors
     {
         public DrawImage(       
             string src,
-            Box box,
+            UnboundBox box,
             BlendMode blendMode = BlendMode.Normal,
             Alignment align = Alignment.Left)
             : base(box, align, blendMode, ResizeFlags.None)
@@ -45,7 +45,7 @@ namespace Carbon.Media.Processors
             var mode  = BlendMode.Normal;
             var align = Alignment.Left;
 
-            var box = new Box();
+            var box = new UnboundBox();
 
             for (var i = 1; i < parts.Length; i++)
             {
@@ -56,13 +56,13 @@ namespace Carbon.Media.Processors
 
                 switch (k)
                 {
-                    case "mode"   : mode = v.ToEnum<BlendMode>(true);   break;
-                    case "align"  : align = v.ToEnum<Alignment>(true);  break;
-                    case "x"      : box.X = Unit.Parse(v);              break;
-                    case "y"      : box.Y = Unit.Parse(v);              break;
-                    case "width"  : box.Width = Unit.Parse(v);          break;
-                    case "height" : box.Height = Unit.Parse(v);         break;
-                    case "padding": box.Padding = Padding.Parse(v);     break;
+                    case "mode"   : mode = v.ToEnum<BlendMode>(true);          break;
+                    case "align"  : align = v.ToEnum<Alignment>(true);         break;
+                    case "x"      : box.X = Unit.Parse(v);                     break;
+                    case "y"      : box.Y = Unit.Parse(v);                     break;
+                    case "width"  : box.Width = Unit.Parse(v);                 break;
+                    case "height" : box.Height = Unit.Parse(v);                break;
+                    case "padding": box.Padding = UnboundPadding.Parse(v);     break;
                 }
             }
 

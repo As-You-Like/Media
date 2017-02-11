@@ -27,7 +27,7 @@ namespace Carbon.Media.Processors
         public Scale Scale { get; set; }
 
         // If the resize mode was set to pad... 
-        public Margin Padding { get; set; } = Margin.Zero;
+        public Padding Padding { get; set; } = Padding.Zero;
         
         public string Background { get; set; }
 
@@ -44,12 +44,12 @@ namespace Carbon.Media.Processors
         public Encode Encode { get; set; }
 
         // blob#1 |> crop(0,0,100,100) |> JPEG(quality:87)
-        // blob#1 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> WebP
+        // blob#1 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> WebP::encode
 
-        // blob#1 |> JPEG(quality:87)
-        // blob#1 |> GIF
-        // blob#1 |> PNG
-        // blob#1 |> WebP
+        // blob#1 |> JPEG::encode(quality:87)
+        // blob#1 |> GIF::encode
+        // blob#1 |> PNG::encode
+        // blob#1 |> WebP::encode
 
         public static MediaPipeline From(MediaTransformation transformation)
         {
@@ -59,22 +59,22 @@ namespace Carbon.Media.Processors
 
             var interpolater = InterpolaterMode.Lanczos3;
             Rectangle? crop = null;
-            var f = new PaddedSize();    // Transform onto rect2
+            var box = new Box();
 
-            f.Width = pipeline.Source.Width;
-            f.Height = pipeline.Source.Height;
+            box.Width = pipeline.Source.Width;
+            box.Height = pipeline.Source.Height;
             
             foreach (var transform in transformation.GetTransforms())
             {
                 if (transform is Crop)
                 {
-                    var xScale = (double)pipeline.Source.Width / f.Width;
-                    var yScale = (double)pipeline.Source.Height / f.Height;
+                    var xScale = (double)pipeline.Source.Width / box.Width;
+                    var yScale = (double)pipeline.Source.Height / box.Height;
 
-                    var c = ((Crop)transform).GetRectangle(f.Size);
+                    var c = ((Crop)transform).GetRectangle(box.Size);
 
-                    f.Width = (int)c.Width;
-                    f.Height = (int)c.Height;
+                    box.Width = (int)c.Width;
+                    box.Height = (int)c.Height;
 
                     if (xScale != 1d || yScale != 1d)
                     {
@@ -92,30 +92,30 @@ namespace Carbon.Media.Processors
                         pipeline.Background = resize.Background;
                     }
 
-                    var bounds = resize.CalcuateSize(f.Size);
+                    var bounds = resize.CalcuateSize(box.Size);
 
                     bool upscale = resize.Upscale;
 
                     switch (resize.Mode)
                     {
                         case ResizeFlags.Crop:
-                            crop = ResizeHelper.CalculateCropRectangle(f.Size, bounds, resize.Anchor ?? CropAnchor.Center);
+                            crop = ResizeHelper.CalculateCropRectangle(box.Size, bounds, resize.Anchor ?? CropAnchor.Center);
 
-                            f.Width = bounds.Width;
-                            f.Height = bounds.Height;
+                            box.Width = bounds.Width;
+                            box.Height = bounds.Height;
 
                             break;
 
                         case ResizeFlags.Fit:
-                            ResizeHelper.Fit(ref f, bounds, resize.Upscale);
+                            ResizeHelper.Fit(ref box, bounds, resize.Upscale);
                             break;
 
                         case ResizeFlags.Pad:
-                            f = ResizeHelper.Pad(f.Size, bounds, resize.Anchor ?? CropAnchor.Center, resize.Upscale); break;
+                            box = ResizeHelper.Pad(box.Size, bounds, resize.Anchor ?? CropAnchor.Center, resize.Upscale); break;
 
                         default: // Exact
-                            f.Width = bounds.Width;
-                            f.Height = bounds.Height;
+                            box.Width = bounds.Width;
+                            box.Height = bounds.Height;
 
                             break;
                     }
@@ -124,8 +124,8 @@ namespace Carbon.Media.Processors
                 {
                     var scale = (Scale)transform;
 
-                    f.Width = scale.Width;
-                    f.Height = scale.Height;
+                    box.Width = scale.Width;
+                    box.Height = scale.Height;
 
                     if (scale.Mode != InterpolaterMode.None)
                     {
@@ -136,11 +136,11 @@ namespace Carbon.Media.Processors
                 {
                     var pad = (Pad)transform;
 
-                    f.Padding = new Margin(
-                        top    : f.Padding.Top + pad.Top,
-                        right  : f.Padding.Right + pad.Right,
-                        bottom : f.Padding.Bottom + pad.Bottom,
-                        left   : f.Padding.Left + pad.Left
+                    box.Padding = new Padding(
+                        top    : box.Padding.Top + pad.Top,
+                        right  : box.Padding.Right + pad.Right,
+                        bottom : box.Padding.Bottom + pad.Bottom,
+                        left   : box.Padding.Left + pad.Left
                     );
                 }
                 else if (transform is Rotate)
@@ -149,12 +149,12 @@ namespace Carbon.Media.Processors
 
                     if (rotate.Angle == 90 || rotate.Angle == 270)
                     {
-                        var oldWidth = f.Width;
-                        var oldHeight = f.Height;
+                        var oldWidth = box.Width;
+                        var oldHeight = box.Height;
 
                         // flip the height & width
-                        f.Width = oldHeight;
-                        f.Height = oldWidth;
+                        box.Width = oldHeight;
+                        box.Height = oldWidth;
                     }
                 }
 
@@ -166,12 +166,12 @@ namespace Carbon.Media.Processors
 
             pipeline.Crop = crop;
 
-            if (crop == null || crop.Value.Width != f.Width || crop.Value.Width != f.Height)
+            if (crop == null || crop.Value.Size != box.Size)
             {
-                pipeline.Scale = new Scale(f.Width, f.Height, interpolater);
+                pipeline.Scale = new Scale(box.Width, box.Height, interpolater);
             }
 
-            pipeline.Padding = f.Padding;
+            pipeline.Padding = box.Padding;
             pipeline.Encode = new Encode(ImageFormat.Jpeg, 0);
             
             return pipeline;
@@ -200,7 +200,7 @@ namespace Carbon.Media.Processors
             }
 
             // pad(0,0)
-            if (!Padding.Equals(Margin.Zero))
+            if (!Padding.Equals(Padding.Zero))
             {
                 sb.Append("|>");
                 sb.Append("pad(");
@@ -208,7 +208,7 @@ namespace Carbon.Media.Processors
                 sb.Append(")");
             }
 
-            if (!Padding.Equals(Margin.Zero) || Background != null)
+            if (!Padding.Equals(Padding.Zero) || Background != null)
             {
                 // sb.Append("|>");
 
@@ -236,7 +236,7 @@ namespace Carbon.Media.Processors
 
     public struct Draw
     {
-        public Margin Margin { get; set; }
+        public Padding Margin { get; set; }
 
         public string Background { get; set; }
 
@@ -252,7 +252,7 @@ namespace Carbon.Media.Processors
                 sb.Append(Background);
             }
 
-            if (!Margin.Equals(Margin.Zero))
+            if (!Margin.Equals(Padding.Zero))
             {
                 sb.Append(",margin:");
                 sb.Append(Margin.ToString());

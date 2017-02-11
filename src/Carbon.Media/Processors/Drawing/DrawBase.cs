@@ -5,7 +5,7 @@ namespace Carbon.Media.Processors
     public abstract class DrawBase : IProcessor
     {
         public DrawBase(
-            Box box,
+            UnboundBox box,
             Alignment? align,
             BlendMode blendMode,
             ResizeFlags scaleMode)
@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors
             ScaleMode = ScaleMode;
         }
 
-        public Box Box { get; }
+        public UnboundBox Box { get; }
 
         public Alignment? Align { get; } // Alignment within the box
 
@@ -31,12 +31,12 @@ namespace Carbon.Media.Processors
         {
             // Mode
 
-            if (Box.X != null)                     yield return new KeyValuePair<string, string>("x"       , Box.X.Value.ToString());
-            if (Box.Y != null)                     yield return new KeyValuePair<string, string>("y"       , Box.Y.Value.ToString());
-            if (Box.Width != null)                 yield return new KeyValuePair<string, string>("width"   , Box.Width.Value.ToString());
-            if (Box.Height != null)                yield return new KeyValuePair<string, string>("height"  , Box.Width.Value.ToString());
-            if (Align != null)                     yield return new KeyValuePair<string, string>("align"   , Align.Value.ToLower());
-            if (!Box.Padding.Equals(Padding.Zero)) yield return new KeyValuePair<string, string>("padding" , Box.Padding.ToString());
+            if (Box.X != null)                            yield return new KeyValuePair<string, string>("x"       , Box.X.Value.ToString());
+            if (Box.Y != null)                            yield return new KeyValuePair<string, string>("y"       , Box.Y.Value.ToString());
+            if (Box.Width != null)                        yield return new KeyValuePair<string, string>("width"   , Box.Width.Value.ToString());
+            if (Box.Height != null)                       yield return new KeyValuePair<string, string>("height"  , Box.Width.Value.ToString());
+            if (Align != null)                            yield return new KeyValuePair<string, string>("align"   , Align.Value.ToLower());
+            if (!Box.Padding.Equals(UnboundPadding.Zero)) yield return new KeyValuePair<string, string>("padding" , Box.Padding.ToString());
         }
     }
 }

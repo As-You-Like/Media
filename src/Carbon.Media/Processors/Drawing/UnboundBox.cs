@@ -2,32 +2,34 @@
 
 namespace Carbon.Media.Processors
 {
-    public class Box
-    {
-        public Box() { }
+    // A box with raw units...
 
-        public Box(Unit x, Unit y, Unit width, Unit height)
+    public class UnboundBox
+    {
+        public UnboundBox() { }
+
+        public UnboundBox(Unit x, Unit y, Unit width, Unit height)
         {
-            X = x;
-            Y = y;
-            Width = width;
+            X      = x;
+            Y      = y;
+            Width  = width;
             Height = height;
         }
 
         // Alignment?
 
-        public Unit? X         { get; set; }  
-        public Unit? Y         { get; set; }
-        public Unit? Width     { get; set; } // 50% || 50px
-        public Unit? Height    { get; set; }
-        public Padding Padding { get; set; } = Padding.Zero;
+        public Unit? X                { get; set; }  
+        public Unit? Y                { get; set; }
+        public Unit? Width            { get; set; } // 50% || 50px
+        public Unit? Height           { get; set; }
+        public UnboundPadding Padding { get; set; } = UnboundPadding.Zero;
     }
 
-    public struct Padding : IEquatable<Padding>
+    public struct UnboundPadding : IEquatable<UnboundPadding>
     {
-        public static readonly Padding Zero = new Padding();
+        public static readonly UnboundPadding Zero = new UnboundPadding();
 
-        public Padding(Margin value)
+        public UnboundPadding(Padding value)
         {
             Top    = value.Top;
             Right  = value.Right;
@@ -35,7 +37,7 @@ namespace Carbon.Media.Processors
             Left   = value.Left;
         }
 
-        public Padding(Unit value)
+        public UnboundPadding(Unit value)
         {
             #region Preconditions
 
@@ -49,7 +51,7 @@ namespace Carbon.Media.Processors
             Left = value;
         }
 
-        public Padding(Unit top, Unit right, Unit bottom, Unit left)
+        public UnboundPadding(Unit top, Unit right, Unit bottom, Unit left)
         {
             #region Preconditions
 
@@ -87,11 +89,13 @@ namespace Carbon.Media.Processors
 
             return $"{Top},{Right},{Bottom},{Left}";
         }
-        
-        public static Padding Parse(string text) =>
-            new Padding(Unit.Parse(text));
 
-        public bool Equals(Padding other)
+        public static UnboundPadding Parse(string text)
+        {
+            return new UnboundPadding(Unit.Parse(text));
+        }
+
+        public bool Equals(UnboundPadding other)
         {
             return Left   == other.Left
                 && Right  == other.Right

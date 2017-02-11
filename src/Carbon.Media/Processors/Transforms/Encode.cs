@@ -20,17 +20,16 @@ namespace Carbon.Media.Processors
         {
             var sb = new StringBuilder();
 
-            sb.Append("encode(");
-
             sb.Append(Format.Canonicalize());
-            
+            sb.Append("::encode");
+
             if (Quality != 0)
             {
-                sb.Append(",quality:" + Quality);
+                sb.Append("(");
+                sb.Append("quality:" + Quality);
+                sb.Append(")");
             }
-
-            sb.Append(")");
-
+            
             return sb.ToString();
         }
 
@@ -43,7 +42,7 @@ namespace Carbon.Media.Processors
 
             int argStart = segment.IndexOf('(') + 1;
             
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
+            var args = segment.Substring(argStart, segment.Length - argStart - 1);
 
             #endregion
   

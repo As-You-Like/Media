@@ -155,7 +155,7 @@ namespace Carbon.Media
 
         public MediaTransformation DrawText(string text)
         {
-            Transform(new DrawText(text, new Box()));
+            Transform(new DrawText(text, new UnboundBox()));
 
             return this;
         }
