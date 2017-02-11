@@ -33,7 +33,7 @@
 
             #endregion
 
-            return new Rotate(angle: int.Parse(key));
+            return new Rotate(angle: int.Parse(key.Replace("deg", "")));
         }
     }
 }
