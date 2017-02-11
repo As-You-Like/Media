@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Tests
-{	
-	public class ScaleTests
+namespace Carbon.Media.Processors.Tests
+{
+    public class ScaleTests
 	{
         [Fact]
         public void A()

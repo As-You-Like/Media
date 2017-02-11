@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Tests
+namespace Carbon.Media.Processors.Tests
 {	
 	public class EncodeTests
 	{
@@ -9,17 +9,23 @@ namespace Carbon.Media.Tests
         [InlineData("gif")]
         [InlineData("png")]
         [InlineData("webp")]
-        [InlineData("jxr")]
+        // [InlineData("jxr")]
         public void A(string name)
         {
             var encode = Encode.Parse($"encode({name}, quality:95)");
 
             Assert.Equal(95, encode.Quality);
 
+            var e = Encode.Parse(encode.Canonicalize());
+
             // TODO: Finalize encoder case... leaning toward upper
 
-            Assert.Equal($"encode({name.ToUpper()},quality:95)", encode.Canonicalize());
+            Assert.Equal($"encode({e.Format.Canonicalize()},quality:95)", encode.Canonicalize());
         }
 
+
+        // JPEG::encode(quality:100)
+        // PNG::encode
+        // WebP::encode
     }
 }

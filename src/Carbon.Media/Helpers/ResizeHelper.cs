@@ -3,6 +3,7 @@
 namespace Carbon.Media
 {
     using Geometry;
+    using Processors;
 
     public static class ResizeHelper
     {

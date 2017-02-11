@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Tests
+namespace Carbon.Media.Processors.Tests
 {	
 	public class DrawTextTests
 	{

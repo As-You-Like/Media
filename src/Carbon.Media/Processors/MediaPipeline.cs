@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     using Geometry;
 
-    // The resolved pipleline
-    public class Pipeline
+    public class MediaPipeline
     {
         // Orient (flip, rotate, etc)
         // Crop source
@@ -28,29 +27,33 @@ namespace Carbon.Media
         public Scale Scale { get; set; }
 
         // If the resize mode was set to pad... 
-        public Margin Margin { get; set; } = Margin.Zero;
+        public Margin Padding { get; set; } = Margin.Zero;
         
         public string Background { get; set; }
 
         public Position Position
-            => new Position { X = Margin.Left, Y = Margin.Top };
+            => new Position { X = Padding.Left, Y = Padding.Top };
         
-        public int FinalWidth => Scale.Width + Margin.Left + Margin.Right;
+        public int FinalWidth => Scale.Width + Padding.Left + Padding.Right;
 
-        public int FinalHeight => Scale.Height + Margin.Top + Margin.Bottom;
+        public int FinalHeight => Scale.Height + Padding.Top + Padding.Bottom;
 
         // 4. Determine whether we need a canvas to apply filters or draw a background
         public List<IFilter> Filters { get; } = new List<IFilter>();
         
         public Encode Encode { get; set; }
 
-        // blob#100 |> crop(0,0,100,100) |> encode(JPEG)
-        // blob#100 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> encode(JPEG)
+        // blob#1 |> crop(0,0,100,100) |> JPEG(quality:87)
+        // blob#1 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> WebP
 
+        // blob#1 |> JPEG(quality:87)
+        // blob#1 |> GIF
+        // blob#1 |> PNG
+        // blob#1 |> WebP
 
-        public static Pipeline From(MediaTransformation transformation)
+        public static MediaPipeline From(MediaTransformation transformation)
         {
-            var pipeline = new Pipeline {
+            var pipeline = new MediaPipeline {
                 Source = transformation.Source
             };
 
@@ -70,7 +73,7 @@ namespace Carbon.Media
 
                     var c = ((Crop)transform).GetRectangle(f.Size);
 
-                    f.Width  = (int)c.Width;
+                    f.Width = (int)c.Width;
                     f.Height = (int)c.Height;
 
                     if (xScale != 1d || yScale != 1d)
@@ -92,7 +95,7 @@ namespace Carbon.Media
                     var bounds = resize.CalcuateSize(f.Size);
 
                     bool upscale = resize.Upscale;
-                  
+
                     switch (resize.Mode)
                     {
                         case ResizeFlags.Crop:
@@ -116,7 +119,6 @@ namespace Carbon.Media
 
                             break;
                     }
-
                 }
                 else if (transform is Scale)
                 {
@@ -130,7 +132,17 @@ namespace Carbon.Media
                         interpolater = scale.Mode;
                     }
                 }
+                else if (transform is Pad)
+                {
+                    var pad = (Pad)transform;
 
+                    f.Padding = new Margin(
+                        top    : f.Padding.Top + pad.Top,
+                        right  : f.Padding.Right + pad.Right,
+                        bottom : f.Padding.Bottom + pad.Bottom,
+                        left   : f.Padding.Left + pad.Left
+                    );
+                }
                 else if (transform is Rotate)
                 {
                     var rotate = (Rotate)transform;
@@ -146,7 +158,6 @@ namespace Carbon.Media
                     }
                 }
 
-
                 else if (transform is IFilter)
                 {
                     pipeline.Filters.Add((IFilter)transform);
@@ -160,10 +171,9 @@ namespace Carbon.Media
                 pipeline.Scale = new Scale(f.Width, f.Height, interpolater);
             }
 
-            pipeline.Margin = f.Padding;
+            pipeline.Padding = f.Padding;
             pipeline.Encode = new Encode(ImageFormat.Jpeg, 0);
             
-
             return pipeline;
         }
 
@@ -188,16 +198,24 @@ namespace Carbon.Media
 
                 sb.Append(Scale.Canonicalize());
             }
-            
-            if (!Margin.Equals(Margin.Zero) || Background != null)
+
+            // pad(0,0)
+            if (!Padding.Equals(Margin.Zero))
             {
                 sb.Append("|>");
-
-                var draw = new Draw() { Background = Background, Margin = Margin };
-
-                sb.Append(draw.Canonicalize());
+                sb.Append("pad(");
+                sb.Append(Padding.ToString());
+                sb.Append(")");
             }
 
+            if (!Padding.Equals(Margin.Zero) || Background != null)
+            {
+                // sb.Append("|>");
+
+                // var draw = new Draw { Background = Background, Margin = Margin };
+
+                // sb.Append(draw.Canonicalize());
+            }
 
             foreach (var filter in Filters)
             {
@@ -209,8 +227,6 @@ namespace Carbon.Media
             sb.Append("|>");
 
             sb.Append(Encode.Canonicalize());
-
-
 
             return sb.ToString();
         }
@@ -254,67 +270,7 @@ namespace Carbon.Media
         public int Y;
     }
 
-    // TODO: Enforce positive values?
-    public struct Margin : IEquatable<Margin>
-    {
-        public static readonly Margin Zero = new Margin(0);
-
-        public Margin(int top, int right, int bottom, int left)
-        {
-            Top = top;
-            Right = right;
-            Bottom = bottom;
-            Left = left;
-        }
-
-        public Margin(int topAndBottom, int leftAndRight)
-        {
-            Top = topAndBottom;
-            Right = leftAndRight;
-            Bottom = topAndBottom;
-            Left = leftAndRight;
-        }
-
-        public Margin(int value)
-        {
-            Top = value;
-            Right = value;
-            Bottom = value;
-            Left = value;
-        }
-
-        public int Top { get; }
-
-        public int Right { get; }
-
-        public int Bottom { get; }
-
-        public int Left { get; }
-
-
-        public override string ToString()
-        {
-            var same = Top == Right && Top == Bottom && Top == Left;
-
-            if (same) return Top.ToString();
-
-
-            if (Top == Bottom && Right == Left)
-            {
-                return "{Top},{Right}";
-            }
-
-            return "{Top},{Right},{Bottom},{Left}";
-        }
-
-        public bool Equals(Margin other)
-        {
-            return Top == other.Top
-                && Right == other.Right
-                && Bottom == other.Bottom
-                && Left == other.Left; 
-        }
-    }
+  
 
   
 

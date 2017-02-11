@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public sealed class DrawText : DrawBase
     {
@@ -107,7 +107,7 @@ namespace Carbon.Media
                     case "width"    : box.Width   = Unit.Parse(v);          break;
                     case "height"   : box.Height  = Unit.Parse(v);          break;
                     case "padding"  : box.Padding = Padding.Parse(v);       break;
-                    case "font"     : font = Media.Font.Parse(v);           break;
+                    case "font"     : font = Processors.Font.Parse(v);      break;
                     case "color"    : color = v;                            break;
                 }
 

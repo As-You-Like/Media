@@ -2,7 +2,7 @@
 
 using Xunit;
 
-namespace Carbon.Media.Tests
+namespace Carbon.Media.Processors.Tests
 {
     public sealed class Signer : ISigner
     {

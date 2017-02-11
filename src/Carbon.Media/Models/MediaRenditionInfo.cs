@@ -1,9 +1,11 @@
 ﻿using System.Runtime.Serialization;
 using System.Text;
 
+using Carbon.Geometry;
+
 namespace Carbon.Media
 {
-    using Geometry;
+    using Processors;
 
     public sealed class MediaRenditionInfo : ISize
     {

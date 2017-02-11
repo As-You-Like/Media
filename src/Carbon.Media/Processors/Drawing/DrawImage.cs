@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public sealed class DrawImage : DrawBase
     {

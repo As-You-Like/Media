@@ -1,30 +1,28 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public sealed class Encode : IProcessor
     {
-        public Encode(ImageFormat encoder, int quality)
+        public Encode(ImageFormat format, int quality)
         {
-            Encoder = encoder;
+            Format = format;
             Quality = quality;
         }
 
         // JPEG, WEBP, PNG, ...
 
-        public ImageFormat Encoder { get; set; }
+        public ImageFormat Format { get; set; }
 
         public int Quality { get; set; }
        
-        // pad(0,0,0,0)
         public string Canonicalize()
         {
             var sb = new StringBuilder();
 
             sb.Append("encode(");
 
-            sb.Append(Encoder.ToString().ToUpper());
+            sb.Append(Format.Canonicalize());
             
             if (Quality != 0)
             {
@@ -49,7 +47,7 @@ namespace Carbon.Media
 
             #endregion
   
-            ImageFormat encoder = ImageFormat.Jpeg;
+            var encoder = ImageFormat.Jpeg;
             int quality = 0;
 
             var parts = segment.Split(Seperators.Comma);

@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media
+﻿namespace Carbon.Media.Processors
 {
     public class InvertFilter : IFilter
     {

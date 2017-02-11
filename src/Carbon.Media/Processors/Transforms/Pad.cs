@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public sealed class Pad : IProcessor
     {

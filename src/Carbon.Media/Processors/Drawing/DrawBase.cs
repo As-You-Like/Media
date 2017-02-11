@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public abstract class DrawBase : IProcessor
     {

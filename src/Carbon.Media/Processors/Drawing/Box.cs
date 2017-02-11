@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carbon.Media
+namespace Carbon.Media.Processors
 {
     public class Box
     {
@@ -26,6 +26,14 @@ namespace Carbon.Media
     public struct Padding : IEquatable<Padding>
     {
         public static readonly Padding Zero = new Padding();
+
+        public Padding(Margin value)
+        {
+            Top    = value.Top;
+            Right  = value.Right;
+            Bottom = value.Bottom;
+            Left   = value.Left;
+        }
 
         public Padding(Unit value)
         {
@@ -74,7 +82,7 @@ namespace Carbon.Media
             }
             else if (Top == Bottom && Right == Left)
             {
-                return Top.ToString() + "," + Right.ToString();
+                return $"{Top},{Right}";
             }
 
             return $"{Top},{Right},{Bottom},{Left}";

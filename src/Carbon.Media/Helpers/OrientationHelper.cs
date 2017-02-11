@@ -2,6 +2,8 @@
 
 namespace Carbon.Media
 {
+    using Processors;
+
     public static class OrientationHelper
     {
         public static Size GetOrientatedSize(ISize media, ImageOrientation orientation)

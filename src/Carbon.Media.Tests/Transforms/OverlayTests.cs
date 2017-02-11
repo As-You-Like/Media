@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Tests
-{	
-	public class OverlayTests
+namespace Carbon.Media.Processors.Tests
+{
+    public class OverlayTests
 	{
         [Fact]
         public void FromFullKey()

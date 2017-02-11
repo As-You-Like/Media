@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Tests
-{	
-	public class CropTests
+namespace Carbon.Media.Processors.Tests
+{
+    public class CropTests
 	{
         [Fact]
         public void FromPercentages()

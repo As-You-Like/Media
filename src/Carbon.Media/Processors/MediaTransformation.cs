@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
+using Carbon.Geometry;
+
 namespace Carbon.Media
 {
-    using Geometry;
-
+    using Processors;
+    
     public class MediaTransformation : ISize
     {
         protected readonly List<IProcessor> transforms = new List<IProcessor>();
@@ -260,7 +262,7 @@ namespace Carbon.Media
                     }
                     else
                     {
-                        processor = Media.Resize.Parse(segment);
+                        processor = Processors.Resize.Parse(segment);
                     }
                 }
                 else
@@ -271,19 +273,20 @@ namespace Carbon.Media
 
                     switch (transformName)
                     {
-                        case "resize"     : processor = Media.Resize.Parse(segment);            break;
-                        case "scale"      : processor = Media.Scale.Parse(segment);             break;
-                        case "crop"       : processor = Media.Crop.Parse(segment);              break;
-                        case "rotate"     : processor = Media.Rotate.Parse(segment);            break;
+                        case "resize"     : processor = Processors.Resize.Parse(segment);       break;
+                        case "scale"      : processor = Scale.Parse(segment);                   break;
+                        case "crop"       : processor = Processors.Crop.Parse(segment);         break;
+                        case "rotate"     : processor = Processors.Rotate.Parse(segment);       break;
                         case "flip"       : processor = Flip.Parse(segment);                    break;
                         case "pad"        : processor = Pad.Parse(segment);                     break;
                         
                         // Drawing                       
-                        case "text"       : processor = Media.DrawText.Parse(segment);          break;
+                        case "text"       : processor = Processors.DrawText.Parse(segment);     break;
                         case "overlay"    : processor = DrawColor.Parse(segment);               break;
                         case "gradient"   : processor = DrawGradient.Parse(segment);            break;
 
                         // filters
+                        case "hueRotate"  : 
                         case "hue-rotate" : processor = HueRotateFilter.Parse(segment);         break;
                         case "saturate"   : processor = SaturateFilter.Parse(segment);          break;
                         case "sepia"      : processor = SepiaFilter.Parse(segment);             break;

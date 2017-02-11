@@ -29,7 +29,6 @@ namespace Carbon.Media.Tests
             Assert.Equal(500, box.Padding.Right);
             Assert.Equal(250, box.Padding.Bottom);
             Assert.Equal(0, box.Padding.Left);
-
   
             box = ResizeHelper.Pad(source, bounds, CropAnchor.Top | CropAnchor.Right, upscale: false);
 
