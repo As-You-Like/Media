@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public class SepiaFilter : ColorMatrix, IFilter
+    public class SepiaFilter : IFilter
     {
         public SepiaFilter(float amount)
         {
@@ -22,7 +22,7 @@
             return new SepiaFilter((float)Unit.Parse(segment).Value);
         }
 
-        public override float[] GetMatrix()
+        public float[] GetMatrix()
         {
             var a = (1f - Amount);
 

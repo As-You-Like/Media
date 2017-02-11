@@ -1,21 +1,19 @@
-﻿// TODO: Import Geometry when stable
-
-using Carbon.Media;
+﻿using Carbon.Media;
 
 namespace Carbon.Geometry
 {
-    public struct Box2
+    public struct PaddedSize
     {
-        public Box2(Size size)
+        public PaddedSize(Size size)
             : this( size.Width, size.Height) { }
 
-        public Box2(Size size, Margin margin)
+        public PaddedSize(Size size, Margin margin)
             : this(size.Width, size.Height)
         {
             Padding = margin;
         }
 
-        public Box2(int width, int height)
+        public PaddedSize(int width, int height)
         {
             Width = width;
             Height = height;

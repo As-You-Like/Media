@@ -59,7 +59,7 @@ namespace Carbon.Media.Processors
 
             var interpolater = InterpolaterMode.Lanczos3;
             Rectangle? crop = null;
-            var f = new Box2();    // Transform onto rect2
+            var f = new PaddedSize();    // Transform onto rect2
 
             f.Width = pipeline.Source.Width;
             f.Height = pipeline.Source.Height;
@@ -127,7 +127,7 @@ namespace Carbon.Media.Processors
                     f.Width = scale.Width;
                     f.Height = scale.Height;
 
-                    if (scale.Mode != InterpolaterMode.Unknown)
+                    if (scale.Mode != InterpolaterMode.None)
                     {
                         interpolater = scale.Mode;
                     }

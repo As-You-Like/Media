@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public class GrayscaleFilter : ColorMatrix, IFilter
+    public class GrayscaleFilter : IFilter
     {
         public GrayscaleFilter(float amount)
         {
@@ -23,7 +23,7 @@
         }
 
         // https://www.w3.org/TR/filter-effects/#grayscaleEquivalent
-        public override float[] GetMatrix()
+        public float[] GetMatrix()
         {
             var a = (1f - Amount);
 
