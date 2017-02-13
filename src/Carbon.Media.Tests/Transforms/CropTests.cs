@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromPercentages()
         {
-            var crop = Crop.Parse("crop(50％,50％,960,540)");
+            var crop = Crop.Parse("crop(50%,50%,960,540)");
 
             Assert.Equal(0.5d, crop.X);
             Assert.Equal(0.5d, crop.Y);

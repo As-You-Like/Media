@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Carbon.Media.Processors
@@ -18,7 +17,7 @@ namespace Carbon.Media.Processors
         public IMediaSource Source { get; set; }
 
         // 1. orient
-        public ImageOrientation Orient { get; set; }
+        public ImageOrientation? Orient { get; set; }
 
         // 2. crop the source
         public Rectangle? Crop { get; set; }   // The crop applied to the source
@@ -37,8 +36,11 @@ namespace Carbon.Media.Processors
 
         public int FinalHeight => Scale.Height + Padding.Top + Padding.Bottom;
 
+        public Size FinalSize => new Size(FinalWidth, FinalHeight);
+
         // 4. Determine whether we need a canvas to apply filters or draw a background
-        public List<IFilter> Filters { get; } = new List<IFilter>();
+        // Filters & Draws
+        public List<IProcessor> Filters { get; } = new List<IProcessor>();
         
         public Encode Encode { get; set; }
 
@@ -46,26 +48,48 @@ namespace Carbon.Media.Processors
 
         // blob#1 |> crop(0,0,100,100) |> JPEG(quality:87)
         // blob#1 |> scale(50,50,lancoz) |> draw(background:0xffffff,margin:10) |> pixelate(5px) |> blur(5px) |> sepia(0.5) |> WebP::encode
-        
+
         // blob#1 |> crop(0,0,100,100) |> JPEG::encode(quality:87)
         // blob#1 |> JPEG::encode(quality:87)
         // blob#1 |> WebP::encode
 
         public static MediaPipeline From(MediaTransformation transformation)
         {
+            return From(transformation.Source, transformation.GetProcessors());
+        }
+
+        public static MediaPipeline From(IMediaSource source, IReadOnlyList<IProcessor> processors)
+        {
             var pipeline = new MediaPipeline {
-                Source = transformation.Source
+                Source = source,
+                Orient = source.Orientation
             };
+
+            var sourceSize = new Size(source.Width, source.Height);
 
             var interpolater = InterpolaterMode.Lanczos3;
             Rectangle? crop = null;
             var box = new Box();
 
-            box.Width = pipeline.Source.Width;
-            box.Height = pipeline.Source.Height;
+            box.Width = sourceSize.Width;
+            box.Height = sourceSize.Height;
             
-            foreach (var transform in transformation.GetTransforms())
+            foreach (var transform in processors)
             {
+                if (transform is Rotate)
+                {
+                    var rotate = (Rotate)transform;
+
+                    // TODO: Consider existing orientation
+
+                    switch (rotate.Angle)
+                    {
+                        case 90     : pipeline.Orient = ImageOrientation.Rotate90;  break;
+                        case 180    : pipeline.Orient = ImageOrientation.Rotate180; break;
+                        case 270    : pipeline.Orient = ImageOrientation.Rotate270; break;
+                        case 360    : pipeline.Orient = ImageOrientation.None;      break;
+                    }
+                }
                 if (transform is Crop)
                 {
                     var xScale = (double)pipeline.Source.Width / box.Width;
@@ -99,7 +123,7 @@ namespace Carbon.Media.Processors
                     switch (resize.Mode)
                     {
                         case ResizeFlags.Crop:
-                            crop = ResizeHelper.CalculateCropRectangle(box.Size, bounds, resize.Anchor ?? CropAnchor.Center);
+                            crop = ResizeHelper.CalculateCropRectangle(box.Size, bounds.ToRational(), resize.Anchor ?? CropAnchor.Center);
 
                             box.Width = bounds.Width;
                             box.Height = bounds.Height;
@@ -158,9 +182,9 @@ namespace Carbon.Media.Processors
                     }
                 }
 
-                else if (transform is IFilter)
+                else
                 {
-                    pipeline.Filters.Add((IFilter)transform);
+                    pipeline.Filters.Add(transform);
                 }
             }
 
@@ -182,6 +206,12 @@ namespace Carbon.Media.Processors
             var sb = new StringBuilder();
 
             sb.Append("blob#" + Source.Key);
+
+            if (Orient != null)
+            {
+                sb.Append("|>");
+                sb.Append(Orient.Value.Canonicalize());
+            }
 
             if (Crop != null)
             {

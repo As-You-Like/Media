@@ -79,7 +79,7 @@ namespace Carbon.Media.Processors.Tests
         {
             var transformation = MediaTransformation.ParsePath("1045645/text(Hello World,font:14px Helvetica)/100x100.jpeg");
 
-            var text = (DrawText)transformation.GetTransforms()[0];
+            var text = (DrawText)transformation.GetProcessors()[0];
 
             Assert.Equal("Hello World", text.Text);
             Assert.Equal(14, text.Font?.Size.Value);
@@ -101,7 +101,7 @@ namespace Carbon.Media.Processors.Tests
             // 1045645/1:00/100x100.jpeg
             var transformation = MediaTransformation.ParsePath("1045645/00:01:00/100x100.jpeg");
 
-            var clip = (Clip)transformation.GetTransforms()[0];
+            var clip = (Clip)transformation.GetProcessors()[0];
 
             Assert.Equal(TimeSpan.FromSeconds(60), clip.Start);
             Assert.Equal(TimeSpan.FromSeconds(60), clip.End);
@@ -196,7 +196,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(50, rendition.Width);
             Assert.Equal(100, rendition.Height);
 
-            Assert.Equal("rotate(90)", rendition.GetTransforms()[0].ToString());
+            Assert.Equal("rotate(90)", rendition.GetProcessors()[0].ToString());
 
             Assert.Equal("1/rotate(90).jpeg", rendition.GetPath());
         }
@@ -220,11 +220,11 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal("85x20.jpeg", rendition.GetFullName());
             Assert.Equal("64a5e3944d4f11c05cde1a60efa9b86e9c4c6e54f3cb17269454472fdfa88d89/85x20.jpeg", rendition.GetPath());
 
-            var rendition2 = MediaTransformation.ParsePath(rendition.GetPath());
+            var img = MediaTransformation.ParsePath(rendition.GetPath());
 
-            Assert.Equal("jpeg", rendition2.Format);
-            Assert.Equal(1, rendition2.GetTransforms().Count);
-            Assert.Equal("85x20", rendition2.GetTransforms()[0].ToString());
+            Assert.Equal("jpeg", img.Format);
+            Assert.Equal(1, img.GetProcessors().Count);
+            Assert.Equal("85x20", img.GetProcessors()[0].ToString());
         }
 
         [Fact]
@@ -245,9 +245,9 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal("1045645", rendition2.Source.Key);
             Assert.Equal("png", rendition2.Format);
-            Assert.Equal(2, rendition2.GetTransforms().Count);
-            Assert.Equal("100x100", rendition2.GetTransforms()[0].ToString());
-            Assert.Equal("crop(0,0,85,20)", rendition2.GetTransforms()[1].ToString());
+            Assert.Equal(2, rendition2.GetProcessors().Count);
+            Assert.Equal("100x100", rendition2.GetProcessors()[0].ToString());
+            Assert.Equal("crop(0,0,85,20)", rendition2.GetProcessors()[1].ToString());
         }
 
         [Fact]
@@ -277,9 +277,11 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(20, rendition.Width);
             Assert.Equal(85, rendition.Height);
 
-            Assert.Equal(3, rendition2.GetTransforms().Count);
+            var processors = rendition2.GetProcessors();
 
-            Assert.Equal(90, ((Rotate)rendition2.GetTransforms()[2]).Angle);
+            Assert.Equal(3, processors.Count);
+
+            Assert.Equal(90, (processors[2] as Rotate).Angle);
         }
 
         [Fact]
@@ -332,15 +334,18 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal("contrast(2)/grayscale(1)/sepia(1)/opacity(1)/saturate(1)/hue-rotate(90deg).jpeg", transformation.GetFullName());
 
-            var rendition2 = MediaTransformation.ParsePath(transformation.GetPath());
-            Assert.Equal(6, rendition2.GetTransforms().Count);
+            var img = MediaTransformation.ParsePath(transformation.GetPath());
 
-            Assert.Equal(2f, ((ContrastFilter)rendition2.GetTransforms()[0]).Amount);
-            Assert.Equal(1f, ((GrayscaleFilter)rendition2.GetTransforms()[1]).Amount);
-            Assert.Equal(1f, ((SepiaFilter)rendition2.GetTransforms()[2]).Amount);
-            Assert.Equal(1f, ((OpacityFilter)rendition2.GetTransforms()[3]).Amount);
-            Assert.Equal(1f, ((SaturateFilter)rendition2.GetTransforms()[4]).Amount);
-            Assert.Equal(90, ((HueRotateFilter)rendition2.GetTransforms()[5]).Degrees);
+            var processors = img.GetProcessors();
+
+            Assert.Equal(6, processors.Count);
+
+            Assert.Equal(2f, (processors[0] as ContrastFilter).Amount);
+            Assert.Equal(1f, (processors[1] as GrayscaleFilter).Amount);
+            Assert.Equal(1f, (processors[2] as SepiaFilter).Amount);
+            Assert.Equal(1f, (processors[3] as OpacityFilter).Amount);
+            Assert.Equal(1f, (processors[4] as SaturateFilter).Amount);
+            Assert.Equal(90, (processors[5] as HueRotateFilter).Degrees);
 
         }
 
@@ -362,14 +367,17 @@ namespace Carbon.Media.Processors.Tests
 
     public class MediaSource : IMediaSource
     {
-        public MediaSource(string key, int width = 0, int height = 0)
+        public MediaSource(string key, int width = 0, int height = 0, ImageOrientation? orientation = null)
         {
             Key = key;
             Width = width;
             Height = height;
+            Orientation = orientation;
         }
 
         public string Key { get; }
+
+        public ImageOrientation? Orientation { get; }
 
         public int Width { get; }
 

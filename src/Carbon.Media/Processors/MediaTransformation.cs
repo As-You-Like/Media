@@ -57,28 +57,28 @@ namespace Carbon.Media
 
         public Size Size => new Size(width, height);
 
-        public IReadOnlyList<IProcessor> GetTransforms() => transforms.AsReadOnly();
+        public IReadOnlyList<IProcessor> GetProcessors() => transforms.AsReadOnly();
 
-        public MediaTransformation Apply(params IProcessor[] transforms)
+        public MediaTransformation Apply(params IProcessor[] processors)
         {
             #region Preconditions
 
-            if (transforms == null)
-                throw new ArgumentNullException(nameof(transforms));
+            if (processors == null)
+                throw new ArgumentNullException(nameof(processors));
 
             #endregion
 
-            if (transforms.Length == 0) return this;
+            if (processors.Length == 0) return this;
 
-            foreach (var transform in transforms)
+            foreach (var processor in processors)
             {
-                Transform(transform);
+                Apply(processor);
             }
 
             return this;
         }
 
-        private MediaTransformation Transform(IProcessor transform)
+        private MediaTransformation Apply(IProcessor transform)
         {
             if (transform is Crop)
             {
@@ -134,70 +134,70 @@ namespace Carbon.Media
 
         public MediaTransformation Rotate(int angle)
         {
-            Transform(new Rotate(angle));
+            Apply(new Rotate(angle));
 
             return this;
         }
 
         public MediaTransformation Crop(Rectangle rect)
         {
-            Transform(new Crop(rect));
+            Apply(new Crop(rect));
 
             return this;
         }
 
         public MediaTransformation Clip(TimeSpan start, TimeSpan end)
         {
-            Transform(new Clip(start, end));
+            Apply(new Clip(start, end));
 
             return this;
         }
 
         public MediaTransformation DrawText(string text)
         {
-            Transform(new DrawText(text, new UnboundBox()));
+            Apply(new DrawText(text, new UnboundBox()));
 
             return this;
         }
 
         public MediaTransformation Crop(int x, int y, int width, int height)
         {
-            Transform(new Crop(x, y, width, height));
+            Apply(new Crop(x, y, width, height));
 
             return this;
         }
 
         public MediaTransformation Resize(int width, int height, CropAnchor anchor)
         {
-            Transform(new Resize(new Size(width, height), anchor));
+            Apply(new Resize(new Size(width, height), anchor));
 
             return this;
         }
 
         public MediaTransformation Resize(Unit width, Unit height)
         {
-            Transform(new Resize(width, height, ResizeFlags.Exact));
+            Apply(new Resize(width, height, ResizeFlags.Exact));
 
             return this;
         }
 
         public MediaTransformation Resize(int width, int height)
         {
-            Transform(new Resize(width, height));
+            Apply(new Resize(width, height));
 
             return this;
         }
 
         public MediaTransformation ApplyFilter(string name, int value)
         {
-            Transform(new UnknownFilter(name, value.ToString()));
+            Apply(new UnknownFilter(name, value.ToString()));
 
             return this;
         }
 
         public MediaTransformation ApplyFilter(string name, string value)
         {
-            Transform(new UnknownFilter(name, value));
+            Apply(new UnknownFilter(name, value));
 
             return this;
         }
@@ -305,10 +305,7 @@ namespace Carbon.Media
 
             var rendition = new MediaTransformation(new MediaSource(id, 0, 0), format);
 
-            foreach (var t in processors)
-            {
-                rendition.Transform(t);
-            }
+            rendition.Apply(processors);
 
             return rendition;
         }
@@ -362,6 +359,8 @@ namespace Carbon.Media
             Width = width;
             Height = height;
         }
+
+        public ImageOrientation? Orientation => null;
 
         public string Key { get; }
 

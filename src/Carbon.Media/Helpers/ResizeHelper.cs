@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace Carbon.Media
+﻿namespace Carbon.Media
 {
     using Geometry;
-    using Processors;
 
     public static class ResizeHelper
     {
@@ -68,6 +65,14 @@ namespace Carbon.Media
                 left = extraWidth;
                 right = 0;
             }
+            else
+            {
+                // If we split on a pixel, add 1px to the left
+                if (extraWidth % 2 == 1)
+                {
+                    left += 1;
+                }
+            }
 
             if (anchor.HasFlag(CropAnchor.Top))
             {
@@ -78,6 +83,14 @@ namespace Carbon.Media
             {
                 top = extraHeight;
                 bottom = 0;
+            }
+            else
+            {
+                // If we split on a pixel, add 1px to the top
+                if (extraHeight % 2 == 1)
+                {
+                    top += 1;
+                }
             }
 
             var padding = new Padding(top, right, bottom, left);
@@ -130,56 +143,54 @@ namespace Carbon.Media
             box.Y = y;
         }
 
-        public static Rectangle CalculateCropRectangle(Size sourceSize, Size bounds, CropAnchor anchor)
+        public static Rectangle CalculateCropRectangle(Size source, Rational aspect, CropAnchor anchor)
         {
-            double x = 0d,
-                   y = 0d,
-                   scale = 0d;
-            
-            double widthP  = (double)bounds.Width / sourceSize.Width;
-            double heightP = (double)bounds.Height / sourceSize.Height;
+            var targetSize = Max(source, aspect);
 
-            if (heightP < widthP)
+            return CalculateCropRectangle(source, targetSize, anchor);
+        }
+
+        // source is ALWAYS bigger than bounds
+        private static Rectangle CalculateCropRectangle(Size source, Size target, CropAnchor anchor)
+        {
+            int x = 0,
+                y = 0;
+       
+            // There's veritical space to distribute
+            if (source.Height > target.Height)
             {
-                scale = widthP;
-
                 if (anchor.HasFlag(CropAnchor.Top))
                 {
                     y = 0;
                 }
                 else if (anchor.HasFlag(CropAnchor.Bottom))
                 {
-                    y = bounds.Height - (sourceSize.Height * scale);
+                    y = source.Height - target.Height;
                 }
                 else // Center
                 {
-                    y = (bounds.Height - (sourceSize.Height * scale)) / 2d;
+                    y = (int)((source.Height - target.Height) / 2d);
                 }
             }
-            else
-            {
-                scale = heightP;
-
+            
+            // There's horizontal space to distribute
+            if (source.Width > target.Width)
+            { 
                 if (anchor.HasFlag(CropAnchor.Left))
                 {
                     x = 0;
                 }
                 else if (anchor.HasFlag(CropAnchor.Right))
                 {
-                    x = bounds.Width - (sourceSize.Width * scale);
+                    x = source.Width - target.Width;
                 }
                 else // center
                 {
-                    x = (bounds.Width - (sourceSize.Width * scale)) / 2d;
+                    x = (int)((source.Width - target.Width) / 2d);
                 }
             }
 
-            return new Rectangle(
-                x       : x,
-                y       : y,
-                width   : sourceSize.Width * scale,
-                height  : sourceSize.Height * scale
-            );
+            return new Rectangle(x, y, new Size(target.Width, target.Height));
         }
 
         /// <summary>

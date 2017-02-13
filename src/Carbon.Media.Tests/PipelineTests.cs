@@ -7,6 +7,42 @@ namespace Carbon.Media.Processors.Tests
         private static readonly MediaSource jpeg_100x50   = new MediaSource("1", 100, 50);
         private static readonly MediaSource jpeg_85x20    = new MediaSource("1", 85, 20);
         private static readonly MediaSource jpeg_1280x720 = new MediaSource("23924858", 1280, 720);
+        private static readonly MediaSource jpeg_524x485  = new MediaSource("22626389", 524, 485);
+
+        private static readonly MediaSource jpeg_100x50_rotate90 = new MediaSource("1", 100, 50, ImageOrientation.Rotate90);
+
+
+        // 22626389/480x444/crop:0-33_480x360.jpeg
+
+        [Fact]
+        public void OrientTest()
+        {
+            var img = new MediaTransformation(jpeg_100x50_rotate90, ImageFormat.Jpeg)
+                .Resize(480, 444)
+                .Crop(0, 33, 480, 360);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal(new Size(480, 360), pipe.FinalSize);
+
+         
+
+            Assert.Equal("blob#1|>rotate(90deg)|>crop(0,3,100,40)|>scale(480,360,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+        }
+
+        [Fact]
+        public void Crop4()
+        {
+            var img = new MediaTransformation(jpeg_524x485, ImageFormat.Jpeg)
+                .Resize(480, 444)              
+                .Crop(0, 33, 480, 360);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal(new Size(480, 360), pipe.FinalSize);
+
+            Assert.Equal("blob#22626389|>crop(0,36,524,393)|>scale(480,360,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+        }
 
         // 23924858/1492x839/crop:358-336_780x140
         [Fact]
@@ -26,6 +62,39 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal("blob#23924858|>crop(307,288,669,120)|>scale(780,140,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
+        [Fact]
+        public void ResizeCrop()
+        {
+            // scale 1.17
+
+            var rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Center);
+ 
+            Assert.Equal(
+                "blob#1|>crop(32,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode",
+                MediaPipeline.From(rendition).Canonicalize()
+            );
+
+            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Left);
+
+            Assert.Equal(
+                "blob#1|>crop(0,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
+                MediaPipeline.From(rendition).Canonicalize()
+            );
+
+            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Right);
+
+            Assert.Equal(
+                "blob#1|>crop(65,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
+                MediaPipeline.From(rendition).Canonicalize()
+            );
+
+            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(300, 100, CropAnchor.Right);
+
+            Assert.Equal(
+                "blob#1|>crop(25,0,60,20)|>scale(300,100,lanczos3)|>JPEG::encode",
+                MediaPipeline.From(rendition).Canonicalize()
+            );
+        }
 
         [Fact]
         public void Pad3()
@@ -44,6 +113,10 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(100, pipe.Padding.Bottom);
             Assert.Equal(100, pipe.Padding.Left);
 
+
+            Assert.Equal(pipe.Position.X, 100);
+            Assert.Equal(pipe.Position.Y, 100);
+
             Assert.Equal(300, pipe.FinalWidth);
             Assert.Equal(300, pipe.FinalHeight);
 
@@ -52,7 +125,7 @@ namespace Carbon.Media.Processors.Tests
 
         }
 
-        [Fact(Skip = "The padding wasn't even...")]
+        [Fact]
         public void Pad1()
         {
             var rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg)
@@ -60,14 +133,12 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
             
-            // Tricky.... if we don't get an even divide, the final image may be off.
-            // Where sould we distribute the pixel? We can scale by 1x
+            // We split a pixel in half -- and added to the left?
 
             Assert.Equal(100, pipe.FinalWidth);
             Assert.Equal(200, pipe.FinalHeight);
 
-            Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7)|>JPEG::encode", pipe.Canonicalize());
-
+            Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7,90,8)|>JPEG::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -200,6 +271,4 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal("blob#1|>scale(170,40,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }      
     }
-
-  
 }

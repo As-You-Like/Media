@@ -98,15 +98,16 @@ namespace Carbon.Media
             { "wav",    Mime.Wav },
             { "wma",    Mime.Wma },
 
-			// Images 
+            // Images 
+            { "bpg",    Mime.Bpg },  // Better portable graphics
 			{ "bmp",    Mime.Bmp },
             { "gif",    Mime.Gif },
             { "hdp",    Mime.Jxr },
             { "ico",    Mime.Ico },
-            { "jp2",    Mime.Jp2 },		// Jpeg 2000
+            { "jp2",    Mime.Jp2 },  // JPEG 2000
 			{ "jpg",    Mime.Jpeg },
             { "jpeg",   Mime.Jpeg },
-            { "jxr",    Mime.Jxr },		// Jpeg XR
+            { "jxr",    Mime.Jxr },  // JPEG XR
 			{ "png",    Mime.Png },
             { "psd",    Mime.Psd },
             { "svg",    Mime.Svg },

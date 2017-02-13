@@ -55,6 +55,7 @@ namespace Carbon.Media.Processors.Tests
             var resize = Resize.Parse("85x20,carve|pad,anchor:center,background:red");
 
             Assert.Equal("85x20,pad|carve,anchor:c,background:red", resize.ToString());
+            Assert.Equal("red", resize.Background);
 
             Assert.Equal("resize(85,20,pad|carve,anchor:c,background:red)", resize.Canonicalize());
         }

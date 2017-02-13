@@ -4,6 +4,8 @@
     {
         string Key { get; }
 
+        ImageOrientation? Orientation { get; }
+
         // change to: long Id
     }
 }

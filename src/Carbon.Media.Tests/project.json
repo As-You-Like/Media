@@ -1,11 +1,11 @@
-﻿{
+{
   "version": "1.0.0",
   "testRunner": "xunit",
 
   "dependencies": {
     "Carbon.Media": { "target": "project" },
-    "NETStandard.Library": "1.6.0",
-    "xunit": "2.2.0-beta4-build3444",
+    "NETStandard.Library": "1.6.1",
+    "xunit": "2.2.0-rc2-build3523",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
 

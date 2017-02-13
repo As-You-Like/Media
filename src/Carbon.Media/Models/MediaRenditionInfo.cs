@@ -120,7 +120,7 @@ namespace Carbon.Media
 
             var b = new MediaTransformation(a.Source, a.Format);
 
-            foreach (var processor in a.GetTransforms())
+            foreach (var processor in a.GetProcessors())
             {
                 if (processor is Resize)
                 {

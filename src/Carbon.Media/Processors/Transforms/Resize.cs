@@ -83,7 +83,20 @@ namespace Carbon.Media.Processors
 
         #region Flags
 
-        public ResizeFlags Mode => Flags & ResizeFlags.Modes;
+        public ResizeFlags Mode
+        {
+            get
+            {
+                var mode = Flags & ResizeFlags.Modes;
+
+                if (mode == ResizeFlags.None && Anchor != null)
+                {
+                    return ResizeFlags.Crop;
+                }
+
+                return mode;
+            }
+        }
 
         public bool Carve => Flags.HasFlag(ResizeFlags.Carve);
 

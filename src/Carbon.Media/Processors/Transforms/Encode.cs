@@ -12,9 +12,9 @@ namespace Carbon.Media.Processors
 
         // JPEG, WEBP, PNG, ...
 
-        public ImageFormat Format { get; set; }
+        public ImageFormat Format { get; }
 
-        public int Quality { get; set; }
+        public int Quality { get; }
        
         public string Canonicalize()
         {
@@ -36,38 +36,41 @@ namespace Carbon.Media.Processors
         public override string ToString() =>
             Canonicalize();
 
+        // JPEG::encode(quality:100)
+        // PNG::encode
+        // WebP::encode
+
         public static Encode Parse(string segment)
         {
-            #region Normalization
+            var indexOfSemiSemi = segment.IndexOf("::");
 
-            int argStart = segment.IndexOf('(') + 1;
-            
-            var args = segment.Substring(argStart, segment.Length - argStart - 1);
+            var format = segment.Substring(0, indexOfSemiSemi).ToEnum<ImageFormat>(true);
 
-            #endregion
-  
-            var encoder = ImageFormat.Jpeg;
             int quality = 0;
 
-            var parts = segment.Split(Seperators.Comma);
-                
-            for (var i = 0; i < parts.Length; i++)
-            {
-                var part = parts[i];
-                
-                if (part.Contains(":"))
-                {
-                    part = part.Split(':')[1];
-                }
+            int argStart = segment.IndexOf('(') + 1;
 
-                switch (i)
+            if (argStart > 0)
+            {
+                var args = segment
+                    .Substring(argStart, segment.Length - argStart - 1)
+                    .Split(Seperators.Comma);
+
+                foreach (var arg in args)
                 {
-                    case 0: encoder = part.ToEnum<ImageFormat>(true); break;
-                    case 1: quality = int.Parse(part); break;
+                    var split = arg.Split(':');
+
+                    var k = split[0];
+                    var v = split[1];
+
+                    switch (k)
+                    {
+                        case "quality": quality = int.Parse(v); break;
+                    }
                 }
             }
 
-            return new Encode(encoder, quality);
+            return new Encode(format, quality);
         }
     }
 }
