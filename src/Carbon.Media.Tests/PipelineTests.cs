@@ -25,10 +25,47 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal(new Size(480, 360), pipe.FinalSize);
 
-         
-
             Assert.Equal("blob#1|>rotate(90deg)|>crop(0,3,100,40)|>scale(480,360,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
+
+        private static readonly MediaSource media_33695921 = new MediaSource("1", 1920, 2560);
+
+        // 33695921 { width: 2560, height: 1920, orientation: Rotate90 }
+
+        [Fact]
+        public void OrientTest2()
+        {
+            var t = MediaTransformation.ParsePath("33695921/960x1280/rotate(90).jpeg");
+
+            var pipe = MediaPipeline.From(media_33695921, t.GetProcessors());
+
+            Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+
+            t = MediaTransformation.ParsePath("33695921/rotate(90)/1280x960.jpeg");
+
+            pipe = MediaPipeline.From(media_33695921, t.GetProcessors());
+
+            Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+        }
+
+        [Fact]
+        public void RotateTest1()
+        {
+            var img = new MediaTransformation(jpeg_100x50_rotate90, ImageFormat.Jpeg)
+                .Resize(480, 444)
+                .Crop(0, 33, 480, 360)
+                .Rotate(90);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal(360, pipe.Scale.Width);
+            Assert.Equal(480, pipe.Scale.Height);
+
+            Assert.Equal(new Size(360, 480), pipe.FinalSize);
+
+            Assert.Equal("blob#1|>rotate(90deg)|>crop(3,0,40,100)|>scale(360,480,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+        }
+
 
         [Fact]
         public void Crop4()

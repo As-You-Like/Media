@@ -3,7 +3,7 @@
 [assembly: AssemblyTitle("Carbon.Media")]
 [assembly: AssemblyProduct("Carbon")]
 [assembly: AssemblyCopyright("© 2012 - 2017 Jason Nelson")]
-[assembly: AssemblyVersion("1.4.1")]
+[assembly: AssemblyVersion("1.4.3")]
 
 /* 
  1.0.0 (2016-10-27)

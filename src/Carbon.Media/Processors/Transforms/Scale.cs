@@ -5,6 +5,9 @@ namespace Carbon.Media.Processors
 {
     public sealed class Scale : IProcessor
     {
+        public Scale(Size size, InterpolaterMode mode)
+            : this(size.Width, size.Height, mode) { }
+
         public Scale(int width, int height, InterpolaterMode mode)
         {
             #region Preconditions

@@ -16,12 +16,16 @@ namespace Carbon.Media.Processors
 
         public IMediaSource Source { get; set; }
 
-        // 1. orient
-        public ImageOrientation? Orient { get; set; }
+        // 1. Flip
+        public Flip Flip { get; set; }
+
+        // 2. orient
+        public int Rotate { get; set; }
 
         // 2. crop the source
         public Rectangle? Crop { get; set; }   // The crop applied to the source
 
+        
         // 3. Scale the crop w/ interpolator
         public Scale Scale { get; set; }
 
@@ -61,9 +65,22 @@ namespace Carbon.Media.Processors
         public static MediaPipeline From(IMediaSource source, IReadOnlyList<IProcessor> processors)
         {
             var pipeline = new MediaPipeline {
-                Source = source,
-                Orient = source.Orientation
+                Source = source
             };
+
+            if (source.Orientation != null)
+            {
+                switch(source.Orientation.Value)
+                {
+                    case ImageOrientation.FlipHorizontal : pipeline.Flip = Flip.Horizontally; break;
+                    case ImageOrientation.Rotate180      : pipeline.Rotate = 180; break;
+                    case ImageOrientation.FlipVertical   : pipeline.Flip = Flip.Vertically; break;
+                    case ImageOrientation.Transpose      : pipeline.Flip = Flip.Horizontally; pipeline.Rotate = 270; break;
+                    case ImageOrientation.Rotate90       : pipeline.Rotate = 90; break;
+                    case ImageOrientation.Transverse     : pipeline.Flip = Flip.Horizontally; pipeline.Rotate = 90; break;
+                    case ImageOrientation.Rotate270      : pipeline.Rotate = 270; break;
+                }
+            }
 
             var sourceSize = new Size(source.Width, source.Height);
 
@@ -76,21 +93,12 @@ namespace Carbon.Media.Processors
             
             foreach (var transform in processors)
             {
-                if (transform is Rotate)
+                if (transform is Flip)
                 {
-                    var rotate = (Rotate)transform;
-
-                    // TODO: Consider existing orientation
-
-                    switch (rotate.Angle)
-                    {
-                        case 90     : pipeline.Orient = ImageOrientation.Rotate90;  break;
-                        case 180    : pipeline.Orient = ImageOrientation.Rotate180; break;
-                        case 270    : pipeline.Orient = ImageOrientation.Rotate270; break;
-                        case 360    : pipeline.Orient = ImageOrientation.None;      break;
-                    }
+                    // Do we need to apply the operations in reverse?
+                    pipeline.Flip = (Flip)transform;
                 }
-                if (transform is Crop)
+                else if (transform is Crop)
                 {
                     var xScale = (double)pipeline.Source.Width / box.Width;
                     var yScale = (double)pipeline.Source.Height / box.Height;
@@ -173,13 +181,25 @@ namespace Carbon.Media.Processors
 
                     if (rotate.Angle == 90 || rotate.Angle == 270)
                     {
-                        var oldWidth = box.Width;
-                        var oldHeight = box.Height;
+                        var oldSize = box.Size;
 
                         // flip the height & width
-                        box.Width = oldHeight;
-                        box.Height = oldWidth;
+                        box.Width = oldSize.Height;
+                        box.Height = oldSize.Width;
+
+                        if (crop != null)
+                        {
+                            var oldCrop = crop.Value;
+
+                            crop = new Rectangle(oldCrop.Y, oldCrop.X, oldCrop.Height, oldCrop.Width);
+                        }
                     }
+                    
+
+                    // TODO: Consider existing orientation
+
+                    pipeline.Rotate = rotate.Angle;
+
                 }
 
                 else
@@ -192,7 +212,7 @@ namespace Carbon.Media.Processors
 
             if (crop == null || crop.Value.Size != box.Size)
             {
-                pipeline.Scale = new Scale(box.Width, box.Height, interpolater);
+                pipeline.Scale = new Scale(box.Size, interpolater);
             }
 
             pipeline.Padding = box.Padding;
@@ -207,10 +227,17 @@ namespace Carbon.Media.Processors
 
             sb.Append("blob#" + Source.Key);
 
-            if (Orient != null)
+            if (Flip != null)
             {
                 sb.Append("|>");
-                sb.Append(Orient.Value.Canonicalize());
+                sb.Append(Flip.Canonicalize());
+            }
+
+            if (Rotate != 0)
+            {
+                sb.Append("|>rotate(");
+                sb.Append(Rotate);
+                sb.Append("deg)");
             }
 
             if (Crop != null)
