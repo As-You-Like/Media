@@ -5,7 +5,7 @@ namespace Carbon.Media
 {
     // FormatInfo?
 
-    public sealed class Mime
+    public sealed class Mime : IEquatable<Mime>
     {
         internal Mime(string name, string format = null)
             : this(name, new[] { format }) { }
@@ -51,18 +51,20 @@ namespace Carbon.Media
 
         #region Equality
 
-        public override int GetHashCode()
-            => Name.GetHashCode();
+        public bool Equals(Mime other) =>
+            other?.Name == Name;
 
-        public override bool Equals(object obj)
-            => (obj as Mime)?.Name == Name;
+        public override int GetHashCode() =>
+            Name.GetHashCode();
+
+        public override bool Equals(object obj) => 
+            (obj as Mime)?.Equals(this) == true;
 
         #endregion
 
         #region Casts
 
-        public static implicit operator string(Mime mime)
-            => mime.Name;
+        public static implicit operator string(Mime mime) => mime.Name;
 
         #endregion
 
@@ -96,8 +98,8 @@ namespace Carbon.Media
             throw new Exception($"No mime found for '{name}'.");
         }
 
-        public static Mime FromPath(string path)
-            => FromExtension(Path.GetExtension(path));
+        public static Mime FromPath(string path) => 
+            FromExtension(Path.GetExtension(path));
 
         public static Mime FromExtension(string extension)
         {
@@ -118,14 +120,14 @@ namespace Carbon.Media
 
             #endregion
 
-            Mime mime;
-
-            if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out mime))
+            if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out Mime mime))
             {
                 return mime;
             }
-
-            throw new Exception($"No mime match for '{format}'.");
+            else
+            {
+                throw new Exception($"No mime match for '{format}'.");
+            }
         }
 
         #endregion
@@ -176,6 +178,7 @@ namespace Carbon.Media
         public static readonly Mime Bmp      = new Mime("image/bmp", "bmp");
         public static readonly Mime Bpg      = new Mime("image/bpg", "bpg");
         public static readonly Mime Gif      = new Mime("image/gif", "gif", new[] { MagicNumber.Gif87a, MagicNumber.Gif89a});
+        public static readonly Mime Heif     = new Mime("image/heif", new[] { "heif", "heic" });
         public static readonly Mime Ico      = new Mime("image/x-icon", "ico");  // [0]
         public static readonly Mime Jp2      = new Mime("image/jp2", new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" });
         public static readonly Mime Jpeg     = new Mime("image/jpeg", new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" });
@@ -201,7 +204,7 @@ namespace Carbon.Media
         public static readonly Mime Mov      = new Mime("video/quicktime", "mov");
         public static readonly Mime Mp4      = new Mime("video/mp4", "mp4");
         public static readonly Mime Mpeg     = new Mime("video/mpeg", "mpeg");
-        public static readonly Mime Ogv      = new Mime("video/ogg", new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334
+        public static readonly Mime Ogv      = new Mime("video/ogg", new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334 (predominantly video)
         public static readonly Mime Ts       = new Mime("video/MP2T", "ts");
         public static readonly Mime WebM     = new Mime("video/webm", "webm");
         public static readonly Mime Wmv      = new Mime("video/x-ms-wmv", "wmv");

@@ -37,10 +37,12 @@ namespace Carbon.Media
 			{ "image/bmp",                      Mime.Bmp },
             { "image/x-bmp",                    Mime.Bmp },
             { "image/gif",                      Mime.Gif },
+            { "image/heif",                     Mime.Heif },
             { "image/x-icon",                   Mime.Ico },
             { "image/jpeg",                     Mime.Jpeg },
             { "image/vnd.ms-photo",             Mime.Jxr },		// Jpeg XR
 			{ "image/png",                      Mime.Png },
+            { "image/psd",                      Mime.Psd },
             { "image/svg+xml",                  Mime.Svg },
             { "image/tiff",                     Mime.Tiff },
             { "image/tiff-fx",                  Mime.Tiff },
@@ -103,6 +105,7 @@ namespace Carbon.Media
 			{ "bmp",    Mime.Bmp },
             { "gif",    Mime.Gif },
             { "hdp",    Mime.Jxr },
+            { "heif",   Mime.Heif },
             { "ico",    Mime.Ico },
             { "jp2",    Mime.Jp2 },  // JPEG 2000
 			{ "jpg",    Mime.Jpeg },
