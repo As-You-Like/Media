@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum ImageOrientation : byte
+    public enum ExifOrientation : byte
     {
         None            = 0, // None
         Horizontal      = 1, // None
@@ -12,7 +12,6 @@
         Transverse      = 7, // Transverse (mirror horizontal and rotate 90)
         Rotate270       = 8  // Rotate 270
     }
-
 
     // transverse|transpose
     // rotate(90deg|180deg|270deg)

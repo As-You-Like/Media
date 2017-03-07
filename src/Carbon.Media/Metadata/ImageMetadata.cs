@@ -15,7 +15,7 @@ namespace Carbon.Media
         public int Height { get; set; }
 
         [DataMember(Name = "orientation", EmitDefaultValue = false)]
-        public ImageOrientation Orientation { get; set; }
+        public ExifOrientation Orientation { get; set; }
 
         // [DataMember(Name = "colorSpace", EmitDefaultValue = false)]
        //  public ColorSpace ColorSpace { get; set; }
