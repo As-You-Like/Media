@@ -1,18 +1,17 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 using static System.Math;
 
 namespace Carbon.Media
 {
+    [DataContract]
     public struct Rational : IFormattable
     {
-        private long numerator;
-        private long denominator;
-
         public Rational(long value)
         {
-            this.numerator = value;
-            this.denominator = 1;
+            Numerator = value;
+            Denominator = 1;
         }
 
         public Rational(long numerator, long denominator)
@@ -24,62 +23,49 @@ namespace Carbon.Media
 
             #endregion
 
-            this.numerator = numerator;
-            this.denominator = denominator;
+            Numerator = numerator;
+            Denominator = denominator;
 
-            this.Reduce();
+            Reduce();
         }
 
-        public long Denominator => denominator;
+        [DataMember(Order = 1)]
+        public long Denominator { get; set; }
 
-        public long Numerator => numerator;
+        [DataMember(Order = 2)]
+        public long Numerator { get; set; }
 
-        public Rational Invert() => new Rational(denominator, numerator);
+        public Rational Invert() => new Rational(Denominator, Numerator);
 
         private void Reduce()
         {
-            if (numerator == 0)
+            if (Numerator == 0)
             {
-                denominator = 1;
+                Denominator = 1;
 
                 return;
             }
 
-            var gcd = CalculateGcd(numerator, denominator);
+            var gcd = CalculateGcd(Numerator, Denominator);
 
-            numerator /= gcd;
-            denominator /= gcd;
+            Numerator /= gcd;
+            Denominator /= gcd;
 
-            if (denominator < 0)
+            if (Denominator < 0)
             {
-                numerator *= -1;
-                denominator *= -1;
+                Numerator *= -1;
+                Denominator *= -1;
             }
         }
 
 
-        public static bool operator >(Rational left, Rational right)
-        {
-            return left.ToDouble() > right.ToDouble();
-        }
+        public static bool operator >(Rational left, Rational right) =>
+            left.ToDouble() > right.ToDouble();
 
-        public static bool operator <(Rational left, Rational right)
-        {
-            return left.ToDouble() < right.ToDouble();
-        }
+        public static bool operator <(Rational left, Rational right) =>
+            left.ToDouble() < right.ToDouble();
 
-        public double ToDouble()
-            => numerator / (double)denominator;
-
-        public override string ToString()
-        {
-            if (denominator == 1)
-            {
-                return numerator.ToString();
-            }
-
-            return numerator + "∶" + denominator;
-        }
+        public double ToDouble() =>  Numerator / (double)Denominator;
 
         private static long CalculateGcd(long a, long b)
         {
@@ -98,11 +84,22 @@ namespace Carbon.Media
             return a;
         }
 
+        public static implicit operator double(Rational rational) => 
+            rational.ToDouble();
 
-        public static implicit operator double(Rational rational)
-            => rational.ToDouble();
+        public override string ToString()
+        {
+            if (Denominator == 1)
+            {
+                return Numerator.ToString();
+            }
 
-        public string ToString(string format, IFormatProvider formatProvider)
-            => ToDouble().ToString(format);
+            return Numerator + "/" + Denominator;
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider) => 
+            ToDouble().ToString(format);
+
+
     }
 }

@@ -12,5 +12,13 @@ namespace Carbon.Media.Tests
             Assert.Equal(0.5d, new Rational(1, 2).ToDouble());
             Assert.Equal(0.33333333333333331d, new Rational(1, 3).ToDouble());
         }
+
+        [Fact]
+        public void ToStringTests()
+        {
+            Assert.Equal("10", new Rational(10, 1).ToString());
+            Assert.Equal("1/10", new Rational(1, 10).ToString());
+            Assert.Equal("1000/1001", new Rational(1000, 1001).ToString());
+        }
     }
 }
