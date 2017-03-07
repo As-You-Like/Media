@@ -2,20 +2,13 @@
 
 namespace Carbon.Media
 {
-    public class H264Profile : MediaCodecProfile
+    public class H264Profile : MediaCodecProfile, IEquatable<H264Profile>
     {
         private readonly string name;
 
         public H264Profile(string name, H264ProfileType type)
         {
-            #region Preconditions
-
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            #endregion
-
-            this.name = name;
+            this.name = name ?? throw new ArgumentNullException(nameof(name));
             Type = type;
         }
 
@@ -27,16 +20,20 @@ namespace Carbon.Media
 
         public override int GetHashCode() => name.GetHashCode();
 
+        public bool Equals(H264Profile other) =>
+            other?.name == name;
+
         public override bool Equals(object obj)
         {
-            var other = obj as H264Profile;
-
-            if (other == null) return false;
-
-            return other.name == this.name;
+            return (obj as H264Profile)?.Equals(this) == true;
         }
 
         #endregion
+
+        // MPEG-4 Visual Simple Profile Level 0: mp4v.20.9
+        // MPEG-4 Visual Advanced Simple Profile Level 0: mp4v.20.240
+        public static readonly H264Profile Level0Simple   = new H264Profile("mp4v.20.9",   H264ProfileType.Baseline);
+        public static readonly H264Profile Level0Advanced = new H264Profile("mp4v.20.240", H264ProfileType.Baseline);
 
         public static readonly H264Profile Baseline = new H264Profile("avc1.42E01E", H264ProfileType.Baseline);
         public static readonly H264Profile Main     = new H264Profile("avc1.4D401E", H264ProfileType.Main);
