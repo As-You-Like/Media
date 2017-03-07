@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-using Carbon.Geometry;
-
 namespace Carbon.Media
 {
     using Processors;
@@ -27,21 +25,14 @@ namespace Carbon.Media
 
         public MediaTransformation(IMediaSource source, string format)
         {
-            #region Preconditions
-
-            if (source == null) throw new ArgumentNullException(nameof(source));
-            if (format == null) throw new ArgumentNullException(nameof(format));
-
-            #endregion
-
-            Source = source;
-            Format = format;
+            Source = source ?? throw new ArgumentNullException(nameof(source));
+            Format = format ?? throw new ArgumentNullException(nameof(format));
 
             this.width = source.Width;
             this.height = source.Height;
         }
 
-        public MediaTransformation(IMediaSource source, ImageOrientation orientation, string format)
+        public MediaTransformation(IMediaSource source, ExifOrientation orientation, string format)
             : this(source, format)
         {
             Apply(orientation.GetTransforms());
@@ -80,33 +71,27 @@ namespace Carbon.Media
 
         private MediaTransformation Apply(IProcessor transform)
         {
-            if (transform is Crop)
+            if (transform is Crop ct)
             {
-                var crop = ((Crop)transform).GetRectangle(Size);
+                var crop = ct.GetRectangle(Size);
 
                 width  = (int)crop.Width;
                 height = (int)crop.Height;
             }
-            else if (transform is Resize)
+            else if (transform is Resize resize)
             {
-                var resize = (Resize)transform;
-
                 var newSize = resize.CalcuateSize(Size);
 
                 width = newSize.Width;
                 height = newSize.Height;
             }
-            else if (transform is Scale)
+            else if (transform is Scale scale)
             {
-                var scale = (Scale)transform;
-
                 width = scale.Width;
                 height = scale.Height;
             }
-            else if (transform is Rotate)
+            else if (transform is Rotate rotate)
             {
-                var rotate = (Rotate)transform;
-
                 // Flip the height & width
                 if (rotate.Angle == 90 || rotate.Angle == 270)
                 {
@@ -117,11 +102,9 @@ namespace Carbon.Media
                     height = oldWidth;
                 }
             }
-            else if (transform is Pad)
+            else if (transform is Pad pad)
             {
-                var pad = (Pad)transform;
-
-                width  += (pad.Left + pad.Right);
+                width += (pad.Left + pad.Right);
                 height += (pad.Top + pad.Bottom);
             }
 
@@ -360,7 +343,7 @@ namespace Carbon.Media
             Height = height;
         }
 
-        public ImageOrientation? Orientation => null;
+        public ExifOrientation? Orientation => null;
 
         public string Key { get; }
 

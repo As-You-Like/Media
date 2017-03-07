@@ -6,14 +6,7 @@ namespace Carbon.Media.Processors
     {
         public UnknownFilter(string name, string value)
         {
-            #region Preconditions
-
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            #endregion
-
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Value = value;
         }
 

@@ -11,22 +11,15 @@ namespace Carbon.Media.Processors
             Alignment align = Alignment.Left)
             : base(box, align, blendMode, ResizeFlags.None)
         {
-            #region Preconditions
 
-            if (src == null)
-                throw new ArgumentNullException(nameof(src));
- 
-            #endregion
-
-            Src = src;
+            Src = src ?? throw new ArgumentNullException(nameof(src));
         }
 
         public string Src { get; set; }
 
         // image(src.jpeg,width:100,x:0,y:0,align:center)
 
-        public override string Canonicalize() =>
-            null;
+        public override string Canonicalize() => null;
 
         public static DrawImage Parse(string key)
         {
@@ -56,13 +49,13 @@ namespace Carbon.Media.Processors
 
                 switch (k)
                 {
-                    case "mode"   : mode = v.ToEnum<BlendMode>(true);          break;
-                    case "align"  : align = v.ToEnum<Alignment>(true);         break;
-                    case "x"      : box.X = Unit.Parse(v);                     break;
-                    case "y"      : box.Y = Unit.Parse(v);                     break;
-                    case "width"  : box.Width = Unit.Parse(v);                 break;
-                    case "height" : box.Height = Unit.Parse(v);                break;
-                    case "padding": box.Padding = UnboundPadding.Parse(v);     break;
+                    case "mode"   : mode        = v.ToEnum<BlendMode>(true); break;
+                    case "align"  : align       = v.ToEnum<Alignment>(true); break;
+                    case "x"      : box.X       = Unit.Parse(v);             break;
+                    case "y"      : box.Y       = Unit.Parse(v);             break;
+                    case "width"  : box.Width   = Unit.Parse(v);             break;
+                    case "height" : box.Height  = Unit.Parse(v);             break;
+                    case "padding": box.Padding = UnboundPadding.Parse(v);   break;
                 }
             }
 

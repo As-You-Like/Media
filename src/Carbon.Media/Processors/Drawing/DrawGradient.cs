@@ -14,8 +14,7 @@
         
         public string Gradient { get; }
 
-        public override string Canonicalize() =>
-            null;
+        public override string Canonicalize() =>  null;
 
         public static DrawGradient Parse(string key)
         {

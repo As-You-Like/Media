@@ -15,14 +15,7 @@ namespace Carbon.Media.Processors
             string color = null)
             : base(box, align, blendMode, ResizeFlags.None)
         {
-            #region Preconditions
-
-            if (text == null)
-                throw new ArgumentNullException(nameof(text));
-
-            #endregion
-
-            Text = text;
+            Text = text ?? throw new ArgumentNullException(nameof(text));
             Font = font;
             Color = color;
         }
@@ -44,19 +37,16 @@ namespace Carbon.Media.Processors
             }
         }
 
-        public override string Canonicalize() =>
-            ToString();
-
         // text(hello+world,font:12px Tacoma,align:center)
 
-        public override string ToString()
+        public override string Canonicalize()
         {
             var sb = new StringBuilder();
 
             sb.Append("text(");
 
             sb.Append(Text);
-            
+
             foreach (var arg in Args())
             {
                 sb.Append(",");
@@ -68,6 +58,9 @@ namespace Carbon.Media.Processors
 
             return sb.ToString();
         }
+
+
+        public override string ToString() => Canonicalize();
 
         public static DrawText Parse(string key)
         {
@@ -123,9 +116,9 @@ namespace Carbon.Media.Processors
         // bold 
         public Font(string name, string weight, Unit size)
         {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Size = size;
             Weight = weight;
-            Name = name;
         }
 
         public string Name { get; }
@@ -134,10 +127,7 @@ namespace Carbon.Media.Processors
 
         public Unit Size { get; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
         public static Font Parse(string text)
         {

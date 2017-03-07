@@ -271,9 +271,7 @@ namespace Carbon.Media.Metadata
 
         public static MetadataItemInfo Get(string path)
         {
-            MetadataItemInfo info;
-
-            if (PathsToNames.TryGetValue(path, out info))
+            if (PathsToNames.TryGetValue(path, out MetadataItemInfo info))
             {
                 return info;
             }

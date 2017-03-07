@@ -11,14 +11,14 @@ namespace Carbon.Media.Metadata
 
         public static CameraMake Get(string name)
         {
-            CameraMake value;
-
-            if (map.TryGetValue(name.ToUpper(), out value))
+            if (map.TryGetValue(name.ToUpper(), out CameraMake value))
             {
                 return value;
             }
-
-            return new CameraMake(name);
+            else
+            {
+                return new CameraMake(name);
+            }
         }
 
         public CameraMake(string name)

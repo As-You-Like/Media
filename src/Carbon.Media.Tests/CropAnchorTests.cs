@@ -1,5 +1,4 @@
-﻿using Carbon.Geometry;
-using Xunit;
+﻿using Xunit;
 
 namespace Carbon.Media.Tests
 {
@@ -65,6 +64,5 @@ namespace Carbon.Media.Tests
             Assert.Equal(Bottom, AnchorHelper.Parse("s"));
             Assert.Equal(Left,   AnchorHelper.Parse("w"));
         }
-
     }
 }

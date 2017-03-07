@@ -30,7 +30,8 @@ namespace Carbon.Media.Processors
 
         // clip(0s,30s)
 
-        public string Canonicalize() => $"clip({Start.TotalSeconds}s,{End.TotalSeconds}s)";
+        public string Canonicalize() =>
+            $"clip({Start.TotalSeconds}s,{End.TotalSeconds}s)";
 
         public override string ToString() => Canonicalize();
     }

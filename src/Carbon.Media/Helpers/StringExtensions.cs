@@ -14,9 +14,7 @@ namespace Carbon.Media
 
             #endregion
 
-            TEnum result;
-
-            Enum.TryParse(self, ignoreCase, out result);
+            Enum.TryParse(self, ignoreCase, out TEnum result);
 
             return result;
         }

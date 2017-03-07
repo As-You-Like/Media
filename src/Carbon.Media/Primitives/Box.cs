@@ -1,6 +1,4 @@
-﻿using Carbon.Media;
-
-namespace Carbon.Geometry
+﻿namespace Carbon.Media
 {
     public struct Box
     {

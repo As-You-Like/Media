@@ -11,22 +11,13 @@ namespace Carbon.Media.Processors
             Alignment? align = null)
             : base(box, align, mode, ResizeFlags.None)
         {
-            #region Preconditions
 
-            if (color == null)
-            {
-                throw new ArgumentNullException(nameof(color));
-            }
-
-            #endregion
-
-            Color = color;
+            Color = color ?? throw new ArgumentNullException(nameof(color));
         }
 
         public string Color { get; set; }
             
-        public override string Canonicalize() =>
-            null;
+        public override string Canonicalize() => null;
 
         public static DrawColor Parse(string key)
         {

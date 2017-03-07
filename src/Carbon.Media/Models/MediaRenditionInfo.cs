@@ -1,8 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using System.Text;
 
-using Carbon.Geometry;
-
 namespace Carbon.Media
 {
     using Processors;
@@ -122,16 +120,12 @@ namespace Carbon.Media
 
             foreach (var processor in a.GetProcessors())
             {
-                if (processor is Resize)
+                if (processor is Resize resize)
                 {
-                    var resize = (Resize)processor;
-
                     b.Apply(resize * scale);
                 }
-                else if (processor is Crop)
+                else if (processor is Crop crop)
                 {
-                    var crop = (Crop)processor;
-
                     b.Apply(crop.Scale(scale));
                 }
                 else

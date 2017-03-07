@@ -2,8 +2,6 @@
 
 namespace Carbon.Media.Processors
 {
-    using Geometry;
-
     public sealed class Crop : IProcessor
     {
         public Crop(Unit x, Unit y, Unit width, Unit height)
@@ -26,10 +24,10 @@ namespace Carbon.Media.Processors
 
         public Crop(Rectangle rectangle)
         {
-            X       = new Unit(rectangle.X);
-            Y       = new Unit(rectangle.Y);
-            Width   = new Unit(rectangle.Width);
-            Height  = new Unit(rectangle.Height);
+            X      = new Unit(rectangle.X);
+            Y      = new Unit(rectangle.Y);
+            Width  = new Unit(rectangle.Width);
+            Height = new Unit(rectangle.Height);
         }
 
         public Unit X { get; }
@@ -41,25 +39,23 @@ namespace Carbon.Media.Processors
         public Unit Height { get; }
 
         public Rectangle GetRectangle(Size source) =>
-            new Rectangle(X, Y, Width, Height);
-
+            new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
 
         public Crop Scale(double xScale, double yScale) =>
             new Crop(
-                x      : (X * xScale),
-                y      : (Y * yScale),
-                width  : (Width * xScale),
-                height : (Height * yScale)
+                x      : (int)(X * xScale),
+                y      : (int)(Y * yScale),
+                width  : (int)(Width * xScale),
+                height : (int)(Height * yScale)
             );
 
         public Crop Scale(double scale) =>
             new Crop(
-                x       : (X * scale),
-                y       : (Y * scale),
-                width   : (Width * scale),
-                height  : (Height * scale)
+                x       : (int)(X * scale),
+                y       : (int)(Y * scale),
+                width   : (int)(Width * scale),
+                height  : (int)(Height * scale)
             );
-
 
         public string Canonicalize() =>
             $"crop({X},{Y},{Width},{Height})";
@@ -109,11 +105,11 @@ namespace Carbon.Media.Processors
 
             parts = key.Split(Seperators.Underscore); // '_'
 
-            var locationString = parts[0];
+            var locationParts = parts[0].Split(Seperators.Dash); // '-'
             var size = Size.Parse(parts[1]);
 
-            Unit x = Unit.Parse(locationString.Split(Seperators.Dash)[0]), // '-'
-                 y = Unit.Parse(locationString.Split(Seperators.Dash)[1]);
+            Unit x = Unit.Parse(locationParts[0]), // '-'
+                 y = Unit.Parse(locationParts[1]);
 
             return new Crop(x, y, size.Width, size.Height);
         }

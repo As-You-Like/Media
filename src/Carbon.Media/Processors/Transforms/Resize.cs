@@ -238,7 +238,13 @@ namespace Carbon.Media.Processors
 
         public static Resize operator * (Resize left, double scale)
         {
-            return new Resize(left.Width * scale, left.Height * scale, left.Anchor, left.Background, left.Flags);
+            return new Resize(
+                width       : (int)(left.Width * scale),
+                height      : (int)(left.Height * scale),
+                anchor      : left.Anchor,
+                background  : left.Background, 
+                flags       : left.Flags
+            );
         }
     }
 }
