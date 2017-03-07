@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Media
 {
-    using Geometry;
-
     public static class ResizeHelper
     {
         // Fit the image without changing the aspect
@@ -139,8 +137,8 @@
                 }
             }
 
-            box.X = x;
-            box.Y = y;
+            box.X = (int)x;
+            box.Y = (int)y;
         }
 
         public static Rectangle CalculateCropRectangle(Size source, Rational aspect, CropAnchor anchor)

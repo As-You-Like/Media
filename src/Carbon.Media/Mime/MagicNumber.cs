@@ -30,11 +30,9 @@ namespace Carbon.Media
             return true;
         }
 
-        public static MagicNumber FromHex(int offset, string text)
-            => new MagicNumber(new byte?[0]);
+        public static MagicNumber FromHex(int offset, string text) => new MagicNumber(new byte?[0]);
 
-        public static MagicNumber FromASCII(string text, int offset = 0)
-            => new MagicNumber(new byte?[0]);
+        public static MagicNumber FromASCII(string text, int offset = 0) => new MagicNumber(new byte?[0]);
 
         public readonly static MagicNumber Flv = new MagicNumber(new byte?[] { 0x46, 0x4C, 0x56, 0x01 });
 
@@ -58,7 +56,6 @@ namespace Carbon.Media
         public static readonly MagicNumber Exe = FromASCII("MZ");
 
         public static readonly MagicNumber Png = FromASCII(".PNG");
-
 
         public static readonly MagicNumber Pdf = FromASCII("%PDF");  // new byte[] { 0x25, 0x50, 0x44, 0x46 }
         public static readonly MagicNumber Ogg = FromASCII("OggS"); // TODO: specific type

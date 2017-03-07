@@ -42,11 +42,10 @@ namespace Carbon.Media
             if (text.Contains("|"))
             {
                 var flags = ResizeFlags.None;
-                ResizeFlags flag;
 
                 foreach (var part in text.Split(Seperators.Bar))
                 {
-                    if (Enum.TryParse(part, true, out flag))
+                    if (Enum.TryParse(part, true, out ResizeFlags flag))
                     {
                         flags |= flag;
                     }

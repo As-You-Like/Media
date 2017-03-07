@@ -40,8 +40,8 @@ namespace Carbon.Media
             }
         }
 
-        public static bool IsCompressible(string format)
-            => Array.BinarySearch(compressableFormats, format) > 0;
+        public static bool IsCompressible(string format) => 
+            Array.BinarySearch(compressableFormats, format) > 0;
 
         public static string FromPath(string path)
         {

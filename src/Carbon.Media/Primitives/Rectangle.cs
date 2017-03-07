@@ -1,10 +1,11 @@
 ﻿// TODO: Import Geometry when stable
 
 using System;
-using Carbon.Media;
 
-namespace Carbon.Geometry
+namespace Carbon.Media
 {
+    // Padding?
+
     public struct Rectangle : IEquatable<Rectangle>
     {
         public Rectangle(Size size)
@@ -13,7 +14,7 @@ namespace Carbon.Geometry
         public Rectangle(int x, int y, Size size)
           : this(x, y, size.Width, size.Height) { }
 
-        public Rectangle(double x, double y, double width, double height)
+        public Rectangle(int x, int y, int width, int height)
         {
             X = x;
             Y = y;
@@ -21,15 +22,15 @@ namespace Carbon.Geometry
             Height = height;
         }
 
-        public double X;
+        public int X;
 
-        public double Y;
+        public int Y;
 
-        public double Width;
+        public int Width;
 
-        public double Height;
+        public int Height;
 
-        public Size Size => new Size((int)Width, (int)Height);
+        public Size Size => new Size(Width, Height);
 
         public bool Equals(Rectangle other) =>
             X == other.X &&
