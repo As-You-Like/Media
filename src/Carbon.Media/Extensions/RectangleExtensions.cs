@@ -1,4 +1,4 @@
-﻿namespace Carbon.Geometry
+﻿namespace Carbon.Media
 {
     public static class RectangleExtensions
     {

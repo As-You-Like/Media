@@ -1,5 +1,4 @@
-﻿using Carbon.Geometry;
-using Xunit;
+﻿using Xunit;
 
 namespace Carbon.Media.Tests
 {

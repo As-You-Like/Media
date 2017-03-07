@@ -11,10 +11,12 @@
 			Assert.Equal("png",		Mime.Parse("image/png").Format);
 			Assert.Equal("tiff",	Mime.Parse("image/tiff").Format);
 			Assert.Equal("gif",		Mime.Parse("image/gif").Format);
-			Assert.Equal("jpeg",	Mime.Parse("image/jpeg").Format);
+            Assert.Equal("heif",    Mime.Parse("image/heif").Format);
+
+            Assert.Equal("jpeg",	Mime.Parse("image/jpeg").Format);
 			Assert.Equal("jxr",		Mime.Parse("image/vnd.ms-photo").Format);
 			Assert.Equal("svg",		Mime.Parse("image/svg+xml").Format);
-
+            
 			// Audio
 			Assert.Equal("flac",	Mime.Parse("audio/flac").Format);
 			Assert.Equal("oga",		Mime.Parse("audio/ogg").Format);

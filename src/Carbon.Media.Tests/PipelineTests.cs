@@ -9,7 +9,7 @@ namespace Carbon.Media.Processors.Tests
         private static readonly MediaSource jpeg_1280x720 = new MediaSource("23924858", 1280, 720);
         private static readonly MediaSource jpeg_524x485  = new MediaSource("22626389", 524, 485);
 
-        private static readonly MediaSource jpeg_100x50_rotate90 = new MediaSource("1", 100, 50, ImageOrientation.Rotate90);
+        private static readonly MediaSource jpeg_100x50_rotate90 = new MediaSource("1", 100, 50, ExifOrientation.Rotate90);
 
 
         // 22626389/480x444/crop:0-33_480x360.jpeg
