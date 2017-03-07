@@ -1,11 +1,8 @@
-﻿using System.Reflection;
+﻿ 1.5.3 (2017-03-07)
+ -----------------------------------------------------
+ Update project to VS2017
+ Allow Rational to be serialized by Protobuf
 
-[assembly: AssemblyTitle("Carbon.Media")]
-[assembly: AssemblyProduct("Carbon")]
-[assembly: AssemblyCopyright("© 2012 - 2017 Jason Nelson")]
-[assembly: AssemblyVersion("1.4.3")]
-
-/* 
  1.0.0 (2016-10-27)
  -----------------------------------------------------
  Remove System.Drawing dependecy
@@ -55,4 +52,3 @@
  0.0.1 (2012-07-11)
  -----------------------------------------------------
  Initial (Broke out of Carbon.Core)
-*/

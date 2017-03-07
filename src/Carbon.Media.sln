@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Carbon.Media", "Carbon.Media\Carbon.Media.xproj", "{2E62E005-7D9F-4C0E-810B-59F0F5F40295}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{86F5C099-4C31-4106-91FF-C624916A6311}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.xproj", "{5C50330F-45A2-4380-BE20-1BE589BCD903}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media", "Carbon.Media\Carbon.Media.csproj", "{2E62E005-7D9F-4C0E-810B-59F0F5F40295}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Carbon.Media.Metadata", "Carbon.Media.Metadata\Carbon.Media.Metadata.xproj", "{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.csproj", "{5C50330F-45A2-4380-BE20-1BE589BCD903}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Metadata", "Carbon.Media.Metadata\Carbon.Media.Metadata.csproj", "{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C50330F-45A2-4380-BE20-1BE589BCD903} = {86F5C099-4C31-4106-91FF-C624916A6311}
 	EndGlobalSection
 EndGlobal
