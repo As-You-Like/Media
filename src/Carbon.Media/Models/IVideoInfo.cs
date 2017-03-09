@@ -12,6 +12,7 @@ namespace Carbon.Media
 
         int Height { get; }
 
-        double FrameRate { get; }
+        // 30
+        Rational FrameRate { get; }
     }
 }
