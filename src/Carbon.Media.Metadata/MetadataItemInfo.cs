@@ -1,10 +1,12 @@
-﻿namespace Carbon.Media.Metadata
+﻿using System;
+
+namespace Carbon.Media.Metadata
 {
     public class MetadataItemInfo
     {
         public MetadataItemInfo(string name, MetaFormat format = MetaFormat.Ansi, int code = 0, string description = null)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Code = code;
             Description = description;
             Converter = GetConverter(format);

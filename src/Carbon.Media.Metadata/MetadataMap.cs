@@ -8,24 +8,21 @@ namespace Carbon.Media.Metadata
     {
         public static readonly MetadataItemConverter Default = new MetadataItemConverter();
 
-        public virtual object Normalize(object value) 
-            => value.ToString();
+        public virtual object Normalize(object value) => value.ToString();
     }
 
     public sealed class IntegerConverter : MetadataItemConverter
     {
         public static new readonly IntegerConverter Default = new IntegerConverter();
 
-        public override object Normalize(object value)
-            => int.Parse(value.ToString());
+        public override object Normalize(object value) => int.Parse(value.ToString());
     }
 
     public sealed class BooleanConverter : MetadataItemConverter
     {
         public static new readonly BooleanConverter Default = new BooleanConverter();
 
-        public override object Normalize(object value)
-            => int.Parse(value.ToString().ToLower());
+        public override object Normalize(object value) => int.Parse(value.ToString().ToLower());
     }
 
     public sealed class SignedRational : MetadataItemConverter
@@ -290,35 +287,6 @@ namespace Carbon.Media.Metadata
 
             return info;
         }
-    }
-
-    public class PrettyMetadata
-    {
-        public MediaOrientation Orientation { get; set; }
-
-        // Dave Gorum <dave@carbonmade.com>			// EMAIL FORMAT
-        public string Creator { get; set; }
-
-        // Rights Holder
-        public string Owner { get; set; }
-
-        public string Camera { get; set; }
-
-        public LocationDetails Location { get; set; }
-
-        public DateTime Created { get; set; }
-
-        public DateTime Modified { get; set; }
-    }
-
-    public class LocationDetails
-    {
-        public double Longitude { get; set; }
-
-        public double Latitude { get; set; }
-
-        public double Altitude { get; set; } // TODO, use a unit
-                                             // Name
     }
 }
 

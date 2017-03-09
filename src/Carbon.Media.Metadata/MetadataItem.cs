@@ -9,18 +9,8 @@ namespace Carbon.Media.Metadata
 
         public MetadataItem(string path, object rawValue)
         {
-            #region Preconditions
-
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
-
-            if (rawValue == null)
-                throw new ArgumentNullException(nameof(rawValue));
-
-            #endregion
-
-            Path = path;
-            RawValue = rawValue;
+            Path = path ?? throw new ArgumentNullException(nameof(path));
+            RawValue = rawValue ?? throw new ArgumentNullException(nameof(rawValue));
             RawType = rawValue.GetType().Name;
 
             var info = MetadataMap.Get(path);
