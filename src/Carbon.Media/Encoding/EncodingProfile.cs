@@ -4,12 +4,12 @@
     {
         public EncodingProfile() { }
 
-        public EncodingProfile(MediaContainer container)
+        public EncodingProfile(MediaContainerType containerType)
         {
-            Container = container;
+            Container = containerType;
         }
 
-        public MediaContainer Container { get; set; }
+        public MediaContainerType Container { get; set; }
 
         public AudioProfile Audio { get; set; }
 

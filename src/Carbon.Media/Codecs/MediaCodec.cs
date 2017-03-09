@@ -123,6 +123,11 @@ namespace Carbon.Media
         public static readonly MediaCodec Vp8 = new MediaCodec("vp8", MediaCodecType.Vp8);
         public static readonly MediaCodec Vp9 = new MediaCodec("vp9", MediaCodecType.Vp9);
 
+
+        public static readonly MediaCodec Vp9 = new MediaCodec("vp9", MediaCodecType.Vp9);
+        public static readonly MediaCodec Vp9 = new MediaCodec("vp9", MediaCodecType.Vp9);
+
+
     }
 
     public abstract class MediaCodecProfile { }

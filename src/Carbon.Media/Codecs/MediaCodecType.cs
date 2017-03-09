@@ -2,109 +2,77 @@
 {
 	public enum MediaCodecType
 	{
-		Unknown = 0,
-
-		// -------------------- Audio Codecs (200-299) ---------------------------------------
-
-		/// <summary>
-		/// Advanced Audio Coding, MPEG-4 AAC
-		/// Container: mpeg4
-		/// Mime: audio/x-m4a
-		/// </summary>
-		Aac = 200,
-
-		/// <summary>
-		/// Audio Codec 3 
-		/// Creator: Dolby Laboratories
-		/// </summary>
-		Ac3 = 205,
-
-		/// <summary>
-		/// Audio Interchange File Format 
-		/// Container: aiff
-		/// Mime: audio/aiff
-		/// </summary>
-		Aiff = 210,
-
-		/// <summary>
-		/// Apple Lossless
-		/// Creator: Apple Inc.
-		/// Extension: .m4a
-		/// </summary>
-		Alac = 215,
-
-		/// <summary>
-		/// Free Lossless Audio Codec
-		/// Creator: Xiph Foundation
-		/// </summary>
-		Flac = 220,
-
-		/// <summary>
-		/// MPEG-1 Audio Layer 3
-		/// Extension: .mp3
-		/// Mime: audio/mpeg
-		/// </summary>
-		Mp3 = 230,
-
-		/// <summary>
-		/// Reserved
-		/// </summary>
-		Opus = 240,
-
-		Pcm = 250,
-
-		/// <summary>
-		/// Vorbis
-		/// Mimes: audio/ogg, audio/vorbis
-		/// </summary>
-		Vorbis = 260,
-
-		/// <summary>
-		/// Container: wav
-		/// Mime: audio/wav
-		/// </summary>
-		Wav = 270,
-
-		/// <summary>
-		/// Windows Media Audio
-		/// Creator: Microsoft
-		/// Supported Containers: asf
-		///  Mime: audio/x-ms-wma
-		/// </summary>
-		Wma = 280,
-
-		// -------------------- Image Codecs (400-499) ---------------------------------------
-
-		Bmp = 400,
-		Gif = 410,
-		Ico = 420,
-		Jpeg = 430,
-		Jpeg2000 = 431,
-		Jxr = 432,
-		Png = 440,
-		Tiff = 450,
-		WebP = 460,
-
-		// -------------------- Video Codecs (900-999)  ---------------------------------------
-		
-		H261 = 901,
-		H262 = 902,
-		H263 = 903,		// MPEG-3
-		H264 = 904,		// MPEG-4
-		H265 = 905,		// Reserved
-
-		Theora = 910,	// Derived from On2's VP3 Codec.
-
-		Vc1 = 920,		// Windows Media Video V9
-
-		Vp6E = 934,
-		Vp6S = 935,
-		Vp6 = 936,		// TrueMotion VP6
-		Vp7 = 937,
-		Vp8 = 938,		// libvpx (used in WebM)
-
-		Wmv7 = 947,
-		Wmv8 = 948,
-		Wmv9 = 949
-	}
+        Unknown = 0,
+        
+        // -------------------- Audio Codecs (200-299) ---------------------------------------
+        
+        Aac      = 200,
+        Ac3      = 205,
+        Aiff     = 210,
+        Alac     = 215, // Apple Lossless
+        Flac     = 220, // Free Lossless Audio Codec
+        Mp3      = 230, // MPEG-1 Audio Layer 3
+        Opus     = 240,
+        Pcm      = 250,
+        Speex    = 255,
+        Vorbis   = 260,
+        Wav      = 270,
+        Wma      = 280, //  Windows Media Audio
+        
+        // -------------------- Image Codecs (400-499) ---------------------------------------
+        
+        Bmp      = 401,
+        Bpg      = 402,
+        Dng      = 408, // Digital Negative
+        Gif      = 410,
+        Heif     = 420, // High Efficiency Image File Format
+        Ico      = 425,
+        Jp2      = 430, // JPEG2000
+        Jpeg     = 431,
+        Jxr      = 432, // JPEG-XR
+        Png      = 450,
+        Psd      = 460,
+        Svg      = 460,
+        Tiff     = 470,
+        WebP     = 480,
+        
+        // TODO: Raw formats: https://en.wikipedia.org/wiki/Raw_image_format
+        
+        // -------------------- Video Codecs (900-999)  ---------------------------------------
+        
+        Blackbird = 901,
+        Cinepak   = 903,
+        Dirac     = 905,
+        DivX      = 906,
+        
+        H261      = 921,
+        H262      = 922,
+        H263      = 923, // MPEG-3
+        H264      = 924, // MPEG-4 (mp4)
+        H265      = 925, // HEVC
+        
+        Huffyuv   = 920,
+        
+        Lagarith  = 925,
+        
+        Sorenson3 = 940,
+        
+        Theora    = 945, // Derived from On2's VP3 Codec.
+        
+        Vc1       = 950, // Windows Media Video V9
+        
+        Vp3       = 953,
+        Vp4       = 954,
+        Vp5       = 955,
+        Vp6       = 956, // TrueMotion VP6
+        Vp6E      = 957,
+        Vp6S      = 959,
+        Vp7       = 960,
+        Vp8       = 961, // libvpx (used in WebM)
+        Vp9       = 962,
+        
+        Wmv7      = 967,
+        Wmv8      = 968,
+        Wmv9      = 969
+    }
 }

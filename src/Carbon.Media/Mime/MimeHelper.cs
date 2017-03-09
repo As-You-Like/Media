@@ -88,9 +88,9 @@ namespace Carbon.Media
 
 			// Audio
 			{ "aac",    Mime.Aac },
-            { "aif",    Mime.Aif },
-            { "aifc",   Mime.Aif },
-            { "aiff",   Mime.Aif },
+            { "aif",    Mime.Aiff },
+            { "aifc",   Mime.Aiff },
+            { "aiff",   Mime.Aiff },
             { "flac",   Mime.Flac },
             { "m4a",    Mime.M4a },
             { "mp3",    Mime.Mp3 },
