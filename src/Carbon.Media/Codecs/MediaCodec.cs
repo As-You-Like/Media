@@ -64,6 +64,11 @@ namespace Carbon.Media
                 // AAC Profiles
                 case "AAC"          : return Aac;
                 case "MP4A.40.2"    : return AacLC;
+
+                case "VP6"          : return Vp6;
+                case "VP7"          : return Vp7;
+                case "VP8"          : return Vp8;
+                case "VP9"          : return Vp9;
             }
 
             var type = name.ToEnum<MediaCodecType>(ignoreCase: true);
@@ -109,7 +114,15 @@ namespace Carbon.Media
         public static readonly MediaCodec Theora       = new MediaCodec("theora", MediaCodecType.Theora);
         public static readonly MediaCodec Dirac        = new MediaCodec("dirac", MediaCodecType.Dirac);
 
-        public static readonly MediaCodec Vp8          = new MediaCodec("vp8", MediaCodecType.Vp8);
+        public static readonly MediaCodec Vp3 = new MediaCodec("vp3", MediaCodecType.Vp3);
+        public static readonly MediaCodec Vp4 = new MediaCodec("vp4", MediaCodecType.Vp4);
+        public static readonly MediaCodec Vp5 = new MediaCodec("vp5", MediaCodecType.Vp5);
+        public static readonly MediaCodec Vp6 = new MediaCodec("vp6", MediaCodecType.Vp6);
+        public static readonly MediaCodec Vp7 = new MediaCodec("vp7", MediaCodecType.Vp7);
+        
+        public static readonly MediaCodec Vp8 = new MediaCodec("vp8", MediaCodecType.Vp8);
+        public static readonly MediaCodec Vp9 = new MediaCodec("vp9", MediaCodecType.Vp9);
+
     }
 
     public abstract class MediaCodecProfile { }

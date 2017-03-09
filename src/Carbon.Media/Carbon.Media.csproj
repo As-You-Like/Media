@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.5.3</VersionPrefix>
-    <Authors>iamcarbon</Authors>
-    <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
     <AssemblyName>Carbon.Media</AssemblyName>
+    <VersionPrefix>1.5.4</VersionPrefix>
+    <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
 
     <AssemblyTitle>Carbon Media</AssemblyTitle>
-    <Copyright>© 2012 - 2017 Jason Nelson</Copyright>
+    <Authors>iamcarbon</Authors>
+    <Copyright>© Jason Nelson</Copyright>
     <Description>Media primitives.</Description>
 
-    <PackageId>Carbon.Media</PackageId>
     <PackageTags>media;mimes;carbon</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/carbon/Media</RepositoryUrl>
@@ -29,6 +28,5 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System" />
   </ItemGroup>
 </Project>
