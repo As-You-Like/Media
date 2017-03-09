@@ -128,6 +128,16 @@ namespace Carbon.Media.Processors.Tests
         }
 
         [Fact]
+        public void ScaleTest3()
+        {
+            var rendition = new MediaRenditionInfo(85, 20, "1045645/100x100/crop(0,0,85,20).png");
+
+            var b = rendition.Scale(2.7f);
+
+            Assert.Equal("270x270/crop(0,0,229,54).png", b.TransformString);
+        }
+
+        [Fact]
         public void ScaleTest()
         {
             MediaRenditionInfo.Host = "google.com";
@@ -191,7 +201,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void OrientedPhotoHasCorrectThings()
         {
-            var rendition = new MediaTransformation(new MediaSource("1", 100, 50), ImageOrientation.Rotate90, "jpeg");
+            var rendition = new MediaTransformation(new MediaSource("1", 100, 50), ExifOrientation.Rotate90, "jpeg");
 
             Assert.Equal(50, rendition.Width);
             Assert.Equal(100, rendition.Height);
@@ -367,7 +377,7 @@ namespace Carbon.Media.Processors.Tests
 
     public class MediaSource : IMediaSource
     {
-        public MediaSource(string key, int width = 0, int height = 0, ImageOrientation? orientation = null)
+        public MediaSource(string key, int width = 0, int height = 0, ExifOrientation? orientation = null)
         {
             Key = key;
             Width = width;
@@ -377,7 +387,7 @@ namespace Carbon.Media.Processors.Tests
 
         public string Key { get; }
 
-        public ImageOrientation? Orientation { get; }
+        public ExifOrientation? Orientation { get; }
 
         public int Width { get; }
 
