@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Drawing;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Carbon.Media
@@ -13,10 +14,10 @@ namespace Carbon.Media
         private readonly string path;
 
         public MediaRenditionInfo(MediaTransformation transformation)
-            : this(transformation, transformation.GetPath())
+            : this(new Size(transformation.Width, transformation.Height), transformation.GetPath())
         { }
 
-        public MediaRenditionInfo(ISize size, string path)
+        public MediaRenditionInfo(Size size, string path)
             : this(size.Width, size.Height, path)
         { }
 
@@ -116,9 +117,9 @@ namespace Carbon.Media
         {
             var a = MediaTransformation.ParsePath(path);
 
-            var b = new MediaTransformation(a.Source, a.Format);
+            var b = new MediaTransformation(a.Source);
 
-            foreach (var processor in a.GetProcessors())
+            foreach (var processor in a.GetTransforms())
             {
                 if (processor is Resize resize)
                 {

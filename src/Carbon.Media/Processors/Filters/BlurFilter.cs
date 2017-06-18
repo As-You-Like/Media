@@ -19,7 +19,16 @@
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
+            // allow px unit
+
+            if (segment.EndsWith("px"))
+            {
+                segment = segment.Replace("px", "");
+            }
+
             return new BlurFilter(float.Parse(segment));
         }
     }
 }
+
+// scheme

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Pad : IProcessor
+    public sealed class Pad : ITransform
     {
         public Pad(int value)
         {

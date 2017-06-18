@@ -37,7 +37,18 @@
 			Assert.Equal("css",		Mime.Parse("text/css").Format);
 		}
 
-		[Fact]
+        [Fact]
+        public void FontTests()
+        {
+
+            Assert.Equal("application/font-woff",  Mime.FromFormat("woff").Name);
+            Assert.Equal("application/font-woff2", Mime.FromFormat("woff2").Name);
+
+        }
+
+
+
+        [Fact]
 		public void MimeEqualityTests()
 		{
 			Assert.Equal(Mime.Zip, Mime.Zip);

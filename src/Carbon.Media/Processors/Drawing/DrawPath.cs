@@ -2,23 +2,28 @@
 
 namespace Carbon.Media.Processors
 {
-    public sealed class DrawColor : DrawBase
+    public sealed class DrawPath : DrawBase
     {
-        public DrawColor(
-            string color,
+        public DrawPath(
+            string path,
             UnboundBox box,
-            BlendMode mode = BlendMode.Normal,
-            Alignment? align = null)
-            : base(box, align, mode, ResizeFlags.None)
+            BlendMode mode = BlendMode.Normal)
+            : base(box, null, mode, ResizeFlags.None)
         {
-            Color = color ?? throw new ArgumentNullException(nameof(color));
+            Path = path ?? throw new ArgumentNullException(nameof(path));
         }
 
-        public string Color { get; set; }
+        // M150 0 L75 200 L225 200 Z
+
+        public string Path { get; set; }
+
+        public string Stroke { get; set; }
+
+        public string Fill { get; set; }
             
         public override string Canonicalize() => null;
 
-        public static DrawColor Parse(string key)
+        public static DrawPath Parse(string key)
         {
             #region Normalization
 
@@ -30,10 +35,12 @@ namespace Carbon.Media.Processors
 
             var parts = key.Split(Seperators.Comma);
 
-            var color = parts[0];
+            var path = parts[0];
 
             var mode  = BlendMode.Normal;
-            Alignment? align = null;
+
+            string stroke = null;
+            string fill = null;
 
             var box = new UnboundBox();
 
@@ -46,21 +53,22 @@ namespace Carbon.Media.Processors
 
                 switch (k)
                 {
+                    case "fill"   : fill = v;   break;
+                    case "stroke" : stroke = v; break;
                     case "mode"   : mode        = v.ToEnum<BlendMode>(true);  break;
-                    case "align"  : align       = v.ToEnum<Alignment>(true);  break;
                     case "x"      : box.X       = Unit.Parse(v);              break;
                     case "y"      : box.Y       = Unit.Parse(v);              break;
                     case "width"  : box.Width   = Unit.Parse(v);              break;
                     case "height" : box.Height  = Unit.Parse(v);              break;
-                    case "padding": box.Padding = UnboundPadding.Parse(v);           break;
+                    case "padding": box.Padding = UnboundPadding.Parse(v);    break;
                 }
             }
 
-            return new DrawColor(color, box, mode, align);
+            return new DrawPath(path, box, mode);
         }
     }
 }
 
 /*
-overlay(red,mode:burn)
+path(M150 0 L75 200 L225 200 Z,stroke:red,fill:black)
 */

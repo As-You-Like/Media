@@ -1,22 +1,19 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public interface IProcessor
+    public interface ITransform
     {
         string Canonicalize();
 
     }
 }
 
-// crop
-// scale(x,y)
-
-
 
 /*
 resize                   (padding, ...)         500x500(fit:pad)
 composite
-
 crop
+scale(x, y)
+
 blur(5px);
 brightness(0.4);
 contrast(200%);

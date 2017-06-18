@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     public interface IVideoInfo
     {
-        MediaCodec Codec { get; }
+        CodecInfo Codec { get; }
 
         TimeSpan Duration { get; }
 

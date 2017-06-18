@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.Drawing;
+
+namespace Carbon.Media
 {
     public struct Box
     {

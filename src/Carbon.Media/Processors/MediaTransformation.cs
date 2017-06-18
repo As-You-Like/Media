@@ -1,56 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.Serialization;
 using System.Text;
+
+// TODO: Add simplify() & combine with pipeline...
 
 namespace Carbon.Media
 {
     using Processors;
     
-    public class MediaTransformation : ISize
+    public class MediaTransformation
     {
-        protected readonly List<IProcessor> transforms = new List<IProcessor>();
+        protected readonly List<ITransform> transforms = new List<ITransform>();
 
         private int width;
         private int height;
+        private ImageEncode encoder;
 
-        public MediaTransformation(IMediaSource source, ImageFormat format)
-        {
-            Source = source;
-            Format = format.ToLower();
-
-            width  = source.Width;
-            height = source.Height;
-        }
-
-        public MediaTransformation(IMediaSource source, string format)
+        public MediaTransformation(IMediaSource source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
-            Format = format ?? throw new ArgumentNullException(nameof(format));
+            
+            width  = source.Width;
+            height = source.Height;
 
-            this.width = source.Width;
-            this.height = source.Height;
-        }
-
-        public MediaTransformation(IMediaSource source, ExifOrientation orientation, string format)
-            : this(source, format)
-        {
-            Apply(orientation.GetTransforms());
+            if (source.Orientation != null)
+            {
+                Apply(source.Orientation.Value.GetTransforms());
+            }
         }
 
         public IMediaSource Source { get; }
-
-        public string Format { get; }
 
         public int Width => width;
 
         public int Height => height;
 
+        public ImageEncode Encoder => encoder;
+
+        public ImageFormat Format => encoder.Format;
+
         public Size Size => new Size(width, height);
 
-        public IReadOnlyList<IProcessor> GetProcessors() => transforms.AsReadOnly();
+        public IReadOnlyList<ITransform> GetTransforms() => transforms.AsReadOnly();
 
-        public MediaTransformation Apply(params IProcessor[] processors)
+        public MediaTransformation Apply(params ITransform[] processors)
         {
             #region Preconditions
 
@@ -69,14 +64,14 @@ namespace Carbon.Media
             return this;
         }
 
-        private MediaTransformation Apply(IProcessor transform)
+        private MediaTransformation Apply(ITransform transform)
         {
-            if (transform is Crop ct)
+            if (transform is Crop crop)
             {
-                var crop = ct.GetRectangle(Size);
+                var rect = crop.GetRectangle(Size);
 
-                width  = (int)crop.Width;
-                height = (int)crop.Height;
+                width = rect.Width;
+                height = rect.Height;
             }
             else if (transform is Resize resize)
             {
@@ -106,6 +101,10 @@ namespace Carbon.Media
             {
                 width += (pad.Left + pad.Right);
                 height += (pad.Top + pad.Bottom);
+            }
+            else if (transform is ImageEncode encode)
+            {
+                encoder = encode;
             }
 
             this.transforms.Add(transform);
@@ -171,30 +170,61 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation ApplyFilter(string name, int value)
+        public MediaTransformation WithQuality(int value)
         {
-            Apply(new UnknownFilter(name, value.ToString()));
+            Apply(new Quality(value));
 
             return this;
         }
 
-        public MediaTransformation ApplyFilter(string name, string value)
+        public MediaTransformation WithBackground(string color)
         {
-            Apply(new UnknownFilter(name, value));
+            Apply(new Background(color));
 
             return this;
         }
 
-        #endregion
+        public MediaTransformation WithPage(int number)
+        {
+            Apply(new Page(number));
 
-        #region Transform Helpers
+            return this;
+        }
 
-        [IgnoreDataMember]
-        public bool HasTransforms => transforms.Count > 0;
+        public MediaTransformation WithColorspace(string name)
+        {
+            Apply(new Colorspace(name));
+
+            return this;
+        }
+
+        public MediaTransformation Blur(int value)
+        {
+            Apply(new BlurFilter(value));
+
+            return this;
+        }
+
+        public MediaTransformation Encode(ImageFormat format, int? quality = null)
+        {
+            if (encoder != null)
+            {
+                throw new Exception("An encoder has already been set");
+            }
+
+            encoder = new ImageEncode(format, quality);
+
+            Apply(encoder);
+
+            return this;
+        }
 
         #endregion
 
         #region Helpers
+
+        [IgnoreDataMember]
+        public bool HasTransforms => transforms.Count > 0;
 
         public static MediaTransformation ParsePath(string path)
         {
@@ -203,130 +233,120 @@ namespace Carbon.Media
             if (path == null)
                 throw new ArgumentNullException(nameof(path));
 
+            if (path.Length < 3)
+            {
+                throw new ArgumentException("May not be empty", nameof(path));
+            }
+
             #endregion
 
-            if (path[0] == '/')
+            if (path.StartsWith("/"))
             {
                 path = path.Substring(1);
             }
 
-            // 100/transform/transform.format
+            // 100/{transform}.{format}
 
-            int lastDotIndex = path.LastIndexOf('.');
-            string format = null;
+            int lastDotIndex        = path.LastIndexOf('.');
+            int firstSeperatorIndex = path.IndexOf('/');
 
-            if (lastDotIndex > 0)
+            if (lastDotIndex == -1)
             {
-                format = path.Substring(lastDotIndex + 1);
-                path   = path.Substring(0, lastDotIndex);
+                throw new Exception("no format provided");
             }
+           
+            string id              = path.Substring(0, firstSeperatorIndex);
+            string transformString = path.Substring(firstSeperatorIndex, lastDotIndex - firstSeperatorIndex);
+            string format          = path.Substring(lastDotIndex + 1);
 
-            var parts = path.Split(Seperators.ForwardSlash);
+            var segments = transformString.Split(Seperators.ForwardSlash);
 
-            var id = parts[0];
 
-            var processors = new IProcessor[parts.Length - 1];
+            var transforms = ParseTransforms(segments);
 
-            for (var i = 1; i < parts.Length; i++)
+            var source = new MediaSource(id, 0, 0);
+
+            var rendition = new MediaTransformation(source)
+                .Apply(transforms)
+                .Encode(ImageFormatHelper.Parse(format));
+
+            return rendition;
+        }
+
+        public static ITransform[] ParseTransforms(string[] segments)
+        {
+            var transforms = new ITransform[segments.Length - 1];
+
+            for (var i = 1; i < segments.Length; i++)
             {
-                var segment = parts[i];
+                var segment = segments[i];
 
-                IProcessor processor;
+                ITransform transform;
 
                 if (char.IsDigit(segment[0]))
                 {
+                    // 1:00
                     if (segment.Contains(":"))
                     {
-                        // 1:00
-
                         var time = TimeSpan.Parse(segment);
 
-                        processor = new Clip(time, time);
+                        transform = new Clip(time, time);
                     }
                     else
                     {
-                        processor = Processors.Resize.Parse(segment);
+                        transform = Processors.Resize.Parse(segment);
                     }
                 }
                 else
                 {
-                    // TODO: Remove colon once crop has been migrated to new syntax.
-
-                    var transformName = segment.Split('(', ':')[0];
-
-                    switch (transformName)
-                    {
-                        case "resize"     : processor = Processors.Resize.Parse(segment);       break;
-                        case "scale"      : processor = Scale.Parse(segment);                   break;
-                        case "crop"       : processor = Processors.Crop.Parse(segment);         break;
-                        case "rotate"     : processor = Processors.Rotate.Parse(segment);       break;
-                        case "flip"       : processor = Flip.Parse(segment);                    break;
-                        case "pad"        : processor = Pad.Parse(segment);                     break;
-                        
-                        // Drawing                       
-                        case "text"       : processor = Processors.DrawText.Parse(segment);     break;
-                        case "overlay"    : processor = DrawColor.Parse(segment);               break;
-                        case "gradient"   : processor = DrawGradient.Parse(segment);            break;
-
-                        // filters
-                        case "hueRotate"  : 
-                        case "hue-rotate" : processor = HueRotateFilter.Parse(segment);         break;
-                        case "saturate"   : processor = SaturateFilter.Parse(segment);          break;
-                        case "sepia"      : processor = SepiaFilter.Parse(segment);             break;
-                        case "brightness" : processor = BrightnessFilter.Parse(segment);        break;
-                        case "grayscale"  : processor = GrayscaleFilter.Parse(segment);         break;
-                        case "blur"       : processor = BlurFilter.Parse(segment);              break;
-                        case "invert"     : processor = InvertFilter.Parse(segment);            break;
-                        case "contrast"   : processor = ContrastFilter.Parse(segment);          break;
-                        case "opacity"    : processor = OpacityFilter.Parse(segment);           break;
-                        default           : processor = UnknownFilter.Parse(segment);           break;
-                    }
+                    transform = Transform.Parse(segment);
                 }
 
-                processors[i - 1] = processor;
+                transforms[i - 1] = transform;
             }
 
-            var rendition = new MediaTransformation(new MediaSource(id, 0, 0), format);
-
-            rendition.Apply(processors);
-
-            return rendition;
+            return transforms;
         }
-        
+
         // blob#100 |> resize(100,100) |> sepia(1)
 
-       
-        public string GetPath() => 
-            Source.Key + "/" + GetFullName("/");
+        public string GetPath() => GetFullName("/", prefix: Source.Key);
 
-        public string GetFullName() =>
-            GetFullName("/");
+        public string GetFullName() => GetFullName("/");
 
-        public string GetFullName(string seperator)
+        public string GetFullName(string seperator, string prefix = null)
         {
             /* 
 			10x10.gif			
-			crop(0,0,10,10).jpeg	// A cropped image rendention (x=0,y=0,width=100,height=100)
-			10x10-c/rotate(90).png	// A 10x10 image (anchored at it's center when resized) rotated 90 degrees
+			crop(0,0,10,10).jpeg
+			10x10-c/rotate(90).png
 			200x100/rotate(90).png
 			640x480.mp4
 			*/
 
             var sb = new StringBuilder();
 
-            foreach (var transform in transforms)
+            if (prefix != null)
             {
-                if (sb.Length != 0)
-                {
-                    sb.Append(seperator);
-                }
-
-                sb.Append(transform.ToString());
+                sb.Append(prefix);
             }
 
-            sb.Append(".");
+            foreach (var transform in transforms)
+            {
+                if (transform is ImageEncode encode)
+                {
+                    sb.Append("." + encode.Format.ToLower());
+                }
+                else
+                {
+                    if (sb.Length != 0)
+                    {
+                        sb.Append(seperator);
+                    }
 
-            sb.Append(Format);
+                    sb.Append(transform.ToString());
+                }
+            }
 
             return sb.ToString();
         }

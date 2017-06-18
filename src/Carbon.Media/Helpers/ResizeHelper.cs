@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.Drawing;
+
+namespace Carbon.Media
 {
     public static class ResizeHelper
     {
@@ -188,7 +190,7 @@
                 }
             }
 
-            return new Rectangle(x, y, new Size(target.Width, target.Height));
+            return new Rectangle(x, y, target.Width, target.Height);
         }
 
         /// <summary>

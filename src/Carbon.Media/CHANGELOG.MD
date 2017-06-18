@@ -1,4 +1,10 @@
-﻿ 1.5.3 (2017-03-07)
+﻿ 1.5.4 (2017-03-07)
+ -----------------------------------------------------
+ Additional Codecs & Containers
+ Rename MediaCodec -> CodecInfo
+ DrawPath
+
+ 1.5.3 (2017-03-07)
  -----------------------------------------------------
  Update project to VS2017
  Allow Rational to be serialized by Protobuf

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Crop : IProcessor
+    public sealed class Crop : ITransform
     {
         public Crop(Unit x, Unit y, Unit width, Unit height)
         {
@@ -38,8 +39,15 @@ namespace Carbon.Media.Processors
 
         public Unit Height { get; }
 
-        public Rectangle GetRectangle(Size source) =>
-            new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
+        public Rectangle GetRectangle()
+        {
+            return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
+        }
+
+        public Rectangle GetRectangle(Size source)
+        {
+            return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
+        }
 
         public Crop Scale(double xScale, double yScale) =>
             new Crop(
@@ -106,7 +114,7 @@ namespace Carbon.Media.Processors
             parts = key.Split(Seperators.Underscore); // '_'
 
             var locationParts = parts[0].Split(Seperators.Dash); // '-'
-            var size = Size.Parse(parts[1]);
+            var size = SizeHelper.Parse(parts[1]);
 
             Unit x = Unit.Parse(locationParts[0]), // '-'
                  y = Unit.Parse(locationParts[1]);

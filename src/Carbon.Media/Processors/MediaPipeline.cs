@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Drawing;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Carbon.Media.Processors
@@ -14,16 +16,18 @@ namespace Carbon.Media.Processors
 
         public IMediaSource Source { get; set; }
 
+        public int? PageNumber { get; set; }
+
         // 1. Flip
         public Flip Flip { get; set; }
 
-        // 2. orient
+        // 2. Rotate
         public int Rotate { get; set; }
 
-        // 2. crop the source
+        // 2. Crop the source
         public Rectangle? Crop { get; set; }   // The crop applied to the source
 
-        // 3. Scale the crop w/ interpolator
+        // 3. Scale the croped source w/ the interpolator
         public Scale Scale { get; set; }
 
         // If the resize mode was set to pad (or padding was added after) 
@@ -41,9 +45,9 @@ namespace Carbon.Media.Processors
 
         // 4. Determine whether we need a canvas to apply filters or draw a background
         // Filters & Draws
-        public List<IProcessor> Filters { get; } = new List<IProcessor>();
+        public List<ITransform> Filters { get; } = new List<ITransform>();
         
-        public Encode Encode { get; set; }
+        public ImageEncode Encode { get; set; }
 
         // blob#1 |> orient(x) |> crop(0,0,100,100) |> JPEG(quality:87)
 
@@ -56,10 +60,10 @@ namespace Carbon.Media.Processors
 
         public static MediaPipeline From(MediaTransformation transformation)
         {
-            return From(transformation.Source, transformation.GetProcessors());
+            return From(transformation.Source, transformation.GetTransforms());
         }
 
-        public static MediaPipeline From(IMediaSource source, IReadOnlyList<IProcessor> processors)
+        public static MediaPipeline From(IMediaSource source, IReadOnlyList<ITransform> processors)
         {
             var pipeline = new MediaPipeline {
                 Source = source
@@ -69,13 +73,18 @@ namespace Carbon.Media.Processors
             {
                 switch(source.Orientation.Value)
                 {
-                    case ExifOrientation.FlipHorizontal : pipeline.Flip = Flip.Horizontally; break;
-                    case ExifOrientation.Rotate180      : pipeline.Rotate = 180; break;
-                    case ExifOrientation.FlipVertical   : pipeline.Flip = Flip.Vertically; break;
-                    case ExifOrientation.Transpose      : pipeline.Flip = Flip.Horizontally; pipeline.Rotate = 270; break;
-                    case ExifOrientation.Rotate90       : pipeline.Rotate = 90; break;
-                    case ExifOrientation.Transverse     : pipeline.Flip = Flip.Horizontally; pipeline.Rotate = 90; break;
-                    case ExifOrientation.Rotate270      : pipeline.Rotate = 270; break;
+                    case ExifOrientation.FlipHorizontal : pipeline.Flip   = Flip.Horizontally;  break;
+                    case ExifOrientation.Rotate180      : pipeline.Rotate = 180;                break;
+                    case ExifOrientation.FlipVertical   : pipeline.Flip   = Flip.Vertically;    break;
+
+                    case ExifOrientation.Transpose      : pipeline.Flip = Flip.Horizontally;
+                                                          pipeline.Rotate = 270; break;
+
+                    case ExifOrientation.Rotate90       : pipeline.Rotate = 90;                 break;
+
+                    case ExifOrientation.Transverse     : pipeline.Flip = Flip.Horizontally;
+                                                          pipeline.Rotate = 90; break;
+                    case ExifOrientation.Rotate270      : pipeline.Rotate = 270;                break;
                 }
             }
 
@@ -89,9 +98,19 @@ namespace Carbon.Media.Processors
                 Height = sourceSize.Height
             };
 
+            int? quality = null;
+
             foreach (var transform in processors)
             {
-                if (transform is Flip flip)
+                if (transform is Page page)
+                {
+                    pipeline.PageNumber = page.Number;
+                }
+                else if (transform is Background background)
+                {
+                    pipeline.Background = background.Color;
+                }
+                else if (transform is Flip flip)
                 {
                     // Do we need to apply the operations in reverse?
                     pipeline.Flip = flip;
@@ -112,6 +131,10 @@ namespace Carbon.Media.Processors
                     }
 
                     crop = c;
+                }
+                else if (transform is Quality q)
+                {
+                    quality = q.Value;
                 }
                 else if (transform is Resize resize)
                 {
@@ -161,10 +184,10 @@ namespace Carbon.Media.Processors
                 else if (transform is Pad pad)
                 {
                     box.Padding = new Padding(
-                        top: box.Padding.Top + pad.Top,
-                        right: box.Padding.Right + pad.Right,
-                        bottom: box.Padding.Bottom + pad.Bottom,
-                        left: box.Padding.Left + pad.Left
+                        top     : box.Padding.Top + pad.Top,
+                        right   : box.Padding.Right + pad.Right,
+                        bottom  : box.Padding.Bottom + pad.Bottom,
+                        left    : box.Padding.Left + pad.Left
                     );
                 }
                 else if (transform is Rotate rotate)
@@ -190,6 +213,15 @@ namespace Carbon.Media.Processors
 
                     pipeline.Rotate = rotate.Angle;
                 }
+                else if (transform is ImageEncode encode)
+                {
+                    if (quality != null)
+                    {
+                        encode = new ImageEncode(encode.Format, quality);
+                    }
+
+                    pipeline.Encode = encode;
+                }
                 else
                 {
                     pipeline.Filters.Add(transform);
@@ -204,9 +236,69 @@ namespace Carbon.Media.Processors
             }
 
             pipeline.Padding = box.Padding;
-            pipeline.Encode = new Encode(ImageFormat.Jpeg, 0);
             
             return pipeline;
+        }
+
+        public static MediaPipeline Parse(string text)
+        {
+            var segments = text.Split(new[] { "|>" }, 50, StringSplitOptions.None);
+
+            /*
+               blob#1 
+            |> scale(50,50,lancoz)
+            |> draw(background:0xffffff,margin:10) 
+            |> pixelate(5px) 
+            |> blur(5px) 
+            |> sepia(0.5) 
+            |> WebP::encode
+            */
+
+            var result = new MediaPipeline();
+
+            foreach (var segment in segments)
+            {
+                if (segment.Contains("#"))
+                {
+                    var id = segment.Split('#')[1];
+
+                    result.Source = new MediaSource(id, 100, 100);
+
+                    continue;
+                }
+
+                var transform = Transform.Parse(segment);
+
+                switch (transform)
+                {
+                    case Page page:
+                        result.PageNumber = page.Number;
+                        break;
+                    case Background bg:
+                        result.Background = bg.Color;
+                        break;
+                    case Rotate rotate:
+                        result.Rotate = rotate.Angle;
+                        break;
+                    case Flip flip:
+                        result.Flip = flip;
+                        break;
+                    case Scale scale:
+                        result.Scale = scale;
+                        break;
+                    case Crop crop:
+                        result.Crop = crop.GetRectangle();
+                        break;
+                    case ImageEncode encode:
+                        result.Encode = encode;
+                        break;
+                    default:
+                        result.Filters.Add(transform);
+                        break;
+                }
+            }
+
+            return result;
         }
 
         public string Canonicalize()
@@ -214,6 +306,15 @@ namespace Carbon.Media.Processors
             var sb = new StringBuilder();
 
             sb.Append("blob#" + Source.Key);
+
+            if (PageNumber != null)
+            {
+                sb.Append("|>page(" + PageNumber + ")");
+            }
+            if (Background != null)
+            {
+                sb.Append("|>background(" + Background + ")");
+            }
 
             if (Flip != null)
             {
@@ -276,18 +377,6 @@ namespace Carbon.Media.Processors
             return sb.ToString();
         }
     }
-
-    public struct Position
-    {
-        public Position(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public int X { get; }
-        public int Y { get; }
-    }  
 
     // how can we define a canvas?
 

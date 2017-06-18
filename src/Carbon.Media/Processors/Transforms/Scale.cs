@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Scale : IProcessor
+    public sealed class Scale : ITransform
     {
         public Scale(Size size, InterpolaterMode mode)
             : this(size.Width, size.Height, mode) { }
@@ -81,9 +82,9 @@ namespace Carbon.Media.Processors
 
                 switch (i)
                 {
-                    case 0: width = int.Parse(part); break;
+                    case 0: width  = int.Parse(part); break;
                     case 1: height = int.Parse(part); break;
-                    case 2: mode = InterpolaterHelper.Parse(part); break;
+                    case 2: mode   = InterpolaterHelper.Parse(part); break;
                 }
             }
 

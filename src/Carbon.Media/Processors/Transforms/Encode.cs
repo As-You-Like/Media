@@ -1,10 +1,11 @@
-﻿using System.Text;
+﻿using System.Runtime.Serialization;
+using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Encode : IProcessor
+    public sealed class ImageEncode : ITransform
     {
-        public Encode(ImageFormat format, int quality)
+        public ImageEncode(ImageFormat format, int? quality = null)
         {
             Format = format;
             Quality = quality;
@@ -14,7 +15,7 @@ namespace Carbon.Media.Processors
 
         public ImageFormat Format { get; }
 
-        public int Quality { get; }
+        public int? Quality { get; }
        
         public string Canonicalize()
         {
@@ -23,24 +24,31 @@ namespace Carbon.Media.Processors
             sb.Append(Format.Canonicalize());
             sb.Append("::encode");
 
-            if (Quality != 0)
+            if (Quality != null && Quality != 0)
             {
                 sb.Append("(");
-                sb.Append("quality:" + Quality);
+                sb.Append("quality:");
+                sb.Append(Quality.Value);
                 sb.Append(")");
             }
             
             return sb.ToString();
         }
 
-        public override string ToString() =>
-            Canonicalize();
+        public override string ToString() => Canonicalize();
 
         // JPEG::encode(quality:100)
         // PNG::encode
         // WebP::encode
 
-        public static Encode Parse(string segment)
+        #region Helpers
+
+        [IgnoreDataMember]
+        public Mime Mime => Format.ToMime();
+
+        #endregion
+
+        public static ImageEncode Parse(string segment)
         {
             var indexOfSemiSemi = segment.IndexOf("::");
 
@@ -58,7 +66,7 @@ namespace Carbon.Media.Processors
 
                 foreach (var arg in args)
                 {
-                    var split = arg.Split(':');
+                    var split = arg.Split(Seperators.Colon);
 
                     var k = split[0];
                     var v = split[1];
@@ -70,7 +78,7 @@ namespace Carbon.Media.Processors
                 }
             }
 
-            return new Encode(format, quality);
+            return new ImageEncode(format, quality);
         }
     }
 }

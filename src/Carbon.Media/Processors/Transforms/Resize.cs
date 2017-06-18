@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Resize : IProcessor
+    public sealed class Resize : ITransform
     {
         public Resize(Size size)
             : this(new Unit(size.Width), new Unit(size.Height), null, null, ResizeFlags.None)
@@ -20,10 +21,12 @@ namespace Carbon.Media.Processors
         {
             // 16384 * 16384 * 4 = 1GB bitmap
 
+            // Max pixels = 16,384 * 16,384
+
             #region Preconditions
 
-            if (width < 0 || width > 6000)
-                throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 6,000");
+            if (width < 0 || width > 8192)
+                throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 8,192");
 
             if (height < 0 || height > 15000)
                 throw new ArgumentOutOfRangeException(nameof(height), height, message: "Must be between 0 and 15,000");
@@ -107,7 +110,6 @@ namespace Carbon.Media.Processors
         // resize(100,100,anchor:center)
         // resize(100,100,flags:fit)
         
-
         public string Canonicalize()
         {
             var sb = new StringBuilder();
@@ -227,13 +229,13 @@ namespace Carbon.Media.Processors
                 var parts = segment.Split(Seperators.Dash);
 
                 return new Resize(
-                    size   : Size.Parse(parts[0]),
+                    size   : SizeHelper.Parse(parts[0]),
                     anchor : AnchorHelper.Parse(parts[1])
                 );
             }
 
             // 100x100
-            return new Resize(Size.Parse(segment));
+            return new Resize(SizeHelper.Parse(segment));
         }
 
         public static Resize operator * (Resize left, double scale)

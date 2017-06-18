@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace Carbon.Media
@@ -16,18 +17,10 @@ namespace Carbon.Media
         // avc1.4D401E (H264 Main)
         // theora
         // vp8
-        public MediaCodec Codec { get; set; }
+        public string Codec { get; set; }
 
-        /// <summary>
-        /// Should be divisible by 16
-        /// </summary>
-        // [DivisibleBy(4)]
         public int Width { get; set; }
 
-        /// <summary>
-        /// Should be divisible by 16
-        /// </summary>
-        // [DivisibleBy(4)]
         public int Height { get; set; }
 
         /// <summary>
@@ -53,7 +46,7 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public Size Size
         {
-            get { return new Size(Width, Height); }
+            get => new Size(Width, Height);
             set
             {
                 Width = value.Width;

@@ -84,6 +84,7 @@ namespace Carbon.Media
 			{ "pdf",    Mime.Pdf },		// Document		PDF
 			{ "xap",    Mime.Xap },		// Plugin		Silverlight
 			{ "woff",   Mime.Woff },	// Font			WOFF
+            { "woff2",  Mime.Woff2 },   // Font         WOFF2
 			{ "zip",    Mime.Zip },		// Package		ZIP			
 
 			// Audio

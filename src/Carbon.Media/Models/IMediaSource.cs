@@ -1,8 +1,12 @@
 ﻿namespace Carbon.Media
 {
-    public interface IMediaSource : ISize
+    public interface IMediaSource
     {
         string Key { get; }
+
+        int Width { get; }
+
+        int Height { get; }
 
         ExifOrientation? Orientation { get; }
 

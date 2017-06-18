@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Processors
 {
-    public abstract class DrawBase : IProcessor
+    public abstract class DrawBase : ITransform
     {
         public DrawBase(
             UnboundBox box,
