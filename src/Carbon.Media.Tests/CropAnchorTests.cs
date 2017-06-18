@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System.Drawing;
+
+using Xunit;
 
 namespace Carbon.Media.Tests
 {
@@ -11,7 +13,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void AlignTests()
         {
-            var box = new Rectangle(new Size(100, 100));
+            var box = new Rectangle(0, 0, 100, 100);
             var bounds = new Size(200, 200);
 
             ResizeHelper.Align(ref box, bounds, Top | Center);

@@ -13,11 +13,11 @@ namespace Carbon.Media.Processors.Tests
         // [InlineData("jxr")]
         public void A(string name)
         {
-            var encode = Encode.Parse($"{name}::encode(quality:95)");
+            var encode = ImageEncode.Parse($"{name}::encode(quality:95)");
 
             Assert.Equal(95, encode.Quality);
 
-            var e = Encode.Parse(encode.Canonicalize());
+            var e = ImageEncode.Parse(encode.Canonicalize());
 
             // TODO: Finalize encoder case... leaning toward upper
 

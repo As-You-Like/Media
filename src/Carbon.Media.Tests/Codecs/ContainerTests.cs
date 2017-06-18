@@ -8,7 +8,6 @@ namespace Carbon.Media.Tests
     {
         [Theory]
         [InlineData(_3GP, "3gp")]
-        [InlineData(Aiff, "aif")]
         [InlineData(Avi, "avi")]
         [InlineData(Flv, "flv")]
         [InlineData(Mp4, "mp4")]
@@ -21,7 +20,7 @@ namespace Carbon.Media.Tests
         }
 
         [Theory]
-        [InlineData(Aiff, "aif")] // aiff?
+        [InlineData(Aiff, "aiff")]
         [InlineData(Mp4, "m4a")]
         [InlineData(Matroska, "mka")]
         [InlineData(Ogg, "oga")]

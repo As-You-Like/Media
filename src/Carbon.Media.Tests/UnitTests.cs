@@ -6,8 +6,8 @@ namespace Carbon.Media.Tests
     {
         [Theory]
         [InlineData("0.1", 0.1d, UnitType.Percent)]
-        [InlineData("10％", 0.1d, UnitType.Percent)]
-        [InlineData("100％", 1d, UnitType.Percent)]
+        [InlineData("10%", 0.1d, UnitType.Percent)]
+        [InlineData("100%", 1d, UnitType.Percent)]
 
         [InlineData("100", 100d, UnitType.Px)]
         [InlineData("100px", 100d, UnitType.Px)]

@@ -1,7 +1,7 @@
 ﻿namespace Carbon.Media.Tests
 {
 	// 
-	public class VideoendentionTests
+	public class VideoTests
 	{
 		// 600x400.mp4	[h264, mp4]
 

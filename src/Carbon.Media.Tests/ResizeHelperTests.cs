@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System.Drawing;
+
+using Xunit;
 
 namespace Carbon.Media.Tests
 {

@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System.Drawing;
+
+using Xunit;
 
 namespace Carbon.Media.Tests
 {
@@ -19,10 +21,11 @@ namespace Carbon.Media.Tests
 		}
 
 		[Fact]
-		public void ToStringTests()
+		public void ParseTests()
 		{
-			Assert.Equal("50x51", new Size(50, 51).ToString());
-			Assert.Equal("0x0", new Size(0, 0).ToString());
+			Assert.Equal(new Size(50, 51), SizeHelper.Parse("50x51"));
+            Assert.Equal(Size.Empty,       SizeHelper.Parse("0x0"));
+
 		}
 	}
 }

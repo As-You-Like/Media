@@ -1,4 +1,8 @@
-﻿using Xunit;
+﻿using System.Drawing;
+
+using Carbon.Media.Tests;
+
+using Xunit;
 
 namespace Carbon.Media.Processors.Tests
 {
@@ -11,39 +15,90 @@ namespace Carbon.Media.Processors.Tests
 
         private static readonly MediaSource jpeg_100x50_rotate90 = new MediaSource("1", 100, 50, ExifOrientation.Rotate90);
 
-
         // 22626389/480x444/crop:0-33_480x360.jpeg
+
+        [Fact]
+        public void BackgroundTest()
+        {
+            var img = new MediaTransformation(jpeg_100x50_rotate90)
+                .Resize(100, 100)
+                .WithBackground("ffffff")
+                .Encode(ImageFormat.Jp2);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal("blob#1|>background(ffffff)|>rotate(90deg)|>scale(100,100,lanczos3)|>JP2::encode", pipe.Canonicalize());
+
+            Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
+        }
+
+        [Fact]
+        public void PageTest()
+        {
+            var img = new MediaTransformation(jpeg_100x50_rotate90)
+                .Resize(100, 100)
+                .WithBackground("ffffff")
+                .WithPage(3)
+                .Encode(ImageFormat.Svg);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal("blob#1|>page(3)|>background(ffffff)|>rotate(90deg)|>scale(100,100,lanczos3)|>SVG::encode", pipe.Canonicalize());
+
+            Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
+        }
+
+        [Fact]
+        public void QualityTest()
+        {
+            var img = new MediaTransformation(jpeg_100x50_rotate90)
+                .Resize(100, 100, CropAnchor.Center)
+                .WithQuality(82)
+                .Encode(ImageFormat.Jpeg);
+
+            var pipe = MediaPipeline.From(img);
+
+            Assert.Equal("blob#1|>rotate(90deg)|>crop(0,25,50,50)|>scale(100,100,lanczos3)|>JPEG::encode(quality:82)", pipe.Canonicalize());
+
+            Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
+        }
 
         [Fact]
         public void OrientTest()
         {
-            var img = new MediaTransformation(jpeg_100x50_rotate90, ImageFormat.Jpeg)
+            var img = new MediaTransformation(jpeg_100x50_rotate90)
                 .Resize(480, 444)
-                .Crop(0, 33, 480, 360);
+                .Crop(0, 33, 480, 360)
+                .Encode(ImageFormat.Png);
 
             var pipe = MediaPipeline.From(img);
 
             Assert.Equal(new Size(480, 360), pipe.FinalSize);
 
-            Assert.Equal("blob#1|>rotate(90deg)|>crop(0,3,100,40)|>scale(480,360,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+            Assert.Equal(
+                "blob#1|>rotate(90deg)|>crop(0,3,100,40)|>scale(480,360,lanczos3)|>PNG::encode", 
+                pipe.Canonicalize()
+            );
+
+            Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
         }
 
-        private static readonly MediaSource media_33695921 = new MediaSource("1", 1920, 2560);
+        private static readonly MediaSource2 media_33695921 = new MediaSource2("1", 1920, 2560);
 
-        // 33695921 { width: 2560, height: 1920, orientation: Rotate90 }
+        // media#33695921 { width: 2560, height: 1920, orientation: Rotate90 }
 
         [Fact]
         public void OrientTest2()
         {
             var t = MediaTransformation.ParsePath("33695921/960x1280/rotate(90).jpeg");
 
-            var pipe = MediaPipeline.From(media_33695921, t.GetProcessors());
+            var pipe = MediaPipeline.From(media_33695921, t.GetTransforms());
 
             Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
 
             t = MediaTransformation.ParsePath("33695921/rotate(90)/1280x960.jpeg");
 
-            pipe = MediaPipeline.From(media_33695921, t.GetProcessors());
+            pipe = MediaPipeline.From(media_33695921, t.GetTransforms());
 
             Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
@@ -51,10 +106,11 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void RotateTest1()
         {
-            var img = new MediaTransformation(jpeg_100x50_rotate90, ImageFormat.Jpeg)
+            var img = new MediaTransformation(jpeg_100x50_rotate90)
                 .Resize(480, 444)
                 .Crop(0, 33, 480, 360)
-                .Rotate(90);
+                .Rotate(90)
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(img);
 
@@ -70,9 +126,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Crop4()
         {
-            var img = new MediaTransformation(jpeg_524x485, ImageFormat.Jpeg)
-                .Resize(480, 444)              
-                .Crop(0, 33, 480, 360);
+            var img = new MediaTransformation(jpeg_524x485)
+                .Resize(480, 444)
+                .Crop(0, 33, 480, 360)
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(img);
 
@@ -85,9 +142,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Crop3()
         {
-            var rendition = new MediaTransformation(jpeg_1280x720, ImageFormat.Jpeg)
+            var rendition = new MediaTransformation(jpeg_1280x720)
                 .Resize(1492, 839)              // upscale by 1.1x      
-                .Crop(358, 336, 780, 140);
+                .Crop(358, 336, 780, 140)
+                .Encode(ImageFormat.Jpeg);
 
             // var cropScale = 1492 / 1280; // 0.85
 
@@ -104,28 +162,34 @@ namespace Carbon.Media.Processors.Tests
         {
             // scale 1.17
 
-            var rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Center);
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(100, 100, CropAnchor.Center)
+                .Encode(ImageFormat.Jpeg);
  
             Assert.Equal(
                 "blob#1|>crop(32,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode",
                 MediaPipeline.From(rendition).Canonicalize()
             );
 
-            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Left);
+            rendition = new MediaTransformation(jpeg_85x20).Resize(100, 100, CropAnchor.Left).Encode(ImageFormat.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(0,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
                 MediaPipeline.From(rendition).Canonicalize()
             );
 
-            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(100, 100, CropAnchor.Right);
+            rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(100, 100, CropAnchor.Right)
+                .Encode(ImageFormat.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(65,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
                 MediaPipeline.From(rendition).Canonicalize()
             );
 
-            rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg).Resize(300, 100, CropAnchor.Right);
+            rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(300, 100, CropAnchor.Right)
+                .Encode(ImageFormat.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(25,0,60,20)|>scale(300,100,lanczos3)|>JPEG::encode",
@@ -136,9 +200,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Pad3()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg)
+            var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(100, 100)
-                .Apply(new Pad(100));
+                .Apply(new Pad(100))
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -162,11 +227,16 @@ namespace Carbon.Media.Processors.Tests
 
         }
 
+        // TODO: Create a shape API
+
+        // draw(circle(50),x:0)
+
         [Fact]
         public void Pad1()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, ImageFormat.Jpeg)
-                .Apply(new Resize(100, 200, ResizeFlags.Pad));
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Apply(new Resize(100, 200, ResizeFlags.Pad))
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
             
@@ -181,8 +251,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Crop1()
         {
-            var rendition = new MediaTransformation(jpeg_100x50, ImageFormat.Jpeg)
-                .Crop(0, 0, 25, 25);
+            var rendition = new MediaTransformation(jpeg_100x50)
+                .Crop(0, 0, 25, 25)
+                .Encode(ImageFormat.Jpeg);
+                
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -192,9 +264,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void CropAndScale()
         {
-            var rendition = new MediaTransformation(jpeg_100x50, ImageFormat.Jpeg)
+            var rendition = new MediaTransformation(jpeg_100x50)
                 .Crop(0, 0, 25, 25)
-                .Resize(50, 50);
+                .Resize(50, 50)
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -206,9 +279,10 @@ namespace Carbon.Media.Processors.Tests
         {
             // We need to apply the "Scale" operations to the crop in reverse...
 
-            var rendition = new MediaTransformation(jpeg_100x50, ImageFormat.Jpeg)
+            var rendition = new MediaTransformation(jpeg_100x50)
                 .Resize(50, 25) // 50%
-                .Crop(0, 0, 25, 25);
+                .Crop(0, 0, 25, 25)
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -218,9 +292,10 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void CropAndScaleDisportionally()
         {
-            var rendition = new MediaTransformation(jpeg_100x50, ImageFormat.Jpeg)
+            var rendition = new MediaTransformation(jpeg_100x50)
                 .Resize(50, 100) // 50%, 200%
-                .Crop(0, 0, 25, 25);
+                .Crop(0, 0, 25, 25)
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -230,7 +305,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Filters()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
+            var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(Unit.Parse("300%"), Unit.Parse("200%"))
                 .Apply(new BlurFilter(5))
                 .Apply(new BrightnessFilter(0.5f))
@@ -241,18 +316,22 @@ namespace Carbon.Media.Processors.Tests
                 .Apply(new OpacityFilter(0.5f))
                 .Apply(new PixelateFilter(20))
                 .Apply(new SaturateFilter(0.5f))
-                .Apply(new SepiaFilter(0.5f));
+                .Apply(new SepiaFilter(0.5f))
+                .Encode(ImageFormat.Jpeg);
               
             var pipe = MediaPipeline.From(rendition);
 
             Assert.Equal("blob#1|>scale(255,40,lanczos3)|>blur(5)|>brightness(0.5)|>contrast(0.5)|>invert(0.5)|>grayscale(0.5)|>hueRotate(45deg)|>opacity(0.5)|>pixelate(20)|>saturate(0.5)|>sepia(0.5)|>JPEG::encode", pipe.Canonicalize());
+
+            Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
         }
 
         [Fact]
         public void ResizeFit1()
         {
-            var rendition = new MediaTransformation(jpeg_100x50, "jpeg")
-                .Apply(Resize.Parse("resize(25x50,fit|upscale)"));
+            var rendition = new MediaTransformation(jpeg_100x50)
+                .Apply(Resize.Parse("resize(25x50,fit|upscale)"))
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
@@ -262,20 +341,21 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void ResizeFit2()
         {
-            var rendition = new MediaTransformation(jpeg_100x50, "jpeg")
-                .Apply(Resize.Parse("resize(200x200,fit|upscale)"));
+            var rendition = new MediaTransformation(jpeg_100x50)
+                .Apply(Resize.Parse("resize(200x200,fit|upscale)"))
+                .Encode(ImageFormat.Jpeg);
             
             var pipe = MediaPipeline.From(rendition);
 
             Assert.Equal("blob#1|>scale(200,100,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
-
         [Fact]
         public void ResizePercent()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
-                .Resize(Unit.Parse("300%"), Unit.Parse("200%"));
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(Unit.Parse("300%"), Unit.Parse("200%"))
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
             
@@ -285,20 +365,21 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Scale1()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
-                .Apply(new Scale(100, 200, InterpolaterMode.Cubic));
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Apply(new Scale(100, 200, InterpolaterMode.Cubic))
+                .Encode(ImageFormat.Jpeg);
 
             var pipe = MediaPipeline.From(rendition);
 
             Assert.Equal("blob#1|>scale(100,200,cubic)|>JPEG::encode", pipe.Canonicalize());
-
         }
 
         [Fact]
         public void ResizeAuto()
         {
-            var rendition = new MediaTransformation(jpeg_85x20, "jpeg")
-                .Resize(Unit.Parse("_"), Unit.Parse("40"));
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(Unit.Parse("_"), Unit.Parse("40"))
+                .Encode(ImageFormat.Jpeg);
 
             Assert.Equal(170, rendition.Width);
             Assert.Equal(40, rendition.Height);
