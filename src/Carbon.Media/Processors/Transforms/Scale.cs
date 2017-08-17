@@ -45,7 +45,7 @@ namespace Carbon.Media.Processors
             sb.Append(",");
             sb.Append(Height);
 
-            if (Mode != default(InterpolaterMode))
+            if (Mode != default)
             {
                 sb.Append(",");
                 sb.Append(Mode.ToLower());
