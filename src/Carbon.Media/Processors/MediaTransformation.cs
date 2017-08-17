@@ -261,7 +261,6 @@ namespace Carbon.Media
 
             var segments = transformString.Split(Seperators.ForwardSlash);
 
-
             var transforms = ParseTransforms(segments);
 
             var source = new MediaSource(id, 0, 0);

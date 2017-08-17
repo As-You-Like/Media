@@ -65,8 +65,8 @@ namespace Carbon.Media
             }
 
             var dotIndex = path.LastIndexOf('.');
-            var spec = path.Substring(0, dotIndex);
-            var format = path.Substring(dotIndex + 1);
+            var spec     = path.Substring(0, dotIndex);
+            var format   = path.Substring(dotIndex + 1);
 
             var newPath = $"{spec}/bg({hex}).{format}";
 

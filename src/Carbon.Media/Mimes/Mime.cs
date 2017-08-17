@@ -22,10 +22,10 @@ namespace Carbon.Media
 
             #endregion
 
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Formats = formats;
-            Type = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
-            Signatures = null; // Array.Empty<MagicNumber>();
+            Name       = name ?? throw new ArgumentNullException(nameof(name));
+            Formats    = formats;
+            Type       = name.Substring(0, name.IndexOf('/')).ToEnum<MediaType>(ignoreCase: true);
+            Signatures = Array.Empty<MagicNumber>();
         }
 
         internal Mime(string name, string format, MagicNumber[] magicNumbers)

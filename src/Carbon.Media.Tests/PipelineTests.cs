@@ -15,7 +15,22 @@ namespace Carbon.Media.Processors.Tests
 
         private static readonly MediaSource jpeg_100x50_rotate90 = new MediaSource("1", 100, 50, ExifOrientation.Rotate90);
 
+        private static readonly MediaSource gif_200x200 = new MediaSource("1", 200, 200);
+
         // 22626389/480x444/crop:0-33_480x360.jpeg
+
+        [Fact]
+        public void CropExact()
+        {
+            var pipeline = MediaPipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode");
+
+
+            Assert.Equal("blob#pipe|>crop(0,0,200,200)|>JPEG::encode", pipeline.Canonicalize());
+
+            Assert.Equal(200, pipeline.FinalWidth);
+            Assert.Equal(200, pipeline.FinalHeight);
+
+        }
 
         [Fact]
         public void BackgroundTest()

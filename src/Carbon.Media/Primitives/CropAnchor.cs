@@ -6,11 +6,11 @@ namespace Carbon.Media
 
     public enum CropAnchor
     {
-        Top         = 1 << 1,
-        Right       = 1 << 2,
-        Bottom      = 1 << 3,
-        Left        = 1 << 4,
-        Center      = 1 << 5
+        Top     = 1 << 1,
+        Right   = 1 << 2,
+        Bottom  = 1 << 3,
+        Left    = 1 << 4,
+        Center  = 1 << 5
     }
 
     public static class CropAnchorExtensions

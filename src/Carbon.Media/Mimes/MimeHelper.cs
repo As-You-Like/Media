@@ -121,13 +121,13 @@ namespace Carbon.Media
             { "webp",   Mime.WebP },
 
 			// Text
-			{ "appcache",   Mime.AppCache },
-            { "css",        Mime.Css },
-            { "csv",        Mime.Csv },
-            { "htm",        Mime.Html },
-            { "html",       Mime.Html },
-            { "txt",        Mime.Txt },
-            { "xml",        Mime.Xml },
+			{ "appcache", Mime.AppCache },
+            { "css",      Mime.Css },
+            { "csv",      Mime.Csv },
+            { "htm",      Mime.Html },
+            { "html",     Mime.Html },
+            { "txt",      Mime.Txt },
+            { "xml",      Mime.Xml },
 
 			// Videos
 			{ "avi",    Mime.Avi },

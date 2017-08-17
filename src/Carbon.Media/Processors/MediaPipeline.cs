@@ -37,9 +37,9 @@ namespace Carbon.Media.Processors
 
         public Position Position => new Position(Padding.Left, Padding.Top);
         
-        public int FinalWidth => Scale.Width + Padding.Left + Padding.Right;
+        public int FinalWidth  => (Scale?.Width ?? Crop.Value.Width) + Padding.Left + Padding.Right;
 
-        public int FinalHeight => Scale.Height + Padding.Top + Padding.Bottom;
+        public int FinalHeight => (Scale?.Height ?? Crop.Value.Height) + Padding.Top + Padding.Bottom;
 
         public Size FinalSize => new Size(FinalWidth, FinalHeight);
 
@@ -260,7 +260,7 @@ namespace Carbon.Media.Processors
             {
                 if (segment.Contains("#"))
                 {
-                    var id = segment.Split('#')[1];
+                    var id = segment.Split(Seperators.Pound)[1]; // '#'
 
                     result.Source = new MediaSource(id, 100, 100);
 

@@ -2,7 +2,7 @@
 {
     // TODO: Remove in .NET next...
 
-    internal class Seperators
+    internal static class Seperators
     {
         public static readonly char[] Space        = { ' ' };
         public static readonly char[] x            = { 'x' };
@@ -13,5 +13,6 @@
         public static readonly char[] Comma        = { ',' };
         public static readonly char[] Bar          = { '|' };
         public static readonly char[] Colon        = { ':' };
+        public static readonly char[] Pound        = { '#' };
     }
 }

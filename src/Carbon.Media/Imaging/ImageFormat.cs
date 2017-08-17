@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     using static ImageFormat;
 
@@ -44,7 +46,7 @@
                 case "webp" : return WebP;
             }
 
-            throw new System.Exception("Unexpected format:" + text);
+            throw new Exception("Unexpected format:" + text);
         }
     }
 
@@ -70,7 +72,7 @@
                 case WebP : return Mime.WebM;
             }
 
-            throw new System.Exception("Unexpected format:" + value.ToLower());
+            throw new Exception("Unexpected format:" + value.ToLower());
         }
 
         public static string Canonicalize(this ImageFormat value)

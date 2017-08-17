@@ -5,8 +5,6 @@ namespace Carbon.Media
 {
     public static class FileFormat
     {
-        private static readonly string[] compressableFormats = { "appcache", "atom", "css", "csv", "html", "js", "json", "txt", "xml" };
-
         public static string Normalize(string format)
         {
             #region Preconditions
@@ -38,11 +36,6 @@ namespace Carbon.Media
 
                 default: return format;
             }
-        }
-
-        public static bool IsCompressible(string format)
-        {
-            return Array.BinarySearch(compressableFormats, format) > 0;
         }
 
         public static string FromPath(string path)
