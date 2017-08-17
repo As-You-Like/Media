@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <AssemblyName>Carbon.Media</AssemblyName>
-    <VersionPrefix>1.7.2</VersionPrefix>
-    <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
+    <VersionPrefix>1.9.1</VersionPrefix>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    
+    <!-- Package Details-->
     <Authors>iamcarbon</Authors>
     <Copyright>© Jason Nelson</Copyright>
     <Description>Media primitives.</Description>
@@ -12,18 +14,11 @@
     <RepositoryUrl>https://github.com/carbon/Media</RepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Remove="NETStandard.Library" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.IO" Version="4.3.0" />
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">    
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Drawing" />

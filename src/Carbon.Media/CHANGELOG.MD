@@ -1,4 +1,6 @@
-﻿ 1.5.4 (2017-03-07)
+﻿- Update to .NETSTANDARD 2.0
+
+ 1.5.4 (2017-03-07)
  -----------------------------------------------------
  Additional Codecs & Containers
  Rename MediaCodec -> CodecInfo
