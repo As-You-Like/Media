@@ -20,11 +20,9 @@ namespace Carbon.Media
 
         public override int GetHashCode() => Name.GetHashCode();
 
-        public bool Equals(CodecInfo other)
-        {
-            return Name == other?.Name
-                && Type == other?.Type;
-        }
+        public bool Equals(CodecInfo other) =>
+            Name == other?.Name && 
+            Type == other?.Type;
 
         public override bool Equals(object obj) =>
             (obj as CodecInfo)?.Equals(this) == true;
@@ -45,22 +43,22 @@ namespace Carbon.Media
             switch (name.ToUpper())
             {
                 // H264 Profiles
-                case "AVC1.42E01E"  : return H264Baseline;
-                case "AVC1.4D401E"  : return H264Main;
-                case "AVC1.58A01E"  : return H264Extended;
-                case "AVC1.64001E"  : return H264High;
+                case "AVC1.42E01E" : return H264Baseline;
+                case "AVC1.4D401E" : return H264Main;
+                case "AVC1.58A01E" : return H264Extended;
+                case "AVC1.64001E" : return H264High;
 
-                case "MP4V.20.9"    : return H264Level0Simple;
-                case "MP4V.20.240"  : return H264Level0Advanced;
+                case "MP4V.20.9"   : return H264Level0Simple;
+                case "MP4V.20.240" : return H264Level0Advanced;
 
                 // AAC Profiles
-                case "AAC"          : return Aac;
-                case "MP4A.40.2"    : return AacLC;
+                case "AAC"         : return Aac;
+                case "MP4A.40.2"   : return AacLC;
 
-                case "VP6"          : return Vp6;
-                case "VP7"          : return Vp7;
-                case "VP8"          : return Vp8;
-                case "VP9"          : return Vp9;
+                case "VP6"         : return Vp6;
+                case "VP7"         : return Vp7;
+                case "VP8"         : return Vp8;
+                case "VP9"         : return Vp9;
             }
 
             var type = name.ToEnum<CodecType>(ignoreCase: true);

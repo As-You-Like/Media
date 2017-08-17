@@ -5,19 +5,19 @@ namespace Carbon.Media
     [Flags]
     public enum ResizeFlags 
     {
-        None      = 0,
-        Exact     = 1 << 1, // Resize to the exact dimensions without regard to the aspect ratio
-        Fit       = 1 << 2, // Fill the box while retaining the aspect ratio. Won't upscale unless upscale is also set, AKA CSS:contain
-        Crop      = 1 << 3, // Fill the box, clipping as needed. background-sizing: cover. AKA Fill || CSS:cover
-        Pad       = 1 << 4, // Center within the box, padding as needed
+        None     = 0,
+        Exact    = 1 << 1, // Resize to the exact dimensions without regard to the aspect ratio
+        Fit      = 1 << 2, // Fill the box while retaining the aspect ratio. Won't upscale unless upscale is also set, AKA CSS:contain
+        Crop     = 1 << 3, // Fill the box, clipping as needed. background-sizing: cover. AKA Fill || CSS:cover
+        Pad      = 1 << 4, // Center within the box, padding as needed
 
         // Portrait  = 1 << 5, // Resize to the height maintaing aspect
         // Landscape = 1 << 6, // Resize to the width maintaing aspect
 
-        Modes    = Exact | Fit | Crop | Pad,
+        Modes   = Exact | Fit | Crop | Pad,
 
-        Carve    = 1 << 10,  // Fill the box, carving as needed
-        Upscale  = 1 << 11
+        Carve   = 1 << 10,  // Fill the box, carving as needed
+        Upscale = 1 << 11
     }
     
     public static class ResizeFlagsExtensions
@@ -65,10 +65,8 @@ namespace Carbon.Media
             }
         }
     }
-
-
-    // CSS Background Size Notes:
-    // Cover: Scale the background image to be as large as possible so that the background area is completely covered by the background image. Some parts of the background image may not be in view within the background positioning area
-    // Contain: Scale the image to the largest size such that both its width and its height can fit inside the content area
-
 }
+
+// CSS Background Size Notes:
+// Cover: Scale the background image to be as large as possible so that the background area is completely covered by the background image. Some parts of the background image may not be in view within the background positioning area
+// Contain: Scale the image to the largest size such that both its width and its height can fit inside the content area

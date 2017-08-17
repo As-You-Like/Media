@@ -81,7 +81,7 @@ namespace Carbon.Media
         #region Equality
 
         public override bool Equals(object obj) =>
-            obj is Unit && Equals((Unit)obj);
+            obj is Unit unit && Equals(unit);
          
         public bool Equals(Unit other) => 
             Type == other.Type && Value == other.Value;
@@ -92,8 +92,7 @@ namespace Carbon.Media
         public static bool operator !=(Unit lhs, Unit rhs) =>
             !lhs.Equals(rhs);
 
-        public override int GetHashCode() => 
-            Value.GetHashCode();
+        public override int GetHashCode() =>  Value.GetHashCode();
         
         #endregion
 

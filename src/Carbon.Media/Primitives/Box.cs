@@ -15,10 +15,10 @@ namespace Carbon.Media
 
         public Box(int width, int height)
         {
-            X = 0;
-            Y = 0;
-            Width = width;
-            Height = height;
+            X       = 0;
+            Y       = 0;
+            Width   = width;
+            Height  = height;
             Padding = Padding.Zero;
         }
         

@@ -11,9 +11,7 @@
         public int X { get; }
         public int Y { get; }
     }  
-
-    // how can we define a canvas?
-
-    // Canvas(500,500, color: red)
-    // Padding is applied to the scale & becomes a margin in draw phase...
 }
+
+// Canvas(500,500, color: red)
+// Padding is applied to the scale & becomes a margin in draw phase...

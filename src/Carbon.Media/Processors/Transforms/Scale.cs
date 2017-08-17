@@ -23,7 +23,7 @@ namespace Carbon.Media.Processors
 
             Width = width;
             Height = height;
-            Mode = mode;
+            Mode   = mode;
         }
 
         public int Width { get; }
@@ -56,8 +56,7 @@ namespace Carbon.Media.Processors
             return sb.ToString();
         }
 
-        public override string ToString() =>
-            Canonicalize();
+        public override string ToString() => Canonicalize();
 
         public static Scale Parse(string segment)
         {

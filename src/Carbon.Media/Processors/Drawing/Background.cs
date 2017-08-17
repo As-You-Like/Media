@@ -1,10 +1,12 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     public class Background : IFilter
     {
         public Background(string color)
         {
-            Color = color;
+            Color = color ?? throw new ArgumentNullException(nameof(color));
         }
 
         public string Color { get; }

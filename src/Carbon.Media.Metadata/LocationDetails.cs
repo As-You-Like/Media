@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public class LocationDetails
+    public struct LocationDetails
     {
         public double Longitude { get; set; }
 

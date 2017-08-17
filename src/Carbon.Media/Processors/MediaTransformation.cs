@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Text;
 
-// TODO: Add simplify() & combine with pipeline...
-
 namespace Carbon.Media
 {
     using Processors;

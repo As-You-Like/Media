@@ -8,26 +8,26 @@ namespace Carbon.Media
 
         public Padding(int top, int right, int bottom, int left)
         {
-            Top = top;
-            Right = right;
+            Top    = top;
+            Right  = right;
             Bottom = bottom;
-            Left = left;
+            Left   = left;
         }
 
         public Padding(int topAndBottom, int leftAndRight)
         {
-            Top = topAndBottom;
-            Right = leftAndRight;
+            Top    = topAndBottom;
+            Right  = leftAndRight;
             Bottom = topAndBottom;
-            Left = leftAndRight;
+            Left   = leftAndRight;
         }
 
         public Padding(int value)
         {
-            Top = value;
-            Right = value;
+            Top    = value;
+            Right  = value;
             Bottom = value;
-            Left = value;
+            Left   = value;
         }
 
         public int Top { get; }
@@ -41,10 +41,10 @@ namespace Carbon.Media
         public static Padding operator +(Padding lhs, Padding rhs) 
         {
             return new Padding(
-                top    : lhs.Top + rhs.Top,
-                right  : lhs.Right + rhs.Right,
+                top    : lhs.Top    + rhs.Top,
+                right  : lhs.Right  + rhs.Right,
                 bottom : lhs.Bottom + rhs.Bottom,
-                left   : lhs.Left + rhs.Left
+                left   : lhs.Left   + rhs.Left
             );
         }
         public override string ToString()
@@ -52,7 +52,6 @@ namespace Carbon.Media
             var same = Top == Right && Top == Bottom && Top == Left;
 
             if (same) return Top.ToString();
-
 
             if (Top == Bottom && Right == Left)
             {
@@ -62,12 +61,10 @@ namespace Carbon.Media
             return $"{Top},{Right},{Bottom},{Left}";
         }
 
-        public bool Equals(Padding other)
-        {
-            return Top == other.Top
-                && Right == other.Right
-                && Bottom == other.Bottom
-                && Left == other.Left;
-        }
+        public bool Equals(Padding other) =>
+            Top == other.Top && 
+            Right == other.Right && 
+            Bottom == other.Bottom && 
+            Left == other.Left;
     }
 }

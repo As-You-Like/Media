@@ -1,45 +1,56 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
+    using static CropAnchor;
+
     public static class AnchorHelper
     {
         public static CropAnchor Parse(string text)
         {
+            #region Preconditions
+
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
+            #endregion
+
             switch (text)
             {
                 case "b":
                 case "s":
-                case "bottom": return CropAnchor.Bottom;
+                case "bottom": return Bottom;
 
-                case "bl": return CropAnchor.Bottom | CropAnchor.Left;
-                case "sw": return CropAnchor.Bottom | CropAnchor.Left;
-                case "br": return CropAnchor.Bottom | CropAnchor.Right;
-                case "se": return CropAnchor.Bottom | CropAnchor.Right;
+                case "bl": return Bottom | Left;
+                case "sw": return Bottom | Left;
+                case "br": return Bottom | Right;
+                case "se": return Bottom | Right;
 
                 case "c":
-                case "center": return CropAnchor.Center;
+                case "center": return Center;
 
                 case "w":
                 case "west":
                 case "l":
-                case "left":  return CropAnchor.Left;
+                case "left":  return Left;
 
                 case "e":
                 case "east":
                 case "r":
-                case "right": return CropAnchor.Right;
+                case "right": return Right;
 
                 case "n":
                 case "north":
                 case "t":
-                case "top": return CropAnchor.Top;
+                case "top": return Top;
 
                 case "nw":
-                case "tl": return CropAnchor.Top | CropAnchor.Left;
+                case "tl": return Top | Left;
 
                 case "ne":
-                case "tr": return CropAnchor.Top | CropAnchor.Right;
+                case "tr": return Top | Right;
 
-                default: throw new System.Exception("Unexpected anchor:" + text);
+                default: throw new Exception("Unexpected anchor:" + text);
             }
         }
     }

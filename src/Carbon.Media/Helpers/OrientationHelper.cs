@@ -21,8 +21,10 @@ namespace Carbon.Media
             }
         }
 
-        public static ExifOrientation Parse(string text) => 
-            (ExifOrientation)Enum.Parse(typeof(ExifOrientation), text);
+        public static ExifOrientation Parse(string text) =>
+            Enum.TryParse<ExifOrientation>(text, true, out var result) 
+                ? result 
+                : throw new Exception("Invalid Orientation: " + text);
 
         public static ITransform[] GetTransforms(this ExifOrientation orientation)
         {
