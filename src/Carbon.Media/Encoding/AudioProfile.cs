@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     public class AudioProfile
     {
-        public int Bitrate { get; set; }
+        public BitRate Bitrate { get; set; }
 
         public string Codec { get; set; }
 
