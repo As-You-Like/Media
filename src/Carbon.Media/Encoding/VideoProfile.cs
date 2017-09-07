@@ -11,7 +11,7 @@ namespace Carbon.Media
 
         public BitRate? BitRate { get; set; }
 
-        public int? MaxBitrate { get; set; }
+        public BitRate? MaxBitrate { get; set; }
 
         // avc1.42E01E (H264 Baseline)
         // avc1.4D401E (H264 Main)

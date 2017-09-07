@@ -5,13 +5,13 @@ namespace Carbon.Media.Tests
     public class ImageFormatTests
     {
         [Theory]
-        [InlineData(ImageFormat.Bmp,  CodecType.Bmp)]
-        [InlineData(ImageFormat.Bpg,  CodecType.Bpg)]
-        [InlineData(ImageFormat.Dng,  CodecType.Dng)]
-        [InlineData(ImageFormat.Gif,  CodecType.Gif)]
-        [InlineData(ImageFormat.Heif, CodecType.Heif)]
-        [InlineData(ImageFormat.Ico,  CodecType.Ico)]
-        public void ImageCodecTypes(ImageFormat a, CodecType b)
+        [InlineData(ImageFormat.Bmp,  CodecId.Bmp)]
+        [InlineData(ImageFormat.Bpg,  CodecId.Bpg)]
+        [InlineData(ImageFormat.Dng,  CodecId.Dng)]
+        [InlineData(ImageFormat.Gif,  CodecId.Gif)]
+        [InlineData(ImageFormat.Heif, CodecId.Heif)]
+        [InlineData(ImageFormat.Ico,  CodecId.Ico)]
+        public void ImageCodecTypes(ImageFormat a, CodecId b)
         {
             Assert.Equal((int)a, (int)b);
         }

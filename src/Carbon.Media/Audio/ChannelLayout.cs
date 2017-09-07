@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum ChannelLayout
+    public enum ChannelLayout : long
     {
         FrontLeft           = 1 << 1,
         FrontRight          = 1 << 2,

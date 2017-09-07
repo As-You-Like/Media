@@ -5,12 +5,12 @@ namespace Carbon.Media.Tests
     public class CodecTests
     {
         [Theory]
-        [InlineData(AudioFormat.Ac3, CodecType.Ac3)]
-        [InlineData(AudioFormat.Aiff, CodecType.Aiff)]
-        [InlineData(AudioFormat.Alac, CodecType.Alac)]
-        [InlineData(AudioFormat.Flac, CodecType.Flac)]
-        [InlineData(AudioFormat.Opus, CodecType.Opus)]
-        public void AudioCodecTypes(AudioFormat a, CodecType b)
+        [InlineData(AudioFormat.Ac3, CodecId.Ac3)]
+        [InlineData(AudioFormat.Aiff, CodecId.Aiff)]
+        [InlineData(AudioFormat.Alac, CodecId.Alac)]
+        [InlineData(AudioFormat.Flac, CodecId.Flac)]
+        [InlineData(AudioFormat.Opus, CodecId.Opus)]
+        public void AudioCodecTypes(AudioFormat a, CodecId b)
         {
             Assert.Equal((int)a, (int)b);
         }
