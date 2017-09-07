@@ -9,7 +9,7 @@ namespace Carbon.Media
     {
         public int? Quality { get; set; }
 
-        public int? Bitrate { get; set; }
+        public BitRate? BitRate { get; set; }
 
         public int? MaxBitrate { get; set; }
 
