@@ -6,24 +6,28 @@ namespace Carbon.Media
     {
         int ChannelCount { get; }
 
-        string Codec { get; }
+        CodecInfo Codec { get; }
 
         TimeSpan Duration { get; }
 
         /// <summary>
         /// The sampling rate defines the number of samples per second
         /// taken from a continuous signal to make a discrete signal.
-        /// Measured in hertz (Hz), or samples per second 
-        /// 
-        /// 8,000 Hz : Telephone
-        /// 11,025 Hz :	1/4 CD sampling Rate
-        /// 22,050 Hz :	1/2 CD sampling Rate
-        /// 44,100 Hz :	Audio CD, most popular MPEG-1 (VCD, SVCD, MP3) sampling rate
-        /// 48,000 Hz :	TV, DVD, and films. 
-        /// 96,000 Hz : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
-        /// 192,000 Hz : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
+        /// Measured in hertz (Hz), or samples per second
+        /// 8,000 Hz     : Telephone
+        /// 44,100 Hz    : Audio CD, most popular MPEG-1 (VCD, SVCD, MP3) sampling rate
+        /// 48,000 Hz    : TV, DVD, and films. 
+        /// 96,000 Hz    : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
+        /// 192,000 Hz   : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
         /// 2,822,400 Hz : SACD
         /// </summary>
         int SampleRate { get; }
+        
+        // The format determines the sample bit count & whether it is planal
+        SampleFormat Format { get; }
+        
+        ChannelLayout ChannelLayout { get; }
     }
+
+    // Channels { L, R, C }
 }
