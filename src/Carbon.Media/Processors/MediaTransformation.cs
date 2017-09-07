@@ -189,9 +189,9 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation WithColorspace(string name)
+        public MediaTransformation WithColorSpace(ColorSpace colorSpace)
         {
-            Apply(new Colorspace(name));
+            Apply(new ColorSpaceFilter(colorSpace));
 
             return this;
         }

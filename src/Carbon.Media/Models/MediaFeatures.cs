@@ -11,7 +11,7 @@ namespace Carbon.Media
         Animated     = 1 << 2,  // 4
         ColorProfile = 1 << 3,  // 8,
 
-        // ColorSpaces
+        // Color spaces
         CMYK         = 1 << 5,
         Gray         = 1 << 6
     }
