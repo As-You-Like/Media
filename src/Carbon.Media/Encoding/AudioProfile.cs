@@ -10,8 +10,8 @@ namespace Carbon.Media
 
         [Range(0, 48000)]
         public int? SampleRate { get; set; }
-
+        
         [Range(0, 32)]
-        public int? BitsPerSample { get; set; }
+        public SampleFormat SampleFormat { get; set; }
     }
 }

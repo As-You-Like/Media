@@ -1,6 +1,5 @@
 ﻿namespace Carbon.Media
 {
-    // Keep in sync with MediaCodecType
     public enum AudioFormat
     {
         Aac    = 200,
@@ -24,3 +23,5 @@
         Wv     = 285, // WavPack
     }
 }
+
+// Keep in sync with CodecId

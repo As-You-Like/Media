@@ -31,4 +31,6 @@
     }
 }
 
-// scheme
+// Sigma
+
+// scheme: Box, Gaussian

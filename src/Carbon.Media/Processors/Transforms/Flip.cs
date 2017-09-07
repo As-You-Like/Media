@@ -54,9 +54,9 @@ namespace Carbon.Media.Processors
         }
     }
 
-    public enum FlipAxis
+    public enum FlipAxis : byte
     {
-        X,  // Horizontally
-        Y   // Veritical
+        X = 1, // Horizontally
+        Y = 2  // Veritical
     }
 }
