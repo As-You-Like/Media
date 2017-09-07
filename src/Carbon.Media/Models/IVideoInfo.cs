@@ -12,7 +12,17 @@ namespace Carbon.Media
 
         int Height { get; }
 
-        // 30
+        // 1/25
         Rational FrameRate { get; }
+
+        Rational AspectRatio { get; }
+
+        PixelFormat PixelFormat { get; }
+
+        int PlaneCount { get; }
+
+        int Alignment { get; }
+
+        int[] Strides { get; }
     }
 }
