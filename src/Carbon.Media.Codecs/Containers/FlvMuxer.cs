@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media.Muxing
+﻿namespace Carbon.Media.Containers
 {
     public class FlvMuxer : Muxer
     {
