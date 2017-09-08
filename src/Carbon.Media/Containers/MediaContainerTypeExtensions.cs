@@ -2,19 +2,19 @@
 
 namespace Carbon.Media
 {
-    using static MediaContainerType;
+    using static ContainerId;
 
-    public static class MediaContainerTypeExtensions
+    public static class ContainerIdExtensions
     {
-        public static string GetVideoFormat(this MediaContainerType container) =>
-             container.ToVideoMime().Format;
+        public static string GetVideoFormat(this ContainerId containerId) =>
+             containerId.ToVideoMime().Format;
 
-        public static string GetAudioFormat(this MediaContainerType container) =>
-            container.ToAudioMime().Format;
+        public static string GetAudioFormat(this ContainerId containerId) =>
+            containerId.ToAudioMime().Format;
 
-        public static Mime ToAudioMime(this MediaContainerType container)
+        public static Mime ToAudioMime(this ContainerId containerId)
         {
-            switch (container)
+            switch (containerId)
             {
                 case _3GP       : return Mime._3GP_Audio;  // audio/3gpp
                 case _3GP2      : return Mime._3GP2_Audio; // audio/3gpp2
@@ -28,13 +28,13 @@ namespace Carbon.Media
                 case Wav        : return Mime.Wav;  // audio/wav
                 case WebM       : return Mime.WebM; // video/webm
                     
-                default: throw new ArgumentException("Invalid container:" + container);
+                default: throw new ArgumentException("Invalid container:" + containerId);
             }
         }
 
-        public static Mime ToVideoMime(this MediaContainerType container)
+        public static Mime ToVideoMime(this ContainerId containerId)
         {
-            switch (container)
+            switch (containerId)
             {
                 case _3GP      : return Mime._3GP;  // video/3gpp
                 case _3GP2     : return Mime._3GP2; // video/3gpp2
@@ -49,7 +49,7 @@ namespace Carbon.Media
                 case Wav       : return Mime.Wav;   // audio/wav
                 case WebM      : return Mime.WebM;  // video/webm
 
-                default: throw new ArgumentException("Invalid container:" + container);
+                default: throw new ArgumentException("Invalid container:" + containerId);
             }
         }
     }

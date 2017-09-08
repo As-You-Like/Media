@@ -1,12 +1,12 @@
 ﻿namespace Carbon.Media
 {
     // A media container may hold one more more types of media
-    // include audio, video, captions, and still images
+    // including audio, video, subtitles, and still images
 
-    public enum MediaContainerType
+    public enum ContainerId
     {
-        _3GP     = 1,   // 3GP                           | 3gp  | audio, video
-        _3GP2    = 2,   // 3GP2                          | 3g2  | audio, video
+        _3GP     = 1,   // 3GP                           | 3gp  | audio, video, subtitles
+        _3GP2    = 2,   // 3GP2                          | 3g2  | audio, video, subtitles
         Aiff     = 11,  // Audio Interchange File Format | aiff | audio
         Asf      = 13,  // Advanced Systems Format       | asf  | audio (wma), video (wmv)
         Au       = 14,  // by Sun Microyststems          | ?    | audio
@@ -25,6 +25,8 @@
         WebM     = 232, // audio, video                  | webm | audio, video
         Xmf      = 240  // eXtensible Music Format       | xdf  | audio
     }
+
+    // Fits
 }
 
 // https://www.w3.org/2008/WebVideo/Fragments/wiki/State_of_the_Art/Containers

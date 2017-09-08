@@ -16,7 +16,7 @@ namespace Carbon.Media
 
         public string Name { get; }
 
-        // Profiles
+        // Profile
 
         #region Equality
 

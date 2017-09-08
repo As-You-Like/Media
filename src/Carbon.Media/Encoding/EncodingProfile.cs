@@ -2,14 +2,14 @@
 {
     public class EncodingProfile
     {
-        public EncodingProfile(MediaContainerType container, AudioProfile audio, VideoProfile video)
+        public EncodingProfile(ContainerId container, AudioProfile audio, VideoProfile video)
         {
             Container = container;
             Audio     = audio;
             Video     = video;
         }
 
-        public MediaContainerType Container { get; }
+        public ContainerId Container { get; }
         
         public AudioProfile Audio { get; }
 

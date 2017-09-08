@@ -16,7 +16,7 @@
         [BitCount(4)]  Bgr4      = 11, // packed BGR | 1:2:1
         [BitCount(8)]  Bgr8      = 12, // packed BGR | 3:3:2
         [BitCount(24)] Bgr24     = 13, // packed BGRA
-        [BitCount(32)] Bgr32     = 14, 
+        [BitCount(32)] Bgr32     = 14, // packed BGR |  8:8:8:x
         [BitCount(48)] Bgr48     = 15, // BGR | 16:16:16
         [BitCount(16)] Bgr555    = 16, // BGR | 5:5:5 | uint
         [BitCount(16)] Bgr565    = 17, // BGR | 5:6:5 | uint

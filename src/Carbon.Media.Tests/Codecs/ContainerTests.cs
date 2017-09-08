@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Tests
 {
-    using static MediaContainerType;
+    using static ContainerId;
 
     public class ContainerTests
     {
@@ -14,7 +14,7 @@ namespace Carbon.Media.Tests
         [InlineData(Matroska, "mkv")]
         [InlineData(WebM, "webm")]
         [InlineData(Ogg, "ogv")]
-        public void VideoFormats(MediaContainerType container, string format)
+        public void VideoFormats(ContainerId container, string format)
         {
             Assert.Equal(format, container.GetVideoFormat());
         }
@@ -24,7 +24,7 @@ namespace Carbon.Media.Tests
         [InlineData(Mp4, "m4a")]
         [InlineData(Matroska, "mka")]
         [InlineData(Ogg, "oga")]
-        public void AudioFormats(MediaContainerType container, string format)
+        public void AudioFormats(ContainerId container, string format)
         {
             Assert.Equal(format, container.GetAudioFormat());
         }

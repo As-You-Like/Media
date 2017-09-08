@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{86F5C099-4C31-4106-91FF-C624916A6311}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Tests", "Carbon.Media.Tests\Carbon.Media.Tests.csproj", "{5C50330F-45A2-4380-BE20-1BE589BCD903}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Metadata", "Carbon.Media.Metadata\Carbon.Media.Metadata.csproj", "{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Codecs", "Carbon.Media.Codecs\Carbon.Media.Codecs.csproj", "{6022D9C7-4480-464F-89E4-2A062E3648F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,11 +31,18 @@ Global
 		{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5C50330F-45A2-4380-BE20-1BE589BCD903} = {86F5C099-4C31-4106-91FF-C624916A6311}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D4D34EA-C8F1-4EFC-8C6F-C6907B3544AF}
 	EndGlobalSection
 EndGlobal
