@@ -16,8 +16,10 @@
         /// </summary>
         Indexed = 3,
 
-        // Monochrome?
-        Grayscale = 4,
+        /// <summary>
+        /// Shades of a single color, typically black (grayscale)
+        /// </summary>
+        Monochrome = 4,
 
         /// <summary>
         /// Y’CbCr separate colors into a luma component (Y’) and two chroma components (Cb and Cr). 
