@@ -16,14 +16,8 @@ namespace Carbon.Media
         // Kb/s
         // Mb/s
 
-        public bool Equals(BitRate other)
-        {
-            return Value == other.value;
-        }
+        public bool Equals(BitRate other) => Value == other.value;
 
-        public override int GetHashCode()
-        {
-            return value.GetHashCode();
-        }
+        public override int GetHashCode() => value.GetHashCode();
     }
 }

@@ -13,5 +13,12 @@ namespace Carbon.Media
         
         [Range(0, 32)]
         public SampleFormat SampleFormat { get; set; }
+
+        // ChannelCount
     }
+
+    // Bitrate              // -b:a
+    // Codec                // -acodec
+    // Audio Frequency      // -af
+    // Audio Quality        // -aq
 }

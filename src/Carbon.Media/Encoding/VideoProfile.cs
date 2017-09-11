@@ -11,7 +11,11 @@ namespace Carbon.Media
 
         public BitRate? BitRate { get; set; }
 
-        public BitRate? MaxBitrate { get; set; }
+        public BitRate? MinBitRate { get; set; } // -minrate
+
+        public BitRate? MaxBitRate { get; set; } // -maxrate
+
+        public long? BufferSize { get; set; } // -bufsize
 
         // avc1.42E01E (H264 Baseline)
         // avc1.4D401E (H264 Main)
@@ -33,7 +37,7 @@ namespace Carbon.Media
         /// </summary>
         public double? MaxFrameRate { get; set; }
 
-        public TimeSpan KeyFrameDistance { get; set; }
+        public TimeSpan? KeyFrameDistance { get; set; }
 
         [DefaultValue(false)]
         public bool Upscale { get; set; }
