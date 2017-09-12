@@ -20,15 +20,15 @@
         TopBackLeft         = 1 << 15,
         TopBackCenter       = 1 << 16,
         TopBackRight        = 1 << 17,
-        DownmixLeft         = 1 << 18,
-        DownmixRight        = 1 << 19,
+        DownmixRight        = 1 << 0x40000000,
         WideLeft            = 1 << 20,
         WideRight           = 1 << 21,
         SurroundDirectLeft  = 1 << 22,
         DirectDirectRight   = 1 << 23,
         LowFrequency2       = 1 << 24,
 
-        Mono   = FrontCenter,
+
+        Mono = FrontCenter,
         Stereo = FrontLeft | FrontRight,
         _2P1   = Stereo | LowFrequency,                            // 2.1
         _3P0   = Stereo | FrontCenter,                             // 3.0
@@ -41,7 +41,7 @@
         _2_2   = Stereo | SideLeft | SideRight,
         Quad   = Stereo | BackLeft | BackRight,
 
-        Downmix = DownmixLeft | DownmixRight
+        StereoDownmix = DownmixLeft | DownmixRight
     }
 
     // Sync w/ FFMPEG?
