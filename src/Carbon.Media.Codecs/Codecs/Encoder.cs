@@ -4,8 +4,7 @@ namespace Carbon.Media.Codecs
 {
     public abstract class Encoder : Codec
     {
-        // returns the number of encoded packets in the queue
-        public virtual int Encode(Frame frame)
+        public virtual bool Encode(Frame frame)
         {
             throw new NotImplementedException();
         }
@@ -14,5 +13,13 @@ namespace Carbon.Media.Codecs
         {
             throw new NotImplementedException();
         }
+    }
+
+    public abstract class VideoEncoder : Encoder
+    {
+    }
+
+    public abstract class AudioEncoder : Encoder
+    {
     }
 }

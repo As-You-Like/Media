@@ -18,7 +18,7 @@
        
         public void Probe() { }
 
-        public void ReadHeader(ContainerContext context)
+        public void ReadHeader(FormatContext context)
         {
         }
 

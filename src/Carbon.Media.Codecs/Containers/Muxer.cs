@@ -10,7 +10,7 @@ namespace Carbon.Media.Containers
         // VideoCodec
         // SubtitleCodec
         
-        public void WriteHeader(ContainerContext context)
+        public void WriteHeader(FormatContext context)
         {
             // Width
             // Height
@@ -22,7 +22,7 @@ namespace Carbon.Media.Containers
         // if interleave is true: the muxer will ensure that packets are interleaved in order of increasing DTS
         public void WritePacket(Packet packet, bool interleave = true) { }
 
-        public void WriteTrailer(ContainerContext context)
+        public void WriteTrailer(FormatContext context)
         {
         }
     }

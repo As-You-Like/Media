@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class AacDecoder : Decoder
+    public class AacDecoder : AudioDecoder
     {
         public override CodecId Id => CodecId.Aac;
     }

@@ -2,6 +2,6 @@
 {
     public class HevcEncoder : Encoder
     {
-        public override CodecId Id => CodecId.HEVC;
+        public override CodecId Id => CodecId.Hevc;
     }
 }

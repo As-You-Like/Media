@@ -1,7 +1,7 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class HevcDecoder : Decoder
+    public class HevcDecoder : VideoDecoder
     {
-        public override CodecId Id => CodecId.HEVC;
+        public override CodecId Id => CodecId.Hevc;
     }
 }

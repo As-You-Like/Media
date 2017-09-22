@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class AacEncoder : Encoder
+    public class AacEncoder : AudioEncoder
     {
         private readonly AacEncoderOptions options;
 

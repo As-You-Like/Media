@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class H264Encoder : Encoder
+    public class H264Encoder : VideoEncoder
     {
         private readonly H264EncoderOptions options;
 
@@ -20,7 +20,7 @@ namespace Carbon.Media.Codecs
         
         public EntropyCoder EntropyCoder { get; set; }
 
-        public MotionEstimationMethod MotionEstimationMethod { get; set; }
+        public H264MotionEstimationMethod MotionEstimationMethod { get; set; }
 
         public string Profile { get; set; }
 
@@ -35,7 +35,7 @@ namespace Carbon.Media.Codecs
         Ac,
         Vlc
     }
-    public enum MotionEstimationMethod
+    public enum H264MotionEstimationMethod
     {
         Dia,
         Epzs,

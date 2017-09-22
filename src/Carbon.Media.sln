@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Metadata", "Ca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Codecs", "Carbon.Media.Codecs\Carbon.Media.Codecs.csproj", "{6022D9C7-4480-464F-89E4-2A062E3648F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpeg", "Carbon.FFmpeg\FFmpeg.csproj", "{22C704D7-E441-461A-BCB7-9709FC406319}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6022D9C7-4480-464F-89E4-2A062E3648F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C704D7-E441-461A-BCB7-9709FC406319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C704D7-E441-461A-BCB7-9709FC406319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C704D7-E441-461A-BCB7-9709FC406319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C704D7-E441-461A-BCB7-9709FC406319}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

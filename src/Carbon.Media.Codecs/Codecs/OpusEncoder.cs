@@ -7,7 +7,6 @@ namespace Carbon.Media.Codecs
         public override CodecId Id => CodecId.Opus;
     }
 
-
     public class OpusEncoderOptions
     {
         public BitRate BitRate { get; set; }
