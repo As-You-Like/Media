@@ -6,7 +6,7 @@ using static System.Math;
 namespace Carbon.Media
 {
     [DataContract]
-    public struct Rational : IFormattable
+    public struct Rational : IEquatable<Rational>, IFormattable
     {
         public Rational(long value)
         {
@@ -100,6 +100,16 @@ namespace Carbon.Media
         public string ToString(string format, IFormatProvider formatProvider) => 
             ToDouble().ToString(format);
 
+
+        #region IEquatable
+
+        public bool Equals(Rational other)
+        {
+            return Numerator   == other.Numerator
+                && Denominator == other.Denominator;
+        }
+
+        #endregion
 
     }
 }
