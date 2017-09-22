@@ -40,6 +40,13 @@ namespace Carbon.Media
 
         public static string FromPath(string path)
         {
+            #region Preconditions
+
+            if (path == null)
+                throw new ArgumentNullException(nameof(path));
+
+            #endregion
+
             var extension = Path.GetExtension(path);
 
             return Normalize(extension);

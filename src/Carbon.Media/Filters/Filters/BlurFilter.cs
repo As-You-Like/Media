@@ -33,4 +33,6 @@
 
 // Sigma
 
+// boxblur, gblur, avgblur, sab, smartblur
+
 // scheme: Box, Gaussian

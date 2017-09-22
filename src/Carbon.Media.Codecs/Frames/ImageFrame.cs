@@ -1,8 +1,10 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-    public class ImageFrame : Frame
+    public class VideoFrame : Frame
     {
-        public ImageFrame(IBuffer data, PixelFormat format, int width, int height, int[] strides)
+        public VideoFrame(IBuffer data, PixelFormat format, int width, int height, int[] strides)
             : base(data)
         {
             Width   = width;

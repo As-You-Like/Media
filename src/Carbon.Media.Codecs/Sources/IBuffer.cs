@@ -11,17 +11,13 @@ namespace Carbon.Media
         long Length { get; }
 
         // Free
-
-
         // Unref
         // Ref
-
     }
     
     // GCHandle?
 
-    // Provides a way to access a managed object from unmanaged memory.
-
+    // Provides a way to access a managed object from unmanaged memory
 
     // For FFMPEG, this should be an AVBuffer
 }

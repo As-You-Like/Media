@@ -11,8 +11,8 @@ namespace Carbon.Media.Processing
         {
             // av_format_open (auto detects format, reads header, and creates an AV context)
 
-            var inputContext  = new ContainerContext();
-            var outputContext = new ContainerContext();
+            var inputContext  = new FormatContext();
+            var outputContext = new FormatContext();
 
             using (var demuxer = new HlsDemuxer())
             using (var muxer = new MovMuxer(new MovMuxerOptions()))
@@ -23,7 +23,6 @@ namespace Carbon.Media.Processing
 
                 // if the header is complete, fill in the missing details from the next few frames
                 
-
                 Packet packet;
 
                 while ((packet = demuxer.ReadPacket()) != null)
@@ -61,8 +60,7 @@ namespace Carbon.Media.Processing
         // FilterLinks
         public IList<IFilter> Filters { get; }
     }
-
-
+    
     // Custom IO Context...
     public class IOContext
     {

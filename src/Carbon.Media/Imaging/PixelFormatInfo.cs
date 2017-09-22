@@ -6,7 +6,11 @@
 
     public struct PixelFormatInfo
     {
-        public PixelFormatInfo(int bitsPerPixel, ColorModel model, ColorChannel[] channels, PixelFormatFlags flags = PixelFormatFlags.None)
+        public PixelFormatInfo(
+            int bitsPerPixel,
+            ColorModel model, 
+            ColorChannel[] channels,
+            PixelFormatFlags flags = PixelFormatFlags.None)
         {
             BitsPerPixel = bitsPerPixel;
             ColorModel   = model;
@@ -30,7 +34,6 @@
 
         public static PixelFormatInfo Get(PixelFormat format)
         {
-         
             switch (format)
             {
                 case Bgr101010     : return new PixelFormatInfo(10, RGB, new[] { B(10), G(10), R(10) });

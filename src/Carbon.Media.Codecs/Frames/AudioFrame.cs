@@ -24,6 +24,5 @@
         public int SampleCount { get; set; }
 
         // Duration?
-
     }
 }

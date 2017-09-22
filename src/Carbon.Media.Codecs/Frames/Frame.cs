@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Carbon.Media
 {
-    public class Frame
+    public abstract class Frame
     {
         public Frame(IBuffer data)
         {
@@ -23,16 +23,18 @@ namespace Carbon.Media
         /// </summary>
         public int PresentationIndex { get; set; }
 
+        // SmtpeTimecode
+        
+        // dts (when we need to decode something)
+        public TimeSpan DecodingTime { get; set; }
+
+        // pts (when we need to display [present] something) 
+        public TimeSpan PresentationTime { get; set; }
+
         /// <summary>
-        /// pts
+        /// The time the frame is presented
         /// </summary>
-        public TimeSpan Timestamp { get; set; }
-
-        // DTS (when we need to decode something) [pkt_pts]
-        public TimeSpan DecodingTimestamp { get; set; }
-
-        // PTS (when we need to display [present] something) [pkt_dts]
-        public TimeSpan PresentationTimestamp { get; set; }
+        public TimeSpan Duration { get; set; }
         
         public Dictionary<string, string> Metadata { get; set; }
     }

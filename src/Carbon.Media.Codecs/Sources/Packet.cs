@@ -19,14 +19,15 @@ namespace Carbon.Media
 
         public int StreamIndex { get; }
 
-        // Type?
+        public MediaStreamType Type { get; set; }
 
-        public TimeSpan Duration { get; }
+        // pts
+        public TimeSpan PresentationTime { get; }
 
-        public TimeSpan PresentationTimestamp { get; }
+        public TimeSpan Duration { get; set;  }
 
-        // Codectimestamp?
-        public TimeSpan DecompressionTimestamp { get; }
+        // dts
+        public TimeSpan DecompressionTimestamp { get; set; }
 
         /// <summary>
         /// Byte position in stream
@@ -34,9 +35,13 @@ namespace Carbon.Media
         /// </summary>
         public long? Position { get; }
 
+
+        // Flags
+
         public void Dispose()
         {
             Data.Dispose();
         }
     }
+    
 }
