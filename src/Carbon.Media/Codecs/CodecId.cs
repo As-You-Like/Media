@@ -3,115 +3,431 @@
     public enum CodecId
 	{
         Unknown = 0,
-        
-        // -------------------- Audio Codecs (200-299) ---------------------------------------
-        
-        Aac      = 200, // Advanced Audio Coding
-        Ac3      = 205,
-        Aiff     = 210,
-        Alac     = 215, // Apple Lossless Audio Codec
-        Als      = 216, // Audio Lossless Coding
-        Amr      = 217, // Adaptive Multi-Rate Audio Codec [.amr, .3ga]
-        Ape      = 218, // Monkey's Audio (APE)
-        Atrac    = 219, // Adaptive Transform Acoustic Coding
-        Flac     = 220, // Free Lossless Audio Codec
-        Mp1      = 225, // MPEG-1 Audio Layer I
-        Mp2      = 226, // MPEG-1 Audio Layer II
-        Mp3      = 230, // MPEG-1 Audio Layer III
-        Mpc      = 235, // Musepack
-        Opus     = 240,
-        Pcm      = 250,
-        Shorten  = 253, // Shorten
-        Speex    = 255,
-        Tta      = 258, // True Audio
-        Vorbis   = 260,
-        Wav      = 270,
-        Wma      = 280, // Windows Media Audio
-        Wmal     = 281, // Windows Media Audio Lossless
-        Wv       = 285, // WavPack
 
-        // Bv16 (BroadVoice)
-        // Bv32 (BroadVoice)
-        // Alls
-        // Ambe
-        // Amr
-        // AmrWb
-        /*
-        G710,
-        G711,
-        G719,
-        G722,
-        G722_1,
-        G722_2, // AmrWb
-        G726,
-        G728,
-        G729
-         */
+        // -------------------- Audio Codecs ---------------------------------------
+        _8svx_exp         = 86071, // 8SVX exponential
+        _8svx_fib         = 86072, // 8SVX fibonacci
+        Adpcm_ima_Oki     = 71681,
+        Adpcm_Dtk         = 71682, // ADPCM Nintendo Gamecube DTK
+        Adpcm_Ima_Rad     = 71683, // ADPCM IMA Radical
+        Adpcm_G726LE      = 71684,
+        Adpcm_Thp_Le      = 71685, // ADPCM Nintendo THP
+        Adpcm_Psx         = 71686,
+        Adpcm_Aica        = 71687,
+        Adpcm_Ima_Dat4    = 71688,
+        Adpcm_Mtaf        = 71689,
+        Adpcm_4xm         = 69639, // ADPCM 4X Movie
+        Adpcm_Adx         = 69641, // SEGA CRI ADX ADPCM
+        Adpcm_Afc         = 71680, // ADPCM Nintendo Gamecube AFC
+        Adpcm_CT          = 69644, // ADPCM Creative Technology
+        Adpcm_EA          = 69642, // ADPCM Electronic Arts
+        Adpcm_EA_MAXIS_XA = 69658,
+        Adpcm_EA_R1       = 69652, // ADPCM Electronic Arts R1
+        Adpcm_EA_R2       = 69654, // ADPCM Electronic Arts R2
+        Adpcm_EA_R3       = 69653, // ADPCM Electronic Arts R3
+        Adpcm_EA_XAS      = 69657, 
+        Adpcm_Ima_APC     = 69661,
+        Adpcm_Ima_EA_Sead = 69655,
+        Adpcm_Ima_EA_Eacs = 69656, 
+        Adpcm_Ima_Iss     = 69659,
+        Adpcm_Ima_AMV     = 69651,
+        Adpcm_Ima_QT      = 69632,
+        Adpcm_Ima_Wav     = 69633, // ADPCM IMA WAV
+        Adpcm_Ima_Dk3     = 69634, // ADPCM IMA Duck DK3
+        Adpcm_Ima_Dk4     = 69635, // ADPCM IMA Duck DK4
+        Adpcm_Ima_WS      = 69636,
+        Adpcm_Ima_SMJPEG  = 69637,
+        Adpcm_MS          = 69638, // ADPCM Microsoft
+        Adpcm_Sbpro_2     = 69649, // ADPCM Sound Blaster Pro 2-bit         
+        Adpcm_Sbpro_3     = 69648, // ADPCM Sound Blaster Pro 2.6-bit       
+        Adpcm_Sbpro_4     = 69647, // ADPCM Sound Blaster Pro 4-bit    
+        Adpcm_swf         = 69645, 
+        Adpcm_thp         = 69650, 
+        Adpcm_xa          = 69640,
+        Adpcm_Vima        = 69662, // ADPCM VIMA
+        Adpcm_Yamaha      = 69646, // APDCM Yamaha AICA
+        Aac               = 86018, // Advanced Audio Coding
+        AacLatm           = 86066, // AAC LATM             
+        Ac3               = 86019, // AC-3               
+        Alac              = 86032, // Apple Lossless Audio Codec             
+        Als               = 86062, // MPEG-4 Audio Lossless Coding
+        // Ambe           = 0,     // Advanced Multi Band Excitation
+        AmrNb             = 73728, // Adaptive Multi-Rate Audio Codec [.amr, .3ga]
+        AmrWb             = 73729, // G.722.2 
+        Ape               = 86049, // Monkey's Audio     
+        Asao              = 86050, // Nellymoser Asao
+        Atrac1            = 86063, // Adaptive Transform Acoustic Coding  
+        Atrac3            = 86047, // Adaptive Transform Acoustic Coding 3     
+        Atrac3p           = 86056, // ATRAC3+
+        Atrac3Al          = 88078, // Adaptive Transform Acoustic Coding 3 Advanced Lossless
+        Atrac3Pal         = 88079,
+        Bv16              = 225,   // BroadVoice
+        Bv32              = 226,   // BroadVoice
+        BinkAudio_rdft    = 86064, // Bink Audio
+        BinkAudio_dct     = 86065,
+        Celt              = 86068, // CELT
+        ComfortNoise      = 86078,
+        Cook              = 86036, // RealAudio cook
+        Dts               = 86020, // DTS Coherent Acoustics
+        DsicinAudio       = 86042, // Delphine Software International CIN audio
+        Dss_sSp           = 86083, // Digital Speech Standard (Standard Play Mode)
+        Dsd_lsbf          = 88069, // Direct Stream Digital
+        Dsd_msbf          = 88070,
+        Dsd_lsbf_planar   = 88071,
+        Dsd_msbf_planar   = 88072,
+        DvAudio           = 86022, // DV audio
+        Eac3              = 86057, // ATSC A/52B 
+        Evrc              = 88067, // Enhanced Variable Rate Codec
+        Flac              = 86028, // Free Lossless Audio Codec 
+        // G710              = 0,  // 
+        // G711              = 0,  // 
+        // G719              = 0,  // 
+        G722              = 69660, // G.722 ADPCM
+        // G722_1            = 0,  // 
+        G722_2            = AmrWb, // 
+        G723_1            = 86069, //                                                      
+        G726              = 69643, // G.726 ADPCM	                                    
+        // G728              = 0,  //                                                        
+        G729              = 86070, //                                               
+        Gsm               = 86034, // GSM      
+        Gsm_ms            = 86046, // GSM (Microsoft)
+        Iac               = 86075, // Indeo Audio Coder
+        Imc               = 86043, // Intel Music Coder
+        Interplay_Acm     = 88074, // Interplay ACM	
+        Mace3             = 86025, // Macintosh Audio Compression/Expansion 3:1          
+        Mace6             = 86026, // Macintosh Audio Compression/Expansion 6:1       
+        MetaSound         = 86080, // Voxware MetaSound
+        Mlp               = 86045, // Meridian Lossless Packing
+        Mp1               = 86059, // MPEG-1 Audio Layer I                               
+        Mp2               = 86016, // MPEG-1 Audio Layer II                                 
+        Mp3               = 86017, // MPEG-1 Audio Layer III
+        Musepack7         = 86044, // Musepack SV7
+        Musepack8         = 86051, // Musepack SV8
+        // Ofr               = 0,  // OptimFROG
+        Opus              = 86077, //    
+        PafAudio          = 86081, // Amazing Studio Packed Animation File Audio
+        Pcm_alaw          = 65543, // PCM A-law       
+        Pcm_bluray        = 65560,
+        Pcm_dvd           = 65555,
+        Pcm_f16le         = 67586,
+        Pcm_f24le         = 67587,
+        Pcm_f32be         = 65556,
+        Pcm_f32le         = 65557,
+        Pcm_f64be         = 65558,
+        Pcm_f64le         = 65559,
+        Pcm_mulaw         = 65542, // PCM mu-law
+        Pcm_s16be         = 65537,
+        Pcm_s16be_Planar  = 65566,
+        Pcm_s16le         = 65536,
+        Pcm_s16le_Planar  = 65554,
+        Pcm_s24be         = 65549,
+        Pcm_s24LE_Planar  = 65564,
+        Pcm_s32LE_Planar  = 65565,
+        Pcm_s24daud       = 65552,
+        Pcm_s24le         = 65548,
+        Pcm_s32be         = 65545,
+        Pcm_s32le         = 65544,
+        Pcm_s64BE         = 67585,
+        Pcm_s64LE         = 67584,
+        Pcm_s8            = 65540, 
+        Pcm_s8_planar     = 65563, // PCM signed 8-bit planar
+        Pcm_u16be         = 65539,
+        Pcm_u16le         = 65538,
+        Pcm_u24be         = 65551,
+        Pcm_u24le         = 65550,
+        Pcm_u32be         = 65547,
+        Pcm_u32le         = 65546,
+        Pcm_u8            = 65541,
+        Pcm_zork          = 65553, // PCM Zork
+        Pcm_lxf           = 65561,
+        Qcelp             = 86040, // Qualcomm PureVoice
+        Qdm2              = 86035, // QDesign Music Codec 2
+        Ra144             = 77824, // RealAudio 1.0 (14.4K)
+        Ra288             = 77825, // RealAudio 2.0 (28.8K)	
+        Ralf              = 86074, // RealAudio Lossless
+        Shorten           = 86031, // Shorten      
+        Snd1              = 86033, // Westwood Audio
+        Sonic             = 88065, // Sonic
+        Sonic_LS          = 88066, // Sonic Lossless
+        SmackerAudio      = 86039, // Smacker audio
+        Speex             = 86052, // Speex                                      
+        Tak               = 86079, // Tom's Verlustfreier Audiokompressor  
+        TrueSpeech        = 86037,
+        Tta               = 86038, // True Audio                           
+        TwinVQ            = 86060, // Transform-domain weighted interleave vector quantization                                        
+        Vima              = 69662, // VIMA
+        VmdAudio          = 86027, // Sierra VMD audio
+        Vorbis            = 86021, //           
+        Voxware           = 86048, // Voxware MetaSound	
+        WavPack           = 86041, // WavPack [wv]            
+        Wma1              = 86023, // Windows Media Audio 1   
+        Wma2              = 86024, // Windows Media Audio 2   
+        // Wma3              , // 
+        Wmal              = 86055, // Windows Media Audio Lossless                  
+        WmaPro            = 86054, // Windows Media Audio Pro	
+        WmaVoice          = 86053, // Windows Media Audio Voice	
+        Xan_Dpcm          = 81922,
+        Xma1              = 88075,
+        Xma2              = 88076,
 
-        // -------------------- Image Codecs (400-499) ---------------------------------------
-
-        Bmp      = 401,
-        Bpg      = 402, // Better Portable Graphics
-        Dng      = 408, // Digital Negative
-        Gif      = 410,
-        Heif     = 420, // High Efficiency Image File Format
-        Ico      = 425,
-        Jp2      = 430, // JPEG2000
-        Jpeg     = 431,
-        Jxr      = 432, // JPEG-XR
-        Png      = 450,
-        Psd      = 460,
-        Svg      = 470,
-        Tiff     = 475,
-        WebP     = 490,
+        Roq_dpcm = 81920, // DPCM id RoQ
+        Interplay_dpcm = 81921, // DPCM Interplay
+        Sol_dpcm = 81923, // DPCM Sol
+        Sdx2_dpcm = 83968,
+        Mp3_adu = 86029,
+        Mp3_on4 = 86030,
         
-        // PPM, PGM, PBM, PNM 
+        Sipr = 86058, // RealAudio SIPR 
+        TrueHD = 86061, // TrueHD
+        Qdmc = 86067,
+
+        // BmvAudio = 86073,
+
+        // -------------------- Image Codecs ---------------------------------------
+
+        Bmp     = 79,     //                                         
+        Bpg      = 0,     // Better Portable Graphics
+        Dng      = 0,     // Digital Negative
+        Dpx      = 129,   // Digital Picture Exchange
+        Exr      = 179,   // OpenEXR image
+        Gif      = 98,    //                                         
+        Heif     = 0,     // High Efficiency Image File Format
+        Ico      = 0,
+        Jp2      = 89,    // JPEG2000                 
+        Jpeg     = 0,
+        Jxr      = 0,     // JPEG-XR
+        Nrw      = 0,     // Nikon Digital SLR Camera Raw Image File	 
+        Pam      = 67,    // PNM extension with alpha support.
+        Pbm      = 64,    //                                         
+        Pcx      = 110,   // PC Paintbrush
+        Pgm      = 65,    // Portable GrayMap image
+        Png      = 62,    // PNG                                         
+        Pnm      = 0,     // 
+        Ppm      = 63,    // Portable PixelMap image
+        Psd      = 32790, // Photoshop                                      
+        Ptx      = 105,   // V.Flash PTX format
+        Sgi      = 102,   // SGI image
+        Srf      = 0,     // Sony Raw Format
+        Sunrast  = 111,   // Sun Rasterfile image
+        Svg      = 0,
+        Tiff     = 97,    //              
+        Tga      = 94,    // Targa image format
+        WebP     = 172,   //                                         
+        Xps      = 0,     // Microsoft XML Paper Specification	        
+        Xmb      = 0,
+        Xpm      = 32796, // X BitMap image format
+        Xwd      = 158,
+        Xface    = 32779,
         // TODO: Raw formats: https://en.wikipedia.org/wiki/Raw_image_format
-        
-        // -------------------- Video Codecs (900-999)  ---------------------------------------
-        
-        Blackbird = 901,
-        Cinepak   = 903,
-        Dirac     = 905,
-        DivX      = 906,
-        Flic      = 909,
-        H261      = 921,
-        H262      = 922,
-        H263      = 923, // MPEG-3
-        H264      = 924, // MPEG-4 (mp4)
-        HEVC      = 925, // aka h.265
-        
-        Huffyuv   = 920,
-        
-        Lagarith  = 925,
 
-        Rv10      = 930, // RealVideo
-        Rv20      = 931,
-        Rv30      = 932,
-        Rv40      = 933,
-        
-        Sorenson3 = 940,
-        
-        Theora    = 945, // Derived from On2's VP3 Codec.
-        
-        Vc1       = 950, // Windows Media Video V9
-        
-        Vp3       = 953,
-        Vp4       = 954,
-        Vp5       = 955,
-        Vp6       = 956, // TrueMotion VP6
-        Vp6E      = 957,
-        Vp6S      = 959,
-        Vp7       = 960,
-        Vp8       = 961, // libvpx (used in WebM)
-        Vp9       = 962,
-        
-        Wmv7      = 967,
-        Wmv8      = 968,
-        Wmv9      = 969,
+        // -------------------- Video Codecs ---------------------------------------
+        _4GV            = 88073, // 4GV (Fourth Generation Vocoder)
+        _4XM            = 35, // 4X Movie
+        _8BPS           = 49,    // QuickTime 8BPS video	
+        Aasc            = 75,    // Autodesk Animator Codec      
+        Aic             = 169,   // Apple Intermediate Codec
+        Amv             = 108,   // AMV Video
+        Anm             = 135,   // Deluxe Paint Animation
+        Asv1            = 32,    // Asus v1	
+        Asv2            = 33,    // Asus v2
+        Aura            = 124,   // Auravision
+        Aura2           = 125,   // Auravision 2
+        Avrp            = 32769, // Avid 1:1 10-bit RGB Packer
+        AV1             = 32797, // Alliance for Open Media AV1
+        Avs             = 83,    // Audio Video Standard             
+        BethsoftVid     = 104,   // Bethesda VID               
+        Blackbird       = 901,   //            
+        Bink            = 136,   // Bink Video
+        Bfi             = 118,   // Brute Force & Ignorance
+        BmvVideo        = 154,   // Discworld II BMV video
+        C93             = 103,   // Interplay C93	
+        Cavs            = 88,    // Chinese AVS video
+        Cdxl            = 159,   // Commodore CDXL video
+        ClearVideo      = 32795, // ClearVideo
+        Cscd            = 80,    // CamStudio
+        Cfhd            = 32784, // CineForm
+        Cinepak         = 44,    // Cinepak     
+        Cllc            = 166,   // Canopus Lossless
+        Cljr            = 37,    // Cirrus Logic AccuPak	
+        Cmv             = 119,   // Electronic Arts CMV video
+        Cpia            = 32778, // CPiA
+        Cyuv            = 27,    // Creative YUV
+        Daala           = 32783, // 
+        Dfa             = 150,   // Chronomaster DFA
+        Dirac           = 117,   // Dirac            
+        DnxHd           = 100,   // VC3/DNxHD
+        DsicInVideo     = 95,    // Delphine Software International CIN video
+        DV              = 25,    // Digital Video               
+        Dxa             = 99,    // ScummVM DXA
+        Dxtory          = 156,   // Dxtory
+        Dxv             = 190,   // Resolume DXV
+        Escape124       = 116,   // Escape 124
+        Escape130       = 170,   // Escape 130
+        Fic             = 175,   // Mirillis FIC
+        Ffvhuff         = 68,    // Huffyuv FFmpeg variant
+        Flic            = 51,    // Autodesk Animator Flic video               
+        FlashSv         = 87,    // Flash Screen Video v1
+        FlashSv2        = 132,   // Flash Screen Video v2
+        Flv1            = 22,    // FLV
+        Ffv1            = 34,    // FFmpeg video codec #1	
+        Fraps           = 77,    // Fraps            
+        Fmvc            = 32793, // FM Screen Capture Codec
+        G2m             = 171,   // Go2Meeting
+        Hap             = 188,   // Vidvox Hap
+        H261            = 4,     // H.261               
+        H262            = 2,     // MPEG-2               
+        H263            = 5,     // MPEG-3        
+        H263P           = 20,    // MPEG-3        
+        H263I           = 21,    // MPEG-3        
+        H264            = 28,    // MPEG-4 (mp4)  
+        Hevc            = 174,   // H.265     
+        Hnm4Video       = 173,   // HNM 4 Video
+        Hqx             = 185,   // Canopus HQX	
+        Huffyuv         = 920,
+        Idcin           = 48,    // id Cinematic format
+        Ilbc            = 86076, // Internet Low Bitrate Codec
+        Indeo2          = 76,    // Intel Indeo 2
+        Indeo3          = 29,    // Intel Indeo 3
+        Indeo4          = 112,   // Intel Indeo 4
+        Indeo5          = 113,   // Intel Indeo 5
+        Interplay_Video = 40,
+        JV              = 149,   // Bitmap Brothers JV Video
+        Kgv1            = 138,   // Kega Video
+        Kmvc            = 86,    // Karl Morton's video codec
+        Lagarith        = 147,   //    
+        Loco            = 73,    // LOCO
+        Mad             = 130,   // Electronic Arts Madcow Video 
+        M101            = 32786, // Matrox Uncompressed SD
+        Mimic           = 114,   // Mimic
+        Mdec            = 38,    // Sony PlayStation Motion DECoder
+        Mmvideo         = 81,    // American Laser Games MM Video
+        MotionPixels    = 120,   // Motion Pixels video
+        Mpeg1           = 1,     // MPEG-1
+        Mpeg2           = H262,
+        Mpeg4           = 13,
+        Mszh            = 54,    // LCL (LossLess Codec Library) 
+        MSMpeg4v1       = 15,    // MPEG-4 part 2 Microsoft variant version 1
+        MSMpeg4v2       = 16,    // MPEG-4 part 2 Microsoft variant version 2
+        MSMpeg4v3       = 17,    // MPEG-4 part 2 Microsoft variant version 3
+        Msa1            = 163,   // MS ATC Screen codec
+        Mss1            = 162,   // Microsoft Screen Codec
+        Mss2            = 167,   // Microsoft Screen Codec
+        Mts2            = 165,   // Expression Encoder Screen Capture Codec
+        Mjpeg           = 8,     // Motion JPEG 
+        // Mj2,                  // Motion JPEG 2000  
+        Mvc1            = 183,
+        Mvc2            = 184,
+        Nuv             = 85,    // NuppelVideo
+        PafVideo        = 178,   // Amazing Studio Packed Animation File Video
+        ProRes          = 927,   // Apple ProRes
+        Pixlet          = 32791, // Apple Pixlet    
+        Qdraw           = 59,    // Apple QuickDraw
+        Qpeg            = 61,    // Q-team QPEG
+        Qtrle           = 56,    // Quicktime Animation 
+        R10k            = 145,   // AJA Kona 10-bit RGB Codec
+        Rl2             = 115,   // RL2 video	
+        Roq             = 39,    // id RoQ video
+        Rpza            = 43,    // QuickTime video (RPZA)	
+        Rscc            = 192,   // Rsupport Screen Capture Codec
+        Rv10            = 6,     // RealVideo 1.0	  
+        Rv20            = 7,     // RealVideo 2.0	  
+        Rv30            = 69,    // RealVideo 3.0	
+        Rv40            = 70,    // RealVideo 4.0
+        Sanm            = 181,
+        Screenpresso    = 191,   // Screenpresso
+        Scpr            = 32794, // ScreenPressor
+        SheerVideo      = 32788, // 
+        Smk             = 84,    // Smacker video
+        Snow            = 32780, // FFmpeg Snow
+        SpeedHq         = 32792, // Newtek SpeedHQ	
+        Smc             = 50,    // QuickTime Graphics
+        Smv             = 88068, // Sigmatel Motion Video
+        SmvJpeg         = 32781, // Sigmatel Motion Video
+        Sp5x            = 11,    // Sunplus JPEG 
+        Svq1            = 23,    // Sorenson Vector Quantizer 1
+        Svq3            = 24,    // Sorenson Vector Quantizer 3
+        Theora          = 31,    // Based on VP3
+        Duck            = 52,    // Duck TrueMotion 1.0	(ffmpeg: TRUEMOTION1)
+        Thp             = 101,   // Nintendo Gamecube THP video
+        Tgv             = 121,   // EA TGV video
+        Tmv             = 127,   // 8088flex TMV
+        Tgq             = 122,   // EA TGQ video
+        Tqi             = 123,   // EA TQI video
+        Tm20            = 78,    // Duck TrueMotion 2.0	 (ffmpeg: TRUEMOTION2)
+        Tr20            = 32785, // Duck TrueMotion 2.0 RT	(ffmpeg: TRUEMOTION2RT)
+        Tscc            = 57,    // TechSmith Screen Capture Codec
+        Tscc2           = 164,   // TechSmith Screen Codec 2
+        Txd             = 106,   // Renderware TXD 
+        Ulti            = 58,    // IBM UltiMotion
+        UtVideo         = 153,   // Ut Video
+        V210            = 128,   // V210 Video Picture Encoding
+        VB              = 109,   // Beam Software VB
+        Vble            = 155,   // VBLE Lossless Codec	
+        Vc1             = 71,    // SMPTE VC-1
+        Vcr1            = 36,    // ATI VCR1
+        Vixl            = 60,    // Miro VideoXL
+        VmdVideo        = 53,    // Sierra VMD video
+        Vmnc            = 90,    // VMware Screen Codec
+        Vp3             = 30,    // On2 Vp3           (VP50)            
+        Vp5             = 91,    // On2 Vp5           (VP60,VP61,VP62)
+        Vp6             = 92,    // On2 TrueMotion VP6          
+        Vp6A            = 107,   // VP6 (Alpha)            
+        Vp6E            = 958,
+        Vp6F            = 93,    // VP6 (Flash)                
+        Vp7             = 180,   // On2 VP7 (VP70,VP71) 
+        Vp8             = 140,   // VP8
+        Vp9             = 168,   // Google VP9             
+        Vqa             = 45,    // Westwood Studios Vector Quantized Animation	
+        Wmv1            = 18,    // Windows Media Video 7   
+        Wmv2            = 19,    // Windows Media Video 8   
+        Wmv3            = 72,    // Windows Media Video 9
+        Wnv1            = 74,    // Winnov WNV1
+        Xan_Wc3         = 41,    // Wing Commander III / Xan	
+        Xan_Wc4         = 42,    // Wing Commander IV / Xan
+        Y216            = 32773, // Pinnacle TARGA CineWave YUV16	(ffmpeg: TARGA_Y216)
+        Ylc             = 32789, // YUY2 Lossless Codec
+        ZeroCodec       = 161,   // ZeroCodec Lossless Video
+        Zmbv            = 82,    // Zip Motion Blocks Video
 
+        // Raw Pixel Formats --- 
+        _012v = 32770,  // Uncompressed 4:2:2 10-bit
+        Avrn  = 32777,  // Avid 1:1 10-bit RGB Packer
+        Avui  = 32771,  // Avid Meridien Uncompressed
+        Ayuv  = 32772,  // Uncompressed packed MS 4:4:4:4
+        R210  = 134,    // Uncompressed RGB 10-bit
+        V210X = 126,    // Uncompressed 4:2:2 10-bit
+        V308  = 32774,  // Uncompressed packed 4:4:4
+        V408  = 32775,  // Uncompressed packed QT 4:4:4:4
+        V410  = 157,    // Uncompressed 4:4:4 10-bit
+        Y41p  = 32768,  // Uncompressed YUV 4:1:1 12-bit
+        Yuv4  = 32776,  // Uncompressed packed 4:2:0
 
-        // Subtitle Codecs
+        // -------------------- Subtitle Codecs ---------------------------------------
+        Ass         = 96269,
+        DvbSubtitle = 94209, // DVB subtitles 
+        DvdSubtitle = 94208, //
+        DvbTeletext = 94215, // DVB teletext
+        EIA_608     = 96257, // EIA-608
+        Idf         = 100354, // iCEDraw text
+        Jacosub     = 96258, // JACOsub
+        MicroDvd    = 96256, // MicroDVD subtitle
+        Mpl2        = 96266,
+        Pjs         = 96268, // Phoenix Japanimation Society
+        RealText    = 96260,
+        Sami        = 96259, // SAMI
+        Srt         = 94216, // SubRip
+        Ssa         = 94212,
+        Stl         = 96261, // Spruce format
+        SubRip      = 96264, // SubRip subtitle with embedded timing
+        SubViewer   = 96263, // SubViewer
+        SubViewer1  = 96262, // 
+        TimedId3    = 100358, // timed ID3 metadata
+        VPlayer     = 96267, // VPlayer
+        WebVtt      = 96265, // WebVTT subtitle
+        Xsub        = 94211, // XSUB
 
+        // Fonts
+        Otf = 100355,
+        Ttf = 98304,
     }
 }
