@@ -2,9 +2,7 @@
 
 namespace Carbon.Media
 {
-    // https://www.ietf.org/rfc/rfc4281.txt
-
-    public class CodecInfo : IEquatable<CodecInfo>
+    public sealed class CodecInfo : IEquatable<CodecInfo>
     {
         internal CodecInfo(string name, CodecId id)
         {
@@ -12,11 +10,11 @@ namespace Carbon.Media
             Id = id;
         }
 
-        public CodecId Id { get; }
-
         public string Name { get; }
 
-        // Profile
+        public CodecId Id { get; }
+
+        // Profile(s)
 
         #region Equality
 
@@ -68,18 +66,17 @@ namespace Carbon.Media
             return new CodecInfo(type.ToString().ToLower(), type);
         }
 
-
         // Audio --------------------------------------------------------------------------------------------------
         public static readonly CodecInfo Aac    = new CodecInfo("aac",       CodecId.Aac);
         public static readonly CodecInfo AacLC  = new CodecInfo("mp4a.40.2", CodecId.Aac);  // AAC-low complexity profile
         public static readonly CodecInfo AacHE  = new CodecInfo("mp4a.40.5", CodecId.Aac);  // AAC-high efficiency profile (HE-AAC)
         public static readonly CodecInfo Alac   = new CodecInfo("alac",      CodecId.Alac); // Apple Lossless (m4a)
-        public static readonly CodecInfo Aiff   = new CodecInfo("aiff",      CodecId.Aiff);
+        // public static readonly CodecInfo Aiff   = new CodecInfo("aiff",      CodecId.Aiff);
         public static readonly CodecInfo Mp3    = new CodecInfo("mp3",       CodecId.Mp3);
-        public static readonly CodecInfo Wma    = new CodecInfo("wma",       CodecId.Wma);
+        public static readonly CodecInfo Wma    = new CodecInfo("wma",       CodecId.Wma1);
         public static readonly CodecInfo Opus   = new CodecInfo("opus",      CodecId.Opus);
         public static readonly CodecInfo Vorbis = new CodecInfo("vorbis",    CodecId.Vorbis);
-        public static readonly CodecInfo Wav    = new CodecInfo("wav",       CodecId.Wav);
+        // public static readonly CodecInfo Wav    = new CodecInfo("wav",       CodecId.Wav);
 
         // Images --------------------------------------------------------------------------------------------------
         public static readonly CodecInfo Bmp    = new CodecInfo("bmp",       CodecId.Bmp);
@@ -102,15 +99,19 @@ namespace Carbon.Media
         public static readonly CodecInfo H264Level0Simple   = new CodecInfo("mp4v.20.9",   CodecId.H264); // level 0 simple
         public static readonly CodecInfo H264Level0Advanced = new CodecInfo("mp4v.20.240", CodecId.H264); // level 0 advanced
 
-        public static readonly CodecInfo Theora       = new CodecInfo("theora", CodecId.Theora);
-        public static readonly CodecInfo Dirac        = new CodecInfo("dirac", CodecId.Dirac);
+        public static readonly CodecInfo Theora = new CodecInfo("theora", CodecId.Theora);
+        public static readonly CodecInfo Dirac = new CodecInfo("dirac", CodecId.Dirac);
 
         public static readonly CodecInfo Vp3 = new CodecInfo("vp3", CodecId.Vp3);
-        public static readonly CodecInfo Vp4 = new CodecInfo("vp4", CodecId.Vp4);
         public static readonly CodecInfo Vp5 = new CodecInfo("vp5", CodecId.Vp5);
         public static readonly CodecInfo Vp6 = new CodecInfo("vp6", CodecId.Vp6);
         public static readonly CodecInfo Vp7 = new CodecInfo("vp7", CodecId.Vp7);
         public static readonly CodecInfo Vp8 = new CodecInfo("vp8", CodecId.Vp8);
         public static readonly CodecInfo Vp9 = new CodecInfo("vp9", CodecId.Vp9);
     }
+
+
 }
+
+// https://www.ietf.org/rfc/rfc4281.txt
+// type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"

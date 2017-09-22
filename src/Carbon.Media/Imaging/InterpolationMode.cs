@@ -11,8 +11,8 @@
         CubicSmoother   = 6,
         Gaussian        = 7,
         Hermite         = 8,
-        Lanczos2        = 9, // Best for downscaling (an approximation to the sinc method)
-        Lanczos3        = 10, // Best for downscaling (an approximation to the sinc method)
+        Lanczos2        = 9,  
+        Lanczos3        = 10,
         Lanczos5        = 11,
         Lanczos8        = 12,
         Mitchell        = 13, // Mitchell-Netravali
@@ -34,7 +34,11 @@
     {
         public static InterpolaterMode Parse(string text)
         {
-            return text.ToEnum<InterpolaterMode>(true);
+            switch (text)
+            {
+                case "lanczos": return InterpolaterMode.Lanczos3;
+                default: return text.ToEnum<InterpolaterMode>(true);
+            }
         }
     }
 }

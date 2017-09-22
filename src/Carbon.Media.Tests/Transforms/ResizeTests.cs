@@ -67,7 +67,7 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal(960, resize.Width);
             Assert.Equal(540, resize.Height);
-            Assert.Equal(null, resize.Anchor);
+            Assert.Null(resize.Anchor);
 
             Assert.Equal(ResizeFlags.Fit | ResizeFlags.Upscale, resize.Flags);
             Assert.Equal(ResizeFlags.Fit, resize.Mode);

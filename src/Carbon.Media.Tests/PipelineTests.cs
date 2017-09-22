@@ -220,24 +220,24 @@ namespace Carbon.Media.Processors.Tests
                 .Apply(new Pad(100))
                 .Encode(ImageFormat.Jpeg);
 
-            var pipe = MediaPipeline.From(rendition);
+            var pipeline = MediaPipeline.From(rendition);
 
-            Assert.Equal(100, pipe.Scale.Width);
-            Assert.Equal(100, pipe.Scale.Height);
+            Assert.Equal(100, pipeline.Scale.Width);
+            Assert.Equal(100, pipeline.Scale.Height);
 
-            Assert.Equal(100, pipe.Padding.Top);
-            Assert.Equal(100, pipe.Padding.Right);
-            Assert.Equal(100, pipe.Padding.Bottom);
-            Assert.Equal(100, pipe.Padding.Left);
+            Assert.Equal(100, pipeline.Padding.Top);
+            Assert.Equal(100, pipeline.Padding.Right);
+            Assert.Equal(100, pipeline.Padding.Bottom);
+            Assert.Equal(100, pipeline.Padding.Left);
 
 
-            Assert.Equal(pipe.Position.X, 100);
-            Assert.Equal(pipe.Position.Y, 100);
+            Assert.Equal(100, pipeline.Position.X);
+            Assert.Equal(100, pipeline.Position.Y);
 
-            Assert.Equal(300, pipe.FinalWidth);
-            Assert.Equal(300, pipe.FinalHeight);
+            Assert.Equal(300, pipeline.FinalWidth);
+            Assert.Equal(300, pipeline.FinalHeight);
 
-            Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipe.Canonicalize());
+            Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipeline.Canonicalize());
             // Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipe.Canonicalize());
 
         }

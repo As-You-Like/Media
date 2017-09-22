@@ -11,7 +11,7 @@
         [BitCount(32)] Abgr32 = 5, // packed ABGR | 8:8:8:8
         [BitCount(32)] Argb32 = 4, // packed ARGB | 8:8:8:8
 
-        // type
+        // BGR
         [BitCount(30)] Bgr101010 = 10, // packed BGR | 10:10:10
         [BitCount(4)]  Bgr4      = 11, // packed BGR | 1:2:1
         [BitCount(8)]  Bgr8      = 12, // packed BGR | 3:3:2
@@ -51,12 +51,11 @@
         [BitCount(8)] Indexed8 = 53,
 
         // pre-multiplied formats
-        [BitCount(32)]  Pbgra32 = 60, // RGBA |  8:8:8:8
+        [BitCount(32)]  Pbgra32       = 60, // RGBA |  8:8:8:8
         [BitCount(128)] Prgba128Float = 61, // RGBA | 32:32:32:32
-        [BitCount(64)]  Prgba64 = 62,
+        [BitCount(64)]  Prgba64       = 62,
 
-        // RGB ------------------------------------
-
+        // RGB -------------------------------------------------------------------
         [BitCount(8)]   Rgb4             = 70, // packed RGB | 1:2:1 bitstream
         [BitCount(8)]   Rgb8             = 71, // packed RGB | 3:3:2
         [BitCount(24)]  Rgb24            = 72, // packed RGB | 8:8:8
@@ -70,6 +69,7 @@
         [BitCount(32)]  Rgba1010102 = 78, // packed RGBA | 10:10:10:2 
         [BitCount(32)]  Rgba1010102XR = 79, // packed RGBA | 10:10:10:2 
 
+        // YUV -------------------------------------------------------------------
         [BitCount(12)]  Yuv420p = 100, // planar YUV | 4:2:0
         [BitCount(16)]  Yuyv422 = 101, // packed YUV | 4:2:2
         [BitCount(16)]  Yuv422p = 102, // planar YUV | 4:4:4

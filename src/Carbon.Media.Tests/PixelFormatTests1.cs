@@ -41,7 +41,7 @@ namespace Carbon.Media.Tests
 
             Assert.Equal(1, bw.BitsPerPixel);
             // Assert.Equal(ColorChannels.K, bw.Channels);
-            Assert.Equal(ColorModel.Grayscale, bw.ColorModel);
+            Assert.Equal(ColorModel.Monochrome, bw.ColorModel);
 
             var rgb24 = PixelFormat.Rgb24.GetInfo();
 

@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    // TextAlignment?
+    using static Alignment;
 
     public enum Alignment
     {
@@ -20,13 +20,13 @@
         {
             switch (alignment)
             {
-                case Alignment.Top    : return "top";
-                case Alignment.Left   : return "left";
-                case Alignment.Bottom : return "bottom";
-                case Alignment.Right  : return "right";
-                case Alignment.Middle : return "middle";
-                case Alignment.Center : return "center";
-                default               : return "unknown";
+                case Top    : return "top";
+                case Left   : return "left";
+                case Bottom : return "bottom";
+                case Right  : return "right";
+                case Middle : return "middle";
+                case Center : return "center";
+                default     : return "unknown";
             }
         }
     }

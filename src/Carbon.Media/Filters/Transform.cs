@@ -46,7 +46,12 @@
                 case "invert"       : return InvertFilter.Parse(segment);
                 case "contrast"     : return ContrastFilter.Parse(segment);
                 case "opacity"      : return OpacityFilter.Parse(segment);
+
+                // Other
+
                 case "quality"      : return Quality.Parse(segment);
+                case "lossless"     : return new Quality(100);
+
                 default             :
 
                     // JPEG::encode

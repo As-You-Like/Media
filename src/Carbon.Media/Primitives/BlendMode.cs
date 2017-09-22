@@ -29,16 +29,15 @@
     }
 
     // And
-    // GrainMerge | GrainExtract
+    // GrainMerge (ffmpeg) | GrainExtract
     // Freeze
     // ChromeKey (treshhold, smoothing)
     // Disolve (mix)
-    // Pinlight
+    // Pinlight (ffmpeg)
 }
 
 /*
 ‘addition’
-‘grainmerge’
 ‘and’
 ‘average’
 ‘freeze’‘extremity’
@@ -50,7 +49,6 @@
 ‘or’
 ‘overlay’
 ‘phoenix’
-‘pinlight’
 ‘reflect’
 ‘xor’
 */

@@ -3,7 +3,6 @@
     public interface ITransform
     {
         string Canonicalize();
-
     }
 }
 

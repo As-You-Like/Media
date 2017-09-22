@@ -54,13 +54,13 @@
         Transparent	  = 80, // *IM
 
 		YCbCr		  = 90, // YCbr
-        // YCoCg      = 90, // 
-        YCC			  = 91, // *IM
-		YIQ			  = 92, // *IM
-		YDbDr		  = 93, // *IM
-		YPbPr		  = 94, // *IM 
-		YUV			  = 95, // *IM
-		Yxy			  = 96, // ICC | Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. 
-		XYZ			  = 97, // ICC | XYZ space allows colors to be expressed as a mixture of the three tristimulus values X, Y, and Z. The term tristimulus comes from the fact that color perception results from the retina of the eye responding to three types of stimuli. After experimentation, the CIE set up a hypothetical set of primaries, XYZ, that correspond to the way the eye’s retina behaves.
+        YCoCg         = 91, // 
+        YCC			  = 92, // *IM
+		YIQ			  = 93, // *IM
+		YDbDr		  = 94, // *IM
+		YPbPr		  = 95, // *IM 
+		YUV			  = 96, // *IM
+		Yxy			  = 97, // ICC | Yxy space expresses the XYZ values in terms of x and y chromaticity coordinates, somewhat analogous to the hue and saturation coordinates of HSV space. 
+		XYZ			  = 98, // ICC | XYZ space allows colors to be expressed as a mixture of the three tristimulus values X, Y, and Z. The term tristimulus comes from the fact that color perception results from the retina of the eye responding to three types of stimuli. After experimentation, the CIE set up a hypothetical set of primaries, XYZ, that correspond to the way the eye’s retina behaves.
     }
 }

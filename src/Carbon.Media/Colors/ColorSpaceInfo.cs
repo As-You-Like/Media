@@ -2,15 +2,36 @@
 {
     public class ColorSpaceInfo
     {
-        public string Name { get; set; }
+        public ColorSpaceInfo(
+            string name,
+            ColorModel model,
+            ColorComponent[] components, 
+            ColorSpaceFlags flags = ColorSpaceFlags.None)
+        {
+            Name       = name;
+            Components = components;
+            Model      = model;
+            Flags      = flags;
+        }
 
-        public ColorComponent[] Components { get; set; }
+        public string Name { get; }
 
-        public ColorModel Model { get; set; }
+        public ColorComponent[] Components { get; }
 
-        // ICCData?
+        public ColorModel Model { get; }
 
-        // ColorTable for indexed color spaces
-        // IsWideGamut?
+        public ColorSpaceFlags Flags { get; }
     }
+
+    public enum ColorSpaceFlags
+    {
+        None      = 0,
+        WideGamut = 1 << 0
+    }
+
+    // ICCData?
+
+    // ColorTable for indexed color spaces
+    // IsWideGamut?
+
 }
