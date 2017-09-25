@@ -8,7 +8,7 @@ namespace Carbon.Media
 
         IntPtr Pointer { get; }
 
-        long Length { get; }
+        int Length { get; }
 
         // Free
         // Unref
@@ -18,6 +18,4 @@ namespace Carbon.Media
     // GCHandle?
 
     // Provides a way to access a managed object from unmanaged memory
-
-    // For FFMPEG, this should be an AVBuffer
 }
