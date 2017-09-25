@@ -4,6 +4,6 @@ namespace FFmpeg
 {
     public abstract class AudioConverter 
     {
-        public abstract void Convert(AudioFrame inFrame, AudioFrame outFrame);
+        public abstract void Convert(AvFrame inFrame, AvFrame outFrame);
     }
 }
