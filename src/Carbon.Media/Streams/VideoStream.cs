@@ -22,10 +22,6 @@
         public Rational? Aspect { get; set; }
 
         public PixelFormat PixelFormat { get;  }
-        
-        public BitRate? BitRateAverage { get; set; }
-
-        public BitRate? BitRateTolerance { get; set; }
 
         public override MediaStreamType Type => MediaStreamType.Video;
     }

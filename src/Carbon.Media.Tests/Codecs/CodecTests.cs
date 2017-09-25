@@ -88,13 +88,10 @@ namespace Carbon.Media.Tests
             Assert.Equal(CodecInfo.H264Extended, CodecInfo.Parse("avc1.58A01E"));
             Assert.Equal(CodecInfo.H264High,     CodecInfo.Parse("avc1.64001E"));
 
-
             Assert.Equal(CodecInfo.H264Level0Simple,   CodecInfo.Parse("mp4v.20.9"));
             Assert.Equal(CodecInfo.H264Level0Advanced, CodecInfo.Parse("mp4v.20.240"));
 
-
             Assert.Equal(CodecInfo.AacLC, CodecInfo.Parse("mp4a.40.2"));
-
         }
     }
 }

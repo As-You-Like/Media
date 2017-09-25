@@ -16,13 +16,17 @@ namespace Carbon.Media
 
         // e.g. H264, AAC ...
         public ICodec Codec { get; }
-
+        
         public BitRate? BitRate { get; set; }
+
+        public BitRate? BitRateAverage { get; set; }
+
+        public BitRate? BitRateTolerance { get; set; }
 
         /// <summary>
         /// The unit of time (in seconds) in which frame timestamps are represented
         /// </summary>
-        public Rational? TimeBase { get; set; }
+        public Rational TimeBase { get; set; }
 
         /// <summary>
         /// The presentation of the first frame in the stream

@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     using static SampleFormatFlags;
 
-    public class SampleFormatInfo
+    public struct SampleFormatInfo
     {
         public SampleFormatInfo(
             SampleFormat id, 
@@ -65,10 +65,9 @@ namespace Carbon.Media
         }
     }
 
-    public enum SampleFormatFlags
+    public enum SampleFormatFlags : byte
     {
         None  = 0,
         Planar = 1
     }
-
 }

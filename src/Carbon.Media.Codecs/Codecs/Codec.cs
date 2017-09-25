@@ -19,8 +19,6 @@
     {
         public Rational[] SupportedFrameRates { get; set; }
 
-
         public PixelFormat[] SupportedPixelFormats { get; set; }
-
     }
 }

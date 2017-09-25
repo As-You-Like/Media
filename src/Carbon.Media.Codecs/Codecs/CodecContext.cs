@@ -4,27 +4,47 @@
     {
         public Codec Codec { get; set; }
 
-        public BitRate Bitrate { get; set; }
-
-        public BitRate BitrateTolerance { get; set; }
-
-        public PixelFormat Format { get; set; }
 
         // MaxBFrames
         // QuantyFactor
         // FrameStategry
         // QuantyOffset
         // HasBFrames
-        // 
-        public int Width { get; set; }
 
-        public int Height { get; set; }
+        #region Audio
 
-        public int SampleRate { get; set; }
+        public virtual int SampleRate { get; set; }
 
-        public int ChannelCount { get; set; }
+        public virtual SampleFormat SampleFormat { get; set; }
 
-        public ColorSpace ColorSpace  { get; set; }
+        public virtual int ChannelCount { get; set; }
+
+        public virtual ChannelLayout ChannelLayout { get; set; }
+
+        #endregion
+
+        #region Image / Video
+
+        public ColorSpace ColorSpace  { get; }
+
+        public PixelFormat PixelFormat { get; set; }
+
+
+        public int Width { get; }
+
+        public int Height { get; }
+
+        public int CodecWidth { get; }
+
+        public int CodecHeight { get; }
+
+        #endregion
+
+        public virtual BitRate? BitRate { get; set; }
+        
+        public virtual BitRate? BitrateTolerance { get; set; }
+
+        public virtual Rational TimeBase { get; set; }
 
         // FrameIndex
         // BlockAlign
@@ -41,6 +61,6 @@
         // ticksPerFrame
         // TimeBase
         // Delay
-       
+
     }
 }

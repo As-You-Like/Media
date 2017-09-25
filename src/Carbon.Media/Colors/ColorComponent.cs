@@ -21,5 +21,7 @@ namespace Carbon.Media
         Cr = 11, // Red Chroma difference
 
         // Y, U, V
+        U = 12,
+        V = 13
     }
 }

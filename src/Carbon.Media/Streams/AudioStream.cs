@@ -2,15 +2,20 @@
 {
     public class AudioStream : MediaStream
     {
-        public AudioStream(int streamIndex, ICodec codec, SampleFormat format, int sampleRate)
-            : base(streamIndex, codec)
+        public AudioStream(
+            int index, 
+            ICodec codec,
+            ChannelLayout channelLayout, 
+            SampleFormat sampleFormat,
+            int sampleRate)
+            : base(index, codec)
         {
-            Format = format;
-            SampleRate = sampleRate;
+            ChannelLayout = channelLayout;
+            SampleFormat  = sampleFormat;
+            SampleRate    = sampleRate;
         }
 
-        // bitcount and planar can be determined from the format
-        public SampleFormat Format { get; }
+        public SampleFormat SampleFormat { get; } 
 
         /// <summary>
         /// The sampling rate defines the number of samples per second
@@ -27,7 +32,7 @@
 
         public int ChannelCount { get; set; }
 
-        public ChannelLayout ChannelLayout { get; set; }
+        public ChannelLayout ChannelLayout { get; }
 
         /// <summary>
         /// framesize?

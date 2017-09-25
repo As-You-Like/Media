@@ -8,40 +8,48 @@ namespace Carbon.Media
     /// </summary>
     public class Packet : IDisposable
     {
-        public Packet(IBuffer data, int streamIndex, long? position = null)
-        {
-            Data        = data ?? throw new ArgumentNullException(nameof(data));
-            StreamIndex = streamIndex;
-            Position    = position;
-        }
+        public IBuffer Data { get; set; }
 
-        public IBuffer Data { get; }
-
-        public int StreamIndex { get; }
+        public int StreamIndex { get; set; }
 
         public MediaStreamType Type { get; set; }
 
-        // pts
-        public TimeSpan PresentationTime { get; }
-
-        public TimeSpan Duration { get; set;  }
-
-        // dts
-        public TimeSpan DecompressionTimestamp { get; set; }
+        /// <summary>
+        /// Decompression timestamp
+        /// </summary>
+        public virtual long Dts { get; set; }
 
         /// <summary>
-        /// Byte position in stream
-        /// - 1 if unknown
+        /// Presentation timestamp
         /// </summary>
-        public long? Position { get; }
+        public virtual long Pts { get; set; }
 
+        public virtual long Duration { get; set;  }
 
-        // Flags
+        /// <summary>
+        /// Byte position in source stream
+        /// -1 if unknown
+        /// </summary>
+        public virtual long Position { get; set; }
 
-        public void Dispose()
+        #region Flags
+
+        public virtual PacketFlags Flags { get; set; }
+        
+        public bool IsKeyframe => Flags.HasFlag(PacketFlags.Keyframe);
+
+        #endregion
+
+        public virtual void Dispose()
         {
             Data.Dispose();
         }
     }
-    
+
+    public enum PacketFlags
+    {
+        Keyframe = 1,
+        Corrupt  = 2
+    }
+
 }
