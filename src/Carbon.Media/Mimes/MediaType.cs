@@ -3,16 +3,16 @@
     public enum MediaType : byte
     {
         Unknown     = 0,
-        Application = 1, // 1,203 registered
-        Audio       = 2, // 141 registered
+        Application = 1,
+        Audio       = 2, 
         Example     = 3,
-        Image       = 4, // 52 registered
-        Message     = 5, // 18 registered
-        Model       = 6, // 20 registered
+        Image       = 4, 
+        Message     = 5, 
+        Model       = 6, 
         Multipart   = 7,
         Text        = 8,
-        Video       = 9  // 75 registered
+        Video       = 9 
     }
-
-    // http://www.iana.org/assignments/media-types/media-types.xhtml
 }
+
+// http://www.iana.org/assignments/media-types/media-types.xhtml

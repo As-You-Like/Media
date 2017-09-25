@@ -3,8 +3,7 @@
     public class CodecContext
     {
         public Codec Codec { get; set; }
-
-
+        
         // MaxBFrames
         // QuantyFactor
         // FrameStategry
@@ -29,14 +28,13 @@
 
         public PixelFormat PixelFormat { get; set; }
 
+        public int Width { get; set; }
 
-        public int Width { get; }
+        public int Height { get; set; }
 
-        public int Height { get; }
+        public int CodecWidth { get; set; }
 
-        public int CodecWidth { get; }
-
-        public int CodecHeight { get; }
+        public int CodecHeight { get; set; }
 
         #endregion
 

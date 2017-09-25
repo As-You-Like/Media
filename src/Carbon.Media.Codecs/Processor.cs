@@ -7,7 +7,7 @@ namespace Carbon.Media.Processing
 {
     public class Processor
     {
-        public void Process(MediaSource input, ITransform[] filters, Stream output)
+        public void Process(MediaSource input, Stream output, ITransform[] filters)
         {
             // av_format_open (auto detects format, reads header, and creates an AV context)
 

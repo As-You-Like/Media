@@ -14,9 +14,5 @@
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/carbon/Media</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>    
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
-  </ItemGroup>
-
+  
 </Project>

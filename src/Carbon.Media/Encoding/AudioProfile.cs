@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Carbon.Media
+﻿namespace Carbon.Media
 {
     public class AudioProfile
     {
@@ -8,17 +6,16 @@ namespace Carbon.Media
 
         public string Codec { get; set; }
 
-        [Range(0, 48000)]
+        // [Range(0, 48000)]
         public int? SampleRate { get; set; }
         
-        [Range(0, 32)]
         public SampleFormat SampleFormat { get; set; }
 
         // ChannelCount
     }
-
-    // Bitrate              // -b:a
-    // Codec                // -acodec
-    // Audio Frequency      // -af
-    // Audio Quality        // -aq
 }
+
+// Bitrate              // -b:a
+// Codec                // -acodec
+// Audio Frequency      // -af
+// Audio Quality        // -aq

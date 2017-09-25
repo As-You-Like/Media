@@ -141,12 +141,14 @@
         Pcm_zork          = 65553, // PCM Zork
         Pcm_lxf           = 65561,
         Qcelp             = 86040, // Qualcomm PureVoice
+        Qdmc              = 86067, // QDesign Music Codec
         Qdm2              = 86035, // QDesign Music Codec 2
         Ra144             = 77824, // RealAudio 1.0 (14.4K)
         Ra288             = 77825, // RealAudio 2.0 (28.8K)	
         Ralf              = 86074, // RealAudio Lossless
         S302m             = 65562, // SMPTE 302M
         Shorten           = 86031, // Shorten      
+        Sipr              = 86058, // RealAudio SIPR 
         Snd1              = 86033, // Westwood Audio
         Sonic             = 88065, // Sonic
         Sonic_LS          = 88066, // Sonic Lossless
@@ -154,6 +156,7 @@
         Speex             = 86052, // Speex                                      
         Tak               = 86079, // Tom's Verlustfreier Audiokompressor  
         TrueSpeech        = 86037,
+        TrueHD            = 86061, // TrueHD
         Tta               = 86038, // True Audio                           
         TwinVQ            = 86060, // Transform-domain weighted interleave vector quantization                                        
         Vima              = 69662, // VIMA
@@ -178,9 +181,6 @@
         Mp3_adu = 86029,
         Mp3_on4 = 86030,
         
-        Sipr = 86058, // RealAudio SIPR 
-        TrueHD = 86061, // TrueHD
-        Qdmc = 86067,
 
         // BmvAudio = 86073,
 
@@ -395,17 +395,17 @@
         Zmbv            = 82,    // Zip Motion Blocks Video
 
         // Raw Pixel Formats --- 
-        _012v = 32770,  // Uncompressed 4:2:2 10-bit
-        Avrn  = 32777,  // Avid 1:1 10-bit RGB Packer
-        Avui  = 32771,  // Avid Meridien Uncompressed
-        Ayuv  = 32772,  // Uncompressed packed MS 4:4:4:4
-        R210  = 134,    // Uncompressed RGB 10-bit
-        V210X = 126,    // Uncompressed 4:2:2 10-bit
-        V308  = 32774,  // Uncompressed packed 4:4:4
-        V408  = 32775,  // Uncompressed packed QT 4:4:4:4
-        V410  = 157,    // Uncompressed 4:4:4 10-bit
-        Y41p  = 32768,  // Uncompressed YUV 4:1:1 12-bit
-        Yuv4  = 32776,  // Uncompressed packed 4:2:0
+        _012v           = 32770,  // Uncompressed 4:2:2 10-bit
+        Avrn            = 32777,  // Avid 1:1 10-bit RGB Packer
+        Avui            = 32771,  // Avid Meridien Uncompressed
+        Ayuv            = 32772,  // Uncompressed packed MS 4:4:4:4
+        R210            = 134,    // Uncompressed RGB 10-bit
+        V210X           = 126,    // Uncompressed 4:2:2 10-bit
+        V308            = 32774,  // Uncompressed packed 4:4:4
+        V408            = 32775,  // Uncompressed packed QT 4:4:4:4
+        V410            = 157,    // Uncompressed 4:4:4 10-bit
+        Y41p            = 32768,  // Uncompressed YUV 4:1:1 12-bit
+        Yuv4            = 32776,  // Uncompressed packed 4:2:0
 
         // -------------------- Subtitle Codecs ---------------------------------------
         Ass         = 96269,
