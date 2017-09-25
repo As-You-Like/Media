@@ -6,8 +6,7 @@
 
         public double Latitude { get; set; }
 
-        public double Altitude { get; set; } // TODO, use a unit
-                                             // Name
+        public double Altitude { get; set; } 
     }
 }
 

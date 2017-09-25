@@ -1,7 +1,15 @@
 ﻿namespace Carbon.Media
 {
-    public struct CameraInfo
+    public class CameraInfo
     {
+        public CameraInfo() { }
+
+        public CameraInfo(string make, string model)
+        {
+            Make = make;
+            Model = model;
+        }
+
         // e.g. Canon
         public string Make { get; set; }
 

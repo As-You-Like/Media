@@ -2,8 +2,8 @@
 {
     public enum FocalPlaneMeasurementUnit
     {
-        None = 1,
-        Inch = 2,
+        None       = 1,
+        Inch       = 2,
         Centimeter = 3
     }
 }
