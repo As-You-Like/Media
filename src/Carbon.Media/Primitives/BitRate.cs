@@ -4,6 +4,8 @@ namespace Carbon.Media
 {
     public struct BitRate : IEquatable<BitRate>
     {
+        public static readonly BitRate Zero = new BitRate(0);
+
         public readonly long value;
 
         public BitRate(long value)
@@ -13,12 +15,27 @@ namespace Carbon.Media
 
         public long Value => value;
 
+        public static BitRate FromKbs(long kbs)
+        {
+            return new BitRate(kbs * 1000);
+        }
+        
+        public static BitRate FromMbs(long kbs)
+        {
+            return new BitRate(kbs * 1000 * 1000);
+        }
+
         // Kb/s
         // Mb/s
+
+
+        #region Equality
 
         public bool Equals(BitRate other) => Value == other.value;
 
         public override int GetHashCode() => value.GetHashCode();
+
+        #endregion
 
         public override string ToString()
         {
