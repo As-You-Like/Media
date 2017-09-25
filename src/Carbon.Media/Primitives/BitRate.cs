@@ -6,7 +6,7 @@ namespace Carbon.Media
     {
         public static readonly BitRate Zero = new BitRate(0);
 
-        public readonly long value;
+        private readonly long value;
 
         public BitRate(long value)
         {
@@ -28,14 +28,13 @@ namespace Carbon.Media
         // Kb/s
         // Mb/s
 
-
         #region Equality
 
         public bool Equals(BitRate other) => Value == other.value;
 
         public override int GetHashCode() => value.GetHashCode();
 
-        #endregion
+        #endregion 
 
         public override string ToString()
         {
