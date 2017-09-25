@@ -2,7 +2,10 @@
 
 namespace Carbon.Media
 {
-    public sealed class CodecInfo : IEquatable<CodecInfo>
+    /// <summary>
+    /// A codec determines syntax and semantics of a bitstream
+    /// </summary>
+    public class CodecInfo : IEquatable<CodecInfo>
     {
         internal CodecInfo(string name, CodecId id)
         {
@@ -109,8 +112,6 @@ namespace Carbon.Media
         public static readonly CodecInfo Vp8 = new CodecInfo("vp8", CodecId.Vp8);
         public static readonly CodecInfo Vp9 = new CodecInfo("vp9", CodecId.Vp9);
     }
-
-
 }
 
 // https://www.ietf.org/rfc/rfc4281.txt

@@ -145,6 +145,7 @@
         Ra144             = 77824, // RealAudio 1.0 (14.4K)
         Ra288             = 77825, // RealAudio 2.0 (28.8K)	
         Ralf              = 86074, // RealAudio Lossless
+        S302m             = 65562, // SMPTE 302M
         Shorten           = 86031, // Shorten      
         Snd1              = 86033, // Westwood Audio
         Sonic             = 88065, // Sonic
@@ -317,6 +318,7 @@
         // Mj2,                  // Motion JPEG 2000  
         Mvc1            = 183,
         Mvc2            = 184,
+        MxPeg           = 146,   // MxPEG
         Nuv             = 85,    // NuppelVideo
         PafVideo        = 178,   // Amazing Studio Packed Animation File Video
         ProRes          = 927,   // Apple ProRes
@@ -337,6 +339,7 @@
         Screenpresso    = 191,   // Screenpresso
         Scpr            = 32794, // ScreenPressor
         SheerVideo      = 32788, // 
+        SgiRle          = 182,   // SGI RLE 8-bit
         Smk             = 84,    // Smacker video
         Snow            = 32780, // FFmpeg Snow
         SpeedHq         = 32792, // Newtek SpeedHQ	
@@ -346,9 +349,11 @@
         Sp5x            = 11,    // Sunplus JPEG 
         Svq1            = 23,    // Sorenson Vector Quantizer 1
         Svq3            = 24,    // Sorenson Vector Quantizer 3
+        Tdsc            = 186,   // TDSC
         Theora          = 31,    // Based on VP3
         Duck            = 52,    // Duck TrueMotion 1.0	(ffmpeg: TRUEMOTION1)
         Thp             = 101,   // Nintendo Gamecube THP video
+        TiertexSeqVideo = 96,    // Tiertex Limited SEQ video
         Tgv             = 121,   // EA TGV video
         Tmv             = 127,   // 8088flex TMV
         Tgq             = 122,   // EA TGQ video
@@ -404,27 +409,27 @@
 
         // -------------------- Subtitle Codecs ---------------------------------------
         Ass         = 96269,
-        DvbSubtitle = 94209, // DVB subtitles 
-        DvdSubtitle = 94208, //
-        DvbTeletext = 94215, // DVB teletext
-        EIA_608     = 96257, // EIA-608
+        DvbSubtitle = 94209,  // DVB subtitles 
+        DvdSubtitle = 94208,  //
+        DvbTeletext = 94215,  // DVB teletext
+        EIA_608     = 96257,  // EIA-608
         Idf         = 100354, // iCEDraw text
-        Jacosub     = 96258, // JACOsub
-        MicroDvd    = 96256, // MicroDVD subtitle
-        Mpl2        = 96266,
-        Pjs         = 96268, // Phoenix Japanimation Society
-        RealText    = 96260,
-        Sami        = 96259, // SAMI
-        Srt         = 94216, // SubRip
-        Ssa         = 94212,
-        Stl         = 96261, // Spruce format
-        SubRip      = 96264, // SubRip subtitle with embedded timing
-        SubViewer   = 96263, // SubViewer
-        SubViewer1  = 96262, // 
+        Jacosub     = 96258,  // JACOsub
+        MicroDvd    = 96256,  // MicroDVD subtitle
+        Mpl2        = 96266,  
+        Pjs         = 96268,  // Phoenix Japanimation Society
+        RealText    = 96260,  
+        Sami        = 96259,  // SAMI
+        Srt         = 94216,  // SubRip
+        Ssa         = 94212,  
+        Stl         = 96261,  // Spruce format
+        SubRip      = 96264,  // SubRip subtitle with embedded timing
+        SubViewer   = 96263,  // SubViewer
+        SubViewer1  = 96262,  // 
         TimedId3    = 100358, // timed ID3 metadata
-        VPlayer     = 96267, // VPlayer
-        WebVtt      = 96265, // WebVTT subtitle
-        Xsub        = 94211, // XSUB
+        VPlayer     = 96267,  // VPlayer
+        WebVtt      = 96265,  // WebVTT subtitle
+        Xsub        = 94211,  // XSUB
 
         // Fonts
         Otf = 100355,
