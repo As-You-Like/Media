@@ -2,14 +2,8 @@
 {
     public enum SubfileType
     {
-        Image = 1,
-        ReducedImage = 2,
-        Page = 3
+        Image        = 1, // OFILETYPE_IMAGE
+        ReducedImage = 2, // OFILETYPE_REDUCEDIMAGE
+        Page         = 3  // OFILETYPE_PAGE
     }
-
-    /*
-	OFILETYPE_IMAGE = 1;
-	OFILETYPE_REDUCEDIMAGE = 2;
-	OFILETYPE_PAGE = 3;
-	*/
 }

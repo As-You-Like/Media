@@ -35,16 +35,14 @@ namespace Carbon.Media.Metadata
 
             var data = BitConverter.GetBytes((UInt64)value);
 
-            // UInt64
-
-            var numberator = BitConverter.ToInt32(data, 0);
-            var denominator = BitConverter.ToInt32(data, 4);
+            var num = BitConverter.ToInt32(data, 0);
+            var den = BitConverter.ToInt32(data, 4);
 
             var x = 0d;
 
-            if (denominator != 0)
+            if (den != 0)
             {
-                x = ((double)numberator / denominator);
+                x = ((double)num / den);
             }
 
             // NaN Check
@@ -79,19 +77,10 @@ namespace Carbon.Media.Metadata
             {
                 x = ((double)numberator / (double)denominator);
             }
-
-            // NaN Check
-
+            
             return x.ToString();
-            /*
-			double focalLength = (double)a / b;
-
-			return int.Parse(value.ToString());
-			*/
         }
     }
-
- 
 
     public sealed class NumberToEnum<T> : MetadataItemConverter
     {
@@ -101,7 +90,7 @@ namespace Carbon.Media.Metadata
         }
     }
 
-    public sealed class DateNormalizer : MetadataItemConverter
+    internal sealed class DateNormalizer : MetadataItemConverter
     {
         public static readonly new DateNormalizer Default = new DateNormalizer();
 

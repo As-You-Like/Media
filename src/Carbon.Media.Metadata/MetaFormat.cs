@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum MetaFormat : byte
+    internal enum MetaFormat : byte
     {
         Ansi        = 1,
         Boolean     = 2,
