@@ -15,18 +15,22 @@ namespace Carbon.Media
 
         public long Value => value;
 
-        public static BitRate FromKbs(long kbs)
-        {
-            return new BitRate(kbs * 1000);
-        }
-        
-        public static BitRate FromMbs(long kbs)
-        {
-            return new BitRate(kbs * 1000 * 1000);
-        }
+
+        public double Kbps => value / 1000d;
+
+        public double Mbps => value / (1000d * 1000d);
 
         // Kb/s
+        public static BitRate FromKbps(double kbs)
+        {
+            return new BitRate((long)(kbs * 1000));
+        }
+
         // Mb/s
+        public static BitRate FromMbps(double kbs)
+        {
+            return new BitRate((long)(kbs * 1000 * 1000));
+        }
 
         #region Equality
 
@@ -43,6 +47,15 @@ namespace Carbon.Media
 
         public static BitRate Parse(string text)
         {
+            if (text.EndsWith("Kb/s"))
+            {
+                return FromKbps(double.Parse(text.Substring(0, text.Length - 4)));
+            }
+            else if (text.EndsWith("Mb/s"))
+            {
+                return FromMbps(double.Parse(text.Substring(0, text.Length - 4)));
+            }
+
             return new BitRate(long.Parse(text));
         }
     }
