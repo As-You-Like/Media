@@ -18,7 +18,10 @@
 
         public Rational? FrameRate { get; set; }
 
-        public Rational? Aspect { get; set; }
+        // Horizontal Aspect Ratio
+        public Rational? AspectRatio { get; set; }
+        
+        public ExifOrientation? Orientation { get; set; }
 
         public PixelFormat PixelFormat { get;  }
 
