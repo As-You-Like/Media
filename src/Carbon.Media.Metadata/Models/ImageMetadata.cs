@@ -3,21 +3,36 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media.Metadata
 {
-    // DocumentInfo
+    [DataContract]
+    public class DocumentMetadata
+    {
+
+        FrameInfo[] Pages { get; set; }
+    }
 
     [DataContract]
     public class ImageMetadata
     {
-        // public ImageFormat Format { get; set;}
+        [DataMember(Name = "format", Order = 1)]
+        public ImageFormat Format { get; set;}
 
-        // Codec(s)
+        [DataMember(Name = "codecs", Order = 2)]
+        public string[] Codecs { get; set; }
 
-        // public ColorSpace ColorSpace { get; set; }
+        [DataMember(Name = "width", Order = 3)]
+        public int Width { get; set; }
 
-        // public PixelFormat PixelFormat { get; set; }
+        [DataMember(Name = "height", Order = 4)]
+        public int Height { get; set; }
 
-        // [DataMember(Name = "orientation", Order = 5)]
-        // public ExifOrientation Orientation { get; set; }
+        [DataMember(Name = "orientation", Order = 5)]
+        public ExifOrientation? Orientation { get; set; }
+
+        [DataMember(Name = "pixelFormat", Order = 6)]
+        public PixelFormat PixelFormat { get; set; }
+
+        [DataMember(Name = "colorSpace")]
+        public ColorSpace ColorSpace { get; set; }
 
         [DataMember(Name = "subject")]
         public SubjectInfo Subject { get; set; }
@@ -27,17 +42,13 @@ namespace Carbon.Media.Metadata
 
         [DataMember(Name = "shutter")] // speed
         public string Shutter { get; set; }
+
         [DataMember(Name = "sensor")]
         public SensorInfo Sensor { get; set; }
 
         [DataMember(Name = "whiteBalance")]
         public WhiteBalance WhiteBalance { get; set; }
-
-        [DataMember(Name = "width", Order = 3)]
-        public int Width { get; set; }
-
-        [DataMember(Name = "height", Order = 4)]
-        public int Height { get; set; }
+        
 
         [DataMember(Name = "location")]
         public LocationDetails? Location { get; set; }
@@ -54,6 +65,8 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "frames")]
         public FrameInfo[] Frames { get; set; }
         
+        // RepeatCount ?
+
         // TODO: Pages?
 
         // Taken
@@ -72,12 +85,3 @@ namespace Carbon.Media.Metadata
  modified   : "2012-05-15T15:01:19Z" 
  location   : { longitude: "x", latitude: "x", name: "New York, NY" }
 */
-
-// MediaMetadata Contract
-// 1 = Container
-// 2 = Codec
-// 3 = Width (pre orientation)
-// 4 = Height (pre orientation)
-// 5 = Orientation
-// 6 = PixelFormat
-// 7 = Duration

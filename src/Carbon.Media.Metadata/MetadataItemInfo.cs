@@ -1,22 +1,30 @@
-﻿using System;
-
-namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata
 {
     using static MetaFormat;
 
     public class MetadataItemInfo
     {
-        internal MetadataItemInfo(string name, MetaFormat format = Ansi, int code = 0, string description = null)
+        internal MetadataItemInfo(ExifTag tag, MetaFormat format = Ansi,  string description = null)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Code = code;
+            Name = tag.ToString();
+            Code = (int)tag;
             Description = description;
             Converter = GetConverter(format);
         }
 
+        public MetadataItemInfo(ExifTag tag, MetadataItemConverter converter)
+        {
+            Name      = tag.ToString();
+            Code      = (int)tag;
+            Converter = converter;
+        }
+
+        internal MetadataItemInfo(string name, MetaFormat format = Ansi)
+            : this(name, GetConverter(format)) { }
+
         public MetadataItemInfo(string name, MetadataItemConverter converter)
         {
-            Name = name;
+            Name      = name;
             Converter = converter;
         }
 
