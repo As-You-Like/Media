@@ -10,7 +10,7 @@ namespace Carbon.Media
             SampleFormat id, 
             int bitCount, 
             Type type,
-            SampleFormatFlags flags = None)
+            SampleFormatFlags flags = default)
         {
             Id       = id;
             BitCount = bitCount;

@@ -14,7 +14,7 @@ namespace Carbon.Media.Processors
             : this(new Unit(size.Width), new Unit(size.Height), anchor, null, ResizeFlags.None)
         { }
 
-        public Resize(Unit width, Unit height, ResizeFlags flags = ResizeFlags.None)
+        public Resize(Unit width, Unit height, ResizeFlags flags = default)
             : this(width, height, null, null, flags) { }
 
         public Resize(Unit width, Unit height, CropAnchor? anchor, string background, ResizeFlags flags)
@@ -191,7 +191,7 @@ namespace Carbon.Media.Processors
                 var width  = Unit.Parse(size[0]);
                 var height = Unit.Parse(size[1]);
 
-                var flags = ResizeFlags.None;
+                ResizeFlags flags = default;
                 string background = null;
                 CropAnchor? anchor = null;
 

@@ -2,7 +2,7 @@
 {
     public enum ColorSpace
 	{
-        Unknown	= 0,
+        Unknown	    = 0,
         
         /// <summary>
         /// The sRGB color space is based on the ITU-R BT.709 standard.
@@ -35,7 +35,7 @@
         HWB	         = 37, //     | IM
         
         // CIE Color Spaces
-        Lab	         = 40, // ICC | ImageSharp         | The CIE L*a*b* color model (Lab) is based on the human perception of color
+        Lab	         = 40, // ICC | ImageSharp      | The CIE L*a*b* color model (Lab) is based on the human perception of color
         Luv          = 41, //     | ImageSharp
         Uvw          = 42, // 
         XYZ          = 43, // ICC |                | Expresses colors as mixture of the three tristimulus values X, Y, and Z. 
