@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 
 namespace Carbon.Media
 {
+    // Replace with owned memory?
+
     public class Buffer : IBuffer
     {
         private IntPtr pointer;

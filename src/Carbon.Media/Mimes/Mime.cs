@@ -3,8 +3,6 @@ using System.IO;
 
 namespace Carbon.Media
 {
-    // FormatInfo?
-
     public sealed class Mime : IEquatable<Mime>
     {
         internal Mime(string name, string format = null)
@@ -129,47 +127,48 @@ namespace Carbon.Media
         // Binary Blob
         public static readonly Mime Blob = new Mime("application/octet-stream", "blob");
 
-        // Applications (0-1999)
-        public static readonly Mime Ai   = new Mime("application/illustrator", "ai");
-        public static readonly Mime Atom = new Mime("application/atom+xml", "atom");
-        public static readonly Mime Doc  = new Mime("application/msword", "doc");
-        public static readonly Mime Js   = new Mime("application/javascript", "js");
-        public static readonly Mime Json = new Mime("application/json", "json");
-        public static readonly Mime M3u8 = new Mime("application/x-mpegURL", "m3u8");
-        public static readonly Mime Mpd  = new Mime("application/dash+xml", "mpd");
-        public static readonly Mime Pdf  = new Mime("application/pdf", "pdf", new[] { MagicNumber.Pdf });
+        // Applications
+        public static readonly Mime Ai   = new Mime("application/illustrator",       "ai");
+        public static readonly Mime Atom = new Mime("application/atom+xml",          "atom");
+        public static readonly Mime Doc  = new Mime("application/msword",            "doc");
+        public static readonly Mime Js   = new Mime("application/javascript",        "js");
+        public static readonly Mime Json = new Mime("application/json",              "json");
+        public static readonly Mime M3u8 = new Mime("application/x-mpegURL",         "m3u8");
+        public static readonly Mime Mpd  = new Mime("application/dash+xml",          "mpd");
+        public static readonly Mime Pdf  = new Mime("application/pdf",               "pdf", new[] { MagicNumber.Pdf });
         public static readonly Mime Swf  = new Mime("application/x-shockwave-flash", "swf");
         public static readonly Mime Xap  = new Mime("application/x-silverlight-app", "xap");
+        public static readonly Mime Xaml = new Mime("application/xaml+xml",          "xaml");
 
         // Applications - Fonts 
         public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
-        public static readonly Mime Ttf   = new Mime("application/x-font-ttf", "ttf");
-        public static readonly Mime Woff  = new Mime("application/font-woff", "woff");   // https://www.w3.org/TR/WOFF/#appendix-b
-        public static readonly Mime Woff2 = new Mime("application/font-woff2", "woff2");
+        public static readonly Mime Otf   = new Mime("application/font-sfnt",         "otf");
+        public static readonly Mime Ttf   = new Mime("application/x-font-ttf",        "ttf");
+        public static readonly Mime Woff  = new Mime("application/font-woff",         "woff");   // https://www.w3.org/TR/WOFF/#appendix-b
+        public static readonly Mime Woff2 = new Mime("application/font-woff2",        "woff2");
 
         // Applications - Color Profiles
         public static readonly Mime Icc = new Mime("application/vnd.iccprofile", "icc");
 
         // Applications - Archives
-        public static readonly Mime Tar           = new Mime("application/x-tar", "tar");
+        public static readonly Mime Tar           = new Mime("application/x-tar",  "tar");
         public static readonly Mime CompressedTar = new Mime("application/x-gzip", "tar.gz");
-        public static readonly Mime Zip           = new Mime("application/zip", "zip");
-
+        public static readonly Mime Zip           = new Mime("application/zip",    "zip");
 
         // Audio (2000-2999)
-        public static readonly Mime Aac      = new Mime("audio/mp4", "aac");
-        public static readonly Mime Aiff     = new Mime("audio/aiff", new[] { "aiff", "aif", "aifc" });
-        public static readonly Mime Flac     = new Mime("audio/flac", "flac");
+        public static readonly Mime Aac      = new Mime("audio/aac",        new[] { "aac", "m4a" });
+        public static readonly Mime Aiff     = new Mime("audio/aiff",       new[] { "aiff", "aif", "aifc" });
+        public static readonly Mime Flac     = new Mime("audio/flac",       "flac");
         public static readonly Mime Mka      = new Mime("audio/x-matroska", "mka");
-        public static readonly Mime Mp3      = new Mime("audio/mpeg", "mp3", new[] { MagicNumber.Mp3 });
-        public static readonly Mime Mpc      = new Mime("audio/musepack", "mpc");
-        public static readonly Mime M4a      = new Mime("audio/mp4", "m4a");
-        public static readonly Mime Oga      = new Mime("audio/ogg", "oga");
-        public static readonly Mime Opus     = new Mime("audio/opus", "opus");
-        public static readonly Mime Spx      = new Mime("audio/speex", "spx");
+        public static readonly Mime Mp3      = new Mime("audio/mpeg",       "mp3", new[] { MagicNumber.Mp3 });
+        public static readonly Mime Mpc      = new Mime("audio/musepack",   "mpc");
+        public static readonly Mime M4a      = new Mime("audio/mp4",        "m4a");
+        public static readonly Mime Oga      = new Mime("audio/ogg",        "oga");
+        public static readonly Mime Opus     = new Mime("audio/opus",       "opus");
+        public static readonly Mime Spx      = new Mime("audio/speex",      "spx");
         public static readonly Mime Ra       = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
-        public static readonly Mime Wav      = new Mime("audio/wav", new[] { "wav", "wave" });
-        public static readonly Mime Wma      = new Mime("audio/x-ms-wma", "wma");
+        public static readonly Mime Wav      = new Mime("audio/wav",         new[] { "wav", "wave" });
+        public static readonly Mime Wma      = new Mime("audio/x-ms-wma",   "wma");
 
 
         // Image (4000-4999)
@@ -190,11 +189,11 @@ namespace Carbon.Media
 
         // Text (8000-8999)
         public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
-        public static readonly Mime Css      = new Mime("text/css", "css");
-        public static readonly Mime Csv      = new Mime("text/csv", "csv");
-        public static readonly Mime Html     = new Mime("text/html", "html");
-        public static readonly Mime Txt      = new Mime("text/plain", "plain");
-        public static readonly Mime Xml      = new Mime("text/xml", "xml");
+        public static readonly Mime Css      = new Mime("text/css",     "css");
+        public static readonly Mime Csv      = new Mime("text/csv",     "csv");
+        public static readonly Mime Html     = new Mime("text/html",    "html");
+        public static readonly Mime Txt      = new Mime("text/plain",   "plain");
+        public static readonly Mime Xml      = new Mime("text/xml",     "xml");
 
         // Video (9000-9999)
         public static readonly Mime Avi      = new Mime("video/x-msvideo", "avi", new[] { MagicNumber.Avi });
@@ -202,7 +201,7 @@ namespace Carbon.Media
         public static readonly Mime Flv      = new Mime("video/x-flv",     "flv", new[] { MagicNumber.Flv });
         public static readonly Mime Mkv      = new Mime("video/x-matroska", new[] { "mkv", "mk3d", "mks" });
         public static readonly Mime Mov      = new Mime("video/quicktime", "mov");
-        public static readonly Mime Mp4      = new Mime("video/mp4",       "mp4");
+        public static readonly Mime Mp4      = new Mime("video/mp4",       new[] { "mp4", "m4v" });
         public static readonly Mime Mpeg     = new Mime("video/mpeg",      "mpeg");
         public static readonly Mime Ogv      = new Mime("video/ogg",       new[] { "ogv", "ogg" }); // http://tools.ietf.org/html/rfc5334 (predominantly video)
         public static readonly Mime Ts       = new Mime("video/MP2T",      "ts");

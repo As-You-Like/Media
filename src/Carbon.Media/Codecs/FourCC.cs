@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media.Codecs
+﻿namespace Carbon.Media
 {
     public struct FourCC
     {
@@ -7,7 +7,12 @@
             CodecId = id;
         }
 
+        
         public CodecId CodecId { get; }
+
+        // int Value
+
+        // Create from ####
 
         public static readonly FourCC AASC = new FourCC(CodecId.Aasc);
         public static readonly FourCC ACDV = new FourCC(CodecId.Acdv);
@@ -27,6 +32,8 @@
         public static readonly FourCC CVID = new FourCC(CodecId.Cinepak);
         public static readonly FourCC CYUV = new FourCC(CodecId.Cyuv);      // Creative Labs YUV
         public static readonly FourCC DUCK = new FourCC(CodecId.Duck);
+        // public static readonly FourCC DV25 = new FourCC();               // DVCPRO 25 
+        // public static readonly FourCC DV50 = new FourCC();               // DVCPRO 50 
         // public static readonly FourCC DXT1 = new FourCC();               // DirectX Texture Compression Format 1
         // public static readonly FourCC DXT2 = new FourCC();               // DirectX Texture Compression Format 2
         // public static readonly FourCC DXT3 = new FourCC();               // DirectX Texture Compression Format 3
@@ -44,7 +51,7 @@
         // public static readonly FourCC IV32 = new FourCC();               // Indeo 3.2
         public static readonly FourCC IV40 = new FourCC(CodecId.Indeo4);
         public static readonly FourCC IV50 = new FourCC(CodecId.Indeo5);
-         public static readonly FourCC JPEG = new FourCC(CodecId.Jpeg);
+        public static readonly FourCC JPEG = new FourCC(CodecId.Jpeg);
         public static readonly FourCC KGV1 = new FourCC(CodecId.Kgv1);
         public static readonly FourCC KMVC = new FourCC(CodecId.Kmvc);
         public static readonly FourCC LAGS = new FourCC(CodecId.Lagarith);
@@ -83,5 +90,6 @@
         public static readonly FourCC V210 = new FourCC(CodecId.V210);
         public static readonly FourCC VBLE = new FourCC(CodecId.Vble);
         public static readonly FourCC VCR1 = new FourCC(CodecId.Vcr1);
+        public static readonly FourCC WVC1 = new FourCC(CodecId.Vc1);
     }
 }

@@ -1,8 +1,18 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public class AudioProfile
     {
-        public BitRate Bitrate { get; set; }
+        public AudioProfile() { }
+
+        public AudioProfile(string codec, BitRate bitRate)
+        {
+            Codec    = codec ?? throw new ArgumentNullException(nameof(codec));
+            BitRate  = bitRate;
+        }
+
+        public BitRate BitRate { get; set; }
 
         public string Codec { get; set; }
 

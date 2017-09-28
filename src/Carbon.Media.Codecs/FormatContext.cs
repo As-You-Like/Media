@@ -4,19 +4,13 @@ using System.Collections.Generic;
 namespace Carbon.Media.Containers
 {
     public class FormatContext
-    {
-        // public Container Container { get; } // Muxer Or Demuxer
-  
-        public MediaSource Source { get; set; }
-
+    { 
         public MediaStream[] Streams { get; set; }
 
         public Chapter[] Chapters { get; set; }
 
         public BitRate? BitRate { get; set; }
-        
-        // Seek
-        
+                
         public int PacketSize { get; set; }
         
         public int MaxDelay { get; set; }
@@ -30,8 +24,6 @@ namespace Carbon.Media.Containers
         public TimeSpan? Duration { get; set; }
 
         public TimeSpan? ReadTimeout { get; set; }
-
-        // Disable Audio | Video | Subtitle
 
         public Dictionary<string, string> Metadata { get; set; }
 
@@ -47,8 +39,5 @@ namespace Carbon.Media.Containers
 
             return null;
         }
-
     }
-
-    // AKA AVFormatContext
 }

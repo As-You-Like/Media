@@ -4,18 +4,14 @@ namespace Carbon.Media
 {
     public interface IBuffer : IDisposable
     {
-        // RefCount
-
-        IntPtr Pointer { get; }
+        // Span
 
         int Length { get; }
 
-        // Free
-        // Unref
-        // Ref
+        // MemoryHandle Retain(bool pin) { } // provides a pointer for accessing the memory
     }
-    
-    // GCHandle?
-
-    // Provides a way to access a managed object from unmanaged memory
 }
+
+
+// Replace with Memory
+

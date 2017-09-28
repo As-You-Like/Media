@@ -74,25 +74,10 @@ namespace Carbon.Media
         public static readonly CodecInfo AacLC  = new CodecInfo("mp4a.40.2", CodecId.Aac);  // AAC-low complexity profile
         public static readonly CodecInfo AacHE  = new CodecInfo("mp4a.40.5", CodecId.Aac);  // AAC-high efficiency profile (HE-AAC)
         public static readonly CodecInfo Alac   = new CodecInfo("alac",      CodecId.Alac); // Apple Lossless (m4a)
-        // public static readonly CodecInfo Aiff   = new CodecInfo("aiff",      CodecId.Aiff);
         public static readonly CodecInfo Mp3    = new CodecInfo("mp3",       CodecId.Mp3);
         public static readonly CodecInfo Wma    = new CodecInfo("wma",       CodecId.Wma1);
         public static readonly CodecInfo Opus   = new CodecInfo("opus",      CodecId.Opus);
         public static readonly CodecInfo Vorbis = new CodecInfo("vorbis",    CodecId.Vorbis);
-        // public static readonly CodecInfo Wav    = new CodecInfo("wav",       CodecId.Wav);
-
-        // Images --------------------------------------------------------------------------------------------------
-        public static readonly CodecInfo Bmp    = new CodecInfo("bmp",       CodecId.Bmp);
-        public static readonly CodecInfo Gif    = new CodecInfo("gif",       CodecId.Gif);
-        public static readonly CodecInfo Heif   = new CodecInfo("heif",      CodecId.Heif);
-        public static readonly CodecInfo Jpeg   = new CodecInfo("jpeg",      CodecId.Jpeg);
-        public static readonly CodecInfo Jp2    = new CodecInfo("jp2",       CodecId.Jp2);
-        public static readonly CodecInfo Jxr    = new CodecInfo("jxr",       CodecId.Jxr);
-        public static readonly CodecInfo Png    = new CodecInfo("png",       CodecId.Png);
-        public static readonly CodecInfo Psd    = new CodecInfo("psd",       CodecId.Psd);
-        public static readonly CodecInfo Svg    = new CodecInfo("svg",       CodecId.Svg);
-        public static readonly CodecInfo Tiff   = new CodecInfo("tiff",      CodecId.Tiff);
-        public static readonly CodecInfo WebP   = new CodecInfo("webp",      CodecId.WebP);
 
         // Video --------------------------------------------------------------------------------------------------
         public static readonly CodecInfo H264Baseline       = new CodecInfo("avc1.42E01E", CodecId.H264); // baseline

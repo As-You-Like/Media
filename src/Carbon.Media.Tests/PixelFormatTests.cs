@@ -2,34 +2,33 @@
 
 namespace Carbon.Media.Tests
 {
-
     public class PixelFormatTests
     {
-        // Quick checks to make sure we never break these
         [Theory]
-        [InlineData("Bgr24", PixelFormat.Bgr24, 2)]
-        [InlineData("Bgra32", PixelFormat.Bgra32, 6)]
-        [InlineData("BlackWhite", PixelFormat.BlackWhite, 10)]
-        [InlineData("Cmyk32", PixelFormat.Cmyk32, 20)]
-        public void Parse(string text, PixelFormat type, int id)
+        [InlineData("Bgr24",      PixelFormat.Bgr24)]
+        [InlineData("Bgra32",     PixelFormat.Bgra32)]
+        [InlineData("BlackWhite", PixelFormat.BlackWhite)]
+        [InlineData("Cmyk32",     PixelFormat.Cmyk32)]
+        public void Parse(string text, PixelFormat type)
         {
             Assert.Equal(type, PixelFormatHelper.Parse(text));
-            // Assert.Equal(id, (int)type);
         }
         
         [Fact]
         public void ColorChannelTests()
         {
-            Assert.Equal(1, (int)ColorComponent.R);
-            Assert.Equal(2, (int)ColorComponent.G);
-            Assert.Equal(3, (int)ColorComponent.B);
-            Assert.Equal(4, (int)ColorComponent.A);
-            Assert.Equal(5, (int)ColorComponent.C);
-            Assert.Equal(6, (int)ColorComponent.M);
-            Assert.Equal(7, (int)ColorComponent.Y);
-            Assert.Equal(8, (int)ColorComponent.K);
+            Assert.Equal(1,  (int)ColorComponent.R);
+            Assert.Equal(2,  (int)ColorComponent.G);
+            Assert.Equal(3,  (int)ColorComponent.B);
+            Assert.Equal(4,  (int)ColorComponent.A);
+            Assert.Equal(5,  (int)ColorComponent.Cb);
+            Assert.Equal(6,  (int)ColorComponent.Cr);
+            Assert.Equal(7,  (int)ColorComponent.Y);
+            Assert.Equal(10, (int)ColorComponent.Cyan);
+            Assert.Equal(11, (int)ColorComponent.Magenta);
+            Assert.Equal(12, (int)ColorComponent.Yellow);
+            Assert.Equal(13, (int)ColorComponent.Key);
         }
-    
 
         [Fact]
         public void A()

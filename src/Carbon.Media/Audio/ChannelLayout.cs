@@ -1,5 +1,8 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
+    [Flags]
     public enum ChannelLayout : long
     {
         Unknown             = 0,
