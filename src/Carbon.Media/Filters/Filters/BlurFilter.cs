@@ -31,6 +31,8 @@
     }
 }
 
+// blur(5px) CSS Syntax
+
 // Sigma
 
 // boxblur, gblur, avgblur, sab, smartblur
