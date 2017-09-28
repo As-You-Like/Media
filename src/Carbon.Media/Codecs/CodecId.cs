@@ -226,13 +226,14 @@
         _4XM            = 35,    //        4X Movie
         _8BPS           = 49,    //        QuickTime 8BPS video	
         Aasc            = 75,    //        Autodesk Animator Codec      
+        Acdv            = 0,     //        ACD Systems Digital Imaging
         Aic             = 169,   //        Apple Intermediate Codec
         Amv             = 108,   //        AMV Video
         Anm             = 135,   //        Deluxe Paint Animation
         Asv1            = 32,    //        Asus v1	
         Asv2            = 33,    //        Asus v2
-        Aura            = 124,   // AUR2 | Auravision
-        Aura2           = 125,   // AURA | Auravision 2
+        Aura            = 124,   // AURA | Auravision
+        Aura2           = 125,   // AUR2 | Auravision 2
         Avrp            = 32769, //        Avfid 1:1 10-bit RGB Packer
         AV1             = 32797, //        Alliance for Open Media AV1
         Avs             = 83,    //        Audio Video Standard             
