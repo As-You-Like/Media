@@ -123,7 +123,8 @@
         BayerGrbg16be   = 111,
 
         // YUV -------------------------------------------------------------------
-        Yuv420p         = 300, // planar YUV | 4:2:0
+                               // Description | Sampling
+        Yuv420p         = 300, // planar YUV  | 4:2:0
         Yuv420p9be      = 301, // 
         Yuv420p9le      = 302,
         Yuv420p16le     = 303,
@@ -148,8 +149,8 @@
         Yuv420p10le     = 322,
         Yuv422p10be     = 323,
         Yuv422p10le     = 324,     
-        Yuva422p        = 325, // planar YUV 4:2:2
-        Yuva444p        = 326, // planar YUV 4:4:4
+        Yuva422p        = 325, // planar YUV | 4:2:2
+        Yuva444p        = 326, // planar YUV | 4:4:4
         Yuva420p9be,
         Yuva420p9le,
         Yuva422p9be,
@@ -168,29 +169,72 @@
         Yuva422p16le,
         Yuva444p16be,
         Yuva444p16le,
-        Yuv420p12be, // planar YUV 4:2:0
-        Yuv420p12le, // planar YUV 4:2:0
-        Yuv420p14be, // planar YUV 4:2:0
-        Yuv420p14le, // planar YUV 4:2:0
-        Yuv422p12be, // planar YUV 4:2:2
-        Yuv422p12le, // planar YUV 4:2:2
-        Yuv422p14be, // planar YUV 4:2:2
-        Yuv422p14le, // planar YUV 4:2:2
-        Yuv444p12be, // planar YUV 4:4:4
-        Yuv444p12le, // planar YUV 4:4:4
-        Yuv444p14be, // planar YUV 4:4:4
-        Yuv444p14le, // planar YUV 4:4:4
+        Yuv420p12be, // planar YUV | 4:2:0
+        Yuv420p12le, // planar YUV | 4:2:0
+        Yuv420p14be, // planar YUV | 4:2:0
+        Yuv420p14le, // planar YUV | 4:2:0
+        Yuv422p12be, // planar YUV | 4:2:2
+        Yuv422p12le, // planar YUV | 4:2:2
+        Yuv422p14be, // planar YUV | 4:2:2
+        Yuv422p14le, // planar YUV | 4:2:2
+        Yuv444p12be, // planar YUV | 4:4:4
+        Yuv444p12le, // planar YUV | 4:4:4
+        Yuv444p14be, // planar YUV | 4:4:4
+        Yuv444p14le, // planar YUV | 4:4:4
 
-        Uyvy422,    // packed YUV | 4:2:2
-        Uyyvyy411,  // packed YUV 4:1:1
+        Uyvy422,     // packed YUV | 4:2:2
+        Uyyvyy411,   // packed YUV | 4:1:1
 
-        Yuv440p10le, // planar YUV 4:4:0
-        Yuv440p10be, // planar YUV 4:4:0
-        Yuv440p12le, // planar YUV 4:4:0
-        Yuv440p12be, // planar YUV 4:4:0
+        Yuv440p10le, // planar YUV 4:4:0 20bpp
+        Yuv440p10be, // planar YUV 4:4:0 20bpp
+        Yuv440p12le, // planar YUV 4:4:0 24bpp
+        Yuv440p12be, // planar YUV 4:4:0 24bpp
+
+        Yvyu422, // packed YUV 4:2:2
 
         Xyz12le, // packed XYZ | 4:4:4
         Xyz12be, // packed XYZ | 4:4:4
+
+        Nv11,   // planar YUV 4:1:1
+        Nv12,   // planar YUV 4:2:0
+        Nv16,   // interleaved chroma YUV | 4:2:2
+        Nv20le, // interleaved chroma YUV | 4:2:2
+        Nv21,   // planar YUV 4:2:0 (swap U & V)
+
+
+        Ayuv64le, // packed AYUV 4:4:4
+        Ayuv64be, // packed AYUV 4:4:4
+
+
+        Imc1,   // planar YUV 4:2:0 16bpp
+        Imc3,   // planar YUV 4:2:0 16bpp
+
+
+        P016 = 0, // Planar, 4:2:0, 16bit
+        P010 = 0, // Planar, 4:2:0, 10-bit.
+        P216 = 0, // Planar, 4:2:2, 16-bit.
+        P210 = 0, // Planar, 4:2:2, 10-bit.
+        Y216 = 0, // Packed, 4:2:2, 16-bit.
+        Y210 = 0, // Packed, 4:2:2, 10-bit.
+        Y416 = 0, // Packed, 4:4:4, 16-bit
+        Y410 = 0, // Packed, 4:4:4, 10-bit.
+        
+        /*
+        YUV ----------------------
+        AI44		4:4:4	Packed
+        AYUV		4:4:4	Packed
+        I420		4:2:0	Planar
+        IYUV		4:2:0	Planar
+        UYVY		4:2:2	Packed
+        Y41P		4:1:1	Packed
+        Y41T		4:1:1	Packed
+        Y42T		4:2:2	Packed
+        YUY2		4:2:2	Packed
+        YVU9		8:4:4	Planar
+        YV12		4:2:0	Planar
+        YVYU		4:2:2 	Packed
+
+        */
 
         /*
         Pal8,
@@ -198,8 +242,6 @@
         Bgr4Byte, // packed RGB 1:2:1
         Rgb4Byte, // packed RGB 1:2:1
 
-        Nv12, //  planar YUV 4:2:0
-        Nv21, // planar YUV 4:2:0 (swap U & V)
         
         [BitsPerPixel(20)] Yuva420p, // planar YUV | 4:2:0
 
@@ -213,11 +255,8 @@
         Gbrp16le,
        
        
-        Nv16,     // interleaved chroma YUV | 4:2:2
-        Nv20le,   // interleaved chroma YUV | 4:2:2
-     
        
-        Yvyu422, // packed YUV 4:2:2
+        
         Ya16be,
         Ya16le,
         Gbrap, // planar GBRA 4:4:4:4
@@ -233,8 +272,7 @@
         Yuvj411p,    // planar YUV 4:1:1
 
        
-        Ayuv64le,    // packed AYUV 4:4:4
-        Ayuv64be,    // packed AYUV 4:4:4
+ 
         P010le,
        
         P010be,
