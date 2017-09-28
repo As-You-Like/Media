@@ -67,7 +67,6 @@
         
         Bgra64le, // packed RGBA 16:16:16:16,
         VdpauMpeg4,
-        Nv20be,   // interleaved chroma YUV 4:2:2
         Rgba64be, // packed RGBA | 16:16:16:16
         Rgba64le,
         Bgra64be, // packed RGBA 16:16:16:16
@@ -198,6 +197,7 @@
         Nv11,   // planar YUV 4:1:1
         Nv12,   // planar YUV 4:2:0
         Nv16,   // interleaved chroma YUV | 4:2:2
+        Nv20be, // interleaved chroma YUV 4:2:2
         Nv20le, // interleaved chroma YUV | 4:2:2
         Nv21,   // planar YUV 4:2:0 (swap U & V)
 
@@ -209,6 +209,7 @@
         Imc1,   // planar YUV 4:2:0 16bpp
         Imc3,   // planar YUV 4:2:0 16bpp
 
+        // Four CC Codecs
 
         P016 = 0, // Planar, 4:2:0, 16bit
         P010 = 0, // Planar, 4:2:0, 10-bit.
