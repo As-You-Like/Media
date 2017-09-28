@@ -24,6 +24,10 @@ namespace Carbon.Media.Colors
 
         public ColorSpaceFlags Flags { get; }
         
+        // WhitePoint
+
+        // PrimaryColors
+
         // TODO: ColorTable (for indexed color spaces)
 
         public bool IsWideGamut => Flags.HasFlag(ColorSpaceFlags.WideGamut);

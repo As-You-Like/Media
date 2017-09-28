@@ -88,7 +88,7 @@ namespace Carbon.Media
         public static readonly CodecInfo H264Level0Advanced = new CodecInfo("mp4v.20.240", CodecId.H264); // level 0 advanced
 
         public static readonly CodecInfo Theora = new CodecInfo("theora", CodecId.Theora);
-        public static readonly CodecInfo Dirac = new CodecInfo("dirac", CodecId.Dirac);
+        public static readonly CodecInfo Dirac  = new CodecInfo("dirac",  CodecId.Dirac);
 
         public static readonly CodecInfo Vp3 = new CodecInfo("vp3", CodecId.Vp3);
         public static readonly CodecInfo Vp5 = new CodecInfo("vp5", CodecId.Vp5);

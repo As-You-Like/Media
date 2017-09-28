@@ -11,18 +11,25 @@ namespace Carbon.Media.Metadata
         public AudioFormat Format { get; set; }
 
         // e.g. mp4a.40.2 (AACLC)
-        [DataMember(Name = "codecs", Order = 2)]
-        public string[] Codecs { get; set; }
+        [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
+        public string Codec { get; set; }
 
-        [DataMember(Name = "duration", Order = 7)]
+        [DataMember(Name = "duration", Order = 7, EmitDefaultValue = false)]
         public TimeSpan Duration { get; set; }
-
-        [DataMember(Name = "channelLayout")]
-        public ChannelLayout ChannelLayout { get; set; }
-
-        [DataMember(Name = "channelCount")]
+        
+        [DataMember(Name = "channelCount", Order = 8, EmitDefaultValue = false)]
         public int ChannelCount { get; set; }
 
-        // Channels
+        [DataMember(Name = "channelLayout", Order = 9, EmitDefaultValue = false)]
+        public ChannelLayout ChannelLayout { get; set; }
     }
 }
+
+/*
+{ 
+    format        : "aac",
+    codec         : "mp4a.40.2",
+    duration      : "00:30:00",
+    channelLayout : "Stereo" 
+}
+*/

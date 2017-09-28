@@ -6,8 +6,11 @@ namespace Carbon.Media.Metadata
     [DataContract]
     public class DocumentMetadata
     {
+        [DataMember(Name = "format", Order = 1)]
+        public DocumentFormat Format { get; set; }
 
-        FrameInfo[] Pages { get; set; }
+        [DataMember(Name = "pages", Order = 10)]
+        public PageMetadata[] Pages { get; set; }
     }
 
     [DataContract]
@@ -16,8 +19,10 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "format", Order = 1)]
         public ImageFormat Format { get; set;}
 
-        [DataMember(Name = "codecs", Order = 2)]
-        public string[] Codecs { get; set; }
+        [DataMember(Name = "codecs", Order = 2, EmitDefaultValue = false)]
+        public string Codec { get; set; }
+        
+        // Codecs = 3?
 
         [DataMember(Name = "width", Order = 3)]
         public int Width { get; set; }
@@ -25,53 +30,53 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "height", Order = 4)]
         public int Height { get; set; }
 
-        [DataMember(Name = "orientation", Order = 5)]
+        [DataMember(Name = "orientation", Order = 5, EmitDefaultValue = false)]
         public ExifOrientation? Orientation { get; set; }
 
-        [DataMember(Name = "pixelFormat", Order = 6)]
+        [DataMember(Name = "pixelFormat", Order = 6, EmitDefaultValue = false)]
         public PixelFormat PixelFormat { get; set; }
 
-        [DataMember(Name = "colorSpace")]
+        [DataMember(Name = "colorSpace", Order = 7, EmitDefaultValue = false)]
         public ColorSpace ColorSpace { get; set; }
 
-        [DataMember(Name = "subject")]
-        public SubjectInfo Subject { get; set; }
-
-        [DataMember(Name = "exposure")]
-        public ExposureInfo Exposure { get; set; }
-
-        [DataMember(Name = "shutter")] // speed
-        public string Shutter { get; set; }
-
-        [DataMember(Name = "sensor")]
-        public SensorInfo Sensor { get; set; }
-
-        [DataMember(Name = "whiteBalance")]
-        public WhiteBalance WhiteBalance { get; set; }
-        
-
-        [DataMember(Name = "location")]
-        public LocationDetails? Location { get; set; }
-
-        [DataMember(Name = "lighting")]
-        public LightingInfo Lighting { get; set; }
-
-        [DataMember(Name = "camera")]
-        public CameraInfo Camera { get; set; }
-
-        [DataMember(Name = "created")]
-        public DateTime? Created { get; }
-        
-        [DataMember(Name = "frames")]
+        [DataMember(Name = "frames", Order = 20, EmitDefaultValue = false)]
         public FrameInfo[] Frames { get; set; }
         
-        // RepeatCount ?
+        [DataMember(Name = "camera", EmitDefaultValue = false)]
+        public CameraInfo Camera { get; set; }
 
-        // TODO: Pages?
+        [DataMember(Name = "lighting", EmitDefaultValue = false)]
+        public LightingInfo Lighting { get; set; }
 
-        // Taken
+        [DataMember(Name = "location", EmitDefaultValue = false)]
+        public LocationDetails? Location { get; set; }
 
-        [DataMember(Name = "modified")]
+
+        [DataMember(Name = "software", EmitDefaultValue = false)]
+        public SoftwareInfo Software { get; set; }
+
+        [DataMember(Name = "subject", EmitDefaultValue = false)]
+        public SubjectInfo Subject { get; set; }
+
+        [DataMember(Name = "exposure", EmitDefaultValue = false)]
+        public ExposureInfo Exposure { get; set; }
+
+        [DataMember(Name = "sensor", EmitDefaultValue = false)] // sensing?
+        public SensorInfo Sensor { get; set; }
+
+        [DataMember(Name = "shutter", EmitDefaultValue = false)]
+        public ShutterInfo Shutter { get; set; }
+
+       
+
+        [DataMember(Name = "whiteBalance", EmitDefaultValue = false)]
+        public WhiteBalance WhiteBalance { get; set; }
+
+
+        [DataMember(Name = "created", Order = 40, EmitDefaultValue = false)]
+        public DateTime? Created { get; }
+
+        [DataMember(Name = "modified", EmitDefaultValue = false)]
         public DateTime? Modified { get; }
     }
 }

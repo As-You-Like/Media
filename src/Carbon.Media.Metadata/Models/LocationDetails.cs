@@ -2,6 +2,7 @@
 
 namespace Carbon.Media.Metadata
 {
+    [DataContract]
     public struct LocationDetails
     {
         [DataMember(Name = "longitude", EmitDefaultValue = false)]

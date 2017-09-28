@@ -3,7 +3,7 @@
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class PageInfo
+    public class PageMetadata
     {
         [DataMember(Name = "width", Order = 1)]
         public int Width { get; set; }
