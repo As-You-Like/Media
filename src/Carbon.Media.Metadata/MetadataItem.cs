@@ -9,9 +9,9 @@ namespace Carbon.Media.Metadata
 
         public MetadataItem(string path, object rawValue)
         {
-            Path = path ?? throw new ArgumentNullException(nameof(path));
+            Path     = path ?? throw new ArgumentNullException(nameof(path));
             RawValue = rawValue ?? throw new ArgumentNullException(nameof(rawValue));
-            RawType = rawValue.GetType().Name;
+            RawType   = rawValue.GetType().Name;
 
             var info = MetadataMap.Get(path);
 

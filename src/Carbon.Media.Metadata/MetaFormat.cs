@@ -1,14 +1,14 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    internal enum MetaFormat : byte
+    internal enum MetaFormat
     {
-        Ansi        = 1,
-        Boolean     = 2,
-        Byte        = 3,
-        Date        = 4,
-        Short       = 5,
-        Long        = 6,
-        Rational    = 7, // Unsigned
-        SRational   = 8
+        Ansi        = 1 << 0,
+        Boolean     = 1 << 1,
+        Byte        = 1 << 2,
+        Date        = 1 << 3,
+        Short       = 1 << 4,
+        Long        = 1 << 5,
+        Rational    = 1 << 6, // Unsigned
+        SRational   = 1 << 7
     }
 }
