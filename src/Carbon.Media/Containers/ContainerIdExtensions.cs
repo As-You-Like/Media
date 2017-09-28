@@ -25,7 +25,7 @@ namespace Carbon.Media
                 case Mp4        : return Mime.M4a;
                 case Ogg        : return Mime.Oga;  // audio/ogg
                 case Matroska   : return Mime.Mka;  // audio/x-matroska 
-                case Wav        : return Mime.Wav;  // audio/wav
+                case Wave       : return Mime.Wav;  // audio/wav
                 case WebM       : return Mime.WebM; // video/webm
                     
                 default: throw new ArgumentException("Invalid container:" + containerId);
@@ -46,7 +46,7 @@ namespace Carbon.Media
                 case Mov       : return Mime.Mov;   // video/quicktime
                 case Mp4       : return Mime.Mp4;
                 case Ogg       : return Mime.Ogv;   // video/ogg
-                case Wav       : return Mime.Wav;   // audio/wav
+                case Wave      : return Mime.Wav;   // audio/wav
                 case WebM      : return Mime.WebM;  // video/webm
 
                 default: throw new ArgumentException("Invalid container:" + containerId);
