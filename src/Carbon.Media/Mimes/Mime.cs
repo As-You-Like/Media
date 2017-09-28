@@ -157,19 +157,19 @@ namespace Carbon.Media
 
 
         // Audio (2000-2999)
-        public static readonly Mime Aac  = new Mime("audio/mp4", "aac");
-        public static readonly Mime Aiff = new Mime("audio/aiff", new[] { "aiff", "aif", "aifc" });
-        public static readonly Mime Flac = new Mime("audio/flac", "flac");
-        public static readonly Mime Mka  = new Mime("audio/x-matroska", "mka");
-        public static readonly Mime Mp3  = new Mime("audio/mpeg", "mp3", new[] { MagicNumber.Mp3 });
-        public static readonly Mime Mpc  = new Mime("audio/musepack", "mpc");
-        public static readonly Mime M4a  = new Mime("audio/mp4", "m4a");
-        public static readonly Mime Oga  = new Mime("audio/ogg", "oga");
-        public static readonly Mime Opus = new Mime("audio/opus", "opus");
-        public static readonly Mime Spx  = new Mime("audio/speex", "spx");
-        public static readonly Mime Ra   = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
-        public static readonly Mime Wav  = new Mime("audio/wav", new[] { "wav", "wave" });
-        public static readonly Mime Wma  = new Mime("audio/x-ms-wma", "wma");
+        public static readonly Mime Aac      = new Mime("audio/mp4", "aac");
+        public static readonly Mime Aiff     = new Mime("audio/aiff", new[] { "aiff", "aif", "aifc" });
+        public static readonly Mime Flac     = new Mime("audio/flac", "flac");
+        public static readonly Mime Mka      = new Mime("audio/x-matroska", "mka");
+        public static readonly Mime Mp3      = new Mime("audio/mpeg", "mp3", new[] { MagicNumber.Mp3 });
+        public static readonly Mime Mpc      = new Mime("audio/musepack", "mpc");
+        public static readonly Mime M4a      = new Mime("audio/mp4", "m4a");
+        public static readonly Mime Oga      = new Mime("audio/ogg", "oga");
+        public static readonly Mime Opus     = new Mime("audio/opus", "opus");
+        public static readonly Mime Spx      = new Mime("audio/speex", "spx");
+        public static readonly Mime Ra       = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
+        public static readonly Mime Wav      = new Mime("audio/wav", new[] { "wav", "wave" });
+        public static readonly Mime Wma      = new Mime("audio/x-ms-wma", "wma");
 
 
         // Image (4000-4999)
