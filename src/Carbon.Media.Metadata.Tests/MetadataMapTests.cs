@@ -18,7 +18,6 @@ namespace Carbon.Media.Metadata.Tests
             Assert.Equal("ExposureMode", result.Name);
             Assert.Equal(41986, result.Code);
 
-
             result = MetadataMap.Get(ExifTag.GPSAltitude);
 
             Assert.Equal("GPSAltitude", result.Name);
