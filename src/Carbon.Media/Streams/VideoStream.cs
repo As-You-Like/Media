@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.Drawing;
+
+namespace Carbon.Media
 {
     public class VideoStream : MediaStream
     {
@@ -12,18 +14,19 @@
 
         public int Height { get; set; }
 
-        public int CodedWidth { get; set; }
-
-        public int CodedHeight { get; set; }
+        /// <summary>
+        /// The coded size of the frame
+        /// </summary>
+        public Size FrameSize { get; set; }
 
         public Rational? FrameRate { get; set; }
 
         // Horizontal Aspect Ratio
         public Rational? AspectRatio { get; set; }
-        
+
         public ExifOrientation? Orientation { get; set; }
 
-        public PixelFormat PixelFormat { get;  }
+        public PixelFormat PixelFormat { get; }
 
         public override MediaStreamType Type => MediaStreamType.Video;
     }

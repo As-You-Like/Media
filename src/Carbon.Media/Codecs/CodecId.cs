@@ -1,7 +1,7 @@
 ﻿namespace Carbon.Media
 {
     public enum CodecId
-	{
+    {
         Unknown = 0,
 
         // -------------------- Audio Codecs ---------------------------------------
