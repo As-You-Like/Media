@@ -3,7 +3,7 @@
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public struct LocationDetails
+    public class GpsData
     {
         [DataMember(Name = "longitude", Order = 1, EmitDefaultValue = false)]
         public double Longitude { get; set; }
@@ -14,10 +14,7 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "altitude", Order = 3, EmitDefaultValue = false)]
         public double Altitude { get; set; } 
     }
+
+    // f32 accuracy: 2.4 meters	
+    // f64 accuracy: nanometer 
 }
-
-// http://msdn.microsoft.com/en-us/library/windows/desktop/ee719904(v=vs.85).aspx
-
-// http://nicholasarmstrong.com/2010/02/exif-quick-reference/
-
-// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html

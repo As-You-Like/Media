@@ -45,7 +45,7 @@ namespace Carbon.Media.Metadata
         public LightingInfo Lighting { get; set; }
 
         [DataMember(Name = "location", Order = 34, EmitDefaultValue = false)]
-        public LocationDetails? Location { get; set; }
+        public GpsData Location { get; set; }
 
         [DataMember(Name = "sensor", Order = 35, EmitDefaultValue = false)] // sensing?
         public SensorInfo Sensor { get; set; }

@@ -83,7 +83,7 @@ namespace Carbon.Media.Metadata.Tests
                 Sensor      = new SensorInfo      { Type = SensingMethod.Trilinear },
                 Lighting    = new LightingInfo    { Source = LightSource.D50 },
                 Software    = new SoftwareInfo    { Name = "Photoshop" },
-                Location    = new LocationDetails { Altitude = 1, Latitude = 2, Longitude = 3 }
+                Location    = new GpsData         { Altitude = 1, Latitude = 2, Longitude = 3 }
             };
 
             var image2 = SerializeAndBack(image);
@@ -96,9 +96,9 @@ namespace Carbon.Media.Metadata.Tests
             Assert.Equal("EOS 5D",                       image2.Camera.Model);
             Assert.Equal("Canon",                        image2.Lens.Make);
             Assert.Equal("EF-S 35mm f/2.8 Macro IS STM", image2.Lens.Model);
-            Assert.Equal(1,                              image2.Location.Value.Altitude);
-            Assert.Equal(2,                              image2.Location.Value.Latitude);
-            Assert.Equal(3,                              image2.Location.Value.Longitude);
+            Assert.Equal(1,                              image2.Location.Altitude);
+            Assert.Equal(2,                              image2.Location.Latitude);
+            Assert.Equal(3,                              image2.Location.Longitude);
 
         }
     }
