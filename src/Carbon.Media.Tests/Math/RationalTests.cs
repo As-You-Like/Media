@@ -16,9 +16,32 @@ namespace Carbon.Media.Tests
         [Fact]
         public void ToStringTests()
         {
-            Assert.Equal("10", new Rational(10, 1).ToString());
-            Assert.Equal("1/10", new Rational(1, 10).ToString());
+            Assert.Equal("10",        new Rational(10, 1).ToString());
+            Assert.Equal("1/10",      new Rational(1, 10).ToString());
             Assert.Equal("1000/1001", new Rational(1000, 1001).ToString());
+        }
+
+        [Fact]
+        public void ReduceTests()
+        {
+            var value = new Rational(5, 10);
+
+            Assert.Equal("5/10", value.ToString());
+            Assert.Equal("1/2", value.Reduce().ToString());
+
+            // Ensure the original value hasn't been modified
+            Assert.Equal(5,  value.Numerator);
+            Assert.Equal(10, value.Denominator);
+        }
+
+        [Fact]
+        public void ParseTests()
+        {
+            Assert.Equal("10",        Rational.Parse("10/1").ToString());
+            Assert.Equal("10",        Rational.Parse("10").ToString());
+
+            Assert.Equal("1/10",      Rational.Parse("1/10").ToString());
+            Assert.Equal("1000/1001", Rational.Parse("1000/1001").ToString());
         }
     }
 }

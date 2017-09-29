@@ -10,7 +10,7 @@ namespace Carbon.Media
     {
         public Rational(long value)
         {
-            Numerator = value;
+            Numerator   = value;
             Denominator = 1;
         }
 
@@ -18,46 +18,39 @@ namespace Carbon.Media
         {
             #region Preconditions
 
-            if (denominator == 0)
-                throw new DivideByZeroException("Denominator may not be 0");
+            if (denominator == 0) throw new DivideByZeroException("denominator may not be 0");
 
             #endregion
 
             Numerator = numerator;
             Denominator = denominator;
-
-            Reduce();
         }
 
         [DataMember(Order = 1)]
-        public long Denominator { get; set; }
+        public long Denominator { get; }
 
         [DataMember(Order = 2)]
-        public long Numerator { get; set; }
+        public long Numerator { get; }
 
         public Rational Invert() => new Rational(Denominator, Numerator);
 
-        private void Reduce()
+        public Rational Reduce()
         {
-            if (Numerator == 0)
-            {
-                Denominator = 1;
-
-                return;
-            }
+            if (Numerator == 0) return this;
 
             var gcd = CalculateGcd(Numerator, Denominator);
 
-            Numerator /= gcd;
-            Denominator /= gcd;
+            var num = Numerator / gcd;
+            var den = Denominator / gcd;
 
-            if (Denominator < 0)
+            if (den < 0)
             {
-                Numerator *= -1;
-                Denominator *= -1;
+                num *= -1;
+                den *= -1;
             }
-        }
 
+            return new Rational(num, den);
+        }
 
         public static bool operator >(Rational left, Rational right) =>
             left.ToDouble() > right.ToDouble();
@@ -65,7 +58,7 @@ namespace Carbon.Media
         public static bool operator <(Rational left, Rational right) =>
             left.ToDouble() < right.ToDouble();
 
-        public double ToDouble() =>  Numerator / (double)Denominator;
+        public double ToDouble() => Numerator / (double)Denominator;
 
         private static long CalculateGcd(long a, long b)
         {
@@ -95,6 +88,18 @@ namespace Carbon.Media
             }
 
             return Numerator + "/" + Denominator;
+        }
+        
+        public static Rational Parse(string text)
+        {
+            var parts = text.Split('/');
+
+            if (parts.Length == 1)
+            {
+                return new Rational(long.Parse(parts[0]));
+            }
+
+            return new Rational(long.Parse(parts[0]), long.Parse(parts[1]));
         }
 
         public string ToString(string format, IFormatProvider formatProvider) => 
