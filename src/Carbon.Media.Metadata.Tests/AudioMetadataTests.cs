@@ -12,14 +12,12 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test1()
         {
-            var audio = new AudioMetadata
-            {
-                Format = AudioFormat.Aac,
-                ChannelCount = 2,
-                Duration = TimeSpan.FromSeconds(30)
+            var audio = new AudioMetadata {
+                Format        = "aac",
+                ChannelCount  = 2,
+                ChannelLayout = ChannelLayout.Stereo,
+                Duration      = TimeSpan.FromSeconds(30)
             };
-
-            // TODO: format should be "aac"
 
             var output = new MemoryStream();
 
@@ -29,13 +27,14 @@ namespace Carbon.Media.Metadata.Tests
 
             var audio2 = Serializer.Deserialize<AudioMetadata>(output);
 
-            Assert.Equal(AudioFormat.Aac, audio2.Format);
+            Assert.Equal("aac", audio2.Format);
             Assert.Equal(TimeSpan.FromSeconds(30), audio2.Duration);
 
             Assert.Equal(@"{
-  ""format"": ""Aac"",
+  ""format"": ""aac"",
   ""duration"": ""00:00:30"",
-  ""channelCount"": 2
+  ""channelCount"": 2,
+  ""channelLayout"": ""Stereo""
 }", JsonObject.FromObject(audio).ToString());
         }
     }

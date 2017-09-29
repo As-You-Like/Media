@@ -3,12 +3,11 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media.Metadata
 {
-
     [DataContract]
     public class ImageMetadata
     {
         [DataMember(Name = "format", Order = 1)]
-        public ImageFormat Format { get; set;}
+        public string Format { get; set;}
 
         [DataMember(Name = "codecs", Order = 2, EmitDefaultValue = false)]
         public string Codec { get; set; }
@@ -33,41 +32,37 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "frames", Order = 20, EmitDefaultValue = false)]
         public FrameInfo[] Frames { get; set; }
         
-        [DataMember(Name = "camera", EmitDefaultValue = false)]
+        [DataMember(Name = "camera", Order = 30, EmitDefaultValue = false)]
         public CameraInfo Camera { get; set; }
 
-        [DataMember(Name = "lighting", EmitDefaultValue = false)]
-        public LightingInfo Lighting { get; set; }
-
-        [DataMember(Name = "location", EmitDefaultValue = false)]
-        public LocationDetails? Location { get; set; }
-
-
-        [DataMember(Name = "software", EmitDefaultValue = false)]
-        public SoftwareInfo Software { get; set; }
-
-        [DataMember(Name = "subject", EmitDefaultValue = false)]
-        public SubjectInfo Subject { get; set; }
-
-        [DataMember(Name = "exposure", EmitDefaultValue = false)]
+        [DataMember(Name = "exposure", Order = 31, EmitDefaultValue = false)]
         public ExposureInfo Exposure { get; set; }
 
-        [DataMember(Name = "sensor", EmitDefaultValue = false)] // sensing?
+        [DataMember(Name = "lens", Order = 32, EmitDefaultValue = false)]
+        public LensInfo Lens { get; set; }
+
+        [DataMember(Name = "lighting", Order = 33, EmitDefaultValue = false)]
+        public LightingInfo Lighting { get; set; }
+
+        [DataMember(Name = "location", Order = 34, EmitDefaultValue = false)]
+        public LocationDetails? Location { get; set; }
+
+        [DataMember(Name = "sensor", Order = 35, EmitDefaultValue = false)] // sensing?
         public SensorInfo Sensor { get; set; }
 
-        [DataMember(Name = "shutter", EmitDefaultValue = false)]
-        public ShutterInfo Shutter { get; set; }
+        [DataMember(Name = "software", Order = 36, EmitDefaultValue = false)]
+        public SoftwareInfo Software { get; set; }
 
-       
+        [DataMember(Name = "subject", Order = 27, EmitDefaultValue = false)]
+        public SubjectInfo Subject { get; set; }    
 
-        [DataMember(Name = "whiteBalance", EmitDefaultValue = false)]
+        [DataMember(Name = "whiteBalance", Order = 28, EmitDefaultValue = false)]
         public WhiteBalance WhiteBalance { get; set; }
-
 
         [DataMember(Name = "created", Order = 40, EmitDefaultValue = false)]
         public DateTime? Created { get; }
 
-        [DataMember(Name = "modified", EmitDefaultValue = false)]
+        [DataMember(Name = "modified", Order = 41, EmitDefaultValue = false)]
         public DateTime? Modified { get; }
     }
 }

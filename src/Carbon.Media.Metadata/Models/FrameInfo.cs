@@ -42,14 +42,4 @@ namespace Carbon.Media.Metadata
         public DisposalMethod? DisposalMethod { get; set; }
     }
 
-    // NOTE: Use a base unit to covert
-
-    public enum DisposalMethod
-    {
-        Unspecified         = 0,
-        NotDisposed         = 1,
-        RestoreToBackground = 2,
-        RestoreToPrevious   = 3
-    }
-
 }

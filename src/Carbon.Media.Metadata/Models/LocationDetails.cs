@@ -5,13 +5,13 @@ namespace Carbon.Media.Metadata
     [DataContract]
     public struct LocationDetails
     {
-        [DataMember(Name = "longitude", EmitDefaultValue = false)]
+        [DataMember(Name = "longitude", Order = 1, EmitDefaultValue = false)]
         public double Longitude { get; set; }
 
-        [DataMember(Name = "latitude", EmitDefaultValue = false)]
+        [DataMember(Name = "latitude", Order = 2, EmitDefaultValue = false)]
         public double Latitude { get; set; }
 
-        [DataMember(Name = "altitude", EmitDefaultValue = false)]
+        [DataMember(Name = "altitude", Order = 3, EmitDefaultValue = false)]
         public double Altitude { get; set; } 
     }
 }

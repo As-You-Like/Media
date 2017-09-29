@@ -6,7 +6,7 @@ namespace Carbon.Media.Metadata
     public class DocumentMetadata
     {
         [DataMember(Name = "format", Order = 1)]
-        public DocumentFormat Format { get; set; }
+        public string Format { get; set; }
 
         [DataMember(Name = "pages", Order = 10)]
         public PageMetadata[] Pages { get; set; }

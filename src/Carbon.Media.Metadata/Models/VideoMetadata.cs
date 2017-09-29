@@ -7,7 +7,7 @@ namespace Carbon.Media.Metadata
     public class VideoMetadata
     {
         [DataMember(Name = "format", Order = 1)]
-        public AudioFormat Format { get; set; }
+        public string Format { get; set; }
 
         [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
         public string Codec { get; set; }

@@ -8,7 +8,7 @@ namespace Carbon.Media.Metadata
     {
         // e.g. aac, mp3
         [DataMember(Name = "format", Order = 1)] 
-        public AudioFormat Format { get; set; }
+        public string Format { get; set; }
 
         // e.g. mp4a.40.2 (AACLC)
         [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
