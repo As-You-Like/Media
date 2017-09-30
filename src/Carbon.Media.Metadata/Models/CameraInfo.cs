@@ -21,7 +21,7 @@ namespace Carbon.Media
         [DataMember(Name = "model", Order =2)]
         public string Model { get; set; }
 
-        [DataMember(Name = "serialNumber", Order = 3)]
+        [DataMember(Name = "serialNumber", Order = 3, EmitDefaultValue = false)]
         public string SerialNumber { get; set; }
     }
 }

@@ -3,11 +3,11 @@
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class DocumentMetadata
+    public class DocumentMetadata : IFormatMetadata
     {
         [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
-
+        
         [DataMember(Name = "pages", Order = 10)]
         public PageMetadata[] Pages { get; set; }
     }

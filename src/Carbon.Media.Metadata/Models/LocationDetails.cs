@@ -14,7 +14,8 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "altitude", Order = 3, EmitDefaultValue = false)]
         public double Altitude { get; set; } 
     }
-
-    // f32 accuracy: 2.4 meters	
-    // f64 accuracy: nanometer 
 }
+
+
+// f32 accuracy: 2.4 meters	
+// f64 accuracy: nanometer 

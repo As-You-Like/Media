@@ -3,9 +3,9 @@
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class SensorInfo
+    public class SensingInfo
     {
-        [DataMember(Name = "type", Order = 1)]
-        public SensingMethod Type { get; set; }
+        [DataMember(Name = "method", Order = 1)]
+        public SensingMethod Method { get; set; }
     }
 }
