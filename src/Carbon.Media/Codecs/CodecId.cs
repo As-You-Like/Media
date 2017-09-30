@@ -144,7 +144,7 @@
         PcmU8          = 65541,
         PcmZork        = 65553, // PCM Zork
         Qcelp          = 86040, // Qualcomm PureVoice
-        Qdmc           = 86067, // QDesign Music Codec                 ffmpeg 3.3
+        Qdmc           = 86067, // QDesign Music Codec                 | ffmpeg 3.3
         Qdm2           = 86035, // QDesign Music Codec 2
         Ra144          = 77824, // RealAudio 1.0 (14.4K)
         Ra288          = 77825, // RealAudio 2.0 (28.8K)	
@@ -184,9 +184,10 @@
         // BmvAudio = 86073,
 
         // -------------------- Image Codecs ---------------------------------------
-
+        AliasPix            = 176,   //        Alias/Wavefront PIX image
         Bmp                 = 79,    //                                         
         Bpg                 = 0,     //        Better Portable Graphics
+        BRenderPix          = 177,   //        BRender PIX image
         Dds                 = 189,   //        DirectDraw Surface
         Dng                 = 0,     //        Digital Negative
         Dpx                 = 129,   //        Digital Picture Exchange
@@ -212,11 +213,12 @@
         Svg                 = 0,
         Tiff                = 97,    //                     
         Tga                 = 94,    //        Targa image format
+        Vc1Image            = 152,   //        Windows Media Video 9 Image v2
         WebP                = 172,   //                                                
+        Wmv3Image           = 151,   //        Windows Media Video 9 Image
         Xpm                 = 32796, //        X BitMap image format           | ffmpeg 3.3
         Xwd                 = 158,
         Xface               = 32779,
-
 
         // -------------------- Video Codecs ---------------------------------------
         _4GV            = 88073, //        4GV (Fourth Generation Vocoder)
@@ -393,6 +395,7 @@
         XanWc4          = 42,    //        Wing Commander IV / Xan
         TargaY216       = 32773, //        Pinnacle TARGA CineWave YUV16
         Ylc             = 32789, //        YUY2 Lossless Codec
+        Yop             = 139,   //        Psygnosis YOP
         ZeroCodec       = 161,   //        ZeroCodec Lossless Video
         Zmbv            = 82,    //        Zip Motion Blocks Video
 
