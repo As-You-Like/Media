@@ -19,5 +19,6 @@ namespace Carbon.Media
         public static readonly FormatInfo WebM     = new FormatInfo(ContainerId.WebM,     new[] { Mime.WebM });
         public static readonly FormatInfo Matroska = new FormatInfo(ContainerId.Matroska, new[] { Mime.Mka, Mime.Mkv });
         public static readonly FormatInfo Ogg      = new FormatInfo(ContainerId.Ogg,      new[] { Mime.Oga, Mime.Ogv });
+        public static readonly FormatInfo Wave     = new FormatInfo(ContainerId.Wave,     new[] { Mime.Wav });
     }
 }

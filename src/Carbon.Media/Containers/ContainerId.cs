@@ -27,8 +27,6 @@
         WebM     = 232, // audio, video                    | webm | audio, video
         Xmf      = 240  // eXtensible Music Format         | xdf  | audio
     }
-
-    // FormatId?
 }
 
 // https://www.w3.org/2008/WebVideo/Fragments/wiki/State_of_the_Art/Containers

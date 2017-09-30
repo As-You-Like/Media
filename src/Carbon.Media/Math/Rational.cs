@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 using static System.Math;
 
 namespace Carbon.Media
 {
-    [DataContract]
     public struct Rational : IEquatable<Rational>, IFormattable
     {
-        public Rational(long value)
-        {
-            Numerator   = value;
-            Denominator = 1;
-        }
+        private readonly long numerator;
+        private readonly long denominator;
 
         public Rational(long numerator, long denominator)
         {
@@ -22,26 +17,24 @@ namespace Carbon.Media
 
             #endregion
 
-            Numerator = numerator;
-            Denominator = denominator;
+            this.numerator = numerator;
+            this.denominator = denominator;
         }
 
-        [DataMember(Order = 1)]
-        public long Denominator { get; }
+        public long Numerator => numerator;
 
-        [DataMember(Order = 2)]
-        public long Numerator { get; }
+        public long Denominator => denominator;
 
-        public Rational Invert() => new Rational(Denominator, Numerator);
+        public Rational Invert() => new Rational(denominator, numerator);
 
         public Rational Reduce()
         {
-            if (Numerator == 0) return this;
+            if (numerator == 0) return this;
 
-            var gcd = CalculateGcd(Numerator, Denominator);
+            var gcd = CalculateGcd(numerator, denominator);
 
-            var num = Numerator / gcd;
-            var den = Denominator / gcd;
+            var num = numerator / gcd;
+            var den = denominator / gcd;
 
             if (den < 0)
             {
@@ -82,12 +75,12 @@ namespace Carbon.Media
 
         public override string ToString()
         {
-            if (Denominator == 1)
+            if (denominator == 1)
             {
-                return Numerator.ToString();
+                return numerator.ToString();
             }
 
-            return Numerator + "/" + Denominator;
+            return numerator + "/" + denominator;
         }
         
         public static Rational Parse(string text)
@@ -96,7 +89,7 @@ namespace Carbon.Media
 
             if (parts.Length == 1)
             {
-                return new Rational(long.Parse(parts[0]));
+                return new Rational(long.Parse(parts[0]), 1);
             }
 
             return new Rational(long.Parse(parts[0]), long.Parse(parts[1]));
@@ -110,8 +103,8 @@ namespace Carbon.Media
 
         public bool Equals(Rational other)
         {
-            return Numerator   == other.Numerator
-                && Denominator == other.Denominator;
+            return numerator   == other.Numerator
+                && denominator == other.Denominator;
         }
 
         #endregion

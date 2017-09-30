@@ -3,7 +3,7 @@
 namespace Carbon.Media
 {
     /// <summary>
-    /// A packet contains zero or more encoded frames which belongs to a single elementary stream (Audio or Video).
+    /// A packet contains zero or more encoded frames belonging to a single elementary stream (Audio or Video).
     /// Packets are provided as input to decoders and recieved as output from encoders
     /// </summary>
     public class Packet : IDisposable
@@ -12,7 +12,7 @@ namespace Carbon.Media
 
         public int StreamIndex { get; set; }
 
-        public MediaStreamType Type { get; set; }
+        public MediaType Type { get; set; }
 
         /// <summary>
         /// Decompression timestamp
@@ -42,14 +42,7 @@ namespace Carbon.Media
 
         public virtual void Dispose()
         {
-            Data.Dispose();
+            Data?.Dispose();
         }
     }
-
-    public enum PacketFlags
-    {
-        Keyframe = 1,
-        Corrupt  = 2
-    }
-
 }

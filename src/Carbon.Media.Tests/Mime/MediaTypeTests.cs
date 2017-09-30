@@ -14,9 +14,12 @@ namespace Carbon.Media.Tests
 			Assert.Equal(4, (int)MediaType.Image);
 			Assert.Equal(8, (int)MediaType.Text);
 			Assert.Equal(9, (int)MediaType.Video);
-		}
 
-		[Fact]
+            // Non-Standard
+            Assert.Equal(100, (int)MediaType.Subtitles);
+        }
+
+        [Fact]
 		public void ApplicationTypeTests()
 		{
 			var formats = new[] { "js", "json", "swf", "xap", "zip" };
@@ -44,7 +47,9 @@ namespace Carbon.Media.Tests
 		[Fact]
 		public void ImageTypeTests()
 		{
-			var formats = new[] { "bmp", "gif", "ico", "jpg", "jpeg", "jxr", "png", "tif", "tiff", "webp" };
+			var formats = new[] {
+                "bmp", "gif", "heif", "ico", "jpg", "jpeg", "jxr", "png", "tif", "tiff", "webp"
+            };
 
 			Assert.True(formats.All(format => Mime.FromFormat(format).Type == MediaType.Image));
 		}

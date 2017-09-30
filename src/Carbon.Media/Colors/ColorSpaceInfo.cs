@@ -3,6 +3,7 @@
 namespace Carbon.Media.Colors
 {
     using static ColorModel;
+    using static ColorSpaceFlags;
 
     public class ColorSpaceInfo
     {
@@ -30,11 +31,11 @@ namespace Carbon.Media.Colors
 
         // TODO: ColorTable (for indexed color spaces)
 
-        public bool IsWideGamut => Flags.HasFlag(ColorSpaceFlags.WideGamut);
+        public bool IsWideGamut => Flags.HasFlag(WideGamut);
 
         public static readonly ColorSpaceInfo Rgb      = new ColorSpaceInfo("RGB",       RGB);
         public static readonly ColorSpaceInfo AdobeRgb = new ColorSpaceInfo("Adobe RGB", RGB);
-        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    RGB, ColorSpaceFlags.WideGamut);
+        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    RGB, WideGamut);
 
     }
 
