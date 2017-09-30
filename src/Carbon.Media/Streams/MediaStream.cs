@@ -12,7 +12,7 @@ namespace Carbon.Media
 
         public int Index { get; }
 
-        public abstract MediaStreamType Type { get; }
+        public abstract MediaType Type { get; }
 
         // e.g. H264, AAC ...
         public ICodec Codec { get; }

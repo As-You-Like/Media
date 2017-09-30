@@ -11,7 +11,10 @@
         Model       = 6, 
         Multipart   = 7,
         Text        = 8,
-        Video       = 9 
+        Video       = 9,
+
+        // Non-Standard
+        Subtitles   = 100
     }
 }
 

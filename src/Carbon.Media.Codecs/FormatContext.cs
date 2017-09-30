@@ -27,7 +27,7 @@ namespace Carbon.Media.Containers
 
         public Dictionary<string, string> Metadata { get; set; }
 
-        public MediaStream GetStream(MediaStreamType type)
+        public MediaStream GetStream(MediaType type)
         {
             foreach (var stream in Streams)
             {

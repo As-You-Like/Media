@@ -10,24 +10,29 @@ namespace Carbon.Media
             PixelFormat = pixelFormat;
         }
 
+        public PixelFormat PixelFormat { get; }
+
+        /// <summary>
+        /// The screen width
+        /// </summary>
         public int Width { get; set; }
-
+        
+        /// <summary>
+        /// The screen height
+        /// </summary>
         public int Height { get; set; }
-
+        
         /// <summary>
         /// The coded size of the frame
         /// </summary>
         public Size FrameSize { get; set; }
 
-        public Rational? FrameRate { get; set; }
-
-        // Horizontal Aspect Ratio
-        public Rational? AspectRatio { get; set; }
+        public Rational? FrameRate { get; set; }        
+        
+        public Rational? PixelAspectRatio { get; set; }
 
         public ExifOrientation? Orientation { get; set; }
-
-        public PixelFormat PixelFormat { get; }
-
-        public override MediaStreamType Type => MediaStreamType.Video;
+        
+        public override MediaType Type => MediaType.Video;
     }
 }

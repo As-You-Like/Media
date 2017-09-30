@@ -5,11 +5,13 @@
         public AudioStream(
             int index, 
             ICodec codec,
+            int channelCount,
             ChannelLayout channelLayout, 
             SampleFormat sampleFormat,
             int sampleRate)
             : base(index, codec)
         {
+            ChannelCount  = channelCount;
             ChannelLayout = channelLayout;
             SampleFormat  = sampleFormat;
             SampleRate    = sampleRate;
@@ -30,16 +32,18 @@
         /// </summary>
         public int SampleRate { get; }
 
-        public int ChannelCount { get; set; }
+        public int ChannelCount { get; }
 
         public ChannelLayout ChannelLayout { get; }
 
         /// <summary>
         /// framesize?
         /// </summary>
-        public int SamplesPerChannel { get; set; }
+        // public int SamplesPerChannel { get; set; }
 
-        public override MediaStreamType Type => MediaStreamType.Audio;
+        // BlockAlignment ? 
+
+        public override MediaType Type => MediaType.Audio;
     }
 }
 
