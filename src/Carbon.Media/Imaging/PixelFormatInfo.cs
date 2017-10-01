@@ -28,6 +28,8 @@
 
         public bool IsPacked => Flags.HasFlag(PixelFormatFlags.Packed);
 
+        public bool IsBigEndian => Flags.HasFlag(PixelFormatFlags.BigEndian);
+        
         public bool IsPlanar => Flags.HasFlag(PixelFormatFlags.Planar);
 
         // Type (float, uint, Fixed)
