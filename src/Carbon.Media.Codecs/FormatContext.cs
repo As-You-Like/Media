@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Carbon.Media.Containers
+namespace Carbon.Media
 {
     public class FormatContext
     { 
@@ -10,20 +10,12 @@ namespace Carbon.Media.Containers
         public Chapter[] Chapters { get; set; }
 
         public BitRate? BitRate { get; set; }
-                
-        public int PacketSize { get; set; }
         
-        public int MaxDelay { get; set; }
-
-        public int ProbeSize { get; set; }
-
         public TimeSpan? MaxAnalyzeDuration { get; set; }
         
         public TimeSpan? StartTime { get; set; }
 
         public TimeSpan? Duration { get; set; }
-
-        public TimeSpan? ReadTimeout { get; set; }
 
         public Dictionary<string, string> Metadata { get; set; }
 
