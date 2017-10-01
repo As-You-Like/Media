@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public class AudioStream : MediaStream
+    public class AudioStream : MediaStream, IAudio
     {
         public AudioStream(
             int index, 
@@ -17,6 +17,10 @@
             SampleRate    = sampleRate;
         }
 
+        public int ChannelCount { get; }
+
+        public ChannelLayout ChannelLayout { get; }
+
         public SampleFormat SampleFormat { get; } 
 
         /// <summary>
@@ -25,11 +29,7 @@
         /// Measured in hertz (Hz)
         /// </summary>
         public int SampleRate { get; }
-
-        public int ChannelCount { get; }
-
-        public ChannelLayout ChannelLayout { get; }
-
+        
         /// <summary>
         /// The block alignment, in bytes, of the stream.
         /// note: PCM formats = audio channels * bytes per sample

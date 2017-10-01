@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public class VideoStream : MediaStream
+    public class VideoStream : MediaStream, IVideo
     {
         public VideoStream(
             int index, 
@@ -31,9 +31,12 @@ namespace Carbon.Media
         /// </summary>
         public int Height { get; }
 
-        public Rational? PixelAspectRatio { get; set; }
+        /// <summary>
+        /// The aspect ratio of the pixels when presented
+        /// </summary>
+        public Rational AspectRatio { get; set; }
 
-        public Rational? FrameRate { get; set; }        
+        public Rational FrameRate { get; set; }        
 
         public ExifOrientation? Orientation { get; set; }
         
