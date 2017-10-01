@@ -22,10 +22,14 @@
         Monochrome = 4,
 
         /// <summary>
-        /// Luma-Chrome System
-        /// Y’CbCr separate colors into a luma component (Y’) and two chroma components (Cb/U and Cr/V). 
+        /// Luma-Chrome System 
         /// </summary>
         YUV = 5,
+
+        /// <summary>
+        /// Y’CbCr separate colors into a luma component (Y’) and two chroma components (Cb/U and Cr/V).
+        /// </summary>
+        YcbCr = YUV,
 
         /// <summary>
         /// CIE L*a*b*
