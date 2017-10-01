@@ -42,8 +42,7 @@ namespace Carbon.Media
         {
             #region Preconditions
 
-            if (path == null)
-                throw new ArgumentNullException(nameof(path));
+            if (path == null) throw new ArgumentNullException(nameof(path));
 
             #endregion
 

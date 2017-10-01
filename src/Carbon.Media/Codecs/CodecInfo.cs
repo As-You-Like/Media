@@ -2,10 +2,7 @@
 
 namespace Carbon.Media
 {
-    /// <summary>
-    /// A codec determines syntax and semantics of a bitstream
-    /// </summary>
-    public class CodecInfo : IEquatable<CodecInfo>
+    public class CodecInfo : IEquatable<CodecInfo>, ICodec
     {
         internal CodecInfo(string name, CodecId id)
         {
@@ -16,6 +13,8 @@ namespace Carbon.Media
         public string Name { get; }
 
         public CodecId Id { get; }
+        
+        // Profile?
 
         // Profile(s)
 

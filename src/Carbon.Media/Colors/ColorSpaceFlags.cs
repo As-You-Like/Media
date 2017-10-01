@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media.Colors
+﻿namespace Carbon.Media
 {
     public enum ColorSpaceFlags : byte
     {

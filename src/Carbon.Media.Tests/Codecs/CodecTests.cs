@@ -7,13 +7,13 @@ namespace Carbon.Media.Tests
     public class CodecTests
     {
         [Theory]
-        [InlineData(CodecId.Aac,    86018, AVCodecID.AV_CODEC_ID_AAC)]
-        [InlineData(CodecId.Ac3,    86019, AVCodecID.AV_CODEC_ID_AC3)]
-        [InlineData(CodecId.Alac,   86032, AVCodecID.AV_CODEC_ID_ALAC)] // Apple Lossless
-        [InlineData(CodecId.Flac,   86028, AVCodecID.AV_CODEC_ID_FLAC)]
-        [InlineData(CodecId.Opus,   86077, AVCodecID.AV_CODEC_ID_OPUS)]
-        [InlineData(CodecId.Mp3,    86017, AVCodecID.AV_CODEC_ID_MP3)]
-        [InlineData(CodecId.Vorbis, 86021, AVCodecID.AV_CODEC_ID_VORBIS)]
+        [InlineData(CodecId.Aac,        86018, AVCodecID.AV_CODEC_ID_AAC)]
+        [InlineData(CodecId.Ac3,        86019, AVCodecID.AV_CODEC_ID_AC3)]
+        [InlineData(CodecId.Alac,       86032, AVCodecID.AV_CODEC_ID_ALAC)] // Apple Lossless
+        [InlineData(CodecId.Flac,       86028, AVCodecID.AV_CODEC_ID_FLAC)]
+        [InlineData(CodecId.Opus,       86077, AVCodecID.AV_CODEC_ID_OPUS)]
+        [InlineData(CodecId.Mp3,        86017, AVCodecID.AV_CODEC_ID_MP3)]
+        [InlineData(CodecId.Vorbis,     86021, AVCodecID.AV_CODEC_ID_VORBIS)]
 
         // MISC
         [InlineData(CodecId.AmrNb,      73728, AVCodecID.AV_CODEC_ID_AMR_NB)]

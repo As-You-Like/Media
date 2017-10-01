@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Carbon.Media.Colors
+namespace Carbon.Media
 {
-    using static ColorModel;
     using static ColorSpaceFlags;
 
     public class ColorSpaceInfo
@@ -19,25 +18,22 @@ namespace Carbon.Media.Colors
 
         public string Name { get; }
 
-        // public ColorComponent[] Components { get; }
-
         public ColorModel Model { get; }
 
         public ColorSpaceFlags Flags { get; }
-        
+
         // WhitePoint
 
         // PrimaryColors
 
         // TODO: ColorTable (for indexed color spaces)
 
+        // ICCData?
         public bool IsWideGamut => Flags.HasFlag(WideGamut);
 
-        public static readonly ColorSpaceInfo Rgb      = new ColorSpaceInfo("RGB",       RGB);
-        public static readonly ColorSpaceInfo AdobeRgb = new ColorSpaceInfo("Adobe RGB", RGB);
-        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    RGB, WideGamut);
-
+        public static readonly ColorSpaceInfo Cmyk     = new ColorSpaceInfo("CMYK",      ColorModel.CMYK);
+        public static readonly ColorSpaceInfo Rgb      = new ColorSpaceInfo("RGB",       ColorModel.RGB);
+        public static readonly ColorSpaceInfo AdobeRgb = new ColorSpaceInfo("Adobe RGB", ColorModel.RGB);
+        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    ColorModel.RGB, WideGamut);
     }
-
-    // ICCData?
 }

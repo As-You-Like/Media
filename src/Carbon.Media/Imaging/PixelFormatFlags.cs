@@ -3,9 +3,9 @@
     public enum PixelFormatFlags
     {
         None          = 0,
-        BigEndian     = 1 << 1,
-        Packed        = 1 << 2,
-        Planar        = 1 << 3,
-        Premultiplied = 1 << 4
+        BigEndian     = 1 << 0,
+        Packed        = 1 << 1,
+        Planar        = 1 << 2,
+        Premultiplied = 1 << 3
     }
 }

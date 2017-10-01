@@ -6,7 +6,6 @@
         {
             CodecId = id;
         }
-
         
         public CodecId CodecId { get; }
 
