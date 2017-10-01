@@ -34,14 +34,14 @@ namespace Carbon.Media
 
         Mono     = FrontCenter,
         Stereo   = FrontLeft | FrontRight,
-        _2_1 = Stereo | LowFrequency,                       // 2.1
-        _3_0 = Stereo | FrontCenter,                        // 3.0
-        _3_1 = _3_0 | LowFrequency,                         // 3.1
-        _4_0 = Stereo | FrontCenter | BackCenter,           // 4.0
-        _4_1 = _4_0 | LowFrequency,                         // 4.1
-        _5_0 = Stereo | FrontCenter | SideLeft | SideRight, // 5.0
-        _5_1 = _5_0 | LowFrequency,                         // 5.1
-        _7_0 = _5_0 | BackLeft | BackRight,
+        _2_1     = Stereo | LowFrequency,                       // 2.1
+        _3_0     = Stereo | FrontCenter,                        // 3.0
+        _3_1     = _3_0 | LowFrequency,                         // 3.1
+        _4_0     = Stereo | FrontCenter | BackCenter,           // 4.0
+        _4_1     = _4_0 | LowFrequency,                         // 4.1
+        _5_0     = Stereo | FrontCenter | SideLeft | SideRight, // 5.0
+        _5_1     = _5_0 | LowFrequency,                         // 5.1
+        _7_0     = _5_0 | BackLeft | BackRight,
         _2_2     = Stereo | SideLeft | SideRight,
         Quad     = Stereo | BackLeft | BackRight,
 
