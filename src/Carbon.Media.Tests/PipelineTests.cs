@@ -23,13 +23,10 @@ namespace Carbon.Media.Processors.Tests
         public void CropExact()
         {
             var pipeline = MediaPipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode");
-
-
+            
             Assert.Equal("blob#pipe|>crop(0,0,200,200)|>JPEG::encode", pipeline.Canonicalize());
 
-            Assert.Equal(200, pipeline.FinalWidth);
-            Assert.Equal(200, pipeline.FinalHeight);
-
+            Assert.Equal(new Size(200, 200), pipeline.FinalSize); // Canvas (Width, Height, BackgroundColor) ?
         }
 
         [Fact]
@@ -166,8 +163,7 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
 
-            Assert.Equal(780, pipe.FinalWidth);
-            Assert.Equal(140, pipe.FinalHeight);
+            Assert.Equal(new Size(780, 140), pipe.FinalSize);
 
             Assert.Equal("blob#23924858|>crop(307,288,669,120)|>scale(780,140,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
@@ -234,8 +230,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(100, pipeline.Position.X);
             Assert.Equal(100, pipeline.Position.Y);
 
-            Assert.Equal(300, pipeline.FinalWidth);
-            Assert.Equal(300, pipeline.FinalHeight);
+            Assert.Equal(new Size(300, 300), pipeline.FinalSize);
 
             Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipeline.Canonicalize());
             // Assert.Equal("blob#1|>scale(100,100,lanczos3)|>pad(100)|>JPEG::encode", pipe.Canonicalize());
@@ -255,11 +250,9 @@ namespace Carbon.Media.Processors.Tests
 
             var pipe = MediaPipeline.From(rendition);
             
-            // We split a pixel in half -- and added to the left?
+            Assert.Equal(new Size(100, 200), pipe.FinalSize);
 
-            Assert.Equal(100, pipe.FinalWidth);
-            Assert.Equal(200, pipe.FinalHeight);
-
+            // We split a pixel in half -- and added to the left
             Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7,90,8)|>JPEG::encode", pipe.Canonicalize());
         }
 
@@ -269,8 +262,7 @@ namespace Carbon.Media.Processors.Tests
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Crop(0, 0, 25, 25)
                 .Encode(ImageFormat.Jpeg);
-                
-
+            
             var pipe = MediaPipeline.From(rendition);
 
             Assert.Equal("blob#1|>crop(0,0,25,25)|>JPEG::encode", pipe.Canonicalize());

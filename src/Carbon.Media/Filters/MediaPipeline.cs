@@ -7,14 +7,7 @@ namespace Carbon.Media.Processors
 {
     public class MediaPipeline
     {
-        // Orient (flip, rotate, etc)
-        // Crop source
-        // Determine canvas size
-        // Determine target pixel format     (does the source have an alpha channel? do any of the filters apply an alpha?)
-        // Determine color model
-        // Determine target color space
-
-        public IMediaSource Source { get; set; }
+        public IMediaSource Source { get; set; } // Input
 
         public int? PageNumber { get; set; }
 
@@ -30,19 +23,20 @@ namespace Carbon.Media.Processors
         // 3. Scale the croped source w/ the interpolator
         public Scale Scale { get; set; }
 
+        // If the image is padded, we need to create an intermediate canvas
+        
         // If the resize mode was set to pad (or padding was added after) 
         public Padding Padding { get; set; } = Padding.Zero;
-        
-        public string Background { get; set; }
+
+        public string BackgroundColor { get; set; }
 
         public Position Position => new Position(Padding.Left, Padding.Top);
         
-        public int FinalWidth  => (Scale?.Width ?? Crop.Value.Width) + Padding.Left + Padding.Right;
-
-        public int FinalHeight => (Scale?.Height ?? Crop.Value.Height) + Padding.Top + Padding.Bottom;
-
-        public Size FinalSize => new Size(FinalWidth, FinalHeight);
-
+        public Size FinalSize => new Size(
+            width  : (Scale?.Width  ?? Crop.Value.Width)  + Padding.Left + Padding.Right,
+            height : (Scale?.Height ?? Crop.Value.Height) + Padding.Top  + Padding.Bottom
+        );
+    
         // 4. Determine whether we need a canvas to apply filters or draw a background
         // Filters & Draws
         public List<ITransform> Filters { get; } = new List<ITransform>();
@@ -108,7 +102,7 @@ namespace Carbon.Media.Processors
                 }
                 else if (transform is Background background)
                 {
-                    pipeline.Background = background.Color;
+                    pipeline.BackgroundColor = background.Color;
                 }
                 else if (transform is Flip flip)
                 {
@@ -122,8 +116,8 @@ namespace Carbon.Media.Processors
 
                     var c = ct.GetRectangle(box.Size);
 
-                    box.Width = (int)c.Width;
-                    box.Height = (int)c.Height;
+                    box.Width  = c.Width;
+                    box.Height = c.Height;
 
                     if (xScale != 1d || yScale != 1d)
                     {
@@ -140,7 +134,7 @@ namespace Carbon.Media.Processors
                 {
                     if (resize.Background != null)
                     {
-                        pipeline.Background = resize.Background;
+                        pipeline.BackgroundColor = resize.Background;
                     }
 
                     var bounds = resize.CalcuateSize(box.Size);
@@ -208,8 +202,7 @@ namespace Carbon.Media.Processors
                         }
                     }
 
-
-                    // TODO: Consider existing orientation
+                    // TODO: Consider source orientation
 
                     pipeline.Rotate = rotate.Angle;
                 }
@@ -240,9 +233,11 @@ namespace Carbon.Media.Processors
             return pipeline;
         }
 
+        private static readonly string[] splitOn = new[] { "|>" };
+
         public static MediaPipeline Parse(string text)
         {
-            var segments = text.Split(new[] { "|>" }, 50, StringSplitOptions.None);
+            var segments = text.Split(splitOn, count: 50, options: StringSplitOptions.None);
 
             /*
                blob#1 
@@ -275,7 +270,7 @@ namespace Carbon.Media.Processors
                         result.PageNumber = page.Number;
                         break;
                     case Background bg:
-                        result.Background = bg.Color;
+                        result.BackgroundColor = bg.Color;
                         break;
                     case Rotate rotate:
                         result.Rotate = rotate.Angle;
@@ -311,9 +306,10 @@ namespace Carbon.Media.Processors
             {
                 sb.Append("|>page(" + PageNumber + ")");
             }
-            if (Background != null)
+
+            if (BackgroundColor != null)
             {
-                sb.Append("|>background(" + Background + ")");
+                sb.Append("|>background(" + BackgroundColor + ")");
             }
 
             if (Flip != null)
@@ -329,13 +325,10 @@ namespace Carbon.Media.Processors
                 sb.Append("deg)");
             }
 
-            if (Crop != null)
+            if (Crop is Rectangle crop)
             {
-                var c = Crop.Value;
-
                 sb.Append("|>");
-
-                sb.Append($"crop({c.X},{c.Y},{c.Width},{c.Height})");
+                sb.Append($"crop({crop.X},{crop.Y},{crop.Width},{crop.Height})");
             }
 
             if (Scale != null)
@@ -346,21 +339,13 @@ namespace Carbon.Media.Processors
             }
 
             // pad(0,0)
+
             if (!Padding.Equals(Padding.Zero))
             {
                 sb.Append("|>");
                 sb.Append("pad(");
                 sb.Append(Padding.ToString());
                 sb.Append(")");
-            }
-
-            if (Background != null)
-            {
-                // sb.Append("|>");
-
-                // var draw = new Draw { Background = Background, Margin = Margin };
-
-                // sb.Append(draw.Canonicalize());
             }
 
             foreach (var filter in Filters)
@@ -378,8 +363,15 @@ namespace Carbon.Media.Processors
         }
     }
 
-    // how can we define a canvas?
-
-    // Canvas(500,500, color: red)
-    // Padding is applied to the scale & becomes a margin in draw phase...
 }
+
+// Canvas(500x500,color:red)
+// Padding is applied to the scale & becomes a margin in draw phase...
+
+// Image Pipeline Steps
+// - Orient (flip, rotate, etc)
+// - Crop source
+// - Determine canvas size
+// - Determine target pixel format  (does the source have an alpha channel? do any of the filters apply an alpha?)
+// - Determine color model
+// - Determine target color space

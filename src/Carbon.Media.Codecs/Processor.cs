@@ -7,7 +7,7 @@ namespace Carbon.Media.Processing
 {
     public class Processor
     {
-        public void Process(MediaSource input, Stream output, ITransform[] filters)
+        public void Process(MediaPipeline pipeline, MediaSource input, Stream output)
         {
             // av_format_open (auto detects format, reads header, and creates an AV context)
 
@@ -48,18 +48,7 @@ namespace Carbon.Media.Processing
         }
     }
 
-    public class FilterGraph
-    { 
-        // Resize
-        // Crop
-        // Overlay
-        // Draw
-        // Clip
-        // Filters
-
-        // FilterLinks
-        public IList<IFilter> Filters { get; }
-    }
+    // Pipeline?
     
     // Custom IO Context...
     public class IOContext
