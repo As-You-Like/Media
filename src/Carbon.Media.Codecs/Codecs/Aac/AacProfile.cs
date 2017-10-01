@@ -3,12 +3,33 @@
     public enum AacProfile
     {
         Main = 1,
-        Low  = 2,
+
+        /// <summary>
+        /// Low Complexity
+        /// </summary>
+        LC   = 2,
         SSR  = 3,
-        LTP  = 4, // Long Term Predicition
-        HE   = 5, // High Efficiency
+
+        /// <summary>
+        /// Long Term Prediction
+        /// </summary>
+        LTP  = 4, 
+
+        /// <summary>
+        /// High Efficiency
+        /// </summary>
+        HE   = 5,
         HEv2 = 6,
+
+
+        /// <summary>
+        /// Low Delay
+        /// </summary>
         LD   = 7,
-        EDL  = 8
+
+        /// <summary>
+        /// Enhanced Low Delay
+        /// </summary>
+        ELD  = 8
     }
 }

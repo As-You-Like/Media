@@ -2,8 +2,8 @@
 {
     public enum Mpeg4Profile
     {
-        Simple,
-        Core,
-        Main
+        Simple = 1,
+        Core   = 2,
+        Main   = 3
     }
 }
