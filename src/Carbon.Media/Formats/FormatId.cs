@@ -25,20 +25,29 @@
         Wv     = 2850, // WavPack
 
         // Image Formats
-        Bmp    = 4001, // BMP
-        Bpg    = 4002, // Better Portable Graphics
-        Dng    = 4008, // Digital Negative
-        Gif    = 4010, // GIF
-        Heif   = 4020, // High Efficiency Image File Format
-        Ico    = 4025, // ICO
-        Jp2    = 4030, // JPEG2000
-        Jpeg   = 4031, // JPEG
-        Jxr    = 4032, // JPEG-XR
-        Png    = 4050, // PNG
-        Psd    = 4060, // PSD
-        Svg    = 4070, // SVG
-        Tiff   = 4075, // Tagged Image File Format        | tiff | image
-        WebP   = 4090, // WebP
+        _3fr = 4005, // Hasselblad
+        Bmp  = 4101, // BMP
+        Bpg  = 4105, // Better Portable Graphics
+        Crw  = 4130, // Canon Digital Camera Raw Image Format
+        Dcr  = 4200, // Kodak Digital Camera Raw Image File
+        Dng  = 4208, // Digital Negative
+        Gif  = 4219, // GIF
+        Heif = 4230, // High Efficiency Image File Format
+        Ico  = 4245, // ICO
+        Jp2  = 4305, // JPEG2000
+        Jpeg = 4309, // JPEG
+        Jxr  = 4355, // JPEG-XR
+        Mrw  = 4404, // Sony (Minolta) Raw Image File
+        Orf  = 4453, // Olympus Digital Camera Raw Image File
+        Pef  = 4509, // Pentax
+        Png  = 4520, // PNG
+        Psd  = 4550, // PSD
+        Raf  = 4580, // Fuji
+        R3d  = 4594, // Red Digital Cinema
+        Svg  = 4630, // SVG
+        Tiff = 4775, // TIFF
+        WebP = 4890, // WebP
+        X3f  = 4900, // Sigma Camera RAW Picture File
 
         // Video Formats
         _3gp   = 9000, //
