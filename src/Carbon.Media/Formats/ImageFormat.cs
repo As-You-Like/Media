@@ -6,20 +6,20 @@ namespace Carbon.Media
 
     public enum ImageFormat
     {
-        Bmp  = 401,
-        Bpg  = 402,
-        Dng  = 408, // Digital Negative
-        Gif  = 410,
-        Heif = 420, // High Efficiency Image File Format
-        Ico  = 425,
-        Jp2  = 430, // JPEG2000
-        Jpeg = 431,
-        Jxr  = 432, // JPEG-XR
-        Png  = 450,
-        Psd  = 460,
-        Svg  = 470,
-        Tiff = 475,
-        WebP = 490,
+        Bmp  = 4001, // BMP
+        Bpg  = 4002, // Better Portable Graphics
+        Dng  = 4008, // Digital Negative
+        Gif  = 4010, // GIF
+        Heif = 4020, // High Efficiency Image File Format
+        Ico  = 4025, // ICO
+        Jp2  = 4030, // JPEG2000
+        Jpeg = 4031, // JPEG
+        Jxr  = 4032, // JPEG-XR
+        Png  = 4050, // PNG
+        Psd  = 4060, // PSD
+        Svg  = 4070, // SVG
+        Tiff = 4075, // TIFF
+        WebP = 4090, // WebP
     }
 
     public static class ImageFormatHelper
