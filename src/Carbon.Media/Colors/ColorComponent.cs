@@ -7,19 +7,17 @@ namespace Carbon.Media
     {
         Unknown = 0,
 
-        R       = 1,
-        G       = 2,
-        B       = 3,
-        A       = 4,
-        Cb      = 5, // Blur chroma difference
-        Cr      = 6, // Red chroma difference
-        Y       = 7, // Luma
-        U       = 8,
-        V       = 9,
+        R       = 1, // Red
+        G       = 2, // Green
+        B       = 3, // Blue
+        A       = 4, // Alpha
+        Y       = 5, // Luma
+        U       = 6, // Alias for Cb
+        V       = 7, // Alias for Cr
 
-        Cyan    = 10, // cyan
-        Magenta = 11, // magenta
-        Yellow  = 12, // yellow
-        Key     = 13, // key (black)
+        Cyan    = 10, // Cyan
+        Magenta = 11, // Magenta
+        Yellow  = 12, // Yellow
+        Key     = 13, // Key (black)
     }
 }

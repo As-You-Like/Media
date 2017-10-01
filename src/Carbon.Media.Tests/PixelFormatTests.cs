@@ -2,6 +2,8 @@
 
 namespace Carbon.Media.Tests
 {
+    using static ColorComponent;
+
     public class PixelFormatTests
     {
         [Theory]
@@ -15,23 +17,36 @@ namespace Carbon.Media.Tests
         }
         
         [Fact]
-        public void ColorChannelTests()
+        public void ComponentTests()
         {
-            Assert.Equal(1,  (int)ColorComponent.R);
-            Assert.Equal(2,  (int)ColorComponent.G);
-            Assert.Equal(3,  (int)ColorComponent.B);
-            Assert.Equal(4,  (int)ColorComponent.A);
-            Assert.Equal(5,  (int)ColorComponent.Cb);
-            Assert.Equal(6,  (int)ColorComponent.Cr);
-            Assert.Equal(7,  (int)ColorComponent.Y);
-            Assert.Equal(10, (int)ColorComponent.Cyan);
-            Assert.Equal(11, (int)ColorComponent.Magenta);
-            Assert.Equal(12, (int)ColorComponent.Yellow);
-            Assert.Equal(13, (int)ColorComponent.Key);
+            // RGBA
+            Assert.Equal(1,  (int)R);
+            Assert.Equal(2,  (int)G);
+            Assert.Equal(3,  (int)B);
+            Assert.Equal(4,  (int)A);
+
+            // YUV
+            Assert.Equal(5,  (int)Y);
+            Assert.Equal(6,  (int)U); 
+            Assert.Equal(7,  (int)V);
+            
+            // CMYK
+            Assert.Equal(10, (int)Cyan);
+            Assert.Equal(11, (int)Magenta);
+            Assert.Equal(12, (int)Yellow);
+            Assert.Equal(13, (int)Key);
         }
 
         [Fact]
-        public void A()
+        public void ColorChannelAliasTests()
+        {
+            // CbCr aliases
+            Assert.Equal(6, (int)ColorChannel.Cb(1).Component);
+            Assert.Equal(7, (int)ColorChannel.Cr(1).Component);
+        }
+
+        [Fact]
+        public void PixelFormatTests()
         {
             var bw = PixelFormat.BlackWhite.GetInfo();
 
