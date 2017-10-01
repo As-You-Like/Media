@@ -1,15 +1,17 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public class AudioFrame : Frame
     {
-        public AudioFrame(IBuffer data)
-            : base(data)
+        public AudioFrame(IBuffer data, SampleFormat format)
         {
+            Buffer = data ?? throw new ArgumentNullException(nameof(data));
+            Format = format;
         }
 
-        /// <summary>
-        /// The size of each plane
-        /// </summary>
+        public IBuffer Buffer { get; }
+
         public virtual int Stride { get; set; }
 
         public virtual SampleFormat Format { get; }
@@ -23,6 +25,9 @@
         /// </summary>
         public virtual int SampleCount { get; set; }
 
-        // Duration?
+        public override void Dispose()
+        {
+            Buffer.Dispose();
+        }
     }
 }

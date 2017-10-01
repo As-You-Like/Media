@@ -2,9 +2,9 @@
 {
     public class VideoFrame : Frame
     {
-        public VideoFrame(IBuffer data, PixelFormat format, int width, int height, int[] strides)
-            : base(data)
+        public VideoFrame(PixelFormat format, int width, int height, IBuffer[] planes, int[] strides)
         {
+            Planes  = planes;
             Width   = width;
             Height  = height;
             Format  = format;
@@ -23,8 +23,10 @@
         
         public PictureType PictureType { get; set; }
 
+        public IBuffer[] Planes { get; } // AKA picture lines?
+
         /// <summary>
-        /// the size of each picture line (plane?)
+        /// The length (size) of each picture line (plane?)
         /// </summary>
         public int[] Strides { get; }
 
@@ -33,6 +35,15 @@
         // MotionVectors
 
         // IsInterlaced
+
         // IsKeyFrame
+
+        public override void Dispose()
+        {
+            foreach (var plane in Planes)
+            {
+                plane.Dispose();
+            }
+        }
     }
 }

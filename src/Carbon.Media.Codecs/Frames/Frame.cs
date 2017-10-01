@@ -3,19 +3,8 @@ using System.Collections.Generic;
 
 namespace Carbon.Media
 {
-    public abstract class Frame
+    public abstract class Frame : IDisposable
     {
-        public Frame(IBuffer data)
-        {
-            Data = data ?? throw new ArgumentNullException(nameof(data));
-        }
-        
-        // internal IntPtr[] datas = new IntPtr[8];
-
-        // The picture / channel planes
-        // There may be mutiple buffers...
-        public IBuffer Data { get; }
-
         /// <summary>
         /// The order the frame is encoded within the bitstream (coded picture number)
         /// </summary>
@@ -44,5 +33,7 @@ namespace Carbon.Media
         public long Duration { get; set; }
         
         public Dictionary<string, string> Metadata { get; set; }
+
+        public abstract void Dispose();
     }
 }
