@@ -46,7 +46,7 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
-        public void PixelFormatTests()
+        public void General()
         {
             var bw = PixelFormat.BlackWhite.GetInfo();
 
