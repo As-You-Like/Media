@@ -1,18 +1,26 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Carbon.Media.Containers;
+﻿using System.IO;
+using Carbon.Media.Formats;
 using Carbon.Media.Processors;
 
 namespace Carbon.Media.Processing
 {
     public class Processor
     {
-        public void Process(MediaPipeline pipeline, MediaSource input, Stream output)
+        private readonly MediaPipeline pipeline;
+
+        public Processor(MediaPipeline pipeline)
+        {
+            this.pipeline = pipeline;
+        }
+
+        public void Process(MediaSource input, Stream output)
         {
             // av_format_open (auto detects format, reads header, and creates an AV context)
 
             var inputContext  = new FormatContext();
             var outputContext = new FormatContext();
+
+            // - build a filter graph from the pipeline (deinterlace, scale, etc)
 
             using (var demuxer = new HlsDemuxer())
             using (var muxer = new MovMuxer(new MovMuxerOptions()))
@@ -41,20 +49,9 @@ namespace Carbon.Media.Processing
                 }
                 
                 muxer.WriteTrailer(outputContext);
-            }
-
-            
-            // Build a filter graph from the filters (deinterlace, scale, etc)
+            }            
         }
     }
-
-    // Pipeline?
-    
-    // Custom IO Context...
-    public class IOContext
-    {
-    }
-
 }
 
 /*

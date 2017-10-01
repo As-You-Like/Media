@@ -13,6 +13,7 @@ namespace Carbon.Media
         // internal IntPtr[] datas = new IntPtr[8];
 
         // The picture / channel planes
+        // There may be mutiple buffers...
         public IBuffer Data { get; }
 
         /// <summary>

@@ -1,17 +1,17 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
-    public class MediaSource
+    public abstract class MediaSource : IDisposable
     {
-
-        // Open
-
-        // Close
-
         public long Position { get; set; }
 
         // Probed if not specified
+
+        // Stream Open
+
+        public virtual void Dispose()
+        {
+        }
     }
-
-
-    // URL, MemoryStream, ...
 }

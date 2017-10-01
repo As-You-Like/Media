@@ -1,10 +1,10 @@
 ﻿namespace Carbon.Media.Codecs
 {
+    // Each codec may implement an Encoder & Decoder
+
     public abstract class Codec : ICodec
     {
         public abstract CodecId Id { get; }
-  
-        // Profiles
     }
 
     public abstract class AudioCodec : Codec

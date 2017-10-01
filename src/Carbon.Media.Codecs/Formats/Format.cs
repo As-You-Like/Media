@@ -6,9 +6,9 @@ namespace Carbon.Media.Formats
     {
         public abstract FormatId Id { get; }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

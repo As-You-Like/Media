@@ -1,21 +1,15 @@
 ﻿namespace Carbon.Media.Formats
 {
     /// <summary>
-    /// Demuxers read a media file and split it into chunks of data (packets).
+    /// Demuxers split a media file into packets (data chunks)
     /// </summary>
     public abstract class Demuxer : Format
     {
-        public Demuxer()
+        public virtual void Open(MediaSource source)
         {
-            // open the container
-            // avformat_open_input
-
-            // open the "container"
-
-            // get the streams
+            // Opens a media file and gets the streams
         }
-
-       
+        
         public void Probe() { }
 
         public void ReadHeader(FormatContext context)
@@ -28,17 +22,9 @@
         // Play
         // Seek
         // Close
-
-
+        
         // Events
         // - OnMetadata
         // - OnPacket
     }
-
-    // AVInputFormat
-    // AA
-    // AppleHttp
-    // Mpegts
-    // Mpjpeg
-    // RawVideo
 }
