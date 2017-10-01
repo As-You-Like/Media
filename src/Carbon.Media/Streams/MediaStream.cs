@@ -6,6 +6,9 @@ namespace Carbon.Media
     {
         public MediaStream(int index, ICodec codec)
         {
+            if (index < 0)
+                throw new ArgumentException("Must be >= 0", nameof(index));
+
             Index = index;
             Codec = codec ?? throw new ArgumentNullException(nameof(codec));
         }
@@ -17,11 +20,10 @@ namespace Carbon.Media
         // e.g. H264, AAC ...
         public ICodec Codec { get; }
         
+        /// <summary>
+        /// The average number of bits per second
+        /// </summary>
         public BitRate? BitRate { get; set; }
-
-        public BitRate? BitRateAverage { get; set; }
-
-        public BitRate? BitRateTolerance { get; set; }
 
         /// <summary>
         /// The unit of time (in seconds) in which frame timestamps are represented
@@ -47,5 +49,10 @@ namespace Carbon.Media
         /// The total number of frames
         /// </summary>
         public long? FrameCount { get; set; }
+
+        /// <summary>
+        /// The size, in bytes, of each frame
+        /// </summary>
+        // public int FrameSize { get; set; }
     }
 }

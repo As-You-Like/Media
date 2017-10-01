@@ -4,32 +4,36 @@ namespace Carbon.Media
 {
     public class VideoStream : MediaStream
     {
-        public VideoStream(int index, ICodec codec, PixelFormat pixelFormat)
+        public VideoStream(
+            int index, 
+            ICodec codec, 
+            PixelFormat pixelFormat, 
+            int width, 
+            int height)
             : base(index, codec)
         {
             PixelFormat = pixelFormat;
+            Width       = width;
+            Height      = height;
         }
 
         public PixelFormat PixelFormat { get; }
 
+        public ColorSpace ColorSpace { get; set; }
+
         /// <summary>
-        /// The screen width
+        /// The frame width
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; }
         
         /// <summary>
-        /// The screen height
+        /// The frame height
         /// </summary>
-        public int Height { get; set; }
-        
-        /// <summary>
-        /// The coded size of the frame
-        /// </summary>
-        public Size FrameSize { get; set; }
+        public int Height { get; }
+
+        public Rational? PixelAspectRatio { get; set; }
 
         public Rational? FrameRate { get; set; }        
-        
-        public Rational? PixelAspectRatio { get; set; }
 
         public ExifOrientation? Orientation { get; set; }
         

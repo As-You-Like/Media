@@ -1,63 +1,58 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
+    [DataContract]
     public class VideoProfile
     {
-        public int? Quality { get; set; }
-
+        [DataMember(Name = "bitRate")]
         public BitRate? BitRate { get; set; }
 
+        [DataMember(Name = "minBitRate")]
         public BitRate? MinBitRate { get; set; } // -minrate
 
+        [DataMember(Name = "maxBitRate")]
         public BitRate? MaxBitRate { get; set; } // -maxrate
 
+        [DataMember(Name = "bufferSize")]
         public long? BufferSize { get; set; } // -bufsize
 
-        // avc1.42E01E (H264 Baseline)
-        // avc1.4D401E (H264 Main)
-        // theora
-        // vp8
+        [DataMember(Name = "codec")]
         public string Codec { get; set; }
 
+        [DataMember(Name = "width")]
         public int Width { get; set; }
 
+        [DataMember(Name = "height")]
         public int Height { get; set; }
 
-        /// <summary>
-        /// A fixed frame rate
-        /// </summary>
-        public double? FrameRate { get; set; }
+        [DataMember(Name = "frameRate")]
+        public double? FrameRate { get; set; } // Rational?
 
         /// <summary>
-        /// A maximum framerate
+        /// A maximum framerate (if not fixed)
         /// </summary>
-        public double? MaxFrameRate { get; set; }
+        [DataMember(Name = "maxFrameRate", EmitDefaultValue = false)]
+        public double? MaxFrameRate { get; set; } // Rational?
 
+        [DataMember(Name = "keyFrameDistance", EmitDefaultValue = false)]
         public TimeSpan? KeyFrameDistance { get; set; }
 
-        [DefaultValue(false)]
+        [DataMember(Name = "upscale"), DefaultValue(false)]
         public bool Upscale { get; set; }
 
-        [DefaultValue(ResizeFlags.Fit)]
+        [DataMember(Name = "quality")]
+        public int? Quality { get; set; }
+
+        [DataMember(Name = "scaleMode"), DefaultValue(ResizeFlags.Fit)]
         public ResizeFlags ScaleMode { get; set; }
-
-        #region Helpers
-
-        [IgnoreDataMember]
-        public Size Size
-        {
-            get => new Size(Width, Height);
-            set
-            {
-                Width = value.Width;
-                Height = value.Height;
-            }
-        }
-
-        #endregion
     }
 }
+
+
+// avc1.42E01E (H264 Baseline)
+// avc1.4D401E (H264 Main)
+// theora
+// vp8

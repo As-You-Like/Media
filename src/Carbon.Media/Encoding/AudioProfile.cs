@@ -4,24 +4,36 @@ namespace Carbon.Media
 {
     public class AudioProfile
     {
-        public AudioProfile() { }
-
-        public AudioProfile(string codec, BitRate bitRate)
+        public AudioProfile(
+            string codec, 
+            BitRate bitRate,
+            SampleFormat sampleFormat = default, 
+            int? sampleRate = null)
         {
-            Codec    = codec ?? throw new ArgumentNullException(nameof(codec));
-            BitRate  = bitRate;
+            #region Preconditions
+
+            if (string.IsNullOrEmpty(codec))
+                throw new ArgumentException("Required", nameof(codec));
+
+            if (sampleRate != null && sampleRate.Value <= 0)
+                throw new ArgumentOutOfRangeException("Must be > 0", sampleRate.Value, nameof(sampleRate));
+
+            #endregion
+
+            Codec        = codec;
+            BitRate      = bitRate;
+            SampleFormat = sampleFormat;
+            SampleRate   = sampleRate;
         }
 
-        public BitRate BitRate { get; set; }
+        public string Codec { get; }
 
-        public string Codec { get; set; }
+        public BitRate BitRate { get; }
 
-        // [Range(0, 48000)]
-        public int? SampleRate { get; set; }
-        
-        public SampleFormat SampleFormat { get; set; }
+        public SampleFormat SampleFormat { get; }
 
-        // ChannelCount
+        // 0...48000
+        public int? SampleRate { get; }        
     }
 }
 

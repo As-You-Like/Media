@@ -20,7 +20,9 @@ namespace Carbon.Media
 
         public SampleFormat Id { get; }
 
-        // BitsPerSample
+        /// <summary>
+        /// Bits per sample
+        /// </summary>
         public int BitCount { get; }
 
         public Type Type { get; }
@@ -63,11 +65,5 @@ namespace Carbon.Media
                 default: throw new ArgumentException("unexpected sample format:" + id);
             }
         }
-    }
-
-    public enum SampleFormatFlags : byte
-    {
-        None  = 0,
-        Planar = 1
     }
 }

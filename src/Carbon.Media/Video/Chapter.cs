@@ -20,6 +20,8 @@ namespace Carbon.Media
         [DataMember(Name = "end")]
         public TimeSpan End { get; }
 
+        // TimeBase?
+
         [DataMember(Name = "metadata", EmitDefaultValue = false)]
         public Dictionary<string, string> Metadata { get; }
     }

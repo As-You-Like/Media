@@ -61,10 +61,22 @@ namespace Carbon.Media
             return $"{Top},{Right},{Bottom},{Left}";
         }
 
+
+        #region Equality
+
         public bool Equals(Padding other) =>
             Top == other.Top && 
             Right == other.Right && 
             Bottom == other.Bottom && 
             Left == other.Left;
+
+
+        public override bool Equals(object obj)
+        {
+            return obj is Padding padding && padding.Equals(this);
+        }
+
+        #endregion
+
     }
 }

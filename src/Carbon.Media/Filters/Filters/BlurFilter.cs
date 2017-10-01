@@ -35,6 +35,6 @@
 
 // Sigma
 
-// boxblur, gblur, avgblur, sab, smartblur
+// TODO: BoxBlur, GaussianBlur, MotionBlur, ...
 
-// scheme: Box, Gaussian
+// boxblur, gblur, avgblur, sab, smartblur
