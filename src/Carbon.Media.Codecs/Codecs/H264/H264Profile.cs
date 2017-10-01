@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carbon.Media
+namespace Carbon.Media.Codecs
 {
     public class H264Profile : IEquatable<H264Profile>
     {
@@ -65,6 +65,21 @@ namespace Carbon.Media
         Hi422P   = 7, // ?
         Hi444PP  = 8, // ?
     }
+
+    /*
+    High,
+	High10,
+	High10Intra,
+	High422,
+	High422Intra,
+	High444,
+	High444Predictive,
+	High444Intra,
+	CAVLC444,
+    */
+    // Constrained
+    // Baseline
+    // Constrained Baseline
 }
 
 // https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC#Profiles
