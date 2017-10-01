@@ -26,17 +26,16 @@ namespace Carbon.Media.Processors
 
         public abstract string Canonicalize();
 
-        // TODO: Use tuple w/ C# 7
-        internal virtual IEnumerable<KeyValuePair<string, string>> Args()
+        internal virtual IEnumerable<(string, string)> Args()
         {
             // Mode
 
-            if (Box.X != null)                            yield return new KeyValuePair<string, string>("x"       , Box.X.Value.ToString());
-            if (Box.Y != null)                            yield return new KeyValuePair<string, string>("y"       , Box.Y.Value.ToString());
-            if (Box.Width != null)                        yield return new KeyValuePair<string, string>("width"   , Box.Width.Value.ToString());
-            if (Box.Height != null)                       yield return new KeyValuePair<string, string>("height"  , Box.Width.Value.ToString());
-            if (Align != null)                            yield return new KeyValuePair<string, string>("align"   , Align.Value.ToLower());
-            if (!Box.Padding.Equals(UnboundPadding.Zero)) yield return new KeyValuePair<string, string>("padding" , Box.Padding.ToString());
+            if (Box.X != null)                            yield return ("x"       , Box.X.Value.ToString());
+            if (Box.Y != null)                            yield return ("y"       , Box.Y.Value.ToString());
+            if (Box.Width != null)                        yield return ("width"   , Box.Width.Value.ToString());
+            if (Box.Height != null)                       yield return ("height"  , Box.Width.Value.ToString());
+            if (Align != null)                            yield return ("align"   , Align.Value.ToLower());
+            if (!Box.Padding.Equals(UnboundPadding.Zero)) yield return ("padding" , Box.Padding.ToString());
         }
     }
 }

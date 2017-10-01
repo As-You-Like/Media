@@ -26,10 +26,9 @@ namespace Carbon.Media.Processors
 
         public Font? Font { get; }
 
-        // TODO: Use tuple w/ C# 7
-        internal override IEnumerable<KeyValuePair<string, string>> Args()
+        internal override IEnumerable<(string, string)> Args()
         {
-            if (Color != null) yield return new KeyValuePair<string, string>("color", Color);
+            if (Color != null) yield return ("color", Color);
 
             foreach (var arg in base.Args())
             {
@@ -47,18 +46,17 @@ namespace Carbon.Media.Processors
 
             sb.Append(Text);
 
-            foreach (var arg in Args())
+            foreach (var (key, value) in Args())
             {
                 sb.Append(",");
 
-                sb.Append(arg.Key + ":" + arg.Value);
+                sb.Append(key + ":" + value);
             }
 
             sb.Append(")");
 
             return sb.ToString();
         }
-
 
         public override string ToString() => Canonicalize();
 
@@ -107,41 +105,6 @@ namespace Carbon.Media.Processors
             }
 
             return new DrawText(text, box, font, align, mode, color);
-        }
-    }
-
-
-    public struct Font
-    {
-        // bold 
-        public Font(string name, string weight, Unit size)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Size = size;
-            Weight = weight;
-        }
-
-        public string Name { get; }
-
-        public string Weight { get; }
-
-        public Unit Size { get; }
-
-        public override string ToString() => Name;
-
-        public static Font Parse(string text)
-        {
-            var parts = text.Split(Seperators.Space);
-
-            if (parts.Length == 1) return new Font(text, "normal", new Unit(12, UnitType.Px));
-            
-            // 12px Name
-
-            return new Font(
-                name   : parts[1], 
-                weight : "normal", 
-                size   : Unit.Parse(parts[0])
-            );
         }
     }
 }
