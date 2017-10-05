@@ -8,6 +8,19 @@ namespace Carbon.Media.Metadata.Tests
     public class ImageMetadataTests
     {
         [Fact]
+        public void SerializeAspect()
+        {
+            var aspect = new Rational(1, 2);
+
+            var aspect2 = Helper.SerializeAndBack(aspect);
+
+
+            Assert.Equal(1, aspect2.Numerator);
+            Assert.Equal(2, aspect2.Denominator);
+
+        }
+
+        [Fact]
         public void Test1()
         {
             var image = new ImageMetadata {

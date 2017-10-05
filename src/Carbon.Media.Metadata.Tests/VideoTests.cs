@@ -17,6 +17,10 @@ namespace Carbon.Media.Metadata.Tests
                 Duration  = TimeSpan.FromSeconds(30)
             };
 
+            var video2 = Helper.SerializeAndBack(video);
+
+            Assert.Equal(30d, video.Duration.TotalSeconds);
+
             Assert.Equal(@"{
   ""format"": ""mp4"",
   ""codec"": ""h.265"",

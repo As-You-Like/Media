@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 using static System.Math;
 
 namespace Carbon.Media
 {
+    [DataContract]
     public struct Rational : IEquatable<Rational>, IFormattable
     {
-        private readonly long numerator;
-        private readonly long denominator;
-
         public Rational(long numerator, long denominator)
         {
             #region Preconditions
@@ -17,24 +16,25 @@ namespace Carbon.Media
 
             #endregion
 
-            this.numerator = numerator;
-            this.denominator = denominator;
+            Numerator = numerator;
+            Denominator = denominator;
         }
 
-        public long Numerator => numerator;
+        [DataMember(Name = "numerator", Order = 1)]
+        public long Numerator { get; }
 
-        public long Denominator => denominator;
+        [DataMember(Name = "denominator", Order = 2)]
+        public long Denominator { get; }
 
-        public Rational Invert() => new Rational(denominator, numerator);
+        public Rational Invert() => new Rational(Denominator, Numerator);
 
         public Rational Reduce()
         {
-            if (numerator == 0) return this;
+            if (Numerator == 0) return this;
 
-            var gcd = CalculateGcd(numerator, denominator);
-
-            var num = numerator / gcd;
-            var den = denominator / gcd;
+            long gcd = CalculateGcd(Numerator, Denominator);
+            long num = Numerator / gcd;
+            long den = Denominator / gcd;
 
             if (den < 0)
             {
@@ -75,17 +75,19 @@ namespace Carbon.Media
 
         public override string ToString()
         {
-            if (denominator == 1)
+            if (Denominator == 1)
             {
-                return numerator.ToString();
+                return Numerator.ToString();
             }
 
-            return numerator + "/" + denominator;
+            return Numerator + "/" + Denominator;
         }
-        
+
+        private static readonly char[] forwardSlash = { '/' };
+
         public static Rational Parse(string text)
         {
-            var parts = text.Split('/');
+            var parts = text.Split(forwardSlash); // '/'
 
             if (parts.Length == 1)
             {
@@ -95,19 +97,24 @@ namespace Carbon.Media
             return new Rational(long.Parse(parts[0]), long.Parse(parts[1]));
         }
 
-        public string ToString(string format, IFormatProvider formatProvider) => 
-            ToDouble().ToString(format);
-
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return ToDouble().ToString(format);
+        }
 
         #region IEquatable
 
         public bool Equals(Rational other)
         {
-            return numerator   == other.Numerator
-                && denominator == other.Denominator;
+            return Numerator   == other.Numerator
+                && Denominator == other.Denominator;
+        }
+
+        public override int GetHashCode()
+        {
+            return (Numerator, Denominator).GetHashCode();
         }
 
         #endregion
-
     }
 }
