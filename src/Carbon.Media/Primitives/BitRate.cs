@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
+    [DataContract]
     public struct BitRate : IEquatable<BitRate>
     {
         public static readonly BitRate Zero = new BitRate(0);
@@ -13,8 +15,8 @@ namespace Carbon.Media
             this.value = value;
         }
 
+        [DataMember(Name = "value", Order = 1)]
         public long Value => value;
-
 
         public double Kbps => value / 1000d;
 

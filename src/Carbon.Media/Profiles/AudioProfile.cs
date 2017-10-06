@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
@@ -26,13 +27,17 @@ namespace Carbon.Media
             SampleRate   = sampleRate;
         }
 
+        [DataMember(Name = "codec")]
         public string Codec { get; }
 
+        [DataMember(Name = "bitRate")]
         public BitRate BitRate { get; }
 
+        [DataMember(Name = "sampleFormat")]
         public SampleFormat SampleFormat { get; }
 
         // 0...48000
+        [DataMember(Name = "sampleRate")]
         public int? SampleRate { get; }        
     }
 }

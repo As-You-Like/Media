@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.Runtime.Serialization;
+
+namespace Carbon.Media
 {
     using static ColorChannel;
     using static ColorModel;
@@ -18,12 +20,16 @@
             Flags        = flags;
         }
 
+        [DataMember(Name = "bitsPerPixel", Order = 1)]
         public int BitsPerPixel { get; }
 
+        [DataMember(Name = "colorModel", Order = 2)]
         public ColorModel ColorModel { get; }
 
+        [DataMember(Name = "channels", Order = 3)]
         public ColorChannel[] Channels { get; }
 
+        [DataMember(Name = "flags", Order = 4)]
         public PixelFormatFlags Flags { get; }
 
         public bool IsPacked => Flags.HasFlag(PixelFormatFlags.Packed);

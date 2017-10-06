@@ -14,15 +14,15 @@ namespace Carbon.Media
             Metadata = metadata;
         }
 
-        [DataMember(Name = "start")]
+        [DataMember(Name = "start", Order = 1)]
         public TimeSpan Start { get; }
 
-        [DataMember(Name = "end")]
+        [DataMember(Name = "end", Order = 2)]
         public TimeSpan End { get; }
 
         // TimeBase?
 
-        [DataMember(Name = "metadata", EmitDefaultValue = false)]
+        [DataMember(Name = "metadata", EmitDefaultValue = false, Order = 3)]
         public Dictionary<string, string> Metadata { get; }
     }
 }

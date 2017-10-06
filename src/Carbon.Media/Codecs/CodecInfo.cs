@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
@@ -10,8 +11,10 @@ namespace Carbon.Media
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
+        [DataMember(Name = "id", Order = 1)]
         public CodecId Id { get; }
 
+        [DataMember(Name = "name", Order = 2)]
         public string Name { get; }
 
         // Profile?
