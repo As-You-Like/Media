@@ -32,12 +32,17 @@
                 case "path"         : return DrawPath.Parse(segment);
                 case "circle"       : return DrawCircle.Parse(segment);
 
-                // filters           
-                case "background"   : return Background.Parse(segment);
+                case "background":
                 case "bg"           : return Background.Parse(segment);
+                
+                // filters           
                 case "blur"         : return BlurFilter.Parse(segment);
                 case "brightness"   : return BrightnessFilter.Parse(segment);
-
+                case "highlight"    : return HighlightFilter.Parse(segment);
+                case "gamma"        : return GammaFilter.Parse(segment);
+                case "sharpen"      : return SharpenFilter.Parse(segment);
+                case "vibrance"     : return VibranceFilter.Parse(segment);
+                    
                 // web filters
                 case "hue-rotate"   : return HueRotateFilter.Parse(segment);
                 case "saturate"     : return SaturateFilter.Parse(segment);

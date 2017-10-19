@@ -1,28 +1,25 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public class GammaFilter : IFilter
+    public class SharpenFilter : IFilter
     {
-        public GammaFilter(float amount)
+        public SharpenFilter(float amount)
         {
             Amount = amount;
         }
 
         public float Amount { get; }
 
-        public string Canonicalize() => $"gamma({Amount})";
+        public string Canonicalize() => $"sharpen({Amount})";
 
         public override string ToString() => Canonicalize();
 
-        public static GammaFilter Parse(string segment)
+        public static SharpenFilter Parse(string segment)
         {
             int argStart = segment.IndexOf('(') + 1;
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
-            return new GammaFilter((float)Unit.Parse(segment).Value);
+            return new SharpenFilter((float)Unit.Parse(segment).Value);
         }
     }
 }
-
-//gamma(1.1, 3.6, 0)
- 

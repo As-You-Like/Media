@@ -18,8 +18,7 @@
             return new BrightnessFilter(float.Parse(segment));
         }
 
-        public string Canonicalize() =>
-             $"brightness({Amount})";
+        public string Canonicalize() => $"brightness({Amount})";
 
         public override string ToString() => Canonicalize();
     }
