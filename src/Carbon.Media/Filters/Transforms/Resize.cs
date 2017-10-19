@@ -208,9 +208,9 @@ namespace Carbon.Media.Processors
 
                         switch (k)
                         {
-                            case "anchor"     : anchor = AnchorHelper.Parse(v); break;
-                            case "background" : background = v;                 break;
-                            default           : throw new Exception("Unknown arg:" + k);
+                            case "anchor"     : anchor = CropAnchorHelper.Parse(v); break;
+                            case "background" : background = v;                     break;
+                            default           : throw new Exception("Unknown resize argument:" + k);
                         }
                     }
                     else
@@ -230,7 +230,7 @@ namespace Carbon.Media.Processors
 
                 return new Resize(
                     size   : SizeHelper.Parse(parts[0]),
-                    anchor : AnchorHelper.Parse(parts[1])
+                    anchor : CropAnchorHelper.Parse(parts[1])
                 );
             }
 
