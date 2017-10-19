@@ -13,6 +13,8 @@ namespace Carbon.Media
         Center = 1 << 5
     }
 
+    // entropy?
+
     public static class CropAnchorExtensions
     {
         public static string ToCode(this CropAnchor anchor)

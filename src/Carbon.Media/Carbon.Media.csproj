@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Carbon.Media</AssemblyName>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <VersionPrefix>1.13.0</VersionPrefix>
+    <VersionPrefix>1.14.0</VersionPrefix>
 
     <LangVersion>7.1</LangVersion>
     

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
     using static SampleFormatFlags;
 
+    [DataContract]
     public struct SampleFormatInfo
     {
         public SampleFormatInfo(
@@ -18,17 +20,22 @@ namespace Carbon.Media
             Flags    = flags;
         }
 
+        [DataMember(Name = "id", Order = 1)]
         public SampleFormat Id { get; }
 
         /// <summary>
         /// Bits per sample
         /// </summary>
+        [DataMember(Name = "bitCount", Order = 3)]
         public int BitCount { get; }
-
-        public Type Type { get; }
-
+        
+        [DataMember(Name = "flags", Order = 4)]
         public SampleFormatFlags Flags { get; }
 
+        [IgnoreDataMember]
+        public Type Type { get; }
+
+        [IgnoreDataMember]
         public bool IsPlanar => Flags.HasFlag(Planar);
 
         public static readonly SampleFormatInfo Int8         = new SampleFormatInfo(SampleFormat.Int8,         8,  typeof(sbyte));

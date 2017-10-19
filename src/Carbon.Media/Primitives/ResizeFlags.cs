@@ -17,7 +17,7 @@ namespace Carbon.Media
         Modes   = Exact | Fit | Crop | Pad,
 
         Carve   = 1 << 10,  // Fill the box, carving as needed
-        Upscale = 1 << 11
+        Upscale = 1 << 11   // Stretch?
     }
     
     public static class ResizeFlagsExtensions

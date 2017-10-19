@@ -47,11 +47,15 @@ namespace Carbon.Media
                 left   : lhs.Left   + rhs.Left
             );
         }
+
         public override string ToString()
         {
             var same = Top == Right && Top == Bottom && Top == Left;
 
-            if (same) return Top.ToString();
+            if (same)
+            {
+                return Top.ToString();
+            }
 
             if (Top == Bottom && Right == Left)
             {
@@ -60,7 +64,6 @@ namespace Carbon.Media
 
             return $"{Top},{Right},{Bottom},{Left}";
         }
-
 
         #region Equality
 
@@ -75,8 +78,12 @@ namespace Carbon.Media
         {
             return obj is Padding padding && padding.Equals(this);
         }
+        
+        public override int GetHashCode()
+        {
+            return (Top, Right, Bottom, Left).GetHashCode();
+        }
 
         #endregion
-
     }
 }

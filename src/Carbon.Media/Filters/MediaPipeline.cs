@@ -208,12 +208,9 @@ namespace Carbon.Media.Processors
                 }
                 else if (transform is ImageEncode encode)
                 {
-                    if (quality != null)
-                    {
-                        encode = new ImageEncode(encode.Format, quality);
-                    }
-
-                    pipeline.Encode = encode;
+                    pipeline.Encode = quality != null
+                        ? new ImageEncode(encode.Format, quality, encode.Flags) // set the quality
+                        : encode;
                 }
                 else
                 {

@@ -1,6 +1,6 @@
-﻿- Update to .NETSTANDARD 2.0
-
- Target NETSTANDARD2
+﻿ - Target to .NETSTANDARD 2.0
+ - Merge ContainerId & FormatId
+ - Add ChannelLayout
 
  1.5.4 (2017-03-07)
  -----------------------------------------------------
