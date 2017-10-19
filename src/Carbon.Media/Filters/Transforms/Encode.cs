@@ -5,10 +5,14 @@ namespace Carbon.Media.Processors
 {
     public sealed class ImageEncode : ITransform
     {
-        public ImageEncode(ImageFormat format, int? quality = null)
+        public ImageEncode(
+            ImageFormat format,
+            int? quality = null, 
+            EncodeFlags flags = default)
         {
-            Format = format;
+            Format  = format;
             Quality = quality;
+            Flags   = flags;
         }
 
         // JPEG, WEBP, PNG, ...
@@ -16,7 +20,10 @@ namespace Carbon.Media.Processors
         public ImageFormat Format { get; }
 
         public int? Quality { get; }
-       
+
+        // jpeg only
+        public EncodeFlags Flags { get; }
+
         public string Canonicalize()
         {
             var sb = new StringBuilder();
@@ -38,6 +45,7 @@ namespace Carbon.Media.Processors
         public override string ToString() => Canonicalize();
 
         // JPEG::encode(quality:100)
+        // JPEG::encode(quality:88,progressive:true)
         // PNG::encode
         // WebP::encode
 
@@ -48,13 +56,47 @@ namespace Carbon.Media.Processors
 
         #endregion
 
+        // With (quality)
         public static ImageEncode Parse(string segment)
         {
+            int quality = 0;
+            var flags = EncodeFlags.None;
+
             var indexOfSemiSemi = segment.IndexOf("::");
 
-            var format = segment.Substring(0, indexOfSemiSemi).ToEnum<ImageFormat>(true);
+            string formatName = segment.Substring(0, indexOfSemiSemi);
 
-            int quality = 0;
+            ImageFormat format;
+
+            switch (formatName)
+            {
+                case "pjpg":
+                    format = ImageFormat.Jpeg;
+                    flags |= EncodeFlags.Progressive;
+                    break;
+
+                case "png8":
+                    format = ImageFormat.Png;
+                    flags |= EncodeFlags._8bit;
+                    break;
+
+                case "png32":
+                    format = ImageFormat.Png;
+                    flags |= EncodeFlags._32bit;
+                    break;
+
+                case "webpll":
+                    format = ImageFormat.WebP;
+                    flags |= EncodeFlags.Lossless;
+                    break;
+
+                default:
+                    format = ImageFormatHelper.Parse(formatName);
+                    break;
+
+            }
+
+            
 
             int argStart = segment.IndexOf('(') + 1;
 
@@ -73,12 +115,22 @@ namespace Carbon.Media.Processors
 
                     switch (k)
                     {
-                        case "quality": quality = int.Parse(v); break;
+                        case "quality"     : quality = int.Parse(v); break;
+                        case "progressive" : flags |= EncodeFlags.Progressive; break;
                     }
                 }
             }
 
-            return new ImageEncode(format, quality);
+            return new ImageEncode(format, quality, flags);
         }
+    }
+
+    public enum EncodeFlags
+    {
+        None = 0,
+        Progressive = 1 << 1,
+        Lossless = 1 << 2,
+        _8bit = 1 << 3,
+        _32bit = 1 << 4
     }
 }

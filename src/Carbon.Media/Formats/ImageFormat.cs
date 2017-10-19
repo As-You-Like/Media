@@ -35,7 +35,7 @@ namespace Carbon.Media
     {
         public static ImageFormat Parse(string text)
         {
-            switch (text)
+            switch (text.ToLower())
             {
                 case "bmp"  : return Bmp;
                 case "bgp"  : return Bpg;
@@ -43,6 +43,7 @@ namespace Carbon.Media
                 case "dng"  : return Dng;
                 case "heif" : return Heif;
                 case "ico"  : return Ico;
+                case "jpg"  : return Jpeg;
                 case "jpeg" : return Jpeg;
                 case "jp2"  : return Jp2;
                 case "jxr"  : return Jxr;
