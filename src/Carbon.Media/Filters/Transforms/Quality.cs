@@ -28,7 +28,6 @@ namespace Carbon.Media.Processors
         // quality(100)
         // lossless
 
-
         public static Quality Parse(string segment)
         {
             int argStart = segment.IndexOf('(') + 1;

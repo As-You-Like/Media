@@ -42,7 +42,11 @@ namespace Carbon.Media
             rect.Height = target.Height;
         }
         
-        public static Box Pad(Size source, Size bounds, CropAnchor anchor = CropAnchor.Center, bool upscale = false)
+        public static Box Pad(
+            Size source, 
+            Size bounds, 
+            CropAnchor anchor = CropAnchor.Center,
+            bool upscale = false)
         {
             var size = Fit(source, bounds, upscale); // Fit if it doesn't fit or needs upscaling...
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Carbon.Media
+﻿namespace Carbon.Media
 {
     internal static class ArgumentList
     {

@@ -65,6 +65,7 @@ namespace Carbon.Media
                 return new Unit(double.Parse(text), UnitType.Percent);
             }
 
+            
             return new Unit(double.Parse(text));
         }
 
@@ -95,7 +96,6 @@ namespace Carbon.Media
         public override int GetHashCode() =>  Value.GetHashCode();
         
         #endregion
-
     }
 
     public enum UnitType

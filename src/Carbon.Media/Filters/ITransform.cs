@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media.Processors
+﻿using System.Text;
+
+namespace Carbon.Media.Processors
 {
     public interface ITransform
     {
