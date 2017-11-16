@@ -24,14 +24,7 @@
                 case "pad"          : return Pad.Parse(segment);
 
                 case "page"         : return Page.Parse(segment);
-                    
-                // drawing            
-                case "text"         : return DrawText.Parse(segment);
-                case "overlay"      : return DrawColor.Parse(segment);
-                case "gradient"     : return DrawGradient.Parse(segment);
-                case "path"         : return DrawPath.Parse(segment);
-                case "circle"       : return DrawCircle.Parse(segment);
-
+                                        
                 case "background":
                 case "bg"           : return Background.Parse(segment);
                 
@@ -40,6 +33,7 @@
                 case "brightness"   : return BrightnessFilter.Parse(segment);
                 case "highlight"    : return HighlightFilter.Parse(segment);
                 case "gamma"        : return GammaFilter.Parse(segment);
+                case "pixelate"     : return PixelateFilter.Parse(segment);
                 case "sharpen"      : return SharpenFilter.Parse(segment);
                 case "vibrance"     : return VibranceFilter.Parse(segment);
                     
@@ -52,8 +46,11 @@
                 case "contrast"     : return ContrastFilter.Parse(segment);
                 case "opacity"      : return OpacityFilter.Parse(segment);
 
-                // Other
+                // Drawing
+                case "draw"         : return Draw.Parse(segment);
 
+                // Other
+                case "metadata"     : return Metadata.Parse(segment);
                 case "quality"      : return Quality.Parse(segment);
                 case "lossless"     : return new Quality(100);
 
@@ -63,7 +60,7 @@
 
                     if (segment.Contains("encode"))
                     {
-                        return ImageEncode.Parse(segment);
+                        return Encode.Parse(segment);
                     }
                     else
                     {

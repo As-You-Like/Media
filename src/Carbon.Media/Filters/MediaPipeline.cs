@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Carbon.Media.Processors
@@ -40,8 +40,10 @@ namespace Carbon.Media.Processors
         // 4. Determine whether we need a canvas to apply filters or draw a background
         // Filters & Draws
         public List<ITransform> Filters { get; } = new List<ITransform>();
-        
-        public ImageEncode Encode { get; set; }
+
+        public Metadata Metadata { get; set; }
+
+        public Encode Encode { get; set; }
 
         // blob#1 |> orient(x) |> crop(0,0,100,100) |> JPEG(quality:87)
 
@@ -116,7 +118,7 @@ namespace Carbon.Media.Processors
 
                     var c = ct.GetRectangle(box.Size);
 
-                    box.Width  = c.Width;
+                    box.Width = c.Width;
                     box.Height = c.Height;
 
                     if (xScale != 1d || yScale != 1d)
@@ -178,10 +180,10 @@ namespace Carbon.Media.Processors
                 else if (transform is Pad pad)
                 {
                     box.Padding = new Padding(
-                        top     : box.Padding.Top + pad.Top,
-                        right   : box.Padding.Right + pad.Right,
-                        bottom  : box.Padding.Bottom + pad.Bottom,
-                        left    : box.Padding.Left + pad.Left
+                        top: box.Padding.Top + pad.Top,
+                        right: box.Padding.Right + pad.Right,
+                        bottom: box.Padding.Bottom + pad.Bottom,
+                        left: box.Padding.Left + pad.Left
                     );
                 }
                 else if (transform is Rotate rotate)
@@ -206,10 +208,14 @@ namespace Carbon.Media.Processors
 
                     pipeline.Rotate = rotate.Angle;
                 }
-                else if (transform is ImageEncode encode)
+                else if (transform is Metadata metadata)
+                {
+                    pipeline.Metadata = metadata;
+                }
+                else if (transform is Encode encode)
                 {
                     pipeline.Encode = quality != null
-                        ? new ImageEncode(encode.Format, quality, encode.Flags) // set the quality
+                        ? new Encode(encode.Format, quality, encode.Flags) // set the quality
                         : encode;
                 }
                 else
@@ -250,9 +256,11 @@ namespace Carbon.Media.Processors
 
             foreach (var segment in segments)
             {
-                if (segment.Contains("#"))
+                var poundIndex = segment.IndexOf('#');
+
+                if (poundIndex > -1)
                 {
-                    var id = segment.Split(Seperators.Pound)[1]; // '#'
+                    var id = segment.Substring(poundIndex + 1); // '#'
 
                     result.Source = new MediaSource(id, 100, 100);
 
@@ -281,7 +289,7 @@ namespace Carbon.Media.Processors
                     case Crop crop:
                         result.Crop = crop.GetRectangle();
                         break;
-                    case ImageEncode encode:
+                    case Encode encode:
                         result.Encode = encode;
                         break;
                     default:
@@ -295,9 +303,19 @@ namespace Carbon.Media.Processors
 
         public string Canonicalize()
         {
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
             sb.Append("blob#" + Source.Key);
+            
+            if (Encode.Format == FormatId.Json && Metadata != null)
+            {
+                sb.Append("|>");
+                Metadata.WriteTo(sb);
+                sb.Append("|>");
+                Encode.WriteTo(sb);
+
+                return sb.ToString();
+            }
 
             if (PageNumber != null)
             {
@@ -332,7 +350,7 @@ namespace Carbon.Media.Processors
             {
                 sb.Append("|>");
 
-                sb.Append(Scale.Canonicalize());
+                Scale.WriteTo(sb);
             }
 
             // pad(0,0)
@@ -354,12 +372,11 @@ namespace Carbon.Media.Processors
 
             sb.Append("|>");
 
-            sb.Append(Encode.Canonicalize());
+            Encode.WriteTo(sb);
 
-            return sb.ToString();
+            return StringBuilderCache.ExtractAndRelease(sb);
         }
     }
-
 }
 
 // Canvas(500x500,color:red)
