@@ -30,11 +30,15 @@ namespace Carbon.Media
             
             switch (format)
             {
-                case "jpg": return "jpeg";
-                case "tif": return "tiff";
-                case "mpg": return "mpeg";
+                case "aif"  : return "aiff";
+                case "fpix" : return "fpx";
+                case "jpe"  : return "jpeg";
+                case "jpg"  : return "jpeg";
+                case "tif"  : return "tiff";
+                case "mpg"  : return "mpeg";
+                case "wave" : return "wav";
 
-                default: return format;
+                default     : return format;
             }
         }
 

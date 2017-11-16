@@ -2,151 +2,155 @@
 
 namespace Carbon.Media
 {
+    using static Mime;
+
     internal static class MimeHelper
     {
         internal static readonly Dictionary<string, Mime> NameToMimeMap = new Dictionary<string, Mime> {
 		
-			// Applications										   TYPE				NAME
-			{ "application/atom+xml",           Mime.Atom },	// Document			Atom
-			{ "application/octet-stream",       Mime.Blob },	// Data				Binary Blob
-			{ "application/msword",             Mime.Doc },		// Document			Word
-			{ "application/vnd.iccprofile",     Mime.Icc },		// Color Profile	ICC
-			{ "application/vnd.ms-fontobject",  Mime.Eot },		// Font				EOT
+			// Applications								   TYPE			    NAME
+			{ "application/atom+xml",           Atom },	// Document		    Atom
+			{ "application/octet-stream",       Blob },	// Data			    Binary Blob
+			{ "application/msword",             Doc },	// Document		    Word
+			{ "application/vnd.iccprofile",     Icc },	// Color Profile    ICC
+			{ "application/vnd.ms-fontobject",  Eot },	// Font			    EOT
+			{ "application/javascript",         Js },	// Script		    JavaScript
+			{ "application/json",               Json },	// Data			    JSON
+			{ "application/x-shockwave-flash",  Swf },	// Plugin		    Flash
+			{ "application/x-font-ttf",         Ttf },	// Font			    TTF
+			{ "application/pdf",                Pdf },	// Document		    PDF
+			{ "application/x-silverlight-app",  Xap },	// Plugin		    Silverlight
+			{ "application/x-font-woff",        Woff },	// Font			    woff
+			{ "application/font-woff",          Woff }, // Font			    woff
+            { "application/tar",                Tar },  // Package          TAR
+            { "application/zip",                Zip },  // Package		    ZIP			
 
-			{ "application/javascript",         Mime.Js },		// Script			JavaScript
-			{ "application/json",               Mime.Json },	// Data				JSON
-			{ "application/x-shockwave-flash",  Mime.Swf },		// Plugin			Flash
-			{ "application/x-font-ttf",         Mime.Ttf },		// Font				TTF
-			{ "application/pdf",                Mime.Pdf },		// Document			PDF
-			{ "application/x-silverlight-app",  Mime.Xap },		// Plugin			Silverlight
-			{ "application/x-font-woff",        Mime.Woff },	// Font				woff
-			{ "application/font-woff",          Mime.Woff },	// Font				woff
-			{ "application/zip",                Mime.Zip },     // Package			ZIP			
+            // Audio --------------------------------------------
+            { "audio/aac",                      Aac },
+			{ "audio/flac",                     Flac },
+            { "audio/mp3",                      Mp3 },
+            { "audio/mp4",                      M4a },
+            { "audio/mpeg",                     Mp3 },
+            { "audio/ogg",                      Oga },
+            { "audio/opus",                     Opus },
+            { "audio/x-realaudio",              Ra },
+            { "audio/wav",                      Wav },
+            { "audio/x-ms-wma",                 Wma },
 
-			// Audio
-			{ "audio/flac",                     Mime.Flac },
-            { "audio/mp4",                      Mime.M4a },
-            { "audio/mpeg",                     Mime.Mp3 },
-            { "audio/ogg",                      Mime.Oga },
-            { "audio/opus",                     Mime.Opus },
-            { "audio/x-realaudio",              Mime.Ra },
-            { "audio/wav",                      Mime.Wav },
-            { "audio/x-ms-wma",                 Mime.Wma },
+			// Images --------------------------------------------
+			{ "image/bmp",                      Bmp },
+            { "image/x-bmp",                    Bmp },
+            { "image/gif",                      Gif },
+            { "image/heif",                     Heif },
+            { "image/x-icon",                   Ico },
+            { "image/jpeg",                     Jpeg },
+            { "image/vnd.ms-photo",             Jxr },	 // Jpeg XR
+			{ "image/png",                      Png },
+            { "image/psd",                      Psd },
+            { "image/svg+xml",                  Svg },
+            { "image/tiff",                     Tiff },
+            { "image/tiff-fx",                  Tiff },
+            { "image/webp",                     WebP },
 
-			// Images 
-			{ "image/bmp",                      Mime.Bmp },
-            { "image/x-bmp",                    Mime.Bmp },
-            { "image/gif",                      Mime.Gif },
-            { "image/heif",                     Mime.Heif },
-            { "image/x-icon",                   Mime.Ico },
-            { "image/jpeg",                     Mime.Jpeg },
-            { "image/vnd.ms-photo",             Mime.Jxr },		// Jpeg XR
-			{ "image/png",                      Mime.Png },
-            { "image/psd",                      Mime.Psd },
-            { "image/svg+xml",                  Mime.Svg },
-            { "image/tiff",                     Mime.Tiff },
-            { "image/tiff-fx",                  Mime.Tiff },
-            { "image/webp",                     Mime.WebP },
+			// Text --------------------------------------------
+			{ "text/cache-manifest",            AppCache },
+            { "text/css",                       Css },
+            { "text/csv",                       Csv },
+            { "text/html",                      Html },
+            { "text/plain",                     Txt },
+            { "text/xml",                       Xml },
 
-			// Text
-			{ "text/cache-manifest",            Mime.AppCache },
-            { "text/css",                       Mime.Css },
-            { "text/csv",                       Mime.Csv },
-            { "text/html",                      Mime.Html },
-            { "text/plain",                     Mime.Txt },
-            { "text/xml",                       Mime.Xml },
-
-			// Videos
-			{ "video/x-msvideo",                Mime.Avi },
-            { "video/x-flv",                    Mime.Flv },
-            { "video/mpeg",                     Mime.Mpeg },
-            { "video/quicktime",                Mime.Mov },
-            { "video/mp4",                      Mime.Mp4 },
-            { "video/MP2T",                     Mime.Ts },
-            { "video/ogg",                      Mime.Ogv },
-            { "video/webm",                     Mime.WebM },
-            { "video/x-ms-wmv",                 Mime.Wmv },
+			// Videos --------------------------------------------
+			{ "video/x-msvideo",                Avi },
+            { "video/x-flv",                    Flv },
+            { "video/mpeg",                     Mpeg },
+            { "video/quicktime",                Mov },
+            { "video/mp4",                      Mp4 },
+            { "video/MP2T",                     Ts },
+            { "video/ogg",                      Ogv },
+            { "video/webm",                     WebM },
+            { "video/x-ms-wmv",                 Wmv },
         };
 
         internal static readonly Dictionary<string, Mime> FormatToMimeMap = new Dictionary<string, Mime> {
 			
-			// Applications				   TYPE			NAME
-			{ "ai",     Mime.Ai },		//				Illustrator
-			{ "atom",   Mime.Atom },	// Document		Atom
-			{ "blob",   Mime.Blob },	// Data			Binary Blob
-			{ "doc",    Mime.Doc },		// Document		Word
-			{ "eot",    Mime.Eot },		// Font			EOT
-			{ "mpd",    Mime.Mpd },		// Dash
-			{ "js",     Mime.Js },		// Script		JavaScript
-			{ "json",   Mime.Json },	// Data			JSON
-			{ "swf",    Mime.Swf },		// Plugin		Flash
-			{ "ttf",    Mime.Ttf },		// Font			TTF
-			{ "pdf",    Mime.Pdf },		// Document		PDF
-			{ "xap",    Mime.Xap },		// Plugin		Silverlight
-			{ "woff",   Mime.Woff },	// Font			WOFF
-            { "woff2",  Mime.Woff2 },   // Font         WOFF2
-			{ "zip",    Mime.Zip },		// Package		ZIP			
+			// Applications	      TYPE              NAME
+			{ "ai",     Ai },	  //			    Illustrator
+			{ "atom",   Atom },	  // Document	    Atom
+			{ "blob",   Blob },	  // Data		    Binary Blob
+			{ "doc",    Doc },	  // Document	    Word
+			{ "eot",    Eot },    // Font		    EOT
+            { "icc",    Icc },    // Color Profile
+            { "mpd",    Mpd },	  // Dash
+			{ "js",     Js },	  // Script		    JavaScript
+			{ "json",   Json },	  // Data		    JSON
+			{ "swf",    Swf },	  // Plugin		    Flash
+			{ "ttf",    Ttf },	  // Font		    TTF
+			{ "pdf",    Pdf },	  // Document	    PDF
+			{ "xap",    Xap },	  // Plugin		    Silverlight
+			{ "woff",   Woff },	  // Font		    WOFF
+            { "woff2",  Woff2 },  // Font           WOFF2
+			{ "zip",    Zip },	  // Package	    ZIP			
 
-			// Audio
-			{ "aac",    Mime.Aac },
-            { "aif",    Mime.Aiff },
-            { "aifc",   Mime.Aiff },
-            { "aiff",   Mime.Aiff },
-            { "flac",   Mime.Flac },
-            { "m4a",    Mime.M4a },
-            { "mp3",    Mime.Mp3 },
-            { "oga",    Mime.Oga },
-            { "opus",   Mime.Opus },
-            { "ra",     Mime.Ra },
-            { "wav",    Mime.Wav },
-            { "wma",    Mime.Wma },
+			// Audio --------------------------------------------
+			{ "aac",    Aac },
+            { "aif",    Aiff },
+            { "aifc",   Aiff },
+            { "aiff",   Aiff },
+            { "flac",   Flac },
+            { "m4a",    M4a },
+            { "mp3",    Mp3 },
+            { "oga",    Oga },
+            { "opus",   Opus },
+            { "ra",     Ra },
+            { "wav",    Wav },
+            { "wma",    Wma },
 
-            // Images 
-            { "bpg",    Mime.Bpg },  // Better portable graphics
-			{ "bmp",    Mime.Bmp },
-            { "gif",    Mime.Gif },
-            { "hdp",    Mime.Jxr },
-            { "heif",   Mime.Heif },
-            { "ico",    Mime.Ico },
-            { "jp2",    Mime.Jp2 },  // JPEG 2000
-			{ "jpg",    Mime.Jpeg },
-            { "jpeg",   Mime.Jpeg },
-            { "jxr",    Mime.Jxr },  // JPEG XR
-			{ "png",    Mime.Png },
-            { "psd",    Mime.Psd },
-            { "svg",    Mime.Svg },
-            { "tif",    Mime.Tiff },
-            { "tiff",   Mime.Tiff },
-            { "wdp",    Mime.Jxr },
-            { "webp",   Mime.WebP },
+            // Images --------------------------------------------
+            { "bpg",    Bpg },  // Better portable graphics
+			{ "bmp",    Bmp },
+            { "fpx",    Fpx },
+            { "gif",    Gif },
+            { "hdp",    Jxr },
+            { "heif",   Heif },
+            { "ico",    Ico },
+            { "jp2",    Jp2 },  // JPEG 2000
+			{ "jpg",    Jpeg },
+            { "jpeg",   Jpeg },
+            { "jxr",    Jxr },  // JPEG XR
+			{ "png",    Png },
+            { "psd",    Psd },
+            { "sgi",    Sgi },
+            { "svg",    Svg },
+            { "tif",    Tiff },
+            { "tiff",   Tiff },
+            { "wdp",    Jxr },
+            { "webp",   WebP },
 
-			// Text
-			{ "appcache", Mime.AppCache },
-            { "css",      Mime.Css },
-            { "csv",      Mime.Csv },
-            { "htm",      Mime.Html },
-            { "html",     Mime.Html },
-            { "txt",      Mime.Txt },
-            { "xml",      Mime.Xml },
+			// Text --------------------------------------------
+			{ "appcache", AppCache },
+            { "css",      Css },
+            { "csv",      Csv },
+            { "htm",      Html },
+            { "html",     Html },
+            { "txt",      Txt },
+            { "xml",      Xml },
 
-			// Videos
-			{ "avi",    Mime.Avi },
-            { "f4v",    Mime.F4v },
-            { "flv",    Mime.Flv },
-            { "m4v",    Mime.Mp4 },
-            { "mpg",    Mime.Mpeg },
-            { "mpeg",   Mime.Mpeg },
-            { "mov",    Mime.Mov },
-            { "mp4",    Mime.Mp4 },
-            { "ogg",    Mime.Ogv },
-            { "ogv",    Mime.Ogv },
-            { "ts",     Mime.Ts },
-            { "qt",     Mime.Mov },
-            { "webm",   Mime.WebM },
-            { "wmv",    Mime.Wmv },
-
-			// Other
-			{ "icc",    Mime.Icc }
+			// Videos --------------------------------------------
+			{ "avi",    Avi },
+            { "f4v",    F4v },
+            { "flv",    Flv },
+            { "m4v",    Mp4 },
+            { "mpg",    Mpeg },
+            { "mpeg",   Mpeg },
+            { "mov",    Mov },
+            { "mp4",    Mp4 },
+            { "ogg",    Ogv },
+            { "ogv",    Ogv },
+            { "ts",     Ts },
+            { "qt",     Mov },
+            { "webm",   WebM },
+            { "wmv",    Wmv },
         };
     }
 }

@@ -139,6 +139,7 @@ namespace Carbon.Media
         public static readonly Mime Swf  = new Mime("application/x-shockwave-flash", "swf");
         public static readonly Mime Xap  = new Mime("application/x-silverlight-app", "xap");
         public static readonly Mime Xaml = new Mime("application/xaml+xml",          "xaml");
+        public static readonly Mime Ps   = new Mime("application/postscript",        "ps");
 
         // Applications - Fonts 
         public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
@@ -151,13 +152,14 @@ namespace Carbon.Media
         public static readonly Mime Icc = new Mime("application/vnd.iccprofile", "icc");
 
         // Applications - Archives
-        public static readonly Mime Tar           = new Mime("application/x-tar",  "tar");
-        public static readonly Mime CompressedTar = new Mime("application/x-gzip", "tar.gz");
-        public static readonly Mime Zip           = new Mime("application/zip",    "zip");
+        public static readonly Mime Tar           = new Mime("application/tar",  "tar");
+        public static readonly Mime CompressedTar = new Mime("application/gzip", "tar.gz");
+        public static readonly Mime Zip           = new Mime("application/zip",  "zip");
 
         // Audio (2000-2999)
         public static readonly Mime Aac      = new Mime("audio/aac",        new[] { "aac", "m4a" });
         public static readonly Mime Aiff     = new Mime("audio/aiff",       new[] { "aiff", "aif", "aifc" });
+        public static readonly Mime Au       = new Mime("audio/au",         new[] { "au" });
         public static readonly Mime Flac     = new Mime("audio/flac",       "flac");
         public static readonly Mime Mka      = new Mime("audio/x-matroska", "mka");
         public static readonly Mime Mp3      = new Mime("audio/mpeg",       "mp3", new[] { MagicNumber.Mp3 });
@@ -175,6 +177,7 @@ namespace Carbon.Media
         public static readonly Mime Bmp      = new Mime("image/bmp",     "bmp");
         public static readonly Mime Bpg      = new Mime("image/bpg",     "bpg");
         public static readonly Mime Dng      = new Mime("image/dng",     "dng");
+        public static readonly Mime Fpx      = new Mime("image/fpx",     new[] { "fpx", "fpix" });
         public static readonly Mime Gif      = new Mime("image/gif",     "gif", new[] { MagicNumber.Gif87a, MagicNumber.Gif89a});
         public static readonly Mime Heif     = new Mime("image/heif",    new[] { "heif", "heic" });
         public static readonly Mime Ico      = new Mime("image/x-icon",  "ico");  // [0]
@@ -183,7 +186,9 @@ namespace Carbon.Media
         public static readonly Mime Jxr      = new Mime("image/jxr",     new[] { "jxr", "hdp", "wdp" });
         public static readonly Mime Png      = new Mime("image/png",     "png");
         public static readonly Mime Psd      = new Mime("image/psd",     "psd", new[] { MagicNumber.Psd } );
+        public static readonly Mime Sgi      = new Mime("image/sgi",     "sgi");
         public static readonly Mime Svg      = new Mime("image/svg+xml", "svg");
+        public static readonly Mime Tga      = new Mime("image/targa",   "tga");
         public static readonly Mime Tiff     = new Mime("image/tiff",    new[] { "tiff", "tif" });
         public static readonly Mime WebP     = new Mime("image/webp",    "webp");
 

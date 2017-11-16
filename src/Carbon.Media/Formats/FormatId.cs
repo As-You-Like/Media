@@ -2,6 +2,9 @@
 {
     public enum FormatId
     {
+        // Applications
+        Json   = 1500,
+
         // Audio Only Formats
         Aac    = 2000,
         Ac3    = 2005,
@@ -28,26 +31,35 @@
         _3fr = 4005, // Hasselblad
         Bmp  = 4101, // BMP
         Bpg  = 4105, // Better Portable Graphics
-        Crw  = 4130, // Canon Digital Camera Raw Image Format
-        Dcr  = 4200, // Kodak Digital Camera Raw Image File
+        Cr2  = 4127, // Canon 2 Raw 
+        Crw  = 4130, // Canon Raw
+        Cur  = 4140, // Windows Cursor
+        Dcr  = 4200, // Kodak Raw
         Dng  = 4208, // Digital Negative
+        Exr  = 4210, // OpenEXR
+        Fpx  = 4212, // FlashPix
         Gif  = 4219, // GIF
         Heif = 4230, // High Efficiency Image File Format
+        Icns = 4243, // Icon File Format
         Ico  = 4245, // ICO
         Jp2  = 4305, // JPEG2000
         Jpeg = 4309, // JPEG
         Jxr  = 4355, // JPEG-XR
         Mrw  = 4404, // Sony (Minolta) Raw Image File
-        Orf  = 4453, // Olympus Digital Camera Raw Image File
+        Orf  = 4453, // Olympus Raw
         Pef  = 4509, // Pentax
         Png  = 4520, // PNG
+        Pnt  = 4523, // MacPaint
         Psd  = 4550, // PSD
         Raf  = 4580, // Fuji
         R3d  = 4594, // Red Digital Cinema
+        Srf  = 4620, // Sony Raw
         Svg  = 4630, // SVG
+        Tga  = 4770, // Targa
         Tiff = 4775, // TIFF
         WebP = 4890, // WebP
         X3f  = 4900, // Sigma Camera RAW Picture File
+        Xbm  = 4910, // XWindow Bitmap
 
         // Video Formats
         _3gp   = 9000, //
