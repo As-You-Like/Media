@@ -28,7 +28,7 @@
 
             if (key.StartsWith("rotate("))
             {
-                key = key.Remove(0, 7).TrimEnd(')');
+                key = key.Substring(7, key.Length - 8);
             }
 
             #endregion

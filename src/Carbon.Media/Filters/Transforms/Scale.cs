@@ -37,8 +37,15 @@ namespace Carbon.Media.Processors
         // scale(100,100,lanczos3)
         public string Canonicalize()
         {
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+        public void WriteTo(StringBuilder sb)
+        {
             sb.Append("scale(");
 
             sb.Append(Width);
@@ -52,8 +59,6 @@ namespace Carbon.Media.Processors
             }
 
             sb.Append(")");
-
-            return sb.ToString();
         }
 
         public override string ToString() => Canonicalize();
@@ -69,8 +74,7 @@ namespace Carbon.Media.Processors
             #endregion
   
             var parts = segment.Split(Seperators.Comma);
-
-
+            
             int width = 0;
             int height = 0;
             var mode = InterpolaterMode.Box;

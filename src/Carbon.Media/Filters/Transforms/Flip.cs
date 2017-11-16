@@ -18,8 +18,7 @@ namespace Carbon.Media.Processors
         public string Canonicalize() =>
             "flip(" + Axis.ToLower() + ")";
      
-        public override string ToString() =>
-            Canonicalize();
+        public override string ToString() => Canonicalize();
 
         public static Flip Parse(string key)
         {

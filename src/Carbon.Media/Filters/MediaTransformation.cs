@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Carbon.Media
 {
+    using Carbon.Media.Drawing;
     using Processors;
     
     public class MediaTransformation
@@ -14,7 +15,7 @@ namespace Carbon.Media
 
         private int width;
         private int height;
-        private ImageEncode encoder;
+        private Encode encoder;
 
         public MediaTransformation(IMediaSource source)
         {
@@ -35,9 +36,9 @@ namespace Carbon.Media
 
         public int Height => height;
 
-        public ImageEncode Encoder => encoder;
+        public Encode Encoder => encoder;
 
-        public ImageFormat Format => encoder.Format;
+        public FormatId Format => encoder.Format;
 
         public Size Size => new Size(width, height);
 
@@ -100,7 +101,7 @@ namespace Carbon.Media
                 width += (pad.Left + pad.Right);
                 height += (pad.Top + pad.Bottom);
             }
-            else if (transform is ImageEncode encode)
+            else if (transform is Encode encode)
             {
                 encoder = encode;
             }
@@ -133,9 +134,9 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation DrawText(string text)
+        public MediaTransformation Draw(params Shape[] shapes)
         {
-            Apply(new DrawText(text, new UnboundBox()));
+            Apply(new Draw(shapes));
 
             return this;
         }
@@ -205,12 +206,17 @@ namespace Carbon.Media
 
         public MediaTransformation Encode(ImageFormat format, int? quality = null)
         {
+            return Encode((FormatId)format, quality);
+        }
+
+        public MediaTransformation Encode(FormatId format, int? quality)
+        {
             if (encoder != null)
             {
                 throw new Exception("An encoder has already been set");
             }
 
-            encoder = new ImageEncode(format, quality);
+            encoder = new Encode(format, quality);
 
             Apply(encoder);
 
@@ -224,7 +230,7 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool HasTransforms => transforms.Count > 0;
 
-        public static MediaTransformation ParsePath(string path)
+        public static MediaTransformation ParsePath(string path, IMediaSource source = null)
         {
             #region Preconditions
 
@@ -261,11 +267,9 @@ namespace Carbon.Media
 
             var transforms = ParseTransforms(segments);
 
-            var source = new MediaSource(id, 0, 0);
-
-            var rendition = new MediaTransformation(source)
+            var rendition = new MediaTransformation(source ?? new MediaSource(id, 0, 0))
                 .Apply(transforms)
-                .Encode(ImageFormatHelper.Parse(format));
+                .Encode(FormatIdExtensions.Parse(format), null);
 
             return rendition;
         }
@@ -321,7 +325,7 @@ namespace Carbon.Media
 			640x480.mp4
 			*/
 
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
             if (prefix != null)
             {
@@ -330,9 +334,10 @@ namespace Carbon.Media
 
             foreach (var transform in transforms)
             {
-                if (transform is ImageEncode encode)
+                if (transform is Encode encode)
                 {
-                    sb.Append("." + encode.Format.ToLower());
+                    sb.Append(".");
+                    sb.Append(encode.Format.ToString().ToLower());
                 }
                 else
                 {
@@ -345,7 +350,7 @@ namespace Carbon.Media
                 }
             }
 
-            return sb.ToString();
+            return StringBuilderCache.ExtractAndRelease(sb);
         }
 
         #endregion

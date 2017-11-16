@@ -41,19 +41,19 @@ namespace Carbon.Media
             {
                 var parts = path.Split(Seperators.ForwardSlash);
 
-                var sb = new StringBuilder();
+                var sb = StringBuilderCache.Aquire();
 
                 for (var i = 1; i < parts.Length; i++)
                 {
                     if (i > 1)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
                     sb.Append(parts[i]);
                 }
 
-                return sb.ToString();
+                return StringBuilderCache.ExtractAndRelease(sb);
             }
         }
 

@@ -49,10 +49,17 @@ namespace Carbon.Media.Processors
         // pad(10,20)
         public string Canonicalize()
         {
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+        public void WriteTo(StringBuilder sb)
+        {
             sb.Append("pad(");
-          
+
             if (Top == Left && Top == Right && Top == Bottom)
             {
                 sb.Append(Top);
@@ -75,12 +82,9 @@ namespace Carbon.Media.Processors
             }
 
             sb.Append(")");
-
-            return sb.ToString();
         }
 
-        public override string ToString() =>
-            Canonicalize();
+        public override string ToString() => Canonicalize();
 
         public static Pad Parse(string segment)
         {

@@ -33,7 +33,7 @@ namespace Carbon.Media.Processors
 
             #endregion
 
-            Width  = width;
+            Width = width;
             Height = height;
             Anchor = anchor;
             Background = background;
@@ -109,23 +109,51 @@ namespace Carbon.Media.Processors
 
         // resize(100,100,anchor:center)
         // resize(100,100,flags:fit)
-        
+
         public string Canonicalize()
         {
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+
+        public void WriteTo(StringBuilder sb)
+        {
             sb.Append("resize(");
-
             sb.Append(Width.Value);
             sb.Append(",");
             sb.Append(Height.Value);
 
             // Options
             WriteOptions(sb);
-            
-            sb.Append(")");
 
-            return sb.ToString();
+            sb.Append(")");
+        }
+
+        public override string ToString()
+        {
+            // 100x100,stretch,anchor:center,background:red
+
+            var sb = StringBuilderCache.Aquire();
+
+            sb.Append(Width);
+            sb.Append("x");
+            sb.Append(Height);
+
+            if (Flags != ResizeFlags.None)
+            {
+                WriteOptions(sb);
+            }
+            else if (Anchor != null)
+            {
+                sb.Append("-");
+                sb.Append(Anchor.Value.ToCode());
+            }
+
+            return StringBuilderCache.ExtractAndRelease(sb);
         }
 
         private void WriteOptions(StringBuilder sb)
@@ -140,7 +168,7 @@ namespace Carbon.Media.Processors
                 sb.Append(",anchor:");
                 sb.Append(Anchor.Value.ToCode());
             }
-            
+
             if (Background != null)
             {
                 sb.Append(",background:");
@@ -148,26 +176,7 @@ namespace Carbon.Media.Processors
             }
         }
 
-        public override string ToString()
-        {
-            if (Flags != ResizeFlags.None)
-            {
-                var sb = new StringBuilder(Width + "x" + Height);
-
-                WriteOptions(sb);
-
-                return sb.ToString();
-            }
-
-            if (Anchor == null)
-            {
-                return Width + "x" + Height;
-            }
-
-            return $"{Width}x{Height}-{Anchor?.ToCode()}";
-        }
-
-        // 100x100,stretch,anchor:center,background:red
+        private static readonly char[] x_x = new[] { 'x', '×' };
 
         public static Resize Parse(string segment)
         {
@@ -186,7 +195,7 @@ namespace Carbon.Media.Processors
             {
                 var parts = segment.Split(Seperators.Comma);
 
-                var size = parts[0].Split('x', '×');
+                var size = parts[0].Split(x_x);
 
                 var width  = Unit.Parse(size[0]);
                 var height = Unit.Parse(size[1]);

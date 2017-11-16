@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 
 namespace Carbon.Media.Processors
 {
@@ -65,8 +66,27 @@ namespace Carbon.Media.Processors
                 height  : (int)(Height * scale)
             );
 
-        public string Canonicalize() =>
-            $"crop({X},{Y},{Width},{Height})";
+        public string Canonicalize()
+        {
+            var sb = StringBuilderCache.Aquire();
+
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+        public void WriteTo(StringBuilder sb)
+        {
+            sb.Append("crop(");
+            sb.Append(X.ToString());
+            sb.Append(',');
+            sb.Append(Y.ToString());
+            sb.Append(',');
+            sb.Append(Width.ToString());
+            sb.Append(',');
+            sb.Append(Height.ToString());
+            sb.Append(')');
+        }
 
         // OLD: crop:0-0_100x100
         // NEW: crop(0,0,100,100)

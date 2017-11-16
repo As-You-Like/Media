@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Carbon.Media.Processors
 {
@@ -17,7 +18,6 @@ namespace Carbon.Media.Processors
             if (end > start)
                 throw new ArgumentException("end may not be after the start");
 
-
             #endregion
 
             Start = start;
@@ -28,9 +28,29 @@ namespace Carbon.Media.Processors
 
         public TimeSpan End { get; }
 
+        public string Canonicalize()
+        {
+            var sb = StringBuilderCache.Aquire();
+
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
         // clip(0s,30s)
 
-        public string Canonicalize() => $"clip({Start.TotalSeconds}s,{End.TotalSeconds}s)";
+        public void WriteTo(StringBuilder sb)
+        {
+            sb.Append("clip(");
+
+            sb.Append(Start.TotalSeconds);
+            sb.Append('s');
+
+            sb.Append(End.TotalSeconds);
+            sb.Append('s');
+            
+            sb.Append(")");
+        }
 
         public override string ToString() => Canonicalize();
     }
