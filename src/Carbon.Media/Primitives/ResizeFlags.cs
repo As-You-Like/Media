@@ -6,19 +6,22 @@ namespace Carbon.Media
     public enum ResizeFlags 
     {
         None     = 0,
-        Exact    = 1 << 1, // Resize to the exact dimensions without regard to the aspect ratio
-        Fit      = 1 << 2, // Fill the box while retaining the aspect ratio. Won't upscale unless upscale is also set, AKA CSS:contain
-        Crop     = 1 << 3, // Fill the box, clipping as needed. background-sizing: cover. AKA Fill || CSS:cover
-        Pad      = 1 << 4, // Center within the box, padding as needed
-
-        // Portrait  = 1 << 5, // Resize to the height maintaing aspect
-        // Landscape = 1 << 6, // Resize to the width maintaing aspect
-
-        Modes   = Exact | Fit | Crop | Pad,
+        Exact    = 1 << 0,  // Resize to the exact dimensions without regard to the aspect ratio
+        Crop     = 1 << 1,  // Fill the box, clipping as needed to maintain the aspect ratio
+        Pad      = 1 << 2,  // Center within the box, padding as needed
+        Fit      = 1 << 3,  // Fit the image in the box while maintaining the aspect ratio
+        
+        Modes    = Exact | Crop | Pad | Fit,
 
         Carve   = 1 << 10,  // Fill the box, carving as needed
-        Upscale = 1 << 11   // Stretch?
+        Upscale = 1 << 11,
+
+        Contain = Pad | Upscale, // Fill the box, padding as needed to maintain the aspect ratio.
+        Cover   = Crop           // Fill the box, clipping as needed to maintain the aspect ratio
     }
+
+    // Portrait  = 1 << 5, // Resize to the height maintaing aspect
+    // Landscape = 1 << 6, // Resize to the width maintaing aspect
     
     public static class ResizeFlagsExtensions
     {
