@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
 namespace Carbon.Media.Processors.Tests
-{	
-	public class RotateTests
+{
+    public class RotateTests
 	{
 		[Fact]
 		public void ParseValues()
@@ -18,9 +18,10 @@ namespace Carbon.Media.Processors.Tests
 		[Fact]
 		public void FromPartialKey()
 		{
-			var rotate = Rotate.Parse("rotate(360)");
-
-			Assert.Equal(360, rotate.Angle);
-		}
-	}
+            Assert.Equal(0, Rotate.Parse("rotate(0)").Angle);
+            Assert.Equal(360, Rotate.Parse("rotate(360)").Angle);
+            Assert.Equal(360, Rotate.Parse("rotate(360deg)").Angle);
+            // Assert.Equal(360, Rotate.Parse("rotate(1rad)").Angle);
+        }
+    }
 }

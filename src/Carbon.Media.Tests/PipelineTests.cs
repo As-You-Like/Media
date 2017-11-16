@@ -10,6 +10,8 @@ namespace Carbon.Media.Processors.Tests
     {
         private static readonly MediaSource jpeg_100x50   = new MediaSource("1", 100, 50);
         private static readonly MediaSource jpeg_85x20    = new MediaSource("1", 85, 20);
+        private static readonly MediaSource jpeg_180x180  = new MediaSource("1", 180, 180);
+
         private static readonly MediaSource jpeg_1280x720 = new MediaSource("23924858", 1280, 720);
         private static readonly MediaSource jpeg_524x485  = new MediaSource("22626389", 524, 485);
 
@@ -38,6 +40,7 @@ namespace Carbon.Media.Processors.Tests
                 .Encode(ImageFormat.Jp2);
 
             var pipe = MediaPipeline.From(img);
+
 
             Assert.Equal("blob#1|>background(ffffff)|>rotate(90deg)|>scale(100,100,lanczos3)|>JP2::encode", pipe.Canonicalize());
 
@@ -225,8 +228,7 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(100, pipeline.Padding.Right);
             Assert.Equal(100, pipeline.Padding.Bottom);
             Assert.Equal(100, pipeline.Padding.Left);
-
-
+            
             Assert.Equal(100, pipeline.Position.X);
             Assert.Equal(100, pipeline.Position.Y);
 
@@ -245,6 +247,7 @@ namespace Carbon.Media.Processors.Tests
         public void Pad1()
         {
             var rendition = new MediaTransformation(jpeg_85x20)
+                .Apply(new Background("000000"))
                 .Apply(new Resize(100, 200, ResizeFlags.Pad))
                 .Encode(ImageFormat.Jpeg);
 
@@ -252,9 +255,60 @@ namespace Carbon.Media.Processors.Tests
             
             Assert.Equal(new Size(100, 200), pipe.FinalSize);
 
+
             // We split a pixel in half -- and added to the left
-            Assert.Equal("blob#1|>scale(85,20,lanczos3)|>pad(90,7,90,8)|>JPEG::encode", pipe.Canonicalize());
+            Assert.Equal("blob#1|>background(000000)|>scale(85,20,lanczos3)|>pad(90,7,90,8)|>JPEG::encode", pipe.Canonicalize());
         }
+
+
+        [Fact]
+        public void Contain1()
+        {
+            var a = MediaTransformation.ParsePath("1/bg(000)/1200x630,contain.jpeg", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal(ResizeFlags.Contain, ResizeFlags.Pad | ResizeFlags.Upscale);
+
+            Assert.Equal(0, pipe.Padding.Top);
+            Assert.Equal(0, pipe.Padding.Bottom);
+            Assert.Equal(285, pipe.Padding.Left);
+            Assert.Equal(285, pipe.Padding.Right);
+
+            Assert.Equal("blob#1|>background(000)|>scale(630,630,lanczos3)|>pad(0,285)|>JPEG::encode", pipe.Canonicalize());
+
+            Assert.Equal(new Size(1200, 630), pipe.FinalSize);
+        }
+        
+        [Fact]
+        public void Cover1()
+        {
+            var a = MediaTransformation.ParsePath("1/1200x630,cover.jpeg", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal("blob#1|>crop(0,43,180,94)|>scale(1200,630,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+
+            Assert.Equal(new Size(1200, 630), pipe.FinalSize);
+        }
+
+        [Fact]
+        public void Contain2()
+        {
+            var a = MediaTransformation.ParsePath("1/bg(000)/1200x630,pad|upscale.jpeg", jpeg_180x180);
+            
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal(0, pipe.Padding.Top);
+            Assert.Equal(0, pipe.Padding.Bottom);
+            Assert.Equal(285, pipe.Padding.Left);
+            Assert.Equal(285, pipe.Padding.Right);
+
+            Assert.Equal("blob#1|>background(000)|>scale(630,630,lanczos3)|>pad(0,285)|>JPEG::encode", pipe.Canonicalize());
+            Assert.Equal(new Size(1200, 630), pipe.FinalSize);
+        }
+
+
 
         [Fact]
         public void Crop1()
@@ -394,6 +448,92 @@ namespace Carbon.Media.Processors.Tests
             var pipe = MediaPipeline.From(rendition);
 
             Assert.Equal("blob#1|>scale(170,40,lanczos3)|>JPEG::encode", pipe.Canonicalize());
-        }      
+        }
+
+
+
+        [Fact]
+        public void FilterTest1()
+        {
+            var t = MediaTransformation.ParsePath("33695921/100x100/" + string.Join("/", 
+                "blur(1)",
+                "brightness(1)",
+                "contrast(1)",
+                "gamma(2)",
+                "grayscale(1)",
+                "invert(1)",
+                "pixelate(1)",
+                "sepia(1)",
+                "sharpen(1)",
+                "vibrance(1)"
+             ) + ".jpeg");
+
+            var pipe = MediaPipeline.From(media_33695921, t.GetTransforms());
+
+
+            Assert.True(pipe.Filters[0] is BlurFilter);
+            Assert.True(pipe.Filters[1] is BrightnessFilter);
+            Assert.True(pipe.Filters[2] is ContrastFilter);
+            Assert.True(pipe.Filters[3] is GammaFilter);
+            Assert.True(pipe.Filters[4] is GrayscaleFilter);
+            Assert.True(pipe.Filters[5] is InvertFilter);
+            Assert.True(pipe.Filters[6] is PixelateFilter);
+            Assert.True(pipe.Filters[7] is SepiaFilter);
+            Assert.True(pipe.Filters[8] is SharpenFilter);
+
+            Assert.Equal("blob#1|>scale(100,100,lanczos3)|>blur(1)|>brightness(1)|>contrast(1)|>gamma(2)|>grayscale(1)|>invert(1)|>pixelate(1)|>sepia(1)|>sharpen(1)|>vibrance(1)|>JPEG::encode", pipe.Canonicalize());
+        }
+
+        [Fact]
+        public void Draw1()
+        {
+            var a = MediaTransformation.ParsePath("1/draw(circle(radius:5)).heif", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+            
+            Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(5))|>HEIF::encode", pipe.Canonicalize());
+        }
+
+        /*
+        [Fact]
+        public void Draw2()
+        {
+            var a = MediaTransformation.ParsePath("1/draw(circle(radius:5),rectangle(100,100,red)).heif", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+
+            throw new System.Exception(pipe.Canonicalize());
+
+            Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(radius:5))|>HEIF::encode", pipe.Canonicalize());
+        }
+        */
+
+        [Fact]
+        public void Metadata1()
+        {
+            var a = MediaTransformation.ParsePath("1/metadata(width,height).json", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal("width", pipe.Metadata.Properties[0]);
+            Assert.Equal("height", pipe.Metadata.Properties[1]);
+
+            Assert.Equal("blob#1|>metadata(width,height)|>JSON::encode", pipe.Canonicalize());
+        }
+
+        [Fact]
+        public void Metadata2()
+        {
+            var a = MediaTransformation.ParsePath("1/metadata({width,height,camera}).json", jpeg_180x180);
+
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal("width", pipe.Metadata.Properties[0]);
+            Assert.Equal("height", pipe.Metadata.Properties[1]);
+            Assert.Equal("camera", pipe.Metadata.Properties[2]);
+
+            Assert.Equal("blob#1|>metadata(width,height,camera)|>JSON::encode", pipe.Canonicalize());
+        }
+
     }
 }

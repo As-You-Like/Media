@@ -1,33 +1,42 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class ImageEncode : ITransform
+    public sealed class Encode : ITransform
     {
-        public ImageEncode(
-            ImageFormat format,
+        public Encode(
+            FormatId format,
             int? quality = null, 
-            EncodeFlags flags = default)
+            EncodingFlags flags = default)
         {
             Format  = format;
             Quality = quality;
             Flags   = flags;
         }
 
-        // JPEG, WEBP, PNG, ...
+        // JPEG, WEBP, PNG, MP4, WEBP, MP4 ...
 
-        public ImageFormat Format { get; }
+        public FormatId Format { get; }
 
+        // TODO: IEncodeOptions
         public int? Quality { get; }
 
         // jpeg only
-        public EncodeFlags Flags { get; }
+        public EncodingFlags Flags { get; }
 
         public string Canonicalize()
         {
-            var sb = new StringBuilder();
+            var sb = StringBuilderCache.Aquire();
 
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+        public void WriteTo(StringBuilder sb)
+        {
             sb.Append(Format.Canonicalize());
             sb.Append("::encode");
 
@@ -38,8 +47,6 @@ namespace Carbon.Media.Processors
                 sb.Append(Quality.Value);
                 sb.Append(")");
             }
-            
-            return sb.ToString();
         }
 
         public override string ToString() => Canonicalize();
@@ -57,75 +64,37 @@ namespace Carbon.Media.Processors
         #endregion
 
         // With (quality)
-        public static ImageEncode Parse(string segment)
+        public static Encode Parse(string segment)
         {
             int quality = 0;
-            var flags = EncodeFlags.None;
-
+            
             var indexOfSemiSemi = segment.IndexOf("::");
 
             string formatName = segment.Substring(0, indexOfSemiSemi);
 
-            ImageFormat format;
-
-            switch (formatName)
-            {
-                case "pjpg":
-                    format = ImageFormat.Jpeg;
-                    flags |= EncodeFlags.Progressive;
-                    break;
-
-                case "png8":
-                    format = ImageFormat.Png;
-                    flags |= EncodeFlags._8bit;
-                    break;
-
-                case "png32":
-                    format = ImageFormat.Png;
-                    flags |= EncodeFlags._32bit;
-                    break;
-
-                case "webpll":
-                    format = ImageFormat.WebP;
-                    flags |= EncodeFlags.Lossless;
-                    break;
-
-                default:
-                    format = ImageFormatHelper.Parse(formatName);
-                    break;
-
-            }
-
-            
+            (FormatId format, EncodingFlags flags) = EncodingHelper.ParseFormat(formatName);
 
             int argStart = segment.IndexOf('(') + 1;
 
             if (argStart > 0)
             {
-                var args = segment
-                    .Substring(argStart, segment.Length - argStart - 1)
-                    .Split(Seperators.Comma);
+                var args = ArgumentList.Parse(segment.Substring(argStart, segment.Length - argStart - 1));
 
                 foreach (var arg in args)
-                {
-                    var split = arg.Split(Seperators.Colon);
-
-                    var k = split[0];
-                    var v = split[1];
-
-                    switch (k)
+                {                    
+                    switch (arg.Name)
                     {
-                        case "quality"     : quality = int.Parse(v); break;
-                        case "progressive" : flags |= EncodeFlags.Progressive; break;
+                        case "quality"     : quality = int.Parse(arg.Value);                     break;
+                        case "progressive" : flags |= EncodingFlags.Progressive;                 break;
+                        case "profile"     : throw new Exception("profiles not yet supported");
                     }
                 }
             }
 
-            return new ImageEncode(format, quality, flags);
+            return new Encode(format, quality, flags);
         }
     }
-
-    public enum EncodeFlags
+    public enum EncodingFlags
     {
         None = 0,
         Progressive = 1 << 1,

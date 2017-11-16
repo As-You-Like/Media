@@ -7,46 +7,45 @@
 		[Fact]
 		public void MimesFromNames()
 		{
-			// Images
-			Assert.Equal("png",		Mime.Parse("image/png").Format);
-			Assert.Equal("tiff",	Mime.Parse("image/tiff").Format);
-			Assert.Equal("gif",		Mime.Parse("image/gif").Format);
-            Assert.Equal("heif",    Mime.Parse("image/heif").Format);
-
-            Assert.Equal("jpeg",	Mime.Parse("image/jpeg").Format);
-			Assert.Equal("jxr",		Mime.Parse("image/vnd.ms-photo").Format);
-			Assert.Equal("svg",		Mime.Parse("image/svg+xml").Format);
-            
-			// Audio
-			Assert.Equal("flac",	Mime.Parse("audio/flac").Format);
-			Assert.Equal("oga",		Mime.Parse("audio/ogg").Format);
-			Assert.Equal("opus",	Mime.Parse("audio/opus").Format);
-
-			// Videos
-			Assert.Equal("wmv",		Mime.Parse("video/x-ms-wmv").Format);
-			Assert.Equal("mp4",		Mime.Parse("video/mp4").Format);
-			Assert.Equal("mov",		Mime.Parse("video/quicktime").Format);
-			Assert.Equal("ogv",		Mime.Parse("video/ogg").Format);
-
-			// Application
-			Assert.Equal("js",		Mime.Parse("application/javascript").Format);
-			Assert.Equal("json",	Mime.Parse("application/json").Format);
-			Assert.Equal("zip",		Mime.Parse("application/zip").Format);
-
-			// Text
-			Assert.Equal("css",		Mime.Parse("text/css").Format);
+            // Audio
+            Assert.Equal("aac",   Mime.Parse("audio/aac").Format);
+            Assert.Equal("flac",  Mime.Parse("audio/flac").Format);
+            Assert.Equal("mp3",   Mime.Parse("audio/mpeg").Format);
+            Assert.Equal("oga",	  Mime.Parse("audio/ogg").Format);
+			Assert.Equal("opus",  Mime.Parse("audio/opus").Format);
+                                  
+            // Images             
+			Assert.Equal("png",	  Mime.Parse("image/png").Format);
+			Assert.Equal("tiff",  Mime.Parse("image/tiff").Format);
+			Assert.Equal("gif",	  Mime.Parse("image/gif").Format);
+            Assert.Equal("heif",  Mime.Parse("image/heif").Format);
+            Assert.Equal("jpeg",  Mime.Parse("image/jpeg").Format);
+			Assert.Equal("jxr",	  Mime.Parse("image/vnd.ms-photo").Format);
+            Assert.Equal("png",	  Mime.Parse("image/png").Format);
+            Assert.Equal("svg",	  Mime.Parse("image/svg+xml").Format);
+			Assert.Equal("webp",  Mime.Parse("image/webp").Format);
+                                  
+			// Videos             
+			Assert.Equal("wmv",	  Mime.Parse("video/x-ms-wmv").Format);
+			Assert.Equal("mp4",	  Mime.Parse("video/mp4").Format);
+			Assert.Equal("mov",	  Mime.Parse("video/quicktime").Format);
+			Assert.Equal("ogv",	  Mime.Parse("video/ogg").Format);
+                                  
+			// Application        
+			Assert.Equal("js",	  Mime.Parse("application/javascript").Format);
+			Assert.Equal("json",  Mime.Parse("application/json").Format);
+			Assert.Equal("zip",	  Mime.Parse("application/zip").Format);
+                                  
+			// Text               
+			Assert.Equal("css",	  Mime.Parse("text/css").Format);
 		}
 
         [Fact]
         public void FontTests()
         {
-
             Assert.Equal("application/font-woff",  Mime.FromFormat("woff").Name);
             Assert.Equal("application/font-woff2", Mime.FromFormat("woff2").Name);
-
         }
-
-
 
         [Fact]
 		public void MimeEqualityTests()
@@ -75,13 +74,14 @@
 			Assert.Equal("application/msword", Mime.FromFormat("doc").ToString());
 
 			// Images
-			Assert.Equal("image/bmp", Mime.FromFormat("bmp").ToString());
+			Assert.Equal("image/bmp",    Mime.FromFormat("bmp").ToString());
 			Assert.Equal("image/x-icon", Mime.FromFormat("ico").ToString());
-			Assert.Equal("image/jpeg", Mime.FromFormat("jpg").ToString());
-			Assert.Equal("image/jpeg", Mime.FromFormat("jpeg").ToString());
-			Assert.Equal("image/png", Mime.FromFormat("png").ToString());
-			Assert.Equal("image/tiff", Mime.FromFormat("tif").ToString());
-			Assert.Equal("image/tiff", Mime.FromFormat("tiff").ToString());
+			Assert.Equal("image/jpeg",   Mime.FromFormat("jpg").ToString());
+			Assert.Equal("image/jpeg",   Mime.FromFormat("jpeg").ToString());
+			Assert.Equal("image/png",    Mime.FromFormat("png").ToString());
+			Assert.Equal("image/tiff",   Mime.FromFormat("tif").ToString());
+			Assert.Equal("image/tiff",   Mime.FromFormat("tiff").ToString());
+            Assert.Equal("image/webp",   Mime.FromFormat("webp").ToString());
 
 			// Scripts
 			Assert.Equal("application/javascript", Mime.FromFormat("js").ToString());
@@ -103,9 +103,9 @@
 			Assert.Equal("video/webm", Mime.FromFormat("webm").ToString());
 
 			// Make sure we don't care about a leading dot or casing
-			Assert.Equal("image/jpeg", Mime.FromExtension(".JpG").ToString());
-			Assert.Equal("image/png", Mime.FromExtension(".pNG").ToString());
-			Assert.Equal("audio/mpeg", Mime.FromExtension(".mP3").ToString());
+			Assert.Equal("image/jpeg",  Mime.FromExtension(".JpG").ToString());
+			Assert.Equal("image/png",   Mime.FromExtension(".pNG").ToString());
+			Assert.Equal("audio/mpeg",  Mime.FromExtension(".mP3").ToString());
 
 			Assert.Equal("application/octet-stream", Mime.FromExtension("blob").ToString());
 

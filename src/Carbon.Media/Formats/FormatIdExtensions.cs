@@ -53,5 +53,91 @@ namespace Carbon.Media
                 default: throw new ArgumentException($"{formatId} does not have a video only type");
             }
         }
+
+        public static Mime ToMime(this FormatId value)
+        {
+            switch (value)
+            {
+                // Audio
+                case Aac  : return Mime.Aac;
+                case Flac : return Mime.Flac;
+                case Mp3  : return Mime.Mp3;
+                case Opus : return Mime.Opus;
+
+                // Images
+                case Bmp  : return Mime.Bmp;
+                case Bpg  : return Mime.Bpg;
+                case Gif  : return Mime.Gif;
+                case Dng  : return Mime.Dng;
+                case Heif : return Mime.Heif;
+                case Ico  : return Mime.Ico;
+                case Jpeg : return Mime.Jpeg;
+                case Jp2  : return Mime.Jp2;
+                case Jxr  : return Mime.Jxr;
+                case Png  : return Mime.Png;
+                case Psd  : return Mime.Psd;
+                case Svg  : return Mime.Svg;
+                case Tiff : return Mime.Tiff;
+                case WebP : return Mime.WebP;
+
+                // Videos
+                case Mp4  : return Mime.Mp4;
+                case WebM : return Mime.WebM;
+            }
+
+            throw new Exception("Unexpected format:" + value.ToString());
+        }
+
+        public static string Canonicalize(this FormatId value)
+        {
+            switch (value)
+            {
+                // Applications
+                case Json : return "JSON";
+
+                // Audio
+                case Aac  : return "AAC";
+                case Flac : return "FLAC";
+                case Mp3  : return "MP3";
+                case Opus : return "OPUS";
+
+                // Images
+                case Bmp  : return "BMP";
+                case Bpg  : return "BPG";
+                case Gif  : return "GIF";
+                case Dng  : return "DNG";
+                case Heif : return "HEIF";
+                case Ico  : return "ICO";
+                case Jpeg : return "JPEG";
+                case Jp2  : return "JP2";
+                case Jxr  : return "JXR"; 
+                case Png  : return "PNG";
+                case Psd  : return "PSD";
+                case Svg  : return "SVG";
+                case Tiff : return "TIFF";
+                case WebP : return "WebP";
+
+                // Video
+                case WebM: return "WebM";
+            }
+
+            return value.ToString().ToUpper();
+        }
+        
+        public static FormatId Parse(string text)
+        {
+            text = FileFormat.Normalize(text);
+            
+            if (Enum.TryParse<FormatId>(text, true, out var format))
+            {
+                return format;
+            }
+            else
+            {
+                throw new Exception("Unsupported format:" + text);
+            }
+        }
+        
+
     }
 }

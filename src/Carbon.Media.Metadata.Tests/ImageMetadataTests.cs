@@ -14,10 +14,8 @@ namespace Carbon.Media.Metadata.Tests
 
             var aspect2 = Helper.SerializeAndBack(aspect);
 
-
             Assert.Equal(1, aspect2.Numerator);
             Assert.Equal(2, aspect2.Denominator);
-
         }
 
         [Fact]
@@ -58,11 +56,11 @@ namespace Carbon.Media.Metadata.Tests
 
             var image2 = Helper.SerializeAndBack(image);
             
-            Assert.Equal("tiff",                    image2.Format);
-            Assert.Equal(1_000_000,                 image2.Width);
-            Assert.Equal(1_000_000,                 image2.Height);
-            Assert.Equal(ExifOrientation.Rotate90,  image2.Orientation);
-            Assert.Equal(PixelFormat.Cmyk32,        image2.PixelFormat);
+            Assert.Equal("tiff",                   image2.Format);
+            Assert.Equal(1_000_000,                image2.Width);
+            Assert.Equal(1_000_000,                image2.Height);
+            Assert.Equal(ExifOrientation.Rotate90, image2.Orientation);
+            Assert.Equal(PixelFormat.Cmyk32,       image2.PixelFormat);
         }
 
         [Fact]

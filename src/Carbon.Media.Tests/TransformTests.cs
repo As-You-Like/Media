@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Carbon.Media.Tests
 {
+    using Carbon.Media.Drawing;
     using Processors;
 
     public sealed class Signer : ISigner
@@ -81,18 +82,20 @@ namespace Carbon.Media.Tests
             Assert.Equal(170, rendition.Width);
             Assert.Equal(40, rendition.Height);
         }
-
+       
         [Fact]
         public void DrawTextTests()
         {
-            var transformation = MediaTransformation.ParsePath("1045645/text(Hello World,font:14px Helvetica)/100x100.jpeg");
+            var transformation = MediaTransformation.ParsePath("1045645/draw(text(Hello World,font:14px Helvetica))/100x100.jpeg");
 
-            var text = (DrawText)transformation.GetTransforms()[0];
+            var draw = (Draw)transformation.GetTransforms()[0];
 
-            Assert.Equal("Hello World", text.Text);
-            Assert.Equal(14, text.Font?.Size.Value);
-            Assert.Equal(UnitType.Px, text.Font?.Size.Type);
-            Assert.Equal("Helvetica", text.Font?.Name);
+            var text = (TextShape)draw.Commands[0];
+
+            Assert.Equal("Hello World", text.Content);
+            Assert.Equal(14,            text.Font?.Size.Value);
+            Assert.Equal(UnitType.Px,   text.Font?.Size.Type);
+            Assert.Equal("Helvetica",   text.Font?.Name);
         }
 
         [Fact]
@@ -238,7 +241,7 @@ namespace Carbon.Media.Tests
 
             var img = MediaTransformation.ParsePath(rendition.GetPath());
 
-            Assert.Equal(ImageFormat.Jpeg, img.Encoder.Format);
+            Assert.Equal(FormatId.Jpeg, img.Encoder.Format);
             Assert.Equal("85x20", img.GetTransforms()[0].ToString());
         }
 
@@ -262,7 +265,7 @@ namespace Carbon.Media.Tests
             Assert.Equal(3, transforms.Count);
 
             Assert.Equal("1045645"          , result.Source.Key);
-            Assert.Equal(ImageFormat.Png    , result.Encoder.Format);
+            Assert.Equal(FormatId.Png       , result.Encoder.Format);
             Assert.Equal("100x100"          , transforms[0].ToString());
             Assert.Equal("crop(0,0,85,20)"  , transforms[1].ToString());
             Assert.Equal("PNG::encode"      , transforms[2].ToString());
@@ -372,7 +375,7 @@ namespace Carbon.Media.Tests
             Assert.Equal(1f, (transforms[4] as SaturateFilter).Amount);
             Assert.Equal(90, (transforms[5] as HueRotateFilter).Degrees);
 
-            Assert.Equal(ImageFormat.Heif, (transforms[6] as ImageEncode).Format);
+            Assert.Equal(FormatId.Heif, (transforms[6] as Encode).Format);
         }
 
         [Fact]

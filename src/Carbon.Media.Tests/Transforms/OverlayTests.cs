@@ -1,15 +1,15 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processors.Tests
+namespace Carbon.Media.Drawing.Tests
 {
-    public class OverlayTests
+    public class RectTests
 	{
         [Fact]
-        public void FromFullKey()
+        public void FromText()
         {
-            var overlay = DrawColor.Parse("color(red,mode:burn,x:1,y:2,width:100,height:300,align:middle,padding:10px)");
+            var overlay = Rect.Parse("rectangle(100,300,red,mode:burn,x:1,y:2,align:middle,padding:10px)");
 
-            Assert.Equal("red", overlay.Color);
+            Assert.Equal("red", overlay.Fill);
             Assert.Equal(BlendMode.Burn, overlay.BlendMode);
             Assert.Equal(1d, overlay.Box.X.Value);
             Assert.Equal(2d, overlay.Box.Y.Value);

@@ -2,6 +2,8 @@
 {
     public class GammaFilter : IFilter
     {
+        // public static readonly GammaFilter Default = new GammaFilter(2.2);
+
         public GammaFilter(float amount)
         {
             Amount = amount;
@@ -24,5 +26,6 @@
     }
 }
 
+// 1 - 3 (default = 2.2)
+
 //gamma(1.1, 3.6, 0)
- 

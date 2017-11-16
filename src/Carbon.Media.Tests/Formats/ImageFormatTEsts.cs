@@ -11,6 +11,8 @@ namespace Carbon.Media.Tests
         [InlineData(ImageFormat.Gif,  4219)]
         [InlineData(ImageFormat.Heif, 4230)]
         [InlineData(ImageFormat.Ico,  4245)]
+        [InlineData(ImageFormat.Jp2,  4305)]
+        [InlineData(ImageFormat.Jpeg, 4309)]
         public void ImageCodecTypes(ImageFormat type, int id)
         {
             Assert.Equal((int)type, id);
