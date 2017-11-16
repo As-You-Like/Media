@@ -193,6 +193,7 @@
         Dng                 = 0,     //        Digital Negative
         Dpx                 = 129,   //        Digital Picture Exchange
         Exr                 = 179,   //        OpenEXR image
+        Fits                = 32803, //        Flexible Image Transport System 
         Gif                 = 98,    //                                                
         Heif                = 0,     //        High Efficiency Image File Format
         Ico                 = 0,               
@@ -211,7 +212,7 @@
         Ptx                 = 105,   //        V.Flash PTX format
         Sgi                 = 102,   //        SGI image
         Sunrast             = 111,   //        Sun Rasterfile image
-        Svg                 = 0,
+        Svg                 = 32801, //        Scalable Vector Graphics
         Tiff                = 97,    //                     
         Tga                 = 94,    //        Targa image format
         Vc1Image            = 152,   //        Windows Media Video 9 Image v2
@@ -277,7 +278,7 @@
         Fraps           = 77,    // FPS1 | Fraps            
         Fmvc            = 32793, //       FM Screen Capture Codec
         G2m             = 171,   //       Go2Meeting
-        Gdv             = 0,     //       Gremlin Digital Video
+        Gdv             = 32802, //       Gremlin Digital Video
         Hap             = 188,   //       Vidvox Hap
         H261            = 4,     // H261 | H.261               
         H262            = 2,     // H262 | MPEG-2               
@@ -312,6 +313,7 @@
         Mpeg2           = H262,
         Mpeg4           = 13,
         Mszh            = 54,    // MSZH | LCL (LossLess Codec Library) 
+        Mscc            = 32799, //        Mandsoft Screen Capture Codec
         MSMpeg4v1       = 15,    //        MPEG-4 part 2 Microsoft variant version 1
         MSMpeg4v2       = 16,    //        MPEG-4 part 2 Microsoft variant version 2
         MSMpeg4v3       = 17,    //        MPEG-4 part 2 Microsoft variant version 3
@@ -352,6 +354,7 @@
         Smv             = 88068, //        Sigmatel Motion Video
         SmvJpeg         = 32781, //        Sigmatel Motion Video
         Sp5x            = 11,    //        Sunplus JPEG 
+        Srgc            = 32800, //        Screen Recorder Gold Codec
         Svq1            = 23,    //        Sorenson Vector Quantizer 1
         Svq3            = 24,    //        Sorenson Vector Quantizer 3
         Tdsc            = 186,   //        TDSC
