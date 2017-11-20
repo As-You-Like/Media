@@ -7,7 +7,7 @@ namespace Carbon.Media
     // FrameBuffer
     // ...
 
-    public unsafe class Buffer : IBuffer, IRetainable
+    public unsafe class Buffer : IRetainable
     {
         private bool isDisposed = false;
         private IntPtr pointer;
@@ -57,7 +57,7 @@ namespace Carbon.Media
 
         public void Free()
         {
-            // todo: ensure there are not oustanding references...
+            // todo: ensure there are not oustanding references?
 
             if (pointer != IntPtr.Zero)
             {

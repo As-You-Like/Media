@@ -2,6 +2,7 @@
 {
     public class Vp8Decoder : Decoder
     {
-        public override CodecId Id => CodecId.Vp8;
+        public Vp8Decoder()
+           : base(CodecId.Vp8) { }
     }
 }

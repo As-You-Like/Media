@@ -1,13 +1,7 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class Vp9EncoderOptions
-    {
-        public BitRate BitRate { get; set; }
-
-        public BitRate MinimumBitRate { get; set; }
-
-        public BitRate MaximumBitRate { get; set; }
-
+    public class Vp9EncoderOptions : VideoEncodingParameters
+    {  
         public int MaximiumKeyframeDistance { get; set; }
 
         public Vp9Quality Quality { get; set; }

@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace Carbon.Media.Codecs
+﻿namespace Carbon.Media.Codecs
 {
-    public abstract class AacDecoder : AudioDecoder
+    public sealed class AacDecoder : AudioDecoder
     {
-        public override CodecId Id => CodecId.Aac;
+        public AacDecoder()
+            : base(CodecId.Aac) { }
     }
 }

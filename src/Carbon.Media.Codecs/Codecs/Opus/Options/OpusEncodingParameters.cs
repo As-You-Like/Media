@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class OpusEncoderOptions
+    public class OpusEncodingParameters
     {
         // ChannelCount
 

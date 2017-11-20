@@ -1,39 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public abstract class Frame : IDisposable
+    public unsafe class Frame : IDisposable
     {
-        /// <summary>
-        /// The order the frame is encoded within the bitstream (coded picture number)
-        /// </summary>
-        public long CodedIndex { get; set; } 
+        protected AVFrame* pointer;
 
-        /// <summary>
-        /// The order the frame is presented (e.g. display picture number)
-        /// </summary>
-        public long PresentationIndex { get; set; }
+        public Frame()
+        {
+             this.pointer = ffmpeg.av_frame_alloc();
+        }
+
+        public AVFrame* Pointer => pointer;
 
         // SmtpeTimecode
         
         /// <summary>
-        /// Decoding time
+        /// Decoding time (from packet)
         /// </summary>
-        public virtual long Dts { get; set; }
+        public virtual long Dts
+        {
+            get => pointer->pkt_dts;
+            set => pointer->pkt_dts = value;
+        }
 
         /// <summary>
         /// Presentation time
         /// </summary>
-        public virtual long Pts { get; set; }
+        public virtual long Pts
+        {
+            get => pointer->pts;
+            set => pointer->pts = value;
+        }
         
         /// <summary>
-        /// The duration the frame is presented
+        /// The duration the frame is presented (via the packet)
         /// </summary>
-        public long Duration { get; set; }
+        public long Duration
+        {
+            get => pointer->pkt_duration;
+        }
         
         public Dictionary<string, string> Metadata { get; set; }
 
-        public abstract void Dispose();
+        public void Dispose()
+        {
+            fixed (AVFrame** p = &pointer)
+            {
+                ffmpeg.av_frame_free(p);
+            }
+        }
     }
 }

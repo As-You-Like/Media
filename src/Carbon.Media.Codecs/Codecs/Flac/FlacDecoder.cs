@@ -2,6 +2,7 @@
 {
     public class FlacDecoder : Decoder
     {
-        public override CodecId Id => CodecId.Aac;
+        public FlacDecoder()
+            : base(CodecId.Flac) { }
     }
 }

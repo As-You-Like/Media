@@ -2,6 +2,7 @@
 {
     public class OpusEncoder : Encoder
     {
-        public override CodecId Id => CodecId.Opus;
+        public OpusEncoder()
+           : base(CodecId.Opus) { }
     }
 }

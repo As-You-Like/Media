@@ -2,7 +2,8 @@
 {
     public class AiffMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Aiff;
+        public AiffMuxer()
+            : base(FormatId.Aiff) { }
 
     }
 }

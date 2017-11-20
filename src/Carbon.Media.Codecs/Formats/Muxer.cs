@@ -4,11 +4,13 @@
 
     public abstract class Muxer : Format
     {
+        public Muxer(FormatId format)
+            : base(format) { }
+
         // AudioCodec
         // VideoCodec
         // SubtitleCodec
 
-        
         public virtual void WriteHeader(FormatContext context)
         {
             // Width

@@ -2,6 +2,7 @@
 {
     public class H264Decoder : Decoder
     {
-        public override CodecId Id => CodecId.H264;
+        public H264Decoder()
+            : base(CodecId.H264) { }
     }
 }

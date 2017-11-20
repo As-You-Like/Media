@@ -2,6 +2,7 @@
 {
     public class HevcDecoder : VideoDecoder
     {
-        public override CodecId Id => CodecId.Hevc;
+        public HevcDecoder()
+            : base(CodecId.Hevc) { }
     }
 }

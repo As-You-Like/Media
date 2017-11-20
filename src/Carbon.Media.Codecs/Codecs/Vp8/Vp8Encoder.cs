@@ -2,6 +2,7 @@
 {
     public class Vp8Encoder : Encoder
     {
-        public override CodecId Id => CodecId.Vp8;
+        public Vp8Encoder()
+           : base(CodecId.Vp8) { }
     }
 }

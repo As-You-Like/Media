@@ -7,10 +7,9 @@ namespace Carbon.Media.Codecs
         private readonly H264EncoderOptions options;
 
         public H264Encoder(H264EncoderOptions options)
+             : base(CodecId.H264)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
         }
-
-        public override CodecId Id => CodecId.H264;
     }
 }

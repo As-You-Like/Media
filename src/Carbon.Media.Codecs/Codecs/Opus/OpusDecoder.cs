@@ -2,6 +2,7 @@
 {
     public class OpusDecoder : Decoder
     {
-        public override CodecId Id => CodecId.Opus;
+        public OpusDecoder()
+           : base(CodecId.Opus) { }
     }
 }

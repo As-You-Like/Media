@@ -30,10 +30,10 @@ namespace Carbon.Media.Processing
                 muxer.WriteHeader(outputContext);
 
                 // if the header is complete, fill in the missing details from the next few frames
-                
-                Packet packet;
 
-                while ((packet = demuxer.ReadPacket()) != null)
+                var packet = new Packet();
+
+                while (demuxer.TryReadPacket(packet))
                 {
                     var stream = inputContext.Streams[packet.StreamIndex];
 
@@ -47,8 +47,11 @@ namespace Carbon.Media.Processing
                         muxer.WritePacket(packet);
                     }
                 }
-                
+
                 muxer.WriteTrailer(outputContext);
+
+                // We may need to rewrite the header here...
+
             }            
         }
     }

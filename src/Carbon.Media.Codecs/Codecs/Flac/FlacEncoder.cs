@@ -4,13 +4,12 @@ namespace Carbon.Media.Codecs
 {
     public class FlacEncoder : Encoder
     {
-        private readonly AacEncoderOptions options;
+        private readonly FlacEncoderOptions options;
 
-        public FlacEncoder(AacEncoderOptions options)
+        public FlacEncoder(FlacEncoderOptions options)
+            : base(CodecId.Flac)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
         }
-
-        public override CodecId Id => CodecId.Flac;
     }
 }

@@ -1,7 +1,8 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class Vp9Encoder : Encoder
+    public class Vp9Encoder : VideoEncoder
     {
-        public override CodecId Id => CodecId.Vp9;
+        public Vp9Encoder()
+           : base(CodecId.Vp9) { }
     }
 }
