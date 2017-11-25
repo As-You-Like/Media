@@ -53,8 +53,8 @@ namespace Carbon.Media
 
                 case Cmyk32        : return new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8)  });
                 case Cmyk64        : return new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16) });
-                case CmykAlpha40   : return new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8),  A(8) });
-                case CmykAlpha80   : return new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16), A(16) });
+                case Cmyka40       : return new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8),  A(8) });
+                case Cmyka80       : return new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16), A(16) });
 
                 case BlackWhite    : return new PixelFormatInfo(1,  Monochrome, new[] { Key(1) });
                 case Gray2         : return new PixelFormatInfo(2,  Monochrome, new[] { Key(2) });
