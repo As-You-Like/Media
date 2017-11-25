@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum VideoFormat
+    public enum VideoFormatId
     {
         _3gp   = 9000, //
         Amv    = 9001, //

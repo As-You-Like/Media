@@ -2,9 +2,9 @@
 {
     // Application types
 
-    public enum DocumentFormat
+    public enum DocumentFormatId
     {
         Doc = 1100,
-        Pdf = 1101
+        Pdf = 1600
     }
 }

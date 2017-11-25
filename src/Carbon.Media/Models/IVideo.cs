@@ -20,7 +20,7 @@ namespace Carbon.Media
 
         // 1/25
         Rational FrameRate { get; }
-
+        
         Rational AspectRatio { get; }
 
         PixelFormat PixelFormat { get; }

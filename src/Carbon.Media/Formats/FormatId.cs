@@ -3,8 +3,15 @@
     public enum FormatId
     {
         // Applications
-        Json   = 1500,
-
+        Doc    = 1100,
+        Eot    = 1150,
+        Json   = 1400,
+        Otf    = 1550,
+        Pdf    = 1600,
+        Ttf    = 1700,
+        Woff   = 1850,
+        Woff2  = 1851,
+        
         // Audio Only Formats
         Aac    = 2000,
         Ac3    = 2005,
