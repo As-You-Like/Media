@@ -2,6 +2,7 @@
 {
     public class GifMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Gif;
+        public GifMuxer()
+            : base(FormatId.Gif) { }
     }
 }

@@ -1,38 +1,86 @@
-﻿using FFmpeg.AutoGen;
+﻿using System;
+using System.IO;
+
+using Carbon.Media.IO;
+using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Formats
 {
     /// <summary>
-    /// Demuxers split a media file into packets (data chunks)
+    /// Demuxers split a media file into packets
     /// </summary>
-    public abstract class Demuxer : Format
+    public unsafe class Demuxer : Format
     {
         public Demuxer(FormatId format)
             : base(format) { }
 
-        public virtual void Open(MediaSource source)
-        {
+        public Demuxer(FormatContext context)
+            : base(context) { }
 
+        public bool IsEof { get; private set; }
 
-            // Opens a media file and gets the streams
-        }
+        public override FormatType Type => FormatType.Demuxer;
 
-        public void ReadHeader(FormatContext context)
-        {
-        }
+        private readonly Packet tempPacket = Packet.Allocate();
 
         // Packets are either Video or Audio data
-        public bool TryReadPacket(Packet packet)
+        public bool TryReadPacket(out Packet packet)
         {
-            return false;
+            if (IsEof) throw new EndOfStreamException("Cannot read past the end of stream");
+
+            int result = ffmpeg.av_read_frame(Context.Pointer, tempPacket.Pointer);
+
+            if (result == 0)
+            {
+                var outputStream = Context.Streams[tempPacket.StreamIndex];
+
+                tempPacket.TimeBase = outputStream.TimeBase; // set the timebase
+
+                packet = tempPacket;
+
+                return true;
+            }
+            
+            // 0 if OK, < 0 on error or end of file
+            
+            if (result == -541478725) // EOF
+            {
+                IsEof = true;
+
+                packet = default;
+
+                return false;
+            }
+            
+            throw new FFmpegException(result);            
         }
 
-        // Play
-        // Seek
-        // Close
-        
-        // Events
-        // - OnMetadata
-        // - OnPacket
+        public void Seek(long position)
+        {
+
+        }
+
+        public static Demuxer Open(Uri url)
+        {
+            var context = new FormatContext();
+
+            context.Open(url);
+
+            return new Demuxer(context);
+        }
+
+        public static Demuxer Open(IOContext source)
+        {
+            var context = new FormatContext();
+
+            context.Open(source);
+
+            return new Demuxer(context);
+        }
+
+        public override void Cleanup()
+        {
+            tempPacket?.Dispose();
+        }
     }
 }

@@ -2,6 +2,7 @@
 {
     public class OggMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Ogg;
+        public OggMuxer()
+            : base(FormatId.Ogg) { }
     }
 }

@@ -2,37 +2,33 @@
 
 namespace Carbon.Media.Codecs
 {
-    public abstract class AacEncoder : AudioEncoder
+    public unsafe class AacEncoder : AudioEncoder
     {
-        private readonly AacEncoderOptions options;
+        public static readonly SampleFormat[] sampleFormats = new[] { SampleFormat.FloatPlanar };
 
-        public AacEncoder(AacEncoderOptions options)
+        public static readonly int[] sampleRates = {
+            96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 7350
+        };
+
+        public AacEncoder(AacEncodingParameters options)
             : base(CodecId.Aac)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            SetFormat(options.GetFormatInfo());
 
-            /*
-            if (!InFormat.Equals(OutFormat))
+            if (options.BitRate != null)
             {
-                resampler = new AudioResampler(InFormat, OutFormat);
-                tempFrame = new AudioFrame();
+                Context.BitRate = options.BitRate;
             }
-            */
 
-            Context.SampleFormat = options.SampleFormat;
-            Context.SampleRate = options.SampleRate;
-            Context.ChannelLayout = options.ChannelLayout;
-            Context.BitRate = options.BitRate;
-            // ChannelCount
+            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
+            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
+            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
 
-          
-            // var rates = codecContext->Flags;
-
-           
-            
-
-
+            Open(options.ToOptions());
         }
 
+        public override SampleFormat[] SampleFormats => sampleFormats;
+
+        public override int[] SampleRates => sampleRates;
     }
 }

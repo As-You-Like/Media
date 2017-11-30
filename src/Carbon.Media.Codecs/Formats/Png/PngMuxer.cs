@@ -2,6 +2,7 @@
 {
     public class PngMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Png;
+        public PngMuxer()
+            : base(FormatId.Png) { }
     }
 }

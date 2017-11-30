@@ -2,6 +2,7 @@
 {
     public class AviDemuxer : Demuxer
     {
-        public override FormatId Id => FormatId.Avi;
+        public AviDemuxer()
+            : base(FormatId.Avi) { }
     }
 }

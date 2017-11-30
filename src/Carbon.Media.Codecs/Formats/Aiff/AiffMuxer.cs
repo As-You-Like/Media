@@ -2,7 +2,7 @@
 {
     public class AiffMuxer : Muxer
     {
-        public AiffMuxer()
+        public AiffMuxer(AiffMuxerOptions options)
             : base(FormatId.Aiff) { }
 
     }

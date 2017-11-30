@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media
@@ -10,57 +10,70 @@ namespace Carbon.Media
     /// </summary>
     public unsafe class Packet : IDisposable
     {
-        private AVPacket native;
         private AVPacket* pointer;
-        private readonly GCHandle handle;
+        private Rational timebase = Timebases.Ffmpeg;
 
-        public Packet()
+        private Packet(AVPacket* pointer)
         {
-            this.native = new AVPacket();
+            #region Preconditions
 
-            var native = new AVPacket();
-            var handle = GCHandle.Alloc(native, GCHandleType.Pinned);
+            if (pointer == null)
+                throw new ArgumentNullException(nameof(pointer));
 
-            this.pointer = (AVPacket*)handle.AddrOfPinnedObject().ToPointer();
+            #endregion
 
-            ffmpeg.av_init_packet(pointer);
-
-            this.native.data = null;
-            this.native.size = 0;
+            this.pointer = pointer;
         }
 
         public AVPacket* Pointer => pointer;
 
-        public Buffer Data { get; set; }
+        public Buffer Memory => pointer->buf != null
+            ? new Buffer((IntPtr)pointer->data, pointer->size)
+            : null;
 
-        public long Size => Data.Length;
+        public int StreamIndex
+        {
+            get => pointer->stream_index;
+            set => pointer->stream_index = value;
+        }
 
-        public int StreamIndex => native.stream_index;
+        public long Dts
+        {
+            get => pointer->dts;
+            set => pointer->dts = value;
+        }
 
-        public MediaType Type { get; set; }
+        public long Pts
+        {
+            get => pointer->pts;
+            set => pointer->pts = value;
+        }
 
         /// <summary>
         /// Decompression timestamp
         /// </summary>
-        public long Dts
+        public Timestamp DecodeTimestamp
         {
-            get => native.dts;
-            set => native.dts = value;
+            get => new Timestamp(Dts, timebase);
         }
 
         /// <summary>
         /// Presentation timestamp
         /// </summary>
-        public long Pts
+        public Timestamp PresentTimestamp
         {
-            get => native.pts;
-            set => native.pts = value;
+            get => new Timestamp(Pts, timebase);
         }
 
-        public long Duration
+        public Timestamp Duration
         {
-            get => native.duration;
-            set => native.duration = value;
+            get => new Timestamp(pointer->duration, timebase);
+            set => pointer->duration = value.Value;
+        }
+
+        public Timestamp ConvergenceDuration
+        {
+            get => new Timestamp(pointer->convergence_duration, timebase);
         }
 
         /// <summary>
@@ -69,52 +82,89 @@ namespace Carbon.Media
         /// </summary>
         public long Position
         {
-            get => native.pos;
-            set => native.pos = value;
+            get => pointer->pos;
+            set => pointer->pos = value;
         }
 
-        // Convergance
-        public long ConvergenceDuration
+        public Rational TimeBase
         {
-            get => native.convergence_duration;
-            set => native.convergence_duration = value;
+            get => timebase;
+            set => timebase = value;
         }
 
+        public void UpdateTimebase(Rational sourceTimeBase, Rational targetTimeBase)
+        {
+            timebase = targetTimeBase;
 
+            Pts               = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
+            Dts               = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
+            pointer->duration = new Timestamp(pointer->duration, sourceTimeBase).Transform(targetTimeBase).Value;
+        }
 
-        /*
+        // frees the packet for reuse
+        public void Clear()
+        {
+            if (pointer->buf != null)
+            {
+                ffmpeg.av_packet_unref(pointer);
+            }
+        }
+
         public PacketFlags Flags
         {
+            get => (PacketFlags) pointer->flags;
+            set => pointer->flags = (int)value;
         }
-        */
-
-        // Additional data?
-
+      
         #region Helpers
 
-        // public bool IsKeyframe => Flags.HasFlag(PacketFlags.Keyframe);
+        public bool IsKeyframe => Flags.HasFlag(PacketFlags.Keyframe);
 
-        // public bool IsCorrupt => Flags.HasFlag(PacketFlags.Corrupt);
+        public bool IsCorrupt => Flags.HasFlag(PacketFlags.Corrupt);
+
+        public bool IsTrusted => Flags.HasFlag(PacketFlags.Trusted);
 
         #endregion
 
-     
+        public static Packet Allocate()
+        {
+            var pointer = ffmpeg.av_packet_alloc();
+
+            ffmpeg.av_init_packet(pointer);
+
+            pointer->data = null;
+            pointer->size = 0;
+
+            return new Packet(pointer);
+        }
+    
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+
+            Dispose(true);
+        }
+
         ~Packet()
         {
             Dispose(false);
         }
-        
-        protected void Dispose(bool disposing)
-        {
-            Data?.Dispose();
 
-            handle.Free();
-        }
-
-        public void Dispose()
+        private void Dispose(bool disposing)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            if (pointer != null)
+            {
+                Console.WriteLine("disposing packet");
+
+                Clear();
+
+                fixed (AVPacket** p = &pointer)
+                {
+                    ffmpeg.av_packet_free(p);
+                }
+
+                pointer = null;
+            }
         }
     }
 }

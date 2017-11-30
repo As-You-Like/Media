@@ -1,9 +1,10 @@
-﻿using Carbon.Media.Codecs;
+﻿using System;
+using Carbon.Media.Codecs;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe abstract class MediaStream
+    public unsafe abstract class MediaStream : IDisposable
     {
         protected AVStream* pointer;
 
@@ -11,9 +12,8 @@ namespace Carbon.Media
         {
             this.pointer = pointer;
 
-            Codec = Codec.Create(pointer->codec, codecType);
+            Codec = Codec.Create(this, codecType);
         }
-
 
         internal AVStream* Pointer => pointer;
 
@@ -88,7 +88,6 @@ namespace Carbon.Media
 
         #endregion
 
-
         public static MediaStream Create(AVStream* pointer, CodecType codecType = CodecType.Decoder)
         {
             MediaStream stream;
@@ -97,15 +96,19 @@ namespace Carbon.Media
             {
                 case AVMediaType.AVMEDIA_TYPE_AUDIO     : stream = new AudioStream(pointer); break;
                 case AVMediaType.AVMEDIA_TYPE_VIDEO     : stream = new VideoStream(pointer); break;
-                case AVMediaType.AVMEDIA_TYPE_SUBTITLE  : stream = new SubtitlesStream(pointer); break;
+                case AVMediaType.AVMEDIA_TYPE_SUBTITLE  : stream = new SubtitleStream(pointer); break;
                 default                                 : stream = new UnknownStream(pointer); break;
             }
-
-
+            
             ffmpeg.avcodec_parameters_from_context(stream.Pointer->codecpar, stream.Codec.Context.Pointer).EnsureSuccess();
-
-
+            
             return stream;
+        }
+
+
+        public void Dispose()
+        {
+            Codec?.Dispose();
         }
     }
 

@@ -2,6 +2,7 @@
 {
     public abstract class AlacEncoder : AudioEncoder
     {
-        public override CodecId Id => CodecId.Alac;
+        public AlacEncoder()
+            : base(CodecId.Alac) { }
     }
 }

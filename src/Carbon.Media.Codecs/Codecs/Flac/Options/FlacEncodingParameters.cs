@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class FlacEncoderOptions
+    public class FlacEncodingParameters
     {
         // Valid values are from 0 to 12, 5 is the default.
         public int CompressionLevel { get; set; }
@@ -21,5 +21,4 @@
 
         public string ChannelMode { get; set; }
     }
-  
 }

@@ -2,11 +2,13 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class OpusEncodingParameters
+    public class OpusEncodingParameters : AudioEncodingParameters
     {
-        // ChannelCount
-
-        public BitRate? BitRate { get; set; }
+        public OpusEncodingParameters()
+        {
+            this.SampleFormat = SampleFormat.Int16; // default to Int16
+            this.SampleRate = 48000;
+        }
 
         // Note: delays lower then 20ms will reduce quality
         public TimeSpan Delay { get; set; }

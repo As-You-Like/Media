@@ -2,6 +2,7 @@
 {
     public class AviMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Avi;
+        public AviMuxer()
+            : base(FormatId.Avi) { }
     }
 }

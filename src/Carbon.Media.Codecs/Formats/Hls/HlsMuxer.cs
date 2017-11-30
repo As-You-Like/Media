@@ -2,18 +2,12 @@
 {
     public class HlsMuxer : Muxer
     {
-        private readonly HlsMuxerOptions options;
+        private readonly HslMuxerParamaters options;
 
-        public HlsMuxer(HlsMuxerOptions options)
+        public HlsMuxer(HslMuxerParamaters options)
+             : base(FormatId.Hls)
         {
             this.options = options;
         }
-
-        public override FormatId Id => FormatId.Hls;
-    }
-
-    public class HlsMuxerOptions
-    {
-
     }
 }

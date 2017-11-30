@@ -2,7 +2,8 @@
 {
     public class FlvMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Flv;
+        public FlvMuxer()
+            : base(FormatId.Flv) { }
     }
 
 }

@@ -2,6 +2,7 @@
 {
     public class AsfMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Asf;
+        public AsfMuxer()
+            : base(FormatId.Asf) { }
     }
 }

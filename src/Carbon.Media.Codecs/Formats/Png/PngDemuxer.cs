@@ -2,6 +2,7 @@
 {
     public class PngDemuxer : Demuxer
     {
-        public override FormatId Id => FormatId.Png;
+        public PngDemuxer()
+            : base(FormatId.Png) { }
     }
 }

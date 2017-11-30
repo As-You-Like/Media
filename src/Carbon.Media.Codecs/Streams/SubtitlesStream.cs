@@ -2,26 +2,11 @@
 
 namespace Carbon.Media
 {
-    public unsafe class SubtitlesStream : MediaStream
+    public unsafe sealed class SubtitleStream : MediaStream
     {
-        public SubtitlesStream(AVStream* pointer)
-            : base(pointer)
-        {
-           
-        }
+        public SubtitleStream(AVStream* pointer)
+            : base(pointer) { }
 
-        public override MediaType Type => MediaType.Subtitles;
-    }
-
-
-    public unsafe class UnknownStream : MediaStream
-    {
-        public UnknownStream(AVStream* pointer)
-            : base(pointer)
-        {
-
-        }
-
-        public override MediaType Type => MediaType.Unknown;
+        public override MediaType Type => MediaType.Subtitle;
     }
 }

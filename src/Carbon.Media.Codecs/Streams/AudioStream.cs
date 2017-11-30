@@ -5,12 +5,10 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe class AudioStream : MediaStream, IAudio
+    public unsafe sealed class AudioStream : MediaStream, IAudio
     {
         public AudioStream(AVStream* pointer)
-            : base(pointer)
-        {
-        }
+            : base(pointer) { }
 
         public int ChannelCount => Codec.Context.ChannelCount;
 
@@ -24,18 +22,14 @@ namespace Carbon.Media
         /// Measured in hertz (Hz)
         /// </summary>
         public int SampleRate => Codec.Context.SampleRate;
-        
+
         /// <summary>
         /// The block alignment, in bytes, of the stream.
         /// note: PCM formats = audio channels * bytes per sample
         /// </summary>
-        public int BlockAlignment { get; set; }
+        public int BlockAlignment => Codec.Context.BlockAlignment;
 
         public override MediaType Type => MediaType.Audio;
-
-        ICodec IAudio.Codec => Codec;
-
-        TimeSpan? IAudio.Duration => base.Duration?.TimeSpan;
 
         public static AudioStream Create(Format format, Codec codec)
         {
@@ -43,11 +37,19 @@ namespace Carbon.Media
 
             if (stream->codec == null)
             {
-                throw new Exception("missing");
+                throw new Exception("missing codec");
             }
 
             return new AudioStream(stream);
         }
+
+        #region IAudio
+
+        ICodec IAudio.Codec => Codec;
+
+        TimeSpan? IAudio.Duration => base.Duration?.TimeSpan;
+
+        #endregion
     }
 }
 

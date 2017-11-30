@@ -2,6 +2,7 @@
 {
     public class MatroskaMuxer : Muxer
     {
-        public override FormatId Id => FormatId.Matroska;
+        public MatroskaMuxer()
+            : base(FormatId.Matroska) { }
     }
 }

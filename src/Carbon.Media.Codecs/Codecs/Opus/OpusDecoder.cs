@@ -3,6 +3,7 @@
     public class OpusDecoder : Decoder
     {
         public OpusDecoder()
-           : base(CodecId.Opus) { }
+           : base(CodecId.Opus)
+        { }
     }
 }

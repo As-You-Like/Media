@@ -3,56 +3,41 @@ using System.Runtime.InteropServices;
 
 namespace Carbon.Media
 {
-    // AudioBuffer
-    // FrameBuffer
-    // ...
-
-    public unsafe class Buffer : IRetainable
+    public unsafe class Buffer
     {
-        private bool isDisposed = false;
         private IntPtr pointer;
         private int length;
-        int referenceCount = 0;
 
         public Buffer(IntPtr pointer, int length)
         {
             this.pointer = pointer;
-            this.length = length;
+            this.length  = length;
         }
 
         public int Length => length;
 
         public Span<byte> Span => new Span<byte>((void*)pointer, length);
 
-        public MemoryHandle Retain(bool pin = true)
-        {
-            referenceCount++;
-
-            return new MemoryHandle(this, (void*)pointer);
-        }
-
-        #region IRetainable
-
-        public void Retain()
-        {
-            referenceCount++;
-        }
-
-        public bool Release()
-        {
-            referenceCount--;
-
-            return true;
-        }
-
-        #endregion
-
+        public IntPtr Pointer => pointer;
+        
         public static Buffer Allocate(int size)
         {
             // HGlobal = ProcessHeap
             // AllocCoTaskMem = COMHeap
+            // Marshal.AllocHGlobal(size)
 
             return new Buffer(Marshal.AllocHGlobal(size), size);
+        }
+        
+        public void Resize(int size)
+        {
+            if (size != Length)
+            {
+                // Reallocate the  & update the pointer
+                pointer = Marshal.ReAllocHGlobal(pointer, (IntPtr)size);
+
+                this.length = size;
+            }
         }
 
         public void Free()
@@ -61,6 +46,8 @@ namespace Carbon.Media
 
             if (pointer != IntPtr.Zero)
             {
+                // ffmpeg.av_free((void*)pointer);
+                
                 Marshal.FreeHGlobal(pointer);
 
                 // FreeCoTaskMem = COMHeap
@@ -70,22 +57,24 @@ namespace Carbon.Media
 
         public void Dispose()
         {
-            if (!isDisposed)
-            {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-                isDisposed = true;
-            }
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
         }
 
         public void Dispose(bool disposing)
         {
-            Free();
+            if (pointer != IntPtr.Zero)
+            {
+                GC.SuppressFinalize(this);
+
+                pointer = IntPtr.Zero;
+            }
         }
 
         ~Buffer()
         {
-            Dispose(true);
+            Dispose(false);
         }
     }
 }

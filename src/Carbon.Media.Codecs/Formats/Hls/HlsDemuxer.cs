@@ -2,6 +2,9 @@
 {
     public class HlsDemuxer : Demuxer
     {
-        public override FormatId Id => FormatId.Hls; // m3u8 playlist
+        public HlsDemuxer()
+            : base(FormatId.Hls) { }
     }
 }
+
+// m3u8 playlist
