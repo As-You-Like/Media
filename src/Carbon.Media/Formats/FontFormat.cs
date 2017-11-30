@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Formats
 {
-    public enum FontFormatId
+    public enum FontFormat
     {
         Eot,            // web format for ttf
         Otf,            // evolution of ttf

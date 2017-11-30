@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum AudioFormatId
+    public enum AudioFormat
     {
         Aac    = 2000,
         Ac3    = 2005,

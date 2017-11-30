@@ -2,9 +2,9 @@
 
 namespace Carbon.Media
 {
-    using static ImageFormatId;
+    using static ImageFormat;
 
-    public enum ImageFormatId
+    public enum ImageFormat
     {
         _3fr = 4005, // Hasselblad
         Bmp  = 4101, // BMP
@@ -42,7 +42,7 @@ namespace Carbon.Media
 
     public static class ImageFormatHelper
     {
-        public static ImageFormatId Parse(string text)
+        public static ImageFormat Parse(string text)
         {
             text = FileFormat.Normalize(text);
 

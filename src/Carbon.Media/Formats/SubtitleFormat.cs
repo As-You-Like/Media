@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum SubtitleFormatId
+    public enum SubtitleFormat
     {
         Gpac  = 10000, 
         Sub   = 10001, // SubRip
