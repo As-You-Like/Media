@@ -222,9 +222,16 @@
         Yuva444p16be    = 625, // YUVA | 
         Yuva444p16le    = 626, // YUVA | 
 
+        // YUVJ
+        Yuvj411p        = 650, // YUVJ | 
+        Yuvj420p        = 651, // YUVJ |
+        Yuvj422p        = 652, // YUVJ |
+        Yuvj440p        = 653, // YUVJ |
+        Yuvj444p        = 654, // YUVJ |
+
         // YUYV
-        [BitsPerPixel(16)] Yuyv422 = 700, // YUV | 4:2:2 | Y0 Cb Y1 Cr
-        [BitsPerPixel(16)] Yvyu422 = 701, // YUV 4:2:2
+        [BitsPerPixel(16)] Yuyv422 = 660, // YUV | 4:2:2 | Y0 Cb Y1 Cr
+        [BitsPerPixel(16)] Yvyu422 = 661, // YUV 4:2:2
 
 
         Imc1 = 1000,   // planar YUV 4:2:0 16bpp
