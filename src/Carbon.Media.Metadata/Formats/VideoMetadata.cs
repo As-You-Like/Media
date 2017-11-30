@@ -4,28 +4,29 @@ using System.Runtime.Serialization;
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class VideoMetadata : IFormatMetadata
+    public class VideoInfo
     {
         [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
 
+        // h265
         [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
         public string Codec { get; set; }
 
-        /// <summary>
-        /// The frame width
-        /// </summary>
         [DataMember(Name = "width", Order = 4, EmitDefaultValue = false)]
         public int Width { get; set; }
 
-        /// <summary>
-        /// The frame height
-        /// </summary>
         [DataMember(Name = "height", Order = 5, EmitDefaultValue = false)]
         public int Height { get; set; }
 
         [DataMember(Name = "pixelFormat", Order = 6, EmitDefaultValue = false)]
         public PixelFormat PixelFormat { get; set; }
+
+        [DataMember(Name = "colorSpace", Order = 7, EmitDefaultValue = false)]
+        public ColorSpace ColorSpace { get; set; }
+
+        [DataMember(Name = "orientation", Order = 8, EmitDefaultValue = false)]
+        public ExifOrientation Orientation { get; set; }
 
         [DataMember(Name = "duration", Order = 11, EmitDefaultValue = false)]
         public TimeSpan Duration { get; set; }
@@ -46,7 +47,7 @@ namespace Carbon.Media.Metadata
 
 /*
 { 
-    format        : "mp4",
+    type          : "mp4",
     codec         : "h265",
     duration      : "00:30:00"
 }

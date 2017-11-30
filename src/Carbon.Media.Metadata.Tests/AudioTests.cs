@@ -10,7 +10,7 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test1()
         {
-            var audio = new AudioMetadata {
+            var audio = new AudioInfo {
                 Format        = "aac",
                 Codec         = "mp4a.40.2",
                 ChannelCount  = 2,

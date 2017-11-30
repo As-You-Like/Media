@@ -10,7 +10,7 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test1()
         {
-            var video = new VideoMetadata {
+            var video = new VideoInfo {
                 Format    = "mp4",
                 FrameRate = new Rational(30000, 1001),
                 Codec     = "h.265",

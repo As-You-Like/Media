@@ -4,14 +4,14 @@ using System.Runtime.Serialization;
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class AudioMetadata : IFormatMetadata
+    public class AudioInfo
     {
-        // e.g. aac, mp3
+        // e.g. aac, mp3 
         [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
 
         // e.g. mp4a.40.2 (AACLC)
-        [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
+        [DataMember(Name = "codec", Order = 2)]
         public string Codec { get; set; }
 
         [DataMember(Name = "duration", Order = 11, EmitDefaultValue = false)]

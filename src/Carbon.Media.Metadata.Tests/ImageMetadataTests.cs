@@ -21,7 +21,7 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test1()
         {
-            var image = new ImageMetadata {
+            var image = new ImageInfo {
                 Format = "gif",
                 Width  = 800,
                 Height = 600
@@ -45,7 +45,7 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test3()
         {
-            var image = new ImageMetadata {
+            var image = new ImageInfo {
                 Format      = "tiff",
                 PixelFormat = PixelFormat.Cmyk32,
                 Width       = 1_000_000,
@@ -68,7 +68,7 @@ namespace Carbon.Media.Metadata.Tests
         {
             // 12MP Digital Negitive
             // 64bpp = 96MB buffer
-            var image = new ImageMetadata
+            var image = new ImageInfo
             {
                 Format      = "dng",
                 Width       = 4000,

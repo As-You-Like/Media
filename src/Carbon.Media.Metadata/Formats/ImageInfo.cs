@@ -4,13 +4,15 @@ using System.Runtime.Serialization;
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class ImageMetadata : IFormatMetadata
+    public class ImageInfo
     {
         [DataMember(Name = "format", Order = 1)]
         public string Format { get; set;}
 
         [DataMember(Name = "codecs", Order = 2, EmitDefaultValue = false)]
         public string Codec { get; set; }
+
+        // 3???
         
         [DataMember(Name = "width", Order = 4, EmitDefaultValue = false)]
         public int Width { get; set; }
@@ -28,7 +30,7 @@ namespace Carbon.Media.Metadata
         public ExifOrientation Orientation { get; set; }
 
         [DataMember(Name = "frames", Order = 10, EmitDefaultValue = false)]
-        public FrameInfo[] Frames { get; set; }
+        public ImageFrameInfo[] Frames { get; set; }
 
         [DataMember(Name = "created", Order = 20, EmitDefaultValue = false)]
         public DateTime? Created { get; }
@@ -79,11 +81,15 @@ namespace Carbon.Media.Metadata
 }
 
 /*
- creator    : { name: "Dave" }												
- owner      : "x"															
- licences   : [ "1", "2" ]
- camera     : { make: "Nikon", model: "D5" },
- created    : "2012-05-15T15:01:19Z"
- modified   : "2012-05-15T15:01:19Z" 
- location   : { longitude: "x", latitude: "x", name: "New York, NY" }
+ format      : "jpeg",
+ width       : 100,
+ height      : 100,
+ pixelFormat : "Rgba32",
+ creator     : { name: "Dave" }												
+ owner       : "x"															
+ licences    : [ "1", "2" ]
+ camera      : { make: "Nikon", model: "D5" },
+ created     : "2012-05-15T15:01:19Z"
+ modified    : "2012-05-15T15:01:19Z" 
+ location    : { longitude: "x", latitude: "x", name: "New York, NY" }
 */

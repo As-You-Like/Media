@@ -9,19 +9,20 @@ namespace Carbon.Media
 
         public CameraInfo(string make, string model)
         {
-            Make  = make;
+            Make = make;
             Model = model;
         }
 
+        // Id = 1
         // e.g. Canon
-        [DataMember(Name = "make", Order = 1)]
+        [DataMember(Name = "make", Order = 2)]
         public string Make { get; set; }
 
         // e.g. EOS5
-        [DataMember(Name = "model", Order =2)]
+        [DataMember(Name = "model", Order = 3)]
         public string Model { get; set; }
 
-        [DataMember(Name = "serialNumber", Order = 3, EmitDefaultValue = false)]
+        [DataMember(Name = "serialNumber", Order = 4, EmitDefaultValue = false)]
         public string SerialNumber { get; set; }
     }
 }
