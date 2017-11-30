@@ -17,7 +17,7 @@ namespace Carbon.Media
         private int height;
         private Encode encoder;
 
-        public MediaTransformation(IMediaSource source)
+        public MediaTransformation(IMediaInfo source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
             
@@ -30,7 +30,7 @@ namespace Carbon.Media
             }
         }
 
-        public IMediaSource Source { get; }
+        public IMediaInfo Source { get; }
 
         public int Width => width;
 
@@ -230,7 +230,7 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool HasTransforms => transforms.Count > 0;
 
-        public static MediaTransformation ParsePath(string path, IMediaSource source = null)
+        public static MediaTransformation ParsePath(string path, IMediaInfo source = null)
         {
             #region Preconditions
 
@@ -267,7 +267,7 @@ namespace Carbon.Media
 
             var transforms = ParseTransforms(segments);
 
-            var rendition = new MediaTransformation(source ?? new MediaSource(id, 0, 0))
+            var rendition = new MediaTransformation(source ?? new MediaInfo(id, 0, 0))
                 .Apply(transforms)
                 .Encode(FormatIdExtensions.Parse(format), null);
 
@@ -356,12 +356,12 @@ namespace Carbon.Media
         #endregion
     }
 
-    internal class MediaSource : IMediaSource
+    internal class MediaInfo : IMediaInfo
     {
-        public MediaSource(string key, int width, int height)
+        public MediaInfo(string key, int width, int height)
         {
-            Key = key;
-            Width = width;
+            Key    = key;
+            Width  = width;
             Height = height;
         }
 

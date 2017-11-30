@@ -55,18 +55,17 @@ namespace Carbon.Media.Drawing
                     {
                         case 0: box.Width = Unit.Parse(v);  break;
                         case 1: box.Height = Unit.Parse(v); break;
-                        case 2: fill = v;                  break;
+                        case 2: fill = v;                   break;
                     }
 
                     i++;
 
                     continue;
                 }
-                
 
                 switch (k)
                 {
-                    case "fill"   : fill       = v;                          break;
+                    case "fill"   : fill        = v;                          break;
                     case "mode"   : mode        = v.ToEnum<BlendMode>(true);  break;
                     case "align"  : align       = v.ToEnum<Alignment>(true);  break;
                     case "x"      : box.X       = Unit.Parse(v);              break;
@@ -75,7 +74,6 @@ namespace Carbon.Media.Drawing
                     case "height" : box.Height  = Unit.Parse(v);              break;
                     case "padding": box.Padding = UnboundPadding.Parse(v);    break;
                 }
-                
             }
 
             return new Rect(fill, box, mode, align);

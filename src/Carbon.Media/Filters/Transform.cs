@@ -25,26 +25,28 @@
 
                 case "page"         : return Page.Parse(segment);
                                         
-                case "background":
+                case "background"   :
                 case "bg"           : return Background.Parse(segment);
                 
-                // filters           
+                // web filters
                 case "blur"         : return BlurFilter.Parse(segment);
                 case "brightness"   : return BrightnessFilter.Parse(segment);
-                case "highlight"    : return HighlightFilter.Parse(segment);
-                case "gamma"        : return GammaFilter.Parse(segment);
-                case "pixelate"     : return PixelateFilter.Parse(segment);
-                case "sharpen"      : return SharpenFilter.Parse(segment);
-                case "vibrance"     : return VibranceFilter.Parse(segment);
-                    
-                // web filters
+                case "contrast"     : return ContrastFilter.Parse(segment);
+                case "grayscale"    : return GrayscaleFilter.Parse(segment);
                 case "hue-rotate"   : return HueRotateFilter.Parse(segment);
+                case "invert"       : return InvertFilter.Parse(segment);
+                case "opacity"      : return OpacityFilter.Parse(segment);
                 case "saturate"     : return SaturateFilter.Parse(segment);
                 case "sepia"        : return SepiaFilter.Parse(segment);
-                case "grayscale"    : return GrayscaleFilter.Parse(segment);
-                case "invert"       : return InvertFilter.Parse(segment);
-                case "contrast"     : return ContrastFilter.Parse(segment);
-                case "opacity"      : return OpacityFilter.Parse(segment);
+
+                // filters           
+                case "highlight"    : return HighlightFilter.Parse(segment);
+                case "gamma"        : return GammaFilter.Parse(segment);
+                case "halftone"     : return HalftoneFilter.Parse(segment);
+                case "pixelate"     : return PixelateFilter.Parse(segment);
+                case "quantize"     : return QuantizeFilter.Parse(segment);
+                case "sharpen"      : return SharpenFilter.Parse(segment);
+                case "vibrance"     : return VibranceFilter.Parse(segment);
 
                 // Drawing
                 case "draw"         : return Draw.Parse(segment);

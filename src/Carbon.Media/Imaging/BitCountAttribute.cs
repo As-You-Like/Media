@@ -2,9 +2,9 @@
 
 namespace Carbon.Media
 {
-    internal class BitCountAttribute : Attribute
+    internal class BitsPerPixelAttribute : Attribute
     {
-        public BitCountAttribute(int value)
+        public BitsPerPixelAttribute(int value)
         {
             Value = value;
         }

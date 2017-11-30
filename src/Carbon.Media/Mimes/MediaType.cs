@@ -14,7 +14,7 @@
         Video       = 9,
 
         // Non-Standard
-        Subtitles   = 100
+        Subtitle   = 100
     }
 }
 

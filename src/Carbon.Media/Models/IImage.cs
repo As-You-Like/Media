@@ -2,7 +2,7 @@
 {
     public interface IImage
     {
-        ImageFormatId Format { get; }
+        ImageFormat Format { get; }
 
         int Width { get; }
 

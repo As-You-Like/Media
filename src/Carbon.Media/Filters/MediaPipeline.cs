@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors
 {
     public class MediaPipeline
     {
-        public IMediaSource Source { get; set; } // Input
+        public IMediaInfo Source { get; set; } // Input
 
         public int? PageNumber { get; set; }
 
@@ -59,7 +59,7 @@ namespace Carbon.Media.Processors
             return From(transformation.Source, transformation.GetTransforms());
         }
 
-        public static MediaPipeline From(IMediaSource source, IReadOnlyList<ITransform> processors)
+        public static MediaPipeline From(IMediaInfo source, IReadOnlyList<ITransform> processors)
         {
             var pipeline = new MediaPipeline {
                 Source = source
@@ -262,7 +262,7 @@ namespace Carbon.Media.Processors
                 {
                     var id = segment.Substring(poundIndex + 1); // '#'
 
-                    result.Source = new MediaSource(id, 100, 100);
+                    result.Source = new MediaInfo(id, 100, 100);
 
                     continue;
                 }

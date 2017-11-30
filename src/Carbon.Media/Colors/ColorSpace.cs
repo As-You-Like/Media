@@ -8,7 +8,7 @@
         Unknown	          = 0,
         
         // RGB Color Spaces ------
-        sRGB               = 1,  // Based on ITU-R BT.709 standard.
+        sRGB               = 1,  // Based on ITU-R BT.709 standard. (IEC 61966-2-1)
         scRGB		       = 2,
         RGB	               = 3,  // FFmpeg#0, IS
         AdobeRGB           = 4,  // 
@@ -40,15 +40,17 @@
 
         // Cinema? ------
         DciP3              = 64, //                    | DCI-P3
-        Bt470              = 65, // FFmpeg#5           | BT.470
+        Bt470              = 65, // FFmpeg#5           | BT.470     (ITU-R BT601-6 625 / ITU-R BT1358 625 / ITU-R BT1700 625 PAL & SECAM / IEC)
         Rec601             = 70, // IM                 | SD         | YCbCr
         Rec709             = 71, // FFmpeg#1, IM       | HD (Bt709) | RGB
         Rec2020Ncl         = 73, // FFmpeg#9           | 4K & 8K
-        Rec2020Cl          = 74, // FFmpeg#10          
+        Rec2020Cl          = 74, // FFmpeg#10          | ITU-R BT2020 constant luminance system    
         Acsc               = 80, //                    | Academy Color Encoding System 
-        Smpte170m          = 81, // FFmpeg#6           | SMPTE 170M
+
+        Smpte170m          = 81, // FFmpeg#6           | SMPTE 170M (ITU-R BT601-6 525 / ITU-R BT1358 525 / ITU-R BT1700 NTSC)
         Smpte240m          = 82, // FFmpeg#7           | SMPTE 240M
-                                                        
+        Smpte2085          = 83, // FFmpeg#11          |  Y'D'zD'x
+
         // YUV ------                                   
         ICtCp              = 90, // ?                   
         xvYCC              = 91, //                     | Extended-gamut YCC
