@@ -67,3 +67,11 @@ namespace Carbon.Media
         #endregion
     }
 }
+
+/// 8,000 Hz     : Telephone
+/// 44,100 Hz    : Audio CD, most popular MPEG-1 (VCD, SVCD, MP3) sampling rate
+/// 48,000 Hz    : TV, DVD, and films. 
+/// 96,000 Hz    : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
+/// 192,000 Hz   : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
+/// 2,822,400 Hz : SACD
+// Channels { L, R, C }
