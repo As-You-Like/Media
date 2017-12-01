@@ -8,8 +8,15 @@ namespace Carbon.Media
     {
         private FFmpeg.AutoGen.SwsContext* pointer;
 
-        public SwsContext(FFmpeg.AutoGen.SwsContext* pointer)
+        private SwsContext(FFmpeg.AutoGen.SwsContext* pointer)
         {
+            #region Preconditions
+
+            if (pointer == null)
+                throw new ArgumentNullException(nameof(pointer));
+
+            #endregion
+
             this.pointer = pointer;
         }
 
@@ -29,15 +36,10 @@ namespace Carbon.Media
                 targetWidth, 
                 targetHeight,
                 targetFormat.ToAVFormat(),
-                (int)flags,
-                null, 
-                null, 
-                null);
-
-            if (pointer == null)
-            {
-                throw new Exception("error initizing sws context");
-            }
+                flags     : (int)flags,
+                srcFilter : null, 
+                dstFilter : null,
+                param     : null);
 
             return new SwsContext(pointer);
         }
@@ -57,7 +59,19 @@ namespace Carbon.Media
 
         public void Dispose()
         {
-            ffmpeg.av_free(pointer);
+            GC.SuppressFinalize(this);
+
+            Dispose(true);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            ffmpeg.sws_freeContext(pointer);
+        }
+
+        ~SwsContext()
+        {
+            Dispose(true);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Carbon.Media.Codecs
         }
 
         #region Audio
-
+        
         public int SampleRate
         {
             get => pointer->sample_rate;

@@ -38,6 +38,8 @@ namespace Carbon.Media
         
         public bool IsPlanar => Flags.HasFlag(PixelFormatFlags.Planar);
 
+        // PackedFormat?
+
         // Type (float, uint, Fixed)
 
         public static PixelFormatInfo Get(PixelFormat format)
@@ -72,7 +74,7 @@ namespace Carbon.Media
                 case Rgba64        : return new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16), A(16) });
 
 
-                default: return default;
+                default: throw new System.Exception("Unsupported pixelFormat:" + format);
             }
         }
     }

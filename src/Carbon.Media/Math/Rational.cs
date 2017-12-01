@@ -70,8 +70,7 @@ namespace Carbon.Media
             return a;
         }
 
-        public static implicit operator double(Rational rational) => 
-            rational.ToDouble();
+        public static implicit operator double(Rational rational) => rational.ToDouble();
 
         public override string ToString()
         {
@@ -104,11 +103,10 @@ namespace Carbon.Media
 
         #region IEquatable
 
-        public bool Equals(Rational other)
-        {
-            return Numerator   == other.Numerator
-                && Denominator == other.Denominator;
-        }
+
+        public bool Equals(Rational other) =>
+            Numerator == other.Numerator && 
+            Denominator == other.Denominator;
 
         public override int GetHashCode()
         {

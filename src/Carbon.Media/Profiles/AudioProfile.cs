@@ -27,17 +27,17 @@ namespace Carbon.Media
             SampleRate   = sampleRate;
         }
 
-        [DataMember(Name = "codec")]
+        [DataMember(Name = "codec", Order = 1)]
         public string Codec { get; }
 
-        [DataMember(Name = "bitRate")]
+        [DataMember(Name = "bitRate", Order = 2)]
         public BitRate BitRate { get; }
 
-        [DataMember(Name = "sampleFormat")]
+        [DataMember(Name = "sampleFormat", Order = 3)]
         public SampleFormat SampleFormat { get; }
 
         // 0...48000
-        [DataMember(Name = "sampleRate")]
+        [DataMember(Name = "sampleRate", Order = 4)]
         public int? SampleRate { get; }        
     }
 }

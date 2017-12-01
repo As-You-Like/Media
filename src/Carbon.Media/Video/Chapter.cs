@@ -7,7 +7,10 @@ namespace Carbon.Media
     [DataContract]
     public class Chapter
     {
-        public Chapter(TimeSpan start, TimeSpan end, Dictionary<string, string> metadata)
+        public Chapter(
+            TimeSpan start,
+            TimeSpan end, 
+            Dictionary<string, string> metadata)
         {
             Start    = start;
             End      = end;

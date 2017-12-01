@@ -66,7 +66,12 @@ namespace Carbon.Media.Codecs
             context.Pointer->codec = this.pointer;
         }
 
-        public void Open(Options options = null)
+        public void Open()
+        {
+            Open(null);
+        }
+
+        internal void Open(Options options)
         {
             if (isOpen)
             {

@@ -24,11 +24,5 @@ namespace Carbon.Media
         Rational AspectRatio { get; }
 
         PixelFormat PixelFormat { get; }
-
-        // int PlaneCount { get; }
-
-        // int Alignment { get; }
-
-        // int[] Strides { get; }
     }
 }

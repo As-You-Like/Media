@@ -21,12 +21,10 @@ namespace Carbon.Media
     {
         public static Size Parse(string size)
         {
-            #region Preconditions
-
             if (size == null)
+            {
                 throw new ArgumentNullException(nameof(size));
-
-            #endregion
+            }
 
             var parts = size.Split(Seperators.x);
 

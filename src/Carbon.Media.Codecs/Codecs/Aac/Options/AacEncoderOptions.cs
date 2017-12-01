@@ -19,7 +19,7 @@
 
         public AacCoder? Coder { get; set; }
 
-        public Options ToOptions()
+        internal Options ToOptions()
         {
             // CBR mode = -b:a
             // VBR

@@ -2,7 +2,7 @@
 {
     public class Mp3EncodingParameters : AudioEncodingParameters
     {
-        public Options ToOptions()
+        internal Options ToOptions()
         {
             // CBR mode = -b:a
             // VBR
@@ -22,8 +22,7 @@
 
                 // setting this activated the bitrate mode
             }
-
-
+            
             return options;
         }
     }

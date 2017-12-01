@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public class VideoFormatInfo
+    public class VideoFormatInfo : IEquatable<VideoFormatInfo>
     {
         public VideoFormatInfo(
             PixelFormat pixelFormat,
@@ -10,7 +10,7 @@ namespace Carbon.Media
             int height,
             int[] strides,
             int bufferSize)
-            : this(pixelFormat, width, height, strides, bufferSize, Timebases.Ffmpeg, new Rational(1, 1)) { }
+            : this(pixelFormat, width, height, strides, bufferSize, new Rational(1, 1), new Rational(1, 1)) { }
 
         public VideoFormatInfo(
             PixelFormat pixelFormat,
@@ -22,6 +22,9 @@ namespace Carbon.Media
             Rational aspectRatio)
         {
             #region Preconditions
+
+            if (pixelFormat == default)
+                throw new ArgumentException("Required", nameof(pixelFormat));
 
             if (width <= 0)
                 throw new ArgumentException("Must be > 0", nameof(width));
@@ -46,25 +49,23 @@ namespace Carbon.Media
 
         public int Height { get; }
 
+        // The strides & buffer size are determined by the height & width + pixelFormat
+
         public int[] Strides { get; }
         
-        public int BufferSize { get; } // FrameSize?
+        // Calcuate?
+        public int BufferSize { get; }
         
+        // Allows for variable rate...
         public Rational TimeBase { get; }
 
         public Rational AspectRatio { get; }
 
-        public static VideoFormatInfo Create(PixelFormat format, int width, int height, int align = 8)
-        {
-            return new VideoFormatInfo(
-                format,
-                width,
-                height,
-                VideoFormatHelper.GetStrides(format, width, align),
-                VideoFormatHelper.GetBufferSize(format, width, height, align),
-                default, 
-                new Rational(1, 1)
-            );
-        }
+        // Check timebase & aspectRatio?
+
+        public bool Equals(VideoFormatInfo other) =>
+            PixelFormat == other.PixelFormat &&
+            Width       == other.Width &&
+            Height      == other.Height;
     }
 }

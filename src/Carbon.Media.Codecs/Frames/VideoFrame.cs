@@ -8,7 +8,7 @@ namespace Carbon.Media
         private byte_ptrArray4 planePointers;
         private int_array4 linesizes;
 
-        public VideoFrame(PixelFormat format, int width, int height)
+        public VideoFrame(PixelFormat pixelFormat, int width, int height)
         {
             #region Preconditions
 
@@ -20,21 +20,21 @@ namespace Carbon.Media
 
             #endregion
 
-            Format = format;
+            Format = pixelFormat;
             Width  = width;
             Height = height;
 
-            pointer->format = (int)format.ToAVFormat();
+            pointer->format = (int)pixelFormat.ToAVFormat();
             pointer->width  = width;
             pointer->height = height;
 
             pointer->extended_data = (byte**)(&pointer->data);
 
-            var info = VideoFormatInfo.Create(format, width, height);
+            var format = VideoFormatHelper.Get(pixelFormat, width, height);
 
-            Strides = info.Strides;
+            Strides = format.Strides;
 
-            Memory = Buffer.Allocate(info.BufferSize);
+            Memory = Buffer.Allocate(format.BufferSize);
 
             // Fill the pointers
            
@@ -45,7 +45,7 @@ namespace Carbon.Media
                 ref planePointers,
                 ref linesizes,
                 (byte*)Memory.Pointer,
-                format.ToAVFormat(),
+                pixelFormat.ToAVFormat(),
                 width,
                 height,
                 1           // align = 8 ?
@@ -82,13 +82,10 @@ namespace Carbon.Media
             );
         }
 
-
         /*
         public void Sync()
         {
-            // Sync with the plane pointers
-
-            var planeArray = GetPlanesArray();
+            var planeArray   = GetPlanesArray();
             var stridesArray = GetStridesArray();
 
             ffmpeg.av_image_copy(
@@ -97,8 +94,8 @@ namespace Carbon.Media
                 src_data        : pointer->extended_data,
                 src_linesizes   : pointer->linesize,
                 pix_fmt         : (AVPixelFormat)pointer->format,
-                width: Width,
-                height: Height
+                width           : Width,
+                height          : Height
 
             );
             
@@ -121,9 +118,26 @@ namespace Carbon.Media
         /// </summary>
         public long PresentationIndex => pointer->display_picture_number;
 
-        public Rational? AspectRatio { get; set; }
+        public Rational? AspectRatio
+        {
+            get
+            {
+                if (pointer->sample_aspect_ratio.IsUnknown())
+                {
+                    return null;
+                }
 
-        // public ColorSpace ColorSpace { get; set; }
+                return pointer->sample_aspect_ratio.ToRational();
+            }
+
+            set => pointer->sample_aspect_ratio = value.ToAVRational();
+        }
+
+        public AVColorSpace ColorSpace
+        {
+            get => pointer->colorspace;
+            set => pointer->colorspace = value;
+        }
 
         /// <summary>
         /// The length (size) of each picture line (plane?)
