@@ -387,6 +387,30 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(pipe.Canonicalize(), MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
         }
 
+
+        [Fact]
+        public void FilterClamps()
+        {
+            var rendition = new MediaTransformation(jpeg_85x20)
+                .Resize(Unit.Parse("300%"), Unit.Parse("200%"))
+                .Apply(new BrightnessFilter(3.5f)) // not clamped
+                .Apply(new ContrastFilter(3.5f))   // not clamped
+                .Apply(new InvertFilter(1.4f))     // clamped to 1
+                .Apply(new GrayscaleFilter(1.3f))  // clamped to 1
+                .Apply(new OpacityFilter(1.3f))    // clamped to 1
+                .Apply(new SaturateFilter(0.5f))
+                .Apply(new SepiaFilter(1.3f))
+                .Encode(ImageFormat.Tiff);
+
+            var pipe = MediaPipeline.From(rendition);
+
+            var text = pipe.Canonicalize();
+
+            Assert.Equal("blob#1|>scale(255,40,lanczos3)|>brightness(3.5)|>contrast(3.5)|>invert(1)|>grayscale(1)|>opacity(1)|>saturate(0.5)|>sepia(1)|>TIFF::encode", text);
+
+            Assert.Equal(text, MediaPipeline.Parse(pipe.Canonicalize()).Canonicalize());
+        }
+
         [Fact]
         public void ResizeFit1()
         {

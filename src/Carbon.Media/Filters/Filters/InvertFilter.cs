@@ -11,7 +11,7 @@ namespace Carbon.Media.Processors
                 throw new ArgumentException("Must be >= 0", nameof(amount));
             }
 
-            if (amount > 0)  // clamped to 1
+            if (amount > 1)  // clamped to 1
             {
                 amount = 1;
             }

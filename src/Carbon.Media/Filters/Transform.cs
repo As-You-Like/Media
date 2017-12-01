@@ -39,7 +39,7 @@
                 case "saturate"     : return SaturateFilter.Parse(segment);
                 case "sepia"        : return SepiaFilter.Parse(segment);
 
-                // filters           
+                // General Filters           
                 case "highlight"    : return HighlightFilter.Parse(segment);
                 case "gamma"        : return GammaFilter.Parse(segment);
                 case "halftone"     : return HalftoneFilter.Parse(segment);
@@ -47,6 +47,9 @@
                 case "quantize"     : return QuantizeFilter.Parse(segment);
                 case "sharpen"      : return SharpenFilter.Parse(segment);
                 case "vibrance"     : return VibranceFilter.Parse(segment);
+
+                // Audio Filters
+                case "volume"       : return VolumeFilter.Parse(segment);
 
                 // Drawing
                 case "draw"         : return Draw.Parse(segment);

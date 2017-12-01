@@ -1,13 +1,24 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     public class PixelateFilter : IFilter
     {
-        public PixelateFilter(float amount)
+        public PixelateFilter(int amount)
         {
+            #region Preconditions
+
+            if (amount < 0 || amount > 10000)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between 0 & 10,000");
+            }
+
+            #endregion
+
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public int Amount { get; }
 
         public string Canonicalize() => $"pixelate({Amount})";
 
@@ -19,7 +30,7 @@
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
-            return new PixelateFilter(float.Parse(segment));
+            return new PixelateFilter(int.Parse(segment));
         }
     }
 }

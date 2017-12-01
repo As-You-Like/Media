@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Processors
 {
-    public sealed class SepiaFilter : ColorMatrixFilter
+    public class SepiaFilter : IFilter
     {
         public SepiaFilter(float amount)
         {
