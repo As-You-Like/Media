@@ -1,9 +1,21 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
-    public class GrayscaleFilter : IFilter
+    public sealed class GrayscaleFilter : IFilter
     {
         public GrayscaleFilter(float amount)
         {
+            if (amount < 0)
+            {
+                throw new ArgumentException("Must be >= 0", nameof(amount));
+            }
+
+            if (amount > 0)  // clamped to 1
+            {
+                amount = 1;
+            }
+
             Amount = amount;
         }
 
@@ -20,19 +32,6 @@
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
             return new GrayscaleFilter((float)Unit.Parse(segment).Value);
-        }
-
-        // https://www.w3.org/TR/filter-effects/#grayscaleEquivalent
-        public float[] GetMatrix()
-        {
-            var a = (1f - Amount);
-
-            return new float[] {
-                0.2126f + (0.7874f * a), 0.7152f - (0.7152f * a), 0.0722f - (0.0722f * a), 0f, 0f,
-                0.2126f - (0.2126f * a), 0.7152f + (0.2848f * a), 0.0722f - (0.0722f * a), 0f, 0f,
-                0.2126f - (0.2126f * a), 0.7152f - (0.7152f * a), 0.0722f + (0.9278f * a), 0f, 0f,
-                0f, 0f, 0f, 1f, 0f
-            };
         }
     }
 }

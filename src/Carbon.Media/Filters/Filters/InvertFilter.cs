@@ -1,9 +1,21 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     public class InvertFilter : IFilter
     {
         public InvertFilter(float amount)
         {
+            if (amount < 0)
+            {
+                throw new ArgumentException("Must be >= 0", nameof(amount));
+            }
+
+            if (amount > 0)  // clamped to 1
+            {
+                amount = 1;
+            }
+
             Amount = amount;
         }
 

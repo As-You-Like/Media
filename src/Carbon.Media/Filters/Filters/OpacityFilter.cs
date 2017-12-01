@@ -1,12 +1,29 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     public class OpacityFilter : IFilter
     {
         public OpacityFilter(float amount)
         {
+            #region Validation
+
+            if (amount < 0)
+            {
+                throw new ArgumentException("Must be >= 0", nameof(amount));
+            }
+
+            #endregion
+
+            if (amount > 1) // clamp to 1
+            {
+                amount = 1;
+            }
+
             Amount = amount;
         }
 
+        // range: 0 (full effect) - 1 (unchanged)
         public float Amount { get; }
 
         public string Canonicalize() => $"opacity({Amount})";

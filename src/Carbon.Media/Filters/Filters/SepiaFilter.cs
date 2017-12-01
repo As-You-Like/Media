@@ -1,12 +1,29 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
-    public class SepiaFilter : IFilter
+    public sealed class SepiaFilter : ColorMatrixFilter
     {
         public SepiaFilter(float amount)
         {
-            Amount = amount;
+            #region Preconditions
+
+            if (amount < 0)
+            {
+                throw new ArgumentException("Must be >= 0", nameof(amount));
+            }
+
+            #endregion
+
+            if (amount > 1)  // clamped to 1
+            {
+                amount = 1;
+            }
+
+            Amount = amount;            
         }
 
+        // range: 0 (unchanged) - 1 (full effect)
         public float Amount { get; }
 
         public string Canonicalize() => $"sepia({Amount})";
@@ -20,18 +37,6 @@
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
             
             return new SepiaFilter((float)Unit.Parse(segment).Value);
-        }
-
-        public float[] GetMatrix()
-        {
-            var a = (1f - Amount);
-
-            return new float[] {
-                0.393f + (0.607f * a), 0.769f - (0.769f * a), 0.189f - (0.189f * a), 0f, 0f,
-                0.349f - (0.349f * a), 0.686f + (0.314f * a), 0.168f - (0.168f * a), 0f, 0f,
-                0.272f - (0.272f * a), 0.534f - (0.534f * a), 0.131f + (0.869f * a), 0f, 0f,
-                0f, 0f, 0f, 1f, 0f
-            };
         }
     }
 }

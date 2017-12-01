@@ -1,10 +1,17 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     public class BlurFilter : IFilter
     {
-        public BlurFilter(float amount)
+        // Specified as a length
+
+        public BlurFilter(float radius)
         {
-            Amount = amount;
+            if (radius < 0 || radius > 2000)
+                throw new ArgumentOutOfRangeException(nameof(radius), radius, "Must be between 0 and 2,000");
+
+            Amount = radius;
         }
 
         public float Amount { get; }
@@ -18,15 +25,10 @@
             int argStart = segment.IndexOf('(') + 1;
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
+            
+            // allows the px unit
 
-            // allow px unit
-
-            if (segment.EndsWith("px"))
-            {
-                segment = segment.Replace("px", "");
-            }
-
-            return new BlurFilter(float.Parse(segment));
+            return new BlurFilter((float)Unit.Parse(segment).Value);
         }
     }
 }
