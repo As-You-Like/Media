@@ -10,8 +10,17 @@ namespace Carbon.Media
 
         protected MediaStream(AVStream* pointer, CodecType codecType = CodecType.Decoder)
         {
-            this.pointer = pointer;
+            #region Preconditions
 
+            if (pointer == null)
+            {
+                throw new ArgumentNullException(nameof(pointer));
+            }
+
+            #endregion
+
+            this.pointer = pointer;
+            
             Codec = Codec.Create(this, codecType);
         }
 
@@ -71,20 +80,20 @@ namespace Carbon.Media
 
         //
         // Summary:
-        //     Real base framerate of the stream. This is the lowest framerate with which all
-        //     timestamps can be represented accurately (it is the least common multiple of
-        //     all framerates in the stream). Note, this value is just a guess! For example,
-        //     if the time base is 1/90000 and all frames have either approximately 3600 or
-        //     1800 timer ticks, then r_frame_rate will be 50/1.
+        //  Real base framerate of the stream. This is the lowest framerate with which all
+        //  timestamps can be represented accurately (it is the least common multiple of
+        //  all framerates in the stream). Note, this value is just a guess! For example,
+        //  if the time base is 1/90000 and all frames have either approximately 3600 or
+        //  1800 timer ticks, then r_frame_rate will be 50/1.
 
         public Rational FrameRate => pointer->r_frame_rate.ToRational();
         
         #region Interleaving
 
-        public InterleavingInfo Interleaving => new InterleavingInfo {
-            ChuckSize = pointer->interleaver_chunk_size,
-            ChuckDuration = pointer->interleaver_chunk_duration
-        };
+        public InterleavingInfo Interleaving => new InterleavingInfo(
+            chunkSize     : pointer->interleaver_chunk_size,
+            chuckDuration : pointer->interleaver_chunk_duration
+        );
 
         #endregion
 
@@ -104,21 +113,12 @@ namespace Carbon.Media
             
             return stream;
         }
-
-
+        
         public void Dispose()
         {
             Codec?.Dispose();
         }
     }
-
-    public struct InterleavingInfo
-    {
-        public long ChuckSize { get; set; }
-
-        public long ChuckDuration { get; set; }
-    }
-
 }
 
  
