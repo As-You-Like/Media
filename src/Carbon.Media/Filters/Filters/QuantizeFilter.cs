@@ -1,18 +1,42 @@
-﻿namespace Carbon.Media.Processors
+﻿using System.Text;
+
+namespace Carbon.Media.Processors
 {
     public class QuantizeFilter : IFilter
     {
-        public QuantizeFilter(int maxColors)
+        public QuantizeFilter(int maxColors, string algorithm = null)
         {
             MaxColors = maxColors;
-            Algorithm = "default";
+            Algorithm = algorithm;
         }
 
         public int MaxColors { get; }
 
-        public string Algorithm { get; }
+        public string Algorithm { get; } // wu....
 
-        public string Canonicalize() => $"quantize({MaxColors})";
+        public string Canonicalize()
+        {
+            var sb = StringBuilderCache.Aquire();
+
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+
+        public void WriteTo(StringBuilder sb)
+        {
+            sb.Append("quantize(");
+
+            sb.Append(MaxColors);
+
+            if (Algorithm != null)
+            {
+                sb.Append(",algorithm:");
+                sb.Append(Algorithm);
+            }
+
+            sb.Append(')');
+        }
 
         public override string ToString() => Canonicalize();
 
