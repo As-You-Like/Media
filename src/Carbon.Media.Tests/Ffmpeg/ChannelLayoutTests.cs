@@ -1,5 +1,7 @@
 ﻿using System;
+
 using FFmpeg.AutoGen;
+
 using Xunit;
 
 namespace Carbon.Media.Ffmpeg.Tests
@@ -80,8 +82,8 @@ namespace Carbon.Media.Ffmpeg.Tests
                 if (count != count2)
                 {
                     throw new Exception(layout + "|" + count + "|" + count2);
-
                 }
+
                 Assert.Equal(count, count2);
             }
         }

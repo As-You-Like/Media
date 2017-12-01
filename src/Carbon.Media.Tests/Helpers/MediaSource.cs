@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Tests
 {
-    internal class MediaSource2 : IMediaSource
+    internal class MediaSource2 : IMediaInfo
     {
         public MediaSource2(string key, int width, int height)
         {

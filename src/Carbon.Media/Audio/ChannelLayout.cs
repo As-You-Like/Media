@@ -24,11 +24,11 @@ namespace Carbon.Media
         TopBackLeft         = 1 << 15, // TBL
         TopBackCenter       = 1 << 16, // TBC
         TopBackRight        = 1 << 17, // TBR
-        WideLeft            = 1 << 20, // WL?
-        WideRight           = 1 << 21, // WR?
-        SurroundDirectLeft  = 1 << 22, // SDL?
-        DirectDirectRight   = 1 << 23, // SDR?
-        LowFrequency2       = 1 << 24, // LF2?
+        WideLeft            = 1 << 20, // WL
+        WideRight           = 1 << 21, // WR
+        SurroundDirectLeft  = 1 << 22, // SDL
+        DirectDirectRight   = 1 << 23, // SDR
+        LowFrequency2       = 1 << 24, // LF2
         DownmixLeft         = 1 << 29, // DL?
         DownmixRight        = 1 << 30, // DR?
 
@@ -52,6 +52,7 @@ namespace Carbon.Media
 
         StereoDownmix       = DownmixLeft | DownmixRight                               //     | DL | DR
 
+        // 6.0 front
         // 7.1 wide
         // 7.1 wide back
     }

@@ -16,7 +16,7 @@ namespace Carbon.Media.Tests
 			Assert.Equal(9, (int)MediaType.Video);
 
             // Non-Standard
-            Assert.Equal(100, (int)MediaType.Subtitles);
+            Assert.Equal(100, (int)MediaType.Subtitle);
         }
 
         [Fact]

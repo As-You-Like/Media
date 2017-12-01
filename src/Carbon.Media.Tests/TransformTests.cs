@@ -351,6 +351,7 @@ namespace Carbon.Media.Tests
             var transformation = new MediaTransformation(jpeg_50x50)
                 .Apply(new ContrastFilter(2f))
                 .Apply(new GrayscaleFilter(1f))
+                .Apply(new QuantizeFilter(256))
                 .Apply(new SepiaFilter(1f))
                 .Apply(new OpacityFilter(1f))
                 .Apply(new SaturateFilter(1f))
@@ -360,22 +361,23 @@ namespace Carbon.Media.Tests
             Assert.Equal(100, transformation.Width);
             Assert.Equal(50, transformation.Height);
 
-            Assert.Equal("contrast(2)/grayscale(1)/sepia(1)/opacity(1)/saturate(1)/hue-rotate(90deg).heif", transformation.GetFullName());
+            Assert.Equal("contrast(2)/grayscale(1)/quantize(256)/sepia(1)/opacity(1)/saturate(1)/hue-rotate(90deg).heif", transformation.GetFullName());
 
             var img = MediaTransformation.ParsePath(transformation.GetPath());
 
             var transforms = img.GetTransforms();
 
-            Assert.Equal(7, transforms.Count);
+            Assert.Equal(8, transforms.Count);
 
-            Assert.Equal(2f, (transforms[0] as ContrastFilter).Amount);
-            Assert.Equal(1f, (transforms[1] as GrayscaleFilter).Amount);
-            Assert.Equal(1f, (transforms[2] as SepiaFilter).Amount);
-            Assert.Equal(1f, (transforms[3] as OpacityFilter).Amount);
-            Assert.Equal(1f, (transforms[4] as SaturateFilter).Amount);
-            Assert.Equal(90, (transforms[5] as HueRotateFilter).Degrees);
+            Assert.Equal(2f,  (transforms[0] as ContrastFilter).Amount);
+            Assert.Equal(1f,  (transforms[1] as GrayscaleFilter).Amount);
+            Assert.Equal(256, (transforms[2] as QuantizeFilter).MaxColors);
+            Assert.Equal(1f,  (transforms[3] as SepiaFilter).Amount);
+            Assert.Equal(1f,  (transforms[4] as OpacityFilter).Amount);
+            Assert.Equal(1f,  (transforms[5] as SaturateFilter).Amount);
+            Assert.Equal(90,  (transforms[6] as HueRotateFilter).Degrees);
 
-            Assert.Equal(FormatId.Heif, (transforms[6] as Encode).Format);
+            Assert.Equal(FormatId.Heif, (transforms[7] as Encode).Format);
         }
 
         [Fact]
@@ -395,7 +397,7 @@ namespace Carbon.Media.Tests
         }
     }
 
-    public class MediaSource : IMediaSource
+    public class MediaSource : IMediaInfo
     {
         public MediaSource(string key, int width = 0, int height = 0, ExifOrientation? orientation = null)
         {
