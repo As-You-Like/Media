@@ -4,6 +4,8 @@
     {
         None       = 1,
         Inch       = 2,
-        Centimeter = 3
+        Centimeter = 3,
+        Millimeter = 4,
+        Micrometer = 5
     }
 }

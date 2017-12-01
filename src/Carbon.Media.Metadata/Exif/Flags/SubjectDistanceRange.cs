@@ -2,10 +2,10 @@
 {
     public enum SubjectDistanceRange : short
     {
-        Unknown     = 0,
-        Macro       = 1,
-        CloseView   = 2,
-        DistantView = 3
+        Unknown = 0,
+        Macro   = 1,
+        Close   = 2, // CloseView
+        Distant = 3  // DistantView
     }
 }
 

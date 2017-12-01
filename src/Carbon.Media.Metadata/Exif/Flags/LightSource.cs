@@ -22,6 +22,6 @@
         D75                  = 22,
         D50                  = 23,
         IsoStudioTungsten    = 24,
-        OtherLightSource     = 255
+        Other                = 255
     }
 }

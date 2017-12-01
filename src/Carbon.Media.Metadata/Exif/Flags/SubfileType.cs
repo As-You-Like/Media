@@ -2,8 +2,13 @@
 {
     public enum SubfileType : byte
     {
-        Image        = 1, // OFILETYPE_IMAGE
-        ReducedImage = 2, // OFILETYPE_REDUCEDIMAGE
-        Page         = 3  // OFILETYPE_PAGE
+        Full                                              = 0,
+        ReducedResolution                                 = 1, 
+        SinglePageOfMultiPage                             = 2, 
+        SinglePageOfMultiPageReducedResolution            = 3,
+        TransparencyMask                                  = 4,
+        TransparencyMaskOfReducedResolutionImage          = 5,
+        TransparencyMaskOfMultiPageImage                  = 6,
+        TransparencyMaskOfReducedResolutionMultiPageImage = 7
     }
 }
