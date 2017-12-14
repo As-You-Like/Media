@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public struct ColorChannel // readonly
+    public readonly struct ColorChannel
     {
         public ColorChannel(ColorComponent component, byte bitCount)
         {
@@ -8,9 +8,9 @@
             BitCount  = bitCount;
         }
 
-        public ColorComponent Component { get; }
+        public readonly ColorComponent Component;
 
-        public byte BitCount { get; }
+        public readonly byte BitCount;
         
         public static ColorChannel R(byte bitCount)       => new ColorChannel(ColorComponent.R,       bitCount);
         public static ColorChannel G(byte bitCount)       => new ColorChannel(ColorComponent.G,       bitCount);

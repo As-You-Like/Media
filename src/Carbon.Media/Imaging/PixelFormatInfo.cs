@@ -6,7 +6,7 @@ namespace Carbon.Media
     using static ColorModel;
     using static PixelFormat;
 
-    public struct PixelFormatInfo
+    public readonly struct PixelFormatInfo
     {
         public PixelFormatInfo(
             int bitsPerPixel,
@@ -21,16 +21,16 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "bitsPerPixel", Order = 1)]
-        public int BitsPerPixel { get; }
+        public readonly int BitsPerPixel;
 
         [DataMember(Name = "colorModel", Order = 2)]
-        public ColorModel ColorModel { get; }
+        public readonly ColorModel ColorModel;
 
         [DataMember(Name = "channels", Order = 3)]
-        public ColorChannel[] Channels { get; }
+        public readonly ColorChannel[] Channels;
 
         [DataMember(Name = "flags", Order = 4)]
-        public PixelFormatFlags Flags { get; }
+        public readonly PixelFormatFlags Flags;
 
         public bool IsPacked => Flags.HasFlag(PixelFormatFlags.Packed);
 

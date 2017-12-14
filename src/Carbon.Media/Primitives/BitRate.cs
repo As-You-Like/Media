@@ -4,23 +4,21 @@ using System.Runtime.Serialization;
 namespace Carbon.Media
 {
     [DataContract]
-    public struct BitRate : IEquatable<BitRate>
+    public readonly struct BitRate : IEquatable<BitRate>
     {
         public static readonly BitRate Zero = new BitRate(0);
 
-        private readonly long value;
-
         public BitRate(long value)
         {
-            this.value = value;
+            Value = value;
         }
 
         [DataMember(Name = "value", Order = 1)]
-        public long Value => value;
+        public readonly long Value;
 
-        public double Kbps => value / 1000d;
+        public double Kbps => Value / 1000d;
 
-        public double Mbps => value / (1000d * 1000d);
+        public double Mbps => Value / (1000d * 1000d);
 
         // Kb/s
         public static BitRate FromKbps(double kbs)
@@ -36,16 +34,13 @@ namespace Carbon.Media
 
         #region Equality
 
-        public bool Equals(BitRate other) => Value == other.value;
+        public bool Equals(BitRate other) => Value == other.Value;
 
-        public override int GetHashCode() => value.GetHashCode();
+        public override int GetHashCode() => Value.GetHashCode();
 
         #endregion 
 
-        public override string ToString()
-        {
-            return value.ToString();
-        }
+        public override string ToString() => Value.ToString();
 
         public static BitRate Parse(string text)
         {

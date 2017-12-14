@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Carbon.Media.Metadata
 {
-    public struct CameraMake
+    public readonly struct CameraMake
     {
         private static readonly Dictionary<string, CameraMake> map = new Dictionary<string, CameraMake> {
             { "PENTAX CORPORATION", Pentax },
@@ -19,10 +19,11 @@ namespace Carbon.Media.Metadata
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
+        
+        public readonly string Name;
 
-        public string Name { get; }
-
-        public static readonly CameraMake Pentax = new CameraMake("Pentax");
         public static readonly CameraMake Nikon  = new CameraMake("Nikon");
+        public static readonly CameraMake Pentax = new CameraMake("Pentax");
+        public static readonly CameraMake Sony   = new CameraMake("Sony");
     }
 }

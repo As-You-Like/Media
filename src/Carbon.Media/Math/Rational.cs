@@ -6,7 +6,7 @@ using static System.Math;
 namespace Carbon.Media
 {
     [DataContract]
-    public struct Rational : IEquatable<Rational>, IFormattable
+    public readonly struct Rational : IEquatable<Rational>, IFormattable
     {
         public Rational(long numerator, long denominator)
         {
@@ -21,10 +21,10 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "numerator", Order = 1)]
-        public long Numerator { get; }
+        public readonly long Numerator;
 
         [DataMember(Name = "denominator", Order = 2)]
-        public long Denominator { get; }
+        public readonly long Denominator;
 
         public Rational Invert() => new Rational(Denominator, Numerator);
 

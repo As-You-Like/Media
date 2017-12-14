@@ -25,7 +25,7 @@
         }
     }
 
-    public struct Argument
+    public readonly struct Argument
     {
         public Argument(string name, string value)
         {
@@ -33,17 +33,15 @@
             Value = value;
         }
 
-        public string Name { get; }
+        public readonly string Name;
 
-        public string Value { get; }
-
+        public readonly string Value;
 
         public void Deconstruct(out string name, out string value)
         {
             name = Name;
             value = Value;
         }
-
 
         public override string ToString()
         {

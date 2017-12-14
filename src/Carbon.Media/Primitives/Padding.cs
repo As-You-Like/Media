@@ -2,9 +2,9 @@
 
 namespace Carbon.Media
 {
-    public struct Padding : IEquatable<Padding>
+    public readonly struct Padding : IEquatable<Padding>
     {
-        public static readonly Padding Zero = new Padding(0);
+        public static readonly Padding Zero = default;
 
         public Padding(int top, int right, int bottom, int left)
         {
@@ -30,13 +30,13 @@ namespace Carbon.Media
             Left   = value;
         }
 
-        public int Top { get; }
+        public readonly int Top;
 
-        public int Right { get; }
+        public readonly int Right;
 
-        public int Bottom { get; }
+        public readonly int Bottom;
 
-        public int Left { get; }
+        public readonly int Left;
         
         public static Padding operator +(Padding lhs, Padding rhs) 
         {
@@ -64,6 +64,8 @@ namespace Carbon.Media
 
             return $"{Top},{Right},{Bottom},{Left}";
         }
+        
+        // TODO Parse
 
         #region Equality
 
@@ -72,7 +74,6 @@ namespace Carbon.Media
             Right == other.Right && 
             Bottom == other.Bottom && 
             Left == other.Left;
-
 
         public override bool Equals(object obj)
         {

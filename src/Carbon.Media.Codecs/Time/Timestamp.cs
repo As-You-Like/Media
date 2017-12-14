@@ -3,7 +3,7 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public struct Timestamp
+    public readonly struct Timestamp
     {
         public Timestamp(long value, Rational timeBase)
         {
@@ -11,9 +11,9 @@ namespace Carbon.Media
             TimeBase = timeBase;
         }
 
-        public long Value { get; }
+        public readonly long Value;
 
-        public Rational TimeBase { get; set; }
+        public readonly Rational TimeBase;
 
         public TimeSpan TimeSpan => TimeSpan.FromTicks(GetTimestamp(Timebases.DotNetTicks));
 

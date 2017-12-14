@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public struct Position
+    public readonly struct Position
     {
         public Position(int x, int y)
         {
@@ -8,9 +8,9 @@
             Y = y;
         }
 
-        public int X { get; }
+        public readonly int X;
 
-        public int Y { get; }
+        public readonly int Y;
     }  
 }
 
