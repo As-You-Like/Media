@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    public struct Unit : IEquatable<Unit>
+    [DataContract]
+    public readonly struct Unit : IEquatable<Unit>
     {
-        public static readonly Unit None = new Unit(0, UnitType.None);
+        public static readonly Unit None = default;
 
         public Unit(double value, UnitType type = UnitType.Px)
         {
@@ -12,9 +14,11 @@ namespace Carbon.Media
             Type = type;
         }
 
-        public double Value { get; }
+        [DataMember(Name = "value", Order = 1)]
+        public readonly UnitType Type;
 
-        public UnitType Type { get; }
+        [DataMember(Name = "value", Order = 2)]
+        public readonly double Value;
 
         public static implicit operator double(Unit unit) => unit.Value;
 
@@ -29,6 +33,7 @@ namespace Carbon.Media
             switch (Type)
             {
                 case UnitType.Percent : return (Value * 100) + "％";
+                case UnitType.Meter   : return Value + " m";
                 default               : return Value.ToString();
             }
         }
@@ -36,6 +41,9 @@ namespace Carbon.Media
         public static Unit Percent(double value) => new Unit(value, UnitType.Percent);
 
         public static Unit Px(int value) => new Unit(value);
+
+        public static Unit Meters(double value) => new Unit(value, UnitType.Meter);
+
 
         // 50％
 
@@ -50,7 +58,7 @@ namespace Carbon.Media
             {
                 text = text.Substring(0, text.Length - 2);
 
-                return new Unit(double.Parse(text));
+                return new Unit(double.Parse(text), UnitType.Px);
             }
 
             else if (text.EndsWith("％") || text.EndsWith("%"))
@@ -60,12 +68,18 @@ namespace Carbon.Media
                 return new Unit(double.Parse(text) / 100d, UnitType.Percent);
             }
 
+            else if (text.EndsWith(" m"))
+            {
+                text = text.Substring(0, text.Length - 2);
+
+                return new Unit(double.Parse(text), UnitType.Meter);
+            }
+
             if (text.Contains("."))
             {
                 return new Unit(double.Parse(text), UnitType.Percent);
             }
 
-            
             return new Unit(double.Parse(text));
         }
 
@@ -81,11 +95,11 @@ namespace Carbon.Media
 
         #region Equality
 
-        public override bool Equals(object obj) =>
-            obj is Unit unit && Equals(unit);
+        public override bool Equals(object obj) => obj is Unit other && Equals(other);
          
         public bool Equals(Unit other) => 
-            Type == other.Type && Value == other.Value;
+            Type == other.Type && 
+            Value == other.Value;
 
         public static bool operator ==(Unit lhs, Unit rhs) =>
             lhs.Equals(rhs);
@@ -93,7 +107,7 @@ namespace Carbon.Media
         public static bool operator !=(Unit lhs, Unit rhs) =>
             !lhs.Equals(rhs);
 
-        public override int GetHashCode() =>  Value.GetHashCode();
+        public override int GetHashCode() => (Type, Value).GetHashCode();
         
         #endregion
     }
@@ -102,6 +116,7 @@ namespace Carbon.Media
     {
         None    = 0,
         Px      = 1,
-        Percent = 2
+        Percent = 2,
+        Meter   = 10
     }
 }
