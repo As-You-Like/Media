@@ -18,6 +18,10 @@ namespace Carbon.Media.Processors
 
         public float Amount { get; }
 
+        public string Canonicalize() => $"volume({Amount})";
+
+        public override string ToString() => Canonicalize();
+
         public static VolumeFilter Parse(string segment)
         {
             int argStart = segment.IndexOf('(') + 1;
@@ -26,9 +30,5 @@ namespace Carbon.Media.Processors
 
             return new VolumeFilter((float)Unit.Parse(segment).Value);
         }
-
-        public string Canonicalize() => $"volume({Amount})";
-
-        public override string ToString() => Canonicalize();
     }
 }

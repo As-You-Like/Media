@@ -10,11 +10,7 @@
         public int Degrees { get; }
 
         // hue-rotate(90deg)
-       
-        public string Canonicalize() => $"hueRotate({Degrees}deg)";
-
-        public override string ToString() => $"hue-rotate({Degrees}deg)";
-
+      
         public static HueRotateFilter Parse(string segment)
         {
             int argStart = segment.IndexOf('(') + 1;
@@ -23,6 +19,14 @@
 
             return new HueRotateFilter(int.Parse(segment.Replace("deg", "")));
         }
+
+        #region ToString()
+
+        public string Canonicalize() => $"hueRotate({Degrees}deg)";
+
+        public override string ToString() => $"hueRotate({Degrees}deg)";
+
+        #endregion
     }
 }
 

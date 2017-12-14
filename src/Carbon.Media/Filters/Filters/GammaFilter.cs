@@ -1,4 +1,7 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+using System.Text;
+
+namespace Carbon.Media.Processors
 {
     public class GammaFilter : IFilter
     {
@@ -6,6 +9,11 @@
 
         public GammaFilter(float amount)
         {
+            if (amount < 0 || amount > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between 0 and 5");
+            }
+
             Amount = amount;
         }
 

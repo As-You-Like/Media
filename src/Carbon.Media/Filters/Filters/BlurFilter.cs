@@ -9,7 +9,9 @@ namespace Carbon.Media.Processors
         public BlurFilter(float radius)
         {
             if (radius < 0 || radius > 2000)
+            {
                 throw new ArgumentOutOfRangeException(nameof(radius), radius, "Must be between 0 and 2,000");
+            }
 
             Amount = radius;
         }

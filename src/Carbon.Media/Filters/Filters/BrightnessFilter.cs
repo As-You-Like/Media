@@ -1,9 +1,17 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+using System.Text;
+
+namespace Carbon.Media.Processors
 {
     public class BrightnessFilter : IFilter
     {
         public BrightnessFilter(float amount)
         {
+            if (amount < -10 || amount > 10)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between -10 and 10");
+            }
+
             Amount = amount;
         }
 

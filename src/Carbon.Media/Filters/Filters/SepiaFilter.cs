@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class SepiaFilter : IFilter
+    public class SepiaFilter : IFilter, ICanonicalizable
     {
         public SepiaFilter(float amount)
         {
@@ -26,9 +27,27 @@ namespace Carbon.Media.Processors
         // range: 0 (unchanged) - 1 (full effect)
         public float Amount { get; }
 
-        public string Canonicalize() => $"sepia({Amount})";
+        #region ICanonicalizable
+
+        public string Canonicalize()
+        {
+            var sb = StringBuilderCache.Aquire();
+
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
+        
+        public void WriteTo(StringBuilder sb)
+        {
+            sb.Append("sepia(");
+            sb.Append(Amount);
+            sb.Append(')');
+        }
 
         public override string ToString() => Canonicalize();
+
+        #endregion
 
         public static SepiaFilter Parse(string segment)
         {

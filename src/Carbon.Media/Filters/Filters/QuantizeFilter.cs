@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Carbon.Media.Processors
 {
@@ -6,6 +7,11 @@ namespace Carbon.Media.Processors
     {
         public QuantizeFilter(int maxColors, string algorithm = null)
         {
+            if (maxColors <= 0)
+            {
+                throw new ArgumentException("Must be > 0", nameof(maxColors));
+            }
+
             MaxColors = maxColors;
             Algorithm = algorithm;
         }
@@ -13,6 +19,8 @@ namespace Carbon.Media.Processors
         public int MaxColors { get; }
 
         public string Algorithm { get; } // wu....
+
+        #region ToString()
 
         public string Canonicalize()
         {
@@ -39,6 +47,8 @@ namespace Carbon.Media.Processors
         }
 
         public override string ToString() => Canonicalize();
+
+        #endregion
 
         public static QuantizeFilter Parse(string segment)
         {

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class CustomFilter : IFilter
+    public sealed class CustomFilter : IFilter, ICanonicalizable
     {
         public CustomFilter(string name, string[] args)
         {
