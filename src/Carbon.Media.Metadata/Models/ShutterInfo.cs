@@ -3,7 +3,7 @@
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class ShutterInfo
+    public struct ShutterInfo
     {
         /// <summary>
         /// The time the shutter was open (in seconds)

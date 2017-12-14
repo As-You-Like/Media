@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.5.0</VersionPrefix>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>Carbon.Media.Metadata</AssemblyName>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Version>1.9.0</Version>
+    <LangVersion>7.2</LangVersion>
 
     <!-- Package Details-->
     <Authors>iamcarbon</Authors>
@@ -16,10 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Carbon.Media\Carbon.Media.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ID3\" />
   </ItemGroup>
 
 </Project>

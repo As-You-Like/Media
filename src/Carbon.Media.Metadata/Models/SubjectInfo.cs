@@ -5,11 +5,13 @@ namespace Carbon.Media.Metadata
     [DataContract]
     public class SubjectInfo
     {
-        [DataMember(Name = "subject")]
+        // Id = 1
+
+        [DataMember(Name = "subject", Order = 2)]
         public string Type { get; set; }
 
         // in meters
-        [DataMember(Name = "distance")]
-        public double Distance { get; set; }
+        [DataMember(Name = "distance", Order = 3)] // TODO :Unit
+        public Unit Distance { get; set; }
     }
 }

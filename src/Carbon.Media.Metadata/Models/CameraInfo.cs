@@ -15,6 +15,7 @@ namespace Carbon.Media
 
         // Id = 1
         // e.g. Canon
+        // aka Manfacturer
         [DataMember(Name = "make", Order = 2)]
         public string Make { get; set; }
 

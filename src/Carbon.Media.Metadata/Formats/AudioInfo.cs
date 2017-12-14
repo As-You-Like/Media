@@ -10,19 +10,21 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
 
-        // e.g. mp4a.40.2 (AACLC)
         [DataMember(Name = "codec", Order = 2)]
         public string Codec { get; set; }
 
-        [DataMember(Name = "duration", Order = 11, EmitDefaultValue = false)]
+        [DataMember(Name = "sampleFormat", Order = 3, EmitDefaultValue = false)]
+        public SampleFormat SampleFormat { get; set; }
+
+        [DataMember(Name = "duration", Order = 10, EmitDefaultValue = false)]
         public TimeSpan Duration { get; set; }
 
-        [DataMember(Name = "channelCount", Order = 12, EmitDefaultValue = false)]
-        public int ChannelCount { get; set; }
+        // Frames = 11
 
-        [DataMember(Name = "channelLayout", Order = 13, EmitDefaultValue = false)]
+        [DataMember(Name = "channelLayout", Order = 12, EmitDefaultValue = false)]
         public ChannelLayout ChannelLayout { get; set; }
     }
+
 }
 
 /*
@@ -30,6 +32,9 @@ namespace Carbon.Media.Metadata
     format        : "aac",
     codec         : "mp4a.40.2",
     duration      : "00:30:00",
-    channelLayout : "Stereo" 
+    channels      : [ 
+        { "name": "FrontLeft"  },
+        { "name": "FrontRight" }
+    ]
 }
 */

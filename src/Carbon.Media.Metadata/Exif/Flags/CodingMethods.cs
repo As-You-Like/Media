@@ -13,5 +13,4 @@ namespace Carbon.Media.Metadata
         BaselineJPEG    = 1 << 4, // BaselineJPEG
         JBIGColor       = 1 << 5
     }
-
 }

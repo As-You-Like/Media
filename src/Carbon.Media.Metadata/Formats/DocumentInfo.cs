@@ -11,7 +11,7 @@ namespace Carbon.Media.Metadata
         public string Format { get; set; }
         
         // Codec = 2
-
+        
         [DataMember(Name = "pages", Order = 10)]
         public PageInfo[] Pages { get; set; }
         

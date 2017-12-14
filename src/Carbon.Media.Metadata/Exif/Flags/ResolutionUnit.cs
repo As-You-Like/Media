@@ -2,8 +2,10 @@
 {
     public enum ResolutionUnit : byte
     {
-        None        = 1,
-        Inches      = 2,
-        Centimeters = 3
+        None       = 1,
+        Inch       = 2,
+        Centimeter = 3,
+        Millimeter = 4,
+        Micrometer = 5
     }
 }

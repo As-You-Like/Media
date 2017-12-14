@@ -13,7 +13,7 @@ namespace Carbon.Media.Metadata
         public int Height { get; set; }
 
         [DataMember(Name = "orientation", Order = 3, EmitDefaultValue = false)]
-        public MediaOrientation Orientation { get; set; }
+        public ExifOrientation Orientation { get; set; }
 
         [DataMember(Name = "pixelFormat", Order = 4, EmitDefaultValue = false)]
         public PixelFormat? PixelFormat { get; set; }

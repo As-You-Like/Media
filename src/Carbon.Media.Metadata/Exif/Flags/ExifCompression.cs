@@ -1,22 +1,22 @@
 ﻿namespace Carbon.Media.Metadata
 {
-	public enum Compression
+	public enum ExifCompression
 	{
 		None         = 1, // Uncompressed
-		CCITT        = 2, // CCITT modified Huffman RLE (CCITTRLE)
-		CCITTFAX3    = 3,
-		CCITTFAX4    = 4,
-		CCITT_T6     = 4,
-		LZW          = 5,
-		Ojpeg        = 6,
-		Jpeg         = 7,
+		CCITT        = 2, // CCITT.T3       |  modified Huffman RLE (CCITTRLE) 
+        CCITTFAX3    = 3, // CCITT.T4
+        CCITTFAX4    = 4, // CCITT.T6
+        CCITT_T6     = 4,
+		LZW          = 5, // LZW
+        Ojpeg        = 6, // JPEG
+        Jpeg         = 7,
         AdobeDeflate = 8,
         JBIGBW       = 9,
         JBIGColor    = 10,
 		Next         = 32766,
         EpsonErf     = 32769,
         CCITTRLEW    = 32771,
-		PackBits     = 32773,
+		PackBits     = 32773, // PackBits
         Thunderscan  = 32809,
 		IT8CTPAD     = 32895,
 		IT8LW        = 32896,

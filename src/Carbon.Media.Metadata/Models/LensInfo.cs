@@ -13,14 +13,16 @@ namespace Carbon.Media
             Model = model;
         }
 
+        // Id = 1
+
         // e.g. Canon
-        [DataMember(Name = "make", Order = 1)]
+        [DataMember(Name = "make", Order = 2, EmitDefaultValue = false)]
         public string Make { get; set; }
 
-        [DataMember(Name = "model", Order = 2)]
+        [DataMember(Name = "model", Order = 3, EmitDefaultValue = false)]
         public string Model { get; set; }
 
-        [DataMember(Name = "serialNumber", Order = 3, EmitDefaultValue = false)]
+        [DataMember(Name = "serialNumber", Order = 4, EmitDefaultValue = false)]
         public string SerialNumber { get; set; }
 
         // FocalLength

@@ -5,9 +5,10 @@
     public sealed class ExifTagInfo
     {
         public static readonly ExifTagInfo ColorSpace                = new ExifTagInfo(ExifTag.ColorSpace,                new NumberToEnum<ExifColorSpace>());
-        public static readonly ExifTagInfo Compression               = new ExifTagInfo(ExifTag.Compression,               new NumberToEnum<Compression>());
+        public static readonly ExifTagInfo Compression               = new ExifTagInfo(ExifTag.Compression,               new NumberToEnum<ExifCompression>());
         public static readonly ExifTagInfo ExposureMode              = new ExifTagInfo(ExifTag.ExposureMode,              new NumberToEnum<ExposureMode>());
         public static readonly ExifTagInfo ExposureProgram           = new ExifTagInfo(ExifTag.ExposureProgram,           new NumberToEnum<ExposureProgram>());
+        public static readonly ExifTagInfo FocalPlaneResolutionUnit  = new ExifTagInfo(ExifTag.FocalPlaneResolutionUnit,  new NumberToEnum<ResolutionUnit>());
         public static readonly ExifTagInfo GainControl               = new ExifTagInfo(ExifTag.GainControl,               new NumberToEnum<GainControl>());          
         public static readonly ExifTagInfo LightSource               = new ExifTagInfo(ExifTag.LightSource,               new NumberToEnum<LightSource>());
         public static readonly ExifTagInfo Orientation               = new ExifTagInfo(ExifTag.Orientation,               new NumberToEnum<ExifOrientation>());

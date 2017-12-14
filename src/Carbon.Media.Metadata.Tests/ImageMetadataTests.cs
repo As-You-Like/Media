@@ -68,8 +68,7 @@ namespace Carbon.Media.Metadata.Tests
         {
             // 12MP Digital Negitive
             // 64bpp = 96MB buffer
-            var image = new ImageInfo
-            {
+            var image = new ImageInfo {
                 Format      = "dng",
                 Width       = 4000,
                 Height      = 3000,
@@ -79,7 +78,7 @@ namespace Carbon.Media.Metadata.Tests
                 Copyright   = "©2018 Willy Wonka. All Rights Reserved.",
                 Exposure    = new ExposureInfo { Time = TimeSpan.FromSeconds(1) },
                 Lens        = new LensInfo("Canon", "EF-S 35mm f/2.8 Macro IS STM"),
-                Location    = new GpsData { Altitude = 1, Latitude = 2, Longitude = 3 },
+                Location    = new GpsData { Altitude = Unit.Meters(10.5), Latitude = 2, Longitude = 3 },
                 Lighting    = new LightingInfo { Source = LightSource.D50 },
                 Software    = new SoftwareInfo { Name = "Photoshop" },
                 Owner       = new ActorInfo {  Name = "Willy Wonka" }
@@ -96,21 +95,24 @@ namespace Carbon.Media.Metadata.Tests
             Assert.Equal("EOS 5D",                                  image2.Camera.Model);
             Assert.Equal("Canon",                                   image2.Lens.Make);
             Assert.Equal("EF-S 35mm f/2.8 Macro IS STM",            image2.Lens.Model);
-            Assert.Equal(1,                                         image2.Location.Altitude);
+            Assert.Equal("10.5 m",                                  image2.Location.Altitude.ToString());
             Assert.Equal(2,                                         image2.Location.Latitude);
             Assert.Equal(3,                                         image2.Location.Longitude);
 
             Assert.Equal(@"{
   ""format"": ""dng"",
+  ""pixelFormat"": ""Rgba64"",
   ""width"": 4000,
   ""height"": 3000,
-  ""pixelFormat"": ""Rgba64"",
   ""colorSpace"": ""RGB"",
+  ""copyright"": ""\u00A92018 Willy Wonka. All Rights Reserved."",
+  ""owner"": {
+    ""name"": ""Willy Wonka""
+  },
   ""camera"": {
     ""make"": ""Canon"",
     ""model"": ""EOS 5D""
   },
-  ""copyright"": ""\u00A92018 Willy Wonka. All Rights Reserved."",
   ""exposure"": {
     ""time"": ""00:00:01""
   },
@@ -124,10 +126,7 @@ namespace Carbon.Media.Metadata.Tests
   ""location"": {
     ""longitude"": 3,
     ""latitude"": 2,
-    ""altitude"": 1
-  },
-  ""owner"": {
-    ""name"": ""Willy Wonka""
+    ""altitude"": ""10.5 m""
   },
   ""software"": {
     ""name"": ""Photoshop""

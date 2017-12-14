@@ -27,6 +27,8 @@ namespace Carbon.Media.Metadata
                 }
             }
         }
+        
+        // ExifTag?
 
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; }

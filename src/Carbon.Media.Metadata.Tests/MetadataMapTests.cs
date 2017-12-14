@@ -11,17 +11,22 @@ namespace Carbon.Media.Metadata.Tests
 
             Assert.NotNull(result.Converter); // RationalConverter
             Assert.Equal("ExposureTime", result.Name);
-            Assert.Equal(33434, result.Code);
+            Assert.Equal(33434,           result.Code);
 
             result = MetadataMap.Get(ExifTag.ExposureMode);
 
             Assert.Equal("ExposureMode", result.Name);
-            Assert.Equal(41986, result.Code);
+            Assert.Equal(41986,          result.Code);
 
             result = MetadataMap.Get(ExifTag.GPSAltitude);
 
             Assert.Equal("GPSAltitude", result.Name);
             Assert.Equal(6, result.Code);
+
+            result = MetadataMap.Get(ExifTag.Acceleration);
+
+            Assert.Equal("Acceleration", result.Name);
+            Assert.Equal(37892,          result.Code);
         }
     }
 }

@@ -12,7 +12,10 @@ namespace Carbon.Media.Metadata
         public double Latitude { get; set; }
 
         [DataMember(Name = "altitude", Order = 3, EmitDefaultValue = false)]
-        public double Altitude { get; set; } 
+        public Unit Altitude { get; set; } 
+        
+        [DataMember(Name = "speed", Order = 4, EmitDefaultValue = false)]
+        public Unit Speed { get; set; }
     }
 }
 
