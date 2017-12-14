@@ -107,6 +107,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
+
+        #region ICanonicalizable
+
         // resize(100,100,anchor:center)
         // resize(100,100,flags:fit)
 
@@ -119,19 +122,20 @@ namespace Carbon.Media.Processors
             return StringBuilderCache.ExtractAndRelease(sb);
         }
 
-
         public void WriteTo(StringBuilder sb)
         {
             sb.Append("resize(");
             sb.Append(Width.Value);
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Height.Value);
 
             // Options
             WriteOptions(sb);
 
-            sb.Append(")");
+            sb.Append(')');
         }
+
+        #endregion
 
         public override string ToString()
         {
@@ -140,7 +144,7 @@ namespace Carbon.Media.Processors
             var sb = StringBuilderCache.Aquire();
 
             sb.Append(Width);
-            sb.Append("x");
+            sb.Append('x');
             sb.Append(Height);
 
             if (Flags != ResizeFlags.None)
@@ -149,7 +153,7 @@ namespace Carbon.Media.Processors
             }
             else if (Anchor != null)
             {
-                sb.Append("-");
+                sb.Append('-');
                 sb.Append(Anchor.Value.ToCode());
             }
 
@@ -160,7 +164,8 @@ namespace Carbon.Media.Processors
         {
             if (Flags != ResizeFlags.None)
             {
-                sb.Append("," + Flags.ToLower());
+                sb.Append(',');
+                sb.Append(Flags.ToLower());
             }
 
             if (Anchor != null)

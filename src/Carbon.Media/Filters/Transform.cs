@@ -23,16 +23,18 @@
                 case "flip"         : return Flip.Parse(segment);
                 case "pad"          : return Pad.Parse(segment);
 
-                case "page"         : return Page.Parse(segment);
+                case "page"         : return PageFilter.Parse(segment);
+                case "frame"        : return FrameFilter.Parse(segment);
                                         
                 case "background"   :
-                case "bg"           : return Background.Parse(segment);
+                case "bg"           : return BackgroundFilter.Parse(segment);
                 
                 // web filters
                 case "blur"         : return BlurFilter.Parse(segment);
                 case "brightness"   : return BrightnessFilter.Parse(segment);
                 case "contrast"     : return ContrastFilter.Parse(segment);
                 case "grayscale"    : return GrayscaleFilter.Parse(segment);
+                case "hueRotate"    : return HueRotateFilter.Parse(segment);
                 case "hue-rotate"   : return HueRotateFilter.Parse(segment);
                 case "invert"       : return InvertFilter.Parse(segment);
                 case "opacity"      : return OpacityFilter.Parse(segment);
@@ -52,12 +54,12 @@
                 case "volume"       : return VolumeFilter.Parse(segment);
 
                 // Drawing
-                case "draw"         : return Draw.Parse(segment);
+                case "draw"         : return DrawFilter.Parse(segment);
 
                 // Other
-                case "metadata"     : return Metadata.Parse(segment);
+                case "metadata"     : return MetadataFilter.Parse(segment);
                 case "quality"      : return Quality.Parse(segment);
-                case "lossless"     : return new Quality(100);
+                case "lossless"     : return LosslessFilter.Default;
 
                 default             :
 

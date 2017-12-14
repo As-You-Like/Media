@@ -6,15 +6,17 @@ using Carbon.Media.Drawing;
 
 namespace Carbon.Media.Processors
 {
-    public class Draw : ITransform
+    public class DrawFilter : ITransform, ICanonicalizable
     {
-        public Draw(IReadOnlyList<Shape> commands)
+        public DrawFilter(IReadOnlyList<Shape> commands)
         {
             Commands = commands ?? throw new ArgumentNullException(nameof(commands));
         }
 
-        public IReadOnlyList<Shape> Commands { get; set; }
-        
+        public IReadOnlyList<Shape> Commands { get; }
+
+        #region ICanonicalizable
+
         public string Canonicalize()
         {
             var sb = StringBuilderCache.Aquire();
@@ -38,10 +40,14 @@ namespace Carbon.Media.Processors
                 Commands[i].WriteTo(sb);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
-        
-        public static Draw Parse(string text)
+
+        public override string ToString() => Canonicalize();
+
+        #endregion
+
+        public static DrawFilter Parse(string text)
         {
             int argStart = text.IndexOf('(') + 1;
 
@@ -54,9 +60,7 @@ namespace Carbon.Media.Processors
                 commands.Add(command);
             }
 
-            return new Draw(commands);
+            return new DrawFilter(commands);
         }
-
-        public override string ToString() => Canonicalize();
     }
 }

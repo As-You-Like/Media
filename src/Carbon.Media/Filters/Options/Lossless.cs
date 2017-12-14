@@ -1,16 +1,20 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public class Lossless : ITransform
+    public class LosslessFilter : ITransform
     {
-        public static readonly Lossless Default = new Lossless();  
+        public static readonly LosslessFilter Default = new LosslessFilter();  
 
-        public static Lossless Parse(string segment)
+        public static LosslessFilter Parse(string segment)
         {
             return Default;
         }
 
-        public string Canonicalize() => $"lossless";
+        #region ICanonicalizable
+
+        public string Canonicalize() => "lossless";
 
         public override string ToString() => Canonicalize();
+
+        #endregion
     }
 }

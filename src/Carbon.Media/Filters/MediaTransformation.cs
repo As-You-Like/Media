@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Carbon.Media
 {
-    using Carbon.Media.Drawing;
+    using Drawing;
     using Processors;
-    
+
     public class MediaTransformation
     {
         protected readonly List<ITransform> transforms = new List<ITransform>();
@@ -20,7 +20,6 @@ namespace Carbon.Media
         public MediaTransformation(IMediaInfo source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
-            
             width  = source.Width;
             height = source.Height;
 
@@ -136,7 +135,7 @@ namespace Carbon.Media
 
         public MediaTransformation Draw(params Shape[] shapes)
         {
-            Apply(new Draw(shapes));
+            Apply(new DrawFilter(shapes));
 
             return this;
         }
@@ -178,14 +177,14 @@ namespace Carbon.Media
 
         public MediaTransformation WithBackground(string color)
         {
-            Apply(new Background(color));
+            Apply(new BackgroundFilter(color));
 
             return this;
         }
 
         public MediaTransformation WithPage(int number)
         {
-            Apply(new Page(number));
+            Apply(new PageFilter(number));
 
             return this;
         }
@@ -197,9 +196,9 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation Blur(int value)
+        public MediaTransformation Blur(float radius)
         {
-            Apply(new BlurFilter(value));
+            Apply(new BlurFilter(radius));
 
             return this;
         }
@@ -230,6 +229,8 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool HasTransforms => transforms.Count > 0;
 
+        private static readonly char[] transformPathSeperators = new[] { ';', '/' };
+
         public static MediaTransformation ParsePath(string path, IMediaInfo source = null)
         {
             #region Preconditions
@@ -244,30 +245,30 @@ namespace Carbon.Media
 
             #endregion
 
-            if (path.StartsWith("/"))
+            if (path[0] == '/')
             {
                 path = path.Substring(1);
             }
 
-            // 100/{transform}.{format}
+            // {sourcePath}/{transform}.{format}
 
             int lastDotIndex        = path.LastIndexOf('.');
-            int firstSeperatorIndex = path.IndexOf('/');
+            int firstSeperatorIndex = path.IndexOfAny(transformPathSeperators); // { ';', '/' }
 
             if (lastDotIndex == -1)
             {
-                throw new Exception("no format provided");
+                throw new Exception("Missing format");
             }
            
-            string id              = path.Substring(0, firstSeperatorIndex);
-            string transformString = path.Substring(firstSeperatorIndex, lastDotIndex - firstSeperatorIndex);
+            string key             = path.Substring(0, firstSeperatorIndex);
+            string transformString = path.Substring(firstSeperatorIndex + 1, lastDotIndex - (firstSeperatorIndex + 1));
             string format          = path.Substring(lastDotIndex + 1);
 
             var segments = transformString.Split(Seperators.ForwardSlash);
 
             var transforms = ParseTransforms(segments);
 
-            var rendition = new MediaTransformation(source ?? new MediaInfo(id, 0, 0))
+            var rendition = new MediaTransformation(source ?? new MediaInfo(key, 0, 0))
                 .Apply(transforms)
                 .Encode(FormatIdExtensions.Parse(format), null);
 
@@ -276,9 +277,9 @@ namespace Carbon.Media
 
         public static ITransform[] ParseTransforms(string[] segments)
         {
-            var transforms = new ITransform[segments.Length - 1];
+            var transforms = new ITransform[segments.Length];
 
-            for (var i = 1; i < segments.Length; i++)
+            for (var i = 0; i < segments.Length; i++)
             {
                 var segment = segments[i];
 
@@ -286,24 +287,14 @@ namespace Carbon.Media
 
                 if (char.IsDigit(segment[0]))
                 {
-                    // 1:00
-                    if (segment.Contains(":"))
-                    {
-                        var time = TimeSpan.Parse(segment);
-
-                        transform = new Clip(time, time);
-                    }
-                    else
-                    {
-                        transform = Processors.Resize.Parse(segment);
-                    }
+                    transform = Processors.Resize.Parse(segment);   
                 }
                 else
                 {
                     transform = Transform.Parse(segment);
                 }
 
-                transforms[i - 1] = transform;
+                transforms[i] = transform;
             }
 
             return transforms;
@@ -315,7 +306,7 @@ namespace Carbon.Media
 
         public string GetFullName() => GetFullName("/");
 
-        public string GetFullName(string seperator, string prefix = null)
+        public string GetFullName(string transformSeperator, string prefix = null)
         {
             /* 
 			10x10.gif			
@@ -336,17 +327,24 @@ namespace Carbon.Media
             {
                 if (transform is Encode encode)
                 {
-                    sb.Append(".");
+                    sb.Append('.');
                     sb.Append(encode.Format.ToString().ToLower());
                 }
                 else
                 {
                     if (sb.Length != 0)
                     {
-                        sb.Append(seperator);
+                        sb.Append(transformSeperator);
                     }
 
-                    sb.Append(transform.ToString());
+                    if (transform is ICanonicalizable canonicalizable)
+                    {
+                        canonicalizable.WriteTo(sb);
+                    }
+                    else
+                    {
+                        sb.Append(transform.ToString());
+                    }
                 }
             }
 
@@ -354,23 +352,5 @@ namespace Carbon.Media
         }
 
         #endregion
-    }
-
-    internal class MediaInfo : IMediaInfo
-    {
-        public MediaInfo(string key, int width, int height)
-        {
-            Key    = key;
-            Width  = width;
-            Height = height;
-        }
-
-        public ExifOrientation? Orientation => null;
-
-        public string Key { get; }
-
-        public int Width { get; }
-
-        public int Height { get; }
     }
 }

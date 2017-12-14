@@ -26,7 +26,7 @@ namespace Carbon.Media.Processors
         // If the image is padded, we need to create an intermediate canvas
         
         // If the resize mode was set to pad (or padding was added after) 
-        public Padding Padding { get; set; } = Padding.Zero;
+        public Padding Padding { get; set; } 
 
         public string BackgroundColor { get; set; }
 
@@ -41,9 +41,11 @@ namespace Carbon.Media.Processors
         // Filters & Draws
         public List<ITransform> Filters { get; } = new List<ITransform>();
 
-        public Metadata Metadata { get; set; }
+        public MetadataFilter Metadata { get; set; }
 
         public Encode Encode { get; set; }
+
+        // lossless?
 
         // blob#1 |> orient(x) |> crop(0,0,100,100) |> JPEG(quality:87)
 
@@ -88,6 +90,7 @@ namespace Carbon.Media.Processors
 
             var interpolater = InterpolaterMode.Lanczos3;
             Rectangle? crop = null;
+            EncodingFlags encodingFlags = EncodingFlags.None;
 
             var box = new Box {
                 Width = sourceSize.Width,
@@ -98,11 +101,11 @@ namespace Carbon.Media.Processors
 
             foreach (var transform in processors)
             {
-                if (transform is Page page)
+                if (transform is PageFilter page)
                 {
                     pipeline.PageNumber = page.Number;
                 }
-                else if (transform is Background background)
+                else if (transform is BackgroundFilter background)
                 {
                     pipeline.BackgroundColor = background.Color;
                 }
@@ -208,14 +211,19 @@ namespace Carbon.Media.Processors
 
                     pipeline.Rotate = rotate.Angle;
                 }
-                else if (transform is Metadata metadata)
+                else if (transform is MetadataFilter metadata)
                 {
                     pipeline.Metadata = metadata;
                 }
+                else if (transform is LosslessFilter)
+                {
+                    quality = 100;
+                    encodingFlags |= EncodingFlags.Lossless;
+                }
                 else if (transform is Encode encode)
                 {
-                    pipeline.Encode = quality != null
-                        ? new Encode(encode.Format, quality, encode.Flags) // set the quality
+                    pipeline.Encode = quality != null || encodingFlags != default
+                        ? new Encode(encode.Format, quality, encode.Flags | encodingFlags) // set the quality
                         : encode;
                 }
                 else
@@ -271,10 +279,10 @@ namespace Carbon.Media.Processors
 
                 switch (transform)
                 {
-                    case Page page:
+                    case PageFilter page:
                         result.PageNumber = page.Number;
                         break;
-                    case Background bg:
+                    case BackgroundFilter bg:
                         result.BackgroundColor = bg.Color;
                         break;
                     case Rotate rotate:
@@ -330,7 +338,8 @@ namespace Carbon.Media.Processors
             if (Flip != null)
             {
                 sb.Append("|>");
-                sb.Append(Flip.Canonicalize());
+
+                Flip.WriteTo(sb);
             }
 
             if (Rotate != 0)
@@ -367,7 +376,14 @@ namespace Carbon.Media.Processors
             {
                 sb.Append("|>");
 
-                sb.Append(filter.Canonicalize());
+                if (filter is ICanonicalizable canonicalizable)
+                {
+                    canonicalizable.WriteTo(sb);
+                }
+                else
+                {
+                    sb.Append(filter.Canonicalize());
+                }
             }
 
             sb.Append("|>");

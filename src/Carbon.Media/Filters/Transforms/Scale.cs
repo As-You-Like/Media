@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Scale : ITransform
+    public sealed class Scale : ITransform, ICanonicalizable
     {
         public Scale(Size size, InterpolaterMode mode)
             : this(size.Width, size.Height, mode) { }
@@ -32,7 +33,10 @@ namespace Carbon.Media.Processors
 
         public InterpolaterMode Mode { get; }
 
+        [IgnoreDataMember]
         public Size Size => new Size(Width, Height);
+
+        #region ICanonicalizable
 
         // scale(100,100,lanczos3)
         public string Canonicalize()
@@ -49,19 +53,21 @@ namespace Carbon.Media.Processors
             sb.Append("scale(");
 
             sb.Append(Width);
-            sb.Append(",");
+            sb.Append(',');
             sb.Append(Height);
 
             if (Mode != default)
             {
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Mode.ToLower());
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public override string ToString() => Canonicalize();
+
+        #endregion
 
         public static Scale Parse(string segment)
         {

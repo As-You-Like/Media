@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Encode : ITransform
+    public sealed class Encode : ITransform, ICanonicalizable
     {
         public Encode(
             FormatId format,
@@ -26,6 +26,8 @@ namespace Carbon.Media.Processors
         // jpeg only
         public EncodingFlags Flags { get; }
 
+        #region ICanonicalizable
+
         public string Canonicalize()
         {
             var sb = StringBuilderCache.Aquire();
@@ -42,14 +44,16 @@ namespace Carbon.Media.Processors
 
             if (Quality != null && Quality != 0)
             {
-                sb.Append("(");
+                sb.Append('(');
                 sb.Append("quality:");
                 sb.Append(Quality.Value);
-                sb.Append(")");
+                sb.Append(')');
             }
         }
 
         public override string ToString() => Canonicalize();
+
+        #endregion
 
         // JPEG::encode(quality:100)
         // JPEG::encode(quality:88,progressive:true)
@@ -86,6 +90,7 @@ namespace Carbon.Media.Processors
                     {
                         case "quality"     : quality = int.Parse(arg.Value);                     break;
                         case "progressive" : flags |= EncodingFlags.Progressive;                 break;
+                        case "lossless"    : flags |= EncodingFlags.Lossless;                    break;
                         case "profile"     : throw new Exception("profiles not yet supported");
                     }
                 }

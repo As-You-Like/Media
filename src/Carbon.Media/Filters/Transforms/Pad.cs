@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Pad : ITransform
+    public sealed class Pad : ITransform, ICanonicalizable
     {
         public Pad(int value)
         {
@@ -67,21 +67,21 @@ namespace Carbon.Media.Processors
             else if (Top == Bottom && Left == Right)
             {
                 sb.Append(Top);
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Right);
             }
             else
             {
                 sb.Append(Top);
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Right);
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Bottom);
-                sb.Append(",");
+                sb.Append(',');
                 sb.Append(Left);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public override string ToString() => Canonicalize();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Crop : ITransform
+    public sealed class Crop : ITransform, ICanonicalizable
     {
         public Crop(Unit x, Unit y, Unit width, Unit height)
         {
@@ -50,21 +50,21 @@ namespace Carbon.Media.Processors
             return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
         }
 
-        public Crop Scale(double xScale, double yScale) =>
-            new Crop(
-                x      : (int)(X * xScale),
-                y      : (int)(Y * yScale),
-                width  : (int)(Width * xScale),
-                height : (int)(Height * yScale)
-            );
+        public Crop Scale(double xScale, double yScale) => new Crop(
+            x      : (int)(X * xScale),
+            y      : (int)(Y * yScale),
+            width  : (int)(Width * xScale),
+            height : (int)(Height * yScale)
+        );
 
-        public Crop Scale(double scale) =>
-            new Crop(
-                x       : (int)(X * scale),
-                y       : (int)(Y * scale),
-                width   : (int)(Width * scale),
-                height  : (int)(Height * scale)
-            );
+        public Crop Scale(double scale) => new Crop(
+            x       : (int)(X * scale),
+            y       : (int)(Y * scale),
+            width   : (int)(Width * scale),
+            height  : (int)(Height * scale)
+        );
+
+        #region ICanonicalizable
 
         public string Canonicalize()
         {
@@ -87,6 +87,8 @@ namespace Carbon.Media.Processors
             sb.Append(Height.ToString());
             sb.Append(')');
         }
+
+        #endregion
 
         // OLD: crop:0-0_100x100
         // NEW: crop(0,0,100,100)

@@ -17,13 +17,6 @@ namespace Carbon.Media.Processors
         }
 
         public int Value { get; }
-       
-        public string Canonicalize()
-        {
-            return $"quality({Value})";
-        }
-
-        public override string ToString() => Canonicalize();
 
         // quality(100)
         // lossless
@@ -36,5 +29,16 @@ namespace Carbon.Media.Processors
             
             return new Quality(int.Parse(arg));
         }
+
+        #region ToString()
+
+        public string Canonicalize()
+        {
+            return $"quality({Value})";
+        }
+
+        public override string ToString() => Canonicalize();
+
+        #endregion
     }
 }

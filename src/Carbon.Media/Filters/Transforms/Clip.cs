@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Clip : ITransform
+    public sealed class Clip : ITransform, ICanonicalizable
     {
         public Clip(TimeSpan start, TimeSpan end)
         {
@@ -28,6 +28,8 @@ namespace Carbon.Media.Processors
 
         public TimeSpan End { get; }
 
+        #region ICanonicalizable
+
         public string Canonicalize()
         {
             var sb = StringBuilderCache.Aquire();
@@ -49,9 +51,11 @@ namespace Carbon.Media.Processors
             sb.Append(End.TotalSeconds);
             sb.Append('s');
             
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public override string ToString() => Canonicalize();
+
+        #endregion
     }
 }

@@ -3,14 +3,16 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class Metadata : ITransform
+    public class MetadataFilter : ITransform, ICanonicalizable
     {
-        public Metadata(string[] properties) // graphql?
+        public MetadataFilter(string[] properties) // graphql?
         {
             Properties = properties ?? throw new ArgumentNullException(nameof(properties));
         }
 
         public string[] Properties { get; }
+
+        #region ToString()
 
         public string Canonicalize()
         {
@@ -23,27 +25,41 @@ namespace Carbon.Media.Processors
 
         public void WriteTo(StringBuilder sb)
         {
-            sb.Append("metadata(");
+            sb.Append("metadata");
 
-            var i = 0;
-
-            foreach (var property in Properties)
+            if (Properties.Length > 0)
             {
-                if (i > 0)
+                sb.Append('(');
+
+                var i = 0;
+
+                foreach (var property in Properties)
                 {
-                    sb.Append(",");
+                    if (i > 0)
+                    {
+                        sb.Append(',');
+                    }
+
+                    sb.Append(property);
+
+                    i++;
                 }
 
-                sb.Append(property);
-
-                i++;
+                sb.Append(')');
             }
-
-            sb.Append(")");
         }
 
-        public static Metadata Parse(string key)
+        public override string ToString() => Canonicalize();
+
+        #endregion
+
+        public static MetadataFilter Parse(string key)
         {
+            if (key == "metadata")
+            {
+                return new MetadataFilter(Array.Empty<string>());
+            }
+
             if (!key.StartsWith("metadata("))
             {
                 throw new Exception("must start with metadata(");
@@ -51,7 +67,6 @@ namespace Carbon.Media.Processors
 
             // get text inside parathesis
             key = key.Substring(9, key.Length - 10);
-
 
             if (key.StartsWith("{"))
             {
@@ -61,7 +76,7 @@ namespace Carbon.Media.Processors
 
             var properties = key.Split(Seperators.Comma);
 
-            return new Metadata(properties);
+            return new MetadataFilter(properties);
         }
     }
 }
