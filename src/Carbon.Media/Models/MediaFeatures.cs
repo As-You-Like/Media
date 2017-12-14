@@ -12,7 +12,7 @@ namespace Carbon.Media
         ColorProfile = 1 << 3,  // 8,
 
         // Color spaces
-        CMYK         = 1 << 5,
+        CMYK         = 1 << 5,  // 16
         Gray         = 1 << 6
     }
 }

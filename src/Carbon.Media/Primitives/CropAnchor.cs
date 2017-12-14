@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     using static CropAnchor;
 
-    public enum CropAnchor
+    public enum CropAnchor : byte
     {
         Top    = 1 << 1,
         Right  = 1 << 2,

@@ -80,7 +80,7 @@ namespace Carbon.Media
         public static readonly MagicNumber Flac = new MagicNumber(0x66, 0x4C, 0x61, 0x43);
 
         //                                                         F     L     V    .
-        public readonly static MagicNumber Flv = new MagicNumber(0x46, 0x4C, 0x56, 0x01);
+        public static readonly MagicNumber Flv = new MagicNumber(0x46, 0x4C, 0x56, 0x01);
 
         public static readonly MagicNumber Gif87a = FromASCII("GIF87a");
         public static readonly MagicNumber Gif89a = FromASCII("GIF89a");
@@ -111,7 +111,7 @@ namespace Carbon.Media
         public static readonly MagicNumber Opus = new MagicNumber(0x4F, 0x70, 0x75, 0x73, 0x48, 0x65, 0x61, 0x64);
 
         //                                                         8     B     P     S
-        public readonly static MagicNumber Psd = new MagicNumber(0x38, 0x42, 0x50, 0x53);
+        public static readonly MagicNumber Psd = new MagicNumber(0x38, 0x42, 0x50, 0x53);
 
         //                                                         %     P     D     F
         public static readonly MagicNumber Pdf = new MagicNumber(0x25, 0x50, 0x44, 0x46);  
@@ -121,7 +121,7 @@ namespace Carbon.Media
 
         public static readonly MagicNumber Ps = new MagicNumber(0x25, 0x21);
 
-        public static readonly MagicNumber Tar = new MagicNumber(0x1F, 0x9D); // Lempel-Ziv-Welch 
+        public static readonly MagicNumber Tar = new MagicNumber(0x1F, 0x9D);
 
         public static readonly MagicNumber Tiff1 = new MagicNumber(73, 73, 42, 0);  // II*. | Little Endian
         public static readonly MagicNumber Tiff2 = new MagicNumber(77, 77, 0, 42);  // MM.* | Big Endian
@@ -132,7 +132,7 @@ namespace Carbon.Media
         public static readonly MagicNumber Wav2 = FromASCII("WAVE");
 
         //                                                       I     D     3
-        public readonly static MagicNumber Mp3 = new MagicNumber(0x49, 0x44, 0x33);
+        public static readonly MagicNumber Mp3 = new MagicNumber(0x49, 0x44, 0x33);
 
         //                                                       .     .     .     .     f     t     y     p     m     p     4     2
         public static readonly MagicNumber Mp4 = new MagicNumber(0x0, 0x0, 0x0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x6D, 0x70, 0x34, 0x32);
@@ -150,6 +150,7 @@ namespace Carbon.Media
 
 
         public static readonly MagicNumber Mpeg1 = new MagicNumber(0x0, 0x0, 0x1, 0xBA);
+
         public static readonly MagicNumber Mpeg2 = new MagicNumber(0x0, 0x0, 0x1, 0xB3);
 
         //                                                          F     W     S

@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Carbon.Media
 {
@@ -8,24 +8,54 @@ namespace Carbon.Media
 
     public sealed class MediaRenditionInfo : ISize
     {
-        public static string Host = "";
-        public static ISigner Signer = null;
+        private readonly string host;
+        private readonly string sourcePath;
+        private readonly string transformPath;
+        private readonly string seperator;
+        private readonly IUrlSigner signer;
 
-        private readonly string path;
-
-        public MediaRenditionInfo(MediaTransformation transformation)
-            : this(new Size(transformation.Width, transformation.Height), transformation.GetPath())
+        public MediaRenditionInfo(
+            string host, 
+            MediaTransformation transformation,
+            string seperator = "/",
+            IUrlSigner signer = null)
+            : this(
+                  host          : host,
+                  sourcePath    : transformation.Source.Key,
+                  transformPath : transformation.GetFullName("/", prefix: null), 
+                  width         : transformation.Width, 
+                  height        : transformation.Height,
+                  seperator     : seperator
+                )
         { }
 
-        public MediaRenditionInfo(Size size, string path)
-            : this(size.Width, size.Height, path)
+        public MediaRenditionInfo(
+            string host,
+            string sourcePath,
+            string transformPath, 
+            Size size, 
+            string seperator = "/",
+            IUrlSigner signer = null)
+            : this(host, sourcePath, transformPath, size.Width, size.Height, seperator, signer)
         { }
 
-        public MediaRenditionInfo(int width, int height, string path)
+        public MediaRenditionInfo(
+            string host, 
+            string sourcePath, 
+            string transformPath, 
+            int width,
+            int height,
+            string seperator = "/",
+            IUrlSigner signer = null)
         {
-            Width = width;
+            this.host               = host;
+            this.sourcePath         = sourcePath    ?? throw new ArgumentNullException(nameof(sourcePath));
+            this.transformPath      = transformPath;
+            this.seperator          = seperator    ?? throw new ArgumentNullException(nameof(seperator));
+            this.signer             = signer;
+
+            Width  = width;
             Height = height;
-            this.path = path;
         }
 
         public int Width { get; }
@@ -35,130 +65,96 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool IsEmpty => Width == 0 || Height == 0;
 
-        public string TransformString
-        {
-            get
-            {
-                var parts = path.Split(Seperators.ForwardSlash);
+        public string SourcePath => sourcePath;
 
-                var sb = StringBuilderCache.Aquire();
-
-                for (var i = 1; i < parts.Length; i++)
-                {
-                    if (i > 1)
-                    {
-                        sb.Append('/');
-                    }
-
-                    sb.Append(parts[i]);
-                }
-
-                return StringBuilderCache.ExtractAndRelease(sb);
-            }
-        }
-
-        public MediaRenditionInfo WithBackground(string hex)
-        {
-            if (hex.StartsWith("#"))
-            {
-                hex = hex.Substring(1);
-            }
-
-            var dotIndex = path.LastIndexOf('.');
-            var spec     = path.Substring(0, dotIndex);
-            var format   = path.Substring(dotIndex + 1);
-
-            var newPath = $"{spec}/bg({hex}).{format}";
-
-            return new MediaRenditionInfo(Width, Height, newPath);
-        }
-
-        public MediaRenditionInfo Resample(string name)
-        {
-            var dotIndex = path.LastIndexOf('.');
-            var spec = path.Substring(0, dotIndex);
-            var format = path.Substring(dotIndex + 1);
-
-            var newPath = $"{spec}/resample({name}).{format}";
-
-            return new MediaRenditionInfo(Width, Height, newPath);
-        }
+        public string TransformPath => transformPath;
 
         public MediaRenditionInfo Blur(int radius)
         {
-            var dotIndex = path.LastIndexOf('.');
-            var spec = path.Substring(0, dotIndex);
-            var format = path.Substring(dotIndex + 1);
+            var dotIndex = transformPath.LastIndexOf('.');
+            var spec     = transformPath.Substring(0, dotIndex);
+            var format   = transformPath.Substring(dotIndex + 1);
 
-            var newPath = $"{spec}/blur({radius}).{format}";
+            var newTransformPath = $"{spec}/blur({radius}).{format}";
 
-            return new MediaRenditionInfo(Width, Height, newPath);
+            return new MediaRenditionInfo(host, sourcePath, newTransformPath, Width, Height, seperator, signer);
         }
 
         public MediaRenditionInfo Crop(Rectangle rect)
         {
-            var transformation = MediaTransformation.ParsePath(this.path);
+            var transformation = MediaTransformation.ParsePath(Path);
 
             transformation.Crop(rect);
 
-            return new MediaRenditionInfo(transformation);
+            return new MediaRenditionInfo(host, transformation, seperator, signer);
         }
 
         public MediaRenditionInfo WithFormat(string format)
         {
-            var dotIndex = path.LastIndexOf('.');
+            var dotIndex = transformPath.LastIndexOf('.');
 
-            var newPath = path.Substring(0, dotIndex) + "." + format;
+            var newTransformPath = transformPath.Substring(0, dotIndex) + "." + format;
 
-            return new MediaRenditionInfo(Width, Height, newPath);
+            return new MediaRenditionInfo(host, sourcePath, newTransformPath, Width, Height, seperator, signer);
         }
 
         public MediaRenditionInfo Scale(double scale)
         {
-            var a = MediaTransformation.ParsePath(path);
+            var a = MediaTransformation.ParsePath(Path);
 
             var b = new MediaTransformation(a.Source);
 
-            foreach (var processor in a.GetTransforms())
+            foreach (var transform in a.GetTransforms())
             {
-                if (processor is Resize resize)
+                switch (transform)
                 {
-                    b.Apply(resize * scale);
-                }
-                else if (processor is Crop crop)
-                {
-                    b.Apply(crop.Scale(scale));
-                }
-                else
-                {
-                    b.Apply(processor);
+                    case Resize resize  : b.Apply(resize * scale);      break;
+                    case Crop crop      : b.Apply(crop.Scale(scale));   break;
+                    default             : b.Apply(transform);           break;
                 }
             }
 
-            return new MediaRenditionInfo(b.Width, b.Height, b.GetPath());
+            return new MediaRenditionInfo(
+                host          : host,
+                sourcePath    : b.Source.Key, 
+                transformPath : b.GetFullName("/", null), 
+                width         : b.Width,
+                height        : b.Height,
+                seperator     : seperator,
+                signer        : signer
+            );
         }
 
         public string Url
         {
             get
             {
-                // TODO: Cache the prefix
+                var prefix = (host != null) ? "https://" + host : string.Empty;
 
-                var prefix = (Host != null) ? "https://" + Host : "";
+                var path = Path;
 
-                if (Signer != null)
+                if (signer != null)
                 {
-                    return prefix + "/" + Signer.Sign(path) + "/" + path;
+                    return prefix + "/" + signer.Sign(path) + "/" + path;
                 }
 
                 return prefix + "/" + path;
             }
         }
 
+        public string Path
+        {
+            get
+            {
+                if (TransformPath == null) return sourcePath;
+
+                return SourcePath + seperator + TransformPath;
+            }
+        }
         public override string ToString() => Url;
     }
 
-    public interface ISigner
+    public interface IUrlSigner
     {
         string Sign(string path);
     }

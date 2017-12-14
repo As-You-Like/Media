@@ -131,8 +131,6 @@ namespace Carbon.Media
         public static readonly Mime Ai   = new Mime("application/illustrator",       new[] { "ai" });
         public static readonly Mime Atom = new Mime("application/atom+xml",          "atom");
         public static readonly Mime Doc  = new Mime("application/msword",            new[] { "doc" }, new[] { MagicNumber.Doc });
-        public static readonly Mime Js   = new Mime("application/javascript",        "js");
-        public static readonly Mime Json = new Mime("application/json",              "json");
         public static readonly Mime M3u8 = new Mime("application/x-mpegURL",         "m3u8");
         public static readonly Mime Mpd  = new Mime("application/dash+xml",          "mpd");
         public static readonly Mime Pdf  = new Mime("application/pdf",               new[] { "pdf" }, new[] { MagicNumber.Pdf });
@@ -140,6 +138,10 @@ namespace Carbon.Media
         public static readonly Mime Xap  = new Mime("application/x-silverlight-app", "xap");
         public static readonly Mime Xaml = new Mime("application/xaml+xml",          "xaml");
         public static readonly Mime Ps   = new Mime("application/postscript",        "ps");
+
+        // Applications - Programing Languages & Data Formats
+        public static readonly Mime Js   = new Mime("application/javascript", "js");
+        public static readonly Mime Json = new Mime("application/json", "json");
 
         // Applications - Fonts 
         public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
@@ -157,39 +159,39 @@ namespace Carbon.Media
         public static readonly Mime Zip           = new Mime("application/zip",  "zip");
 
         // Audio (2000-2999)
-        public static readonly Mime Aac      = new Mime("audio/aac",        new[] { "aac", "m4a" });
-        public static readonly Mime Aiff     = new Mime("audio/aiff",       new[] { "aiff", "aif", "aifc" }, new[] { MagicNumber.Aiff });
-        public static readonly Mime Au       = new Mime("audio/au",         new[] { "au" });
-        public static readonly Mime Flac     = new Mime("audio/flac",       new[] { "flac" }, new[] { MagicNumber.Flac });
-        public static readonly Mime Mka      = new Mime("audio/x-matroska", "mka");
-        public static readonly Mime Mp3      = new Mime("audio/mpeg",       new[] { "mp3" }, new[] { MagicNumber.Mp3 });
-        public static readonly Mime Mpc      = new Mime("audio/musepack",   "mpc");
-        public static readonly Mime M4a      = new Mime("audio/mp4",        "m4a");
-        public static readonly Mime Oga      = new Mime("audio/ogg",        "oga");
-        public static readonly Mime Opus     = new Mime("audio/opus",       new[] { "opus" }, new[] { MagicNumber.Opus });
-        public static readonly Mime Spx      = new Mime("audio/speex",      "spx");
+        public static readonly Mime Aac      = new Mime("audio/aac",         new[] { "aac", "m4a" });
+        public static readonly Mime Aiff     = new Mime("audio/aiff",        new[] { "aiff", "aif", "aifc" }, new[] { MagicNumber.Aiff });
+        public static readonly Mime Au       = new Mime("audio/au",          new[] { "au" });
+        public static readonly Mime Flac     = new Mime("audio/flac",        new[] { "flac" }, new[] { MagicNumber.Flac });
+        public static readonly Mime Mka      = new Mime("audio/x-matroska",  "mka");
+        public static readonly Mime Mp3      = new Mime("audio/mpeg",        new[] { "mp3" }, new[] { MagicNumber.Mp3 });
+        public static readonly Mime Mpc      = new Mime("audio/musepack",    "mpc");
+        public static readonly Mime M4a      = new Mime("audio/mp4",         "m4a");
+        public static readonly Mime Oga      = new Mime("audio/ogg",         "oga");
+        public static readonly Mime Opus     = new Mime("audio/opus",        new[] { "opus" }, new[] { MagicNumber.Opus });
+        public static readonly Mime Spx      = new Mime("audio/speex",       "spx");
         public static readonly Mime Ra       = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
         public static readonly Mime Wav      = new Mime("audio/wav",         new[] { "wav", "wave" }, new[] { MagicNumber.Wav1, MagicNumber.Wav2 });
         public static readonly Mime Wma      = new Mime("audio/x-ms-wma",    new[] { "wma" }, new[] { MagicNumber.Wma });
 
         // Image (4000-4999)
-        public static readonly Mime Bmp      = new Mime("image/bmp",     new[] { "bmp" }, new[] { MagicNumber.Bmp });
-        public static readonly Mime Bpg      = new Mime("image/bpg",     new[] { "bpg" }, new[] { MagicNumber.Bgp });
-        public static readonly Mime Dng      = new Mime("image/dng",     "dng");
-        public static readonly Mime Fpx      = new Mime("image/fpx",     new[] { "fpx", "fpix" });
-        public static readonly Mime Gif      = new Mime("image/gif",     new[] { "gif" }, new[] { MagicNumber.Gif87a, MagicNumber.Gif89a});
-        public static readonly Mime Heif     = new Mime("image/heif",    new[] { "heif", "heic" });
-        public static readonly Mime Ico      = new Mime("image/x-icon",  new[] { "ico" }, new[] { MagicNumber.Ico });  // [0]
-        public static readonly Mime Jp2      = new Mime("image/jp2",     new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" }, new[] { MagicNumber.Jp2 });
-        public static readonly Mime Jpeg     = new Mime("image/jpeg",    new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" }, new[] { MagicNumber.Jpeg1, MagicNumber.Jpeg2, MagicNumber.Jpeg3 });
-        public static readonly Mime Jxr      = new Mime("image/jxr",     new[] { "jxr", "hdp", "wdp" });
-        public static readonly Mime Png      = new Mime("image/png",     new[] { "png" }, new[] { MagicNumber.Png });
-        public static readonly Mime Psd      = new Mime("image/psd",     new[] { "psd" }, new[] { MagicNumber.Psd } );
-        public static readonly Mime Sgi      = new Mime("image/sgi",     "sgi");
-        public static readonly Mime Svg      = new Mime("image/svg+xml", "svg");
-        public static readonly Mime Tga      = new Mime("image/targa",   "tga");
-        public static readonly Mime Tiff     = new Mime("image/tiff",    new[] { "tiff", "tif" }, new[] { MagicNumber.Tiff1, MagicNumber.Tiff2 });
-        public static readonly Mime WebP     = new Mime("image/webp",    "webp");
+        public static readonly Mime Bmp      = new Mime("image/bmp",         new[] { "bmp" }, new[] { MagicNumber.Bmp });
+        public static readonly Mime Bpg      = new Mime("image/bpg",         new[] { "bpg" }, new[] { MagicNumber.Bgp });
+        public static readonly Mime Dng      = new Mime("image/dng",         "dng");
+        public static readonly Mime Fpx      = new Mime("image/fpx",         new[] { "fpx", "fpix" });
+        public static readonly Mime Gif      = new Mime("image/gif",         new[] { "gif" }, new[] { MagicNumber.Gif87a, MagicNumber.Gif89a});
+        public static readonly Mime Heif     = new Mime("image/heif",        new[] { "heif", "heic" });
+        public static readonly Mime Ico      = new Mime("image/x-icon",      new[] { "ico" }, new[] { MagicNumber.Ico });  // [0]
+        public static readonly Mime Jp2      = new Mime("image/jp2",         new[] { "jp2", "j2k", "jpf", "jpx", "jpm", "mj2" }, new[] { MagicNumber.Jp2 });
+        public static readonly Mime Jpeg     = new Mime("image/jpeg",        new[] { "jpeg", "jpg", "jpe", "jif", "jfif", "jfi" }, new[] { MagicNumber.Jpeg1, MagicNumber.Jpeg2, MagicNumber.Jpeg3 });
+        public static readonly Mime Jxr      = new Mime("image/jxr",         new[] { "jxr", "hdp", "wdp" });
+        public static readonly Mime Png      = new Mime("image/png",         new[] { "png" }, new[] { MagicNumber.Png });
+        public static readonly Mime Psd      = new Mime("image/psd",         new[] { "psd" }, new[] { MagicNumber.Psd } );
+        public static readonly Mime Sgi      = new Mime("image/sgi",         "sgi");
+        public static readonly Mime Svg      = new Mime("image/svg+xml",     "svg");
+        public static readonly Mime Tga      = new Mime("image/targa",       "tga");
+        public static readonly Mime Tiff     = new Mime("image/tiff",        new[] { "tiff", "tif" }, new[] { MagicNumber.Tiff1, MagicNumber.Tiff2 });
+        public static readonly Mime WebP     = new Mime("image/webp",        "webp");
 
         // Text (8000-8999)
         public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
@@ -217,11 +219,10 @@ namespace Carbon.Media
         public static readonly Mime _3GP2    = new Mime("video/3gpp2",     "3g2"); 
         public static readonly Mime Mxf      = new Mime("application/mxf", "mxf");
 
-        public static readonly Mime _3GP_Audio  = new Mime("audio/3gpp",  "3gp"); // Can be audio or video...
-        public static readonly Mime _3GP2_Audio = new Mime("audio/3gpp2", "3g2"); // Can be audio or video...
+        public static readonly Mime _3GP_Audio  = new Mime("audio/3gpp",   "3gp"); // Can be audio or video...
+        public static readonly Mime _3GP2_Audio = new Mime("audio/3gpp2",  "3g2"); // Can be audio or video...
     }
 }
-
 
 // NOTES -----------------------------------------------------------------------------------------------------------------------
 // [0]:	Internet Explorer 8 does not accept the official mime type "image/vnd.microsoft.icon". Must be "Content-Type: image/x-icon".

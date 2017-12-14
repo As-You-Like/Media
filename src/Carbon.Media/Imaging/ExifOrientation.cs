@@ -7,7 +7,7 @@ namespace Carbon.Media
     public enum ExifOrientation : byte
     {
         None           = 0, // None
-        Horizontal     = 1, // None
+        Horizontal     = 1, // Normal
         FlipHorizontal = 2, // Flip horizontally
         Rotate180      = 3, // Rotate 180
         FlipVertical   = 4, // Flip vertically
@@ -16,7 +16,7 @@ namespace Carbon.Media
         Transverse     = 7, // Transverse (mirror horizontal and rotate 90)
         Rotate270      = 8  // Rotate 270
     }
-    
+
     public static class ExifOrientationHelper
     {
         public static ExifOrientation Parse(string text)
@@ -33,13 +33,15 @@ namespace Carbon.Media
                 case "7"          : return Transverse;
                 case "8"          : return Rotate270;
 
-
                 case "transverse" : return Transverse;
                 case "transpose"  : return Transpose;
 
                 case "h":
                 case "horizontal" : return Horizontal;
-                
+
+                case "rotate90"   : return Rotate90;
+                case "rotate270"  : return Rotate270;
+
                 default: throw new Exception("Unexpected orientation:" + text);
             }
         }
