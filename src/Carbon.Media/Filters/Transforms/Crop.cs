@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Crop : ITransform, ICanonicalizable
+    public sealed class CropTransform : ITransform, ICanonicalizable
     {
-        public Crop(Unit x, Unit y, Unit width, Unit height)
+        public CropTransform(Unit x, Unit y, Unit width, Unit height)
         {
             #region Preconditions
 
@@ -24,7 +24,7 @@ namespace Carbon.Media.Processors
             Height = height;
         }
 
-        public Crop(Rectangle rectangle)
+        public CropTransform(Rectangle rectangle)
         {
             X      = new Unit(rectangle.X);
             Y      = new Unit(rectangle.Y);
@@ -50,14 +50,14 @@ namespace Carbon.Media.Processors
             return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
         }
 
-        public Crop Scale(double xScale, double yScale) => new Crop(
+        public CropTransform Scale(double xScale, double yScale) => new CropTransform(
             x      : (int)(X * xScale),
             y      : (int)(Y * yScale),
             width  : (int)(Width * xScale),
             height : (int)(Height * yScale)
         );
 
-        public Crop Scale(double scale) => new Crop(
+        public CropTransform Scale(double scale) => new CropTransform(
             x       : (int)(X * scale),
             y       : (int)(Y * scale),
             width   : (int)(Width * scale),
@@ -94,7 +94,7 @@ namespace Carbon.Media.Processors
         // NEW: crop(0,0,100,100)
         public override string ToString() => Canonicalize();
 
-        public static Crop Parse(string key)
+        public static CropTransform Parse(string key)
         {
             string[] parts;
 
@@ -111,7 +111,7 @@ namespace Carbon.Media.Processors
 
                 parts = key.Split(Seperators.Comma);
 
-                return new Crop(
+                return new CropTransform(
                     x      : Unit.Parse(parts[0]),
                     y      : Unit.Parse(parts[1]),
                     width  : Unit.Parse(parts[2]),
@@ -141,7 +141,7 @@ namespace Carbon.Media.Processors
             Unit x = Unit.Parse(locationParts[0]), // '-'
                  y = Unit.Parse(locationParts[1]);
 
-            return new Crop(x, y, size.Width, size.Height);
+            return new CropTransform(x, y, size.Width, size.Height);
         }
     }
 }

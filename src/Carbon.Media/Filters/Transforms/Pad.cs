@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Pad : ITransform, ICanonicalizable
+    public sealed class PadTransform : ITransform, ICanonicalizable
     {
-        public Pad(int value)
+        public PadTransform(int value)
         {
             #region Preconditions
 
@@ -19,7 +19,7 @@ namespace Carbon.Media.Processors
             Left = value;
         }
 
-        public Pad(int top, int right, int bottom, int left)
+        public PadTransform(int top, int right, int bottom, int left)
         {
             #region Preconditions
             
@@ -86,7 +86,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static Pad Parse(string segment)
+        public static PadTransform Parse(string segment)
         {
             #region Normalization
 
@@ -98,7 +98,7 @@ namespace Carbon.Media.Processors
             
             if (!segment.Contains(","))
             {       
-                return new Pad(int.Parse(segment));
+                return new PadTransform(int.Parse(segment));
             }
 
             string[] parts = segment.Split(Seperators.Comma);
@@ -108,7 +108,7 @@ namespace Carbon.Media.Processors
                 var a = int.Parse(parts[0]); // Top & Bottom
                 var b = int.Parse(parts[1]); // Left & Right
                 
-                return new Pad(a, b, a, b);
+                return new PadTransform(a, b, a, b);
             }
             else if (parts.Length == 4)
             {                              
@@ -117,7 +117,7 @@ namespace Carbon.Media.Processors
                 int bottom = int.Parse(parts[2]);
                 int left   = int.Parse(parts[3]); 
 
-                return new Pad(top, right, bottom, left);
+                return new PadTransform(top, right, bottom, left);
             }
 
             throw new Exception("Unexpected");

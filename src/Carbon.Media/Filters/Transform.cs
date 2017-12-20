@@ -16,24 +16,24 @@
 
             switch (name)
             {
-                case "resize"       : return Resize.Parse(segment);
-                case "scale"        : return Scale.Parse(segment);
-                case "crop"         : return Crop.Parse(segment);
-                case "rotate"       : return Rotate.Parse(segment);
-                case "flip"         : return Flip.Parse(segment);
-                case "pad"          : return Pad.Parse(segment);
+                // Transforms
+                case "resize"       : return ResizeTransform.Parse(segment);
+                case "scale"        : return ScaleTransform.Parse(segment);
+                case "crop"         : return CropTransform.Parse(segment);
+                case "rotate"       : return RotateTransform.Parse(segment);
+                case "flip"         : return FlipTransform.Parse(segment);
+                case "pad"          : return PadTransform.Parse(segment);
 
                 case "page"         : return PageFilter.Parse(segment);
-                case "frame"        : return FrameFilter.Parse(segment);
-                                        
-                case "background"   :
-                case "bg"           : return BackgroundFilter.Parse(segment);
+                case "frame"        : return FrameFilter.Parse(segment);        
+                case "background"   : return BackgroundFilter.Parse(segment);
                 
                 // web filters
                 case "blur"         : return BlurFilter.Parse(segment);
                 case "brightness"   : return BrightnessFilter.Parse(segment);
                 case "contrast"     : return ContrastFilter.Parse(segment);
                 case "grayscale"    : return GrayscaleFilter.Parse(segment);
+                case "rotateHue"    : return HueRotateFilter.Parse(segment);
                 case "hueRotate"    : return HueRotateFilter.Parse(segment);
                 case "hue-rotate"   : return HueRotateFilter.Parse(segment);
                 case "invert"       : return InvertFilter.Parse(segment);
@@ -59,10 +59,12 @@
                 // Other
                 case "metadata"     : return MetadataFilter.Parse(segment);
                 case "quality"      : return Quality.Parse(segment);
+
+                // Boolean Options
                 case "lossless"     : return LosslessFilter.Default;
+                case "debug"        : return DebugFilter.Default;
 
                 default             :
-
                     // JPEG::encode
 
                     if (segment.Contains("encode"))

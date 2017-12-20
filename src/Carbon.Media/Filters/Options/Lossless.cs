@@ -2,12 +2,9 @@
 {
     public class LosslessFilter : ITransform
     {
-        public static readonly LosslessFilter Default = new LosslessFilter();  
+        public static readonly LosslessFilter Default = new LosslessFilter();
 
-        public static LosslessFilter Parse(string segment)
-        {
-            return Default;
-        }
+        public static LosslessFilter Parse(string segment) => Default;
 
         #region ICanonicalizable
 

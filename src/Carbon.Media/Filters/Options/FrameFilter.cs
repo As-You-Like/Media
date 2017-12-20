@@ -7,12 +7,8 @@ namespace Carbon.Media.Processors
     {
         public FrameFilter(int number)
         {
-            #region Preconditions
-
             if (number < 0)
                 throw new ArgumentException("Must be > 0", nameof(number));
-
-            #endregion
 
             Number = number;
         }

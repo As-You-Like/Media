@@ -4,25 +4,27 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class ResizeProcessor : ITransform
+    public sealed class ResizeTransform : ITransform
     {
-        const int maxDimension = 16383; 
-        
-        // The maximum pixel dimensions of a WebP image is 16383 x 16383.
+        const int maxDimension = 16384;
+
+        // 8K = 7,680 x 4,320
+
+        // The maximum pixel dimensions of a WebP image is 16384 x 16384.
         // 16384 * 16384 * 4 = 1GB bitmap
 
-        public ResizeProcessor(Size size)
+        public ResizeTransform(Size size)
             : this(new Unit(size.Width), new Unit(size.Height), null, ResizeFlags.None)
         { }
 
-        public ResizeProcessor(Size size, CropAnchor? anchor)
+        public ResizeTransform(Size size, CropAnchor? anchor)
             : this(new Unit(size.Width), new Unit(size.Height), anchor, ResizeFlags.None)
         { }
 
-        public ResizeProcessor(Unit width, Unit height, ResizeFlags flags = default)
+        public ResizeTransform(Unit width, Unit height, ResizeFlags flags = default)
             : this(width, height, null, flags) { }
 
-        public ResizeProcessor(Unit width, Unit height, CropAnchor? anchor, ResizeFlags flags)
+        public ResizeTransform(Unit width, Unit height, CropAnchor? anchor, ResizeFlags flags)
         {
             #region Preconditions
 
@@ -131,8 +133,7 @@ namespace Carbon.Media.Processors
             sb.Append(Width.Value);
             sb.Append(',');
             sb.Append(Height.Value);
-
-            // Options
+            
             WriteOptions(sb);
 
             sb.Append(')');
@@ -180,7 +181,7 @@ namespace Carbon.Media.Processors
 
         private static readonly char[] x_x = new[] { 'x', '×' };
 
-        public static ResizeProcessor Parse(string segment)
+        public static ResizeTransform Parse(string segment)
         {
             #region Normalization
 
@@ -203,7 +204,6 @@ namespace Carbon.Media.Processors
                 var height = Unit.Parse(size[1]);
 
                 ResizeFlags flags = default;
-                string background = null;
                 CropAnchor? anchor = null;
 
                 for (var i = 1; i < parts.Length; i++)
@@ -229,7 +229,7 @@ namespace Carbon.Media.Processors
                     }
                 }
 
-                return new ResizeProcessor(width, height, anchor, flags);
+                return new ResizeTransform(width, height, anchor, flags);
             }
 
             else if (segment.Contains("-"))
@@ -238,19 +238,19 @@ namespace Carbon.Media.Processors
 
                 var parts = segment.Split(Seperators.Dash);
 
-                return new ResizeProcessor(
+                return new ResizeTransform(
                     size   : SizeHelper.Parse(parts[0]),
                     anchor : CropAnchorHelper.Parse(parts[1])
                 );
             }
 
             // 100x100
-            return new ResizeProcessor(SizeHelper.Parse(segment));
+            return new ResizeTransform(SizeHelper.Parse(segment));
         }
 
-        public static ResizeProcessor operator * (ResizeProcessor left, double scale)
+        public static ResizeTransform operator * (ResizeTransform left, double scale)
         {
-            return new ResizeProcessor(
+            return new ResizeTransform(
                 width       : (int)(left.Width * scale),
                 height      : (int)(left.Height * scale),
                 anchor      : left.Anchor,

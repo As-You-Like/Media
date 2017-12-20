@@ -51,7 +51,7 @@ namespace Carbon.Media
             this.host               = host;
             this.sourcePath         = sourcePath    ?? throw new ArgumentNullException(nameof(sourcePath));
             this.transformPath      = transformPath;
-            this.seperator          = seperator    ?? throw new ArgumentNullException(nameof(seperator));
+            this.seperator          = seperator     ?? throw new ArgumentNullException(nameof(seperator));
             this.signer             = signer;
 
             Width  = width;
@@ -108,9 +108,9 @@ namespace Carbon.Media
             {
                 switch (transform)
                 {
-                    case Resize resize  : b.Apply(resize * scale);      break;
-                    case Crop crop      : b.Apply(crop.Scale(scale));   break;
-                    default             : b.Apply(transform);           break;
+                    case ResizeTransform resize : b.Apply(resize * scale);      break;
+                    case CropTransform crop     : b.Apply(crop.Scale(scale));   break;
+                    default                     : b.Apply(transform);           break;
                 }
             }
 

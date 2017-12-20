@@ -3,12 +3,12 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Flip : ITransform, ICanonicalizable
+    public sealed class FlipTransform : ITransform, ICanonicalizable
     {
-        public static readonly Flip Horizontally = new Flip(FlipAxis.X);
-        public static readonly Flip Vertically   = new Flip(FlipAxis.Y);
+        public static readonly FlipTransform Horizontally = new FlipTransform(FlipAxis.X);
+        public static readonly FlipTransform Vertically   = new FlipTransform(FlipAxis.Y);
 
-        public Flip(FlipAxis axis)
+        public FlipTransform(FlipAxis axis)
         {
             Axis = axis;
         }
@@ -38,7 +38,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static Flip Parse(string key)
+        public static FlipTransform Parse(string key)
         {
             #region Normalization
 

@@ -1,8 +1,8 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public sealed class Rotate : ITransform
+    public sealed class RotateTransform : ITransform
     {
-        public Rotate(int angle)
+        public RotateTransform(int angle)
         {
             #region Preconditions
 
@@ -22,7 +22,7 @@
 
         public override string ToString() => $"rotate({Angle})";
 
-        public static Rotate Parse(string key)
+        public static RotateTransform Parse(string key)
         {
             #region Normalization
 
@@ -33,7 +33,7 @@
 
             #endregion
 
-            return new Rotate(angle: int.Parse(key.Replace("deg", "")));
+            return new RotateTransform(angle: int.Parse(key.Replace("deg", "")));
         }
     }
 }

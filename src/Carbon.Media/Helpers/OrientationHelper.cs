@@ -30,13 +30,13 @@ namespace Carbon.Media
         {
             switch (orientation)
             {
-                case FlipHorizontal : return new ITransform[] { Flip.Horizontally };
-                case Rotate180      : return new ITransform[] { new Rotate(180) };
-                case FlipVertical   : return new ITransform[] { Flip.Vertically };
-                case Transpose      : return new ITransform[] { Flip.Horizontally, new Rotate(270) };
-                case Rotate90       : return new ITransform[] { new Rotate(90) };
-                case Transverse     : return new ITransform[] { Flip.Horizontally, new Rotate(90) };
-                case Rotate270      : return new ITransform[] { new Rotate(270) };
+                case FlipHorizontal : return new ITransform[] { FlipTransform.Horizontally };
+                case Rotate180      : return new ITransform[] { new RotateTransform(180) };
+                case FlipVertical   : return new ITransform[] { FlipTransform.Vertically };
+                case Transpose      : return new ITransform[] { FlipTransform.Horizontally, new RotateTransform(270) };
+                case Rotate90       : return new ITransform[] { new RotateTransform(90) };
+                case Transverse     : return new ITransform[] { FlipTransform.Horizontally, new RotateTransform(90) };
+                case Rotate270      : return new ITransform[] { new RotateTransform(270) };
                 default             : return new ITransform[0];
             }
         }

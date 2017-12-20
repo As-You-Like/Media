@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum InterpolaterMode
+    public enum InterpolaterMode : byte
     {
         None            = 0,
         NearestNeighbor = 1, // AKA Point
@@ -19,7 +19,7 @@
         Quadratic       = 14,
         Robidoux        = 15,
         RobidouxSharp   = 16,
-        Spline36        = 17 // 
+        Spline36        = 17 // ???
     }
 
     public static class InterpolaterExtensions
@@ -36,8 +36,9 @@
         {
             switch (text)
             {
-                case "lanczos": return InterpolaterMode.Lanczos3;
-                default: return text.ToEnum<InterpolaterMode>(true);
+                case "box"     : return InterpolaterMode.Box;
+                case "lanczos" : return InterpolaterMode.Lanczos3;
+                default        : return text.ToEnum<InterpolaterMode>(true);
             }
         }
     }

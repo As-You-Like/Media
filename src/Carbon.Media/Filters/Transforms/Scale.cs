@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Scale : ITransform, ICanonicalizable
+    public sealed class ScaleTransform : ITransform, ICanonicalizable
     {
-        public Scale(Size size, InterpolaterMode mode)
+        public ScaleTransform(Size size, InterpolaterMode mode)
             : this(size.Width, size.Height, mode) { }
 
-        public Scale(int width, int height, InterpolaterMode mode)
+        public ScaleTransform(int width, int height, InterpolaterMode mode)
         {
             #region Preconditions
 
@@ -69,7 +69,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static Scale Parse(string segment)
+        public static ScaleTransform Parse(string segment)
         {
             #region Normalization
 
@@ -97,7 +97,7 @@ namespace Carbon.Media.Processors
                 }
             }
 
-            return new Scale(width, height, mode);
+            return new ScaleTransform(width, height, mode);
         }
     }
 }
