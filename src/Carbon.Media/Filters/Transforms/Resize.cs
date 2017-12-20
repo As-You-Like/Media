@@ -4,40 +4,40 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Resize : ITransform
+    public sealed class ResizeProcessor : ITransform
     {
-        public Resize(Size size)
-            : this(new Unit(size.Width), new Unit(size.Height), null, null, ResizeFlags.None)
+        const int maxDimension = 16383; 
+        
+        // The maximum pixel dimensions of a WebP image is 16383 x 16383.
+        // 16384 * 16384 * 4 = 1GB bitmap
+
+        public ResizeProcessor(Size size)
+            : this(new Unit(size.Width), new Unit(size.Height), null, ResizeFlags.None)
         { }
 
-        public Resize(Size size, CropAnchor? anchor)
-            : this(new Unit(size.Width), new Unit(size.Height), anchor, null, ResizeFlags.None)
+        public ResizeProcessor(Size size, CropAnchor? anchor)
+            : this(new Unit(size.Width), new Unit(size.Height), anchor, ResizeFlags.None)
         { }
 
-        public Resize(Unit width, Unit height, ResizeFlags flags = default)
-            : this(width, height, null, null, flags) { }
+        public ResizeProcessor(Unit width, Unit height, ResizeFlags flags = default)
+            : this(width, height, null, flags) { }
 
-        public Resize(Unit width, Unit height, CropAnchor? anchor, string background, ResizeFlags flags)
+        public ResizeProcessor(Unit width, Unit height, CropAnchor? anchor, ResizeFlags flags)
         {
-            // 16384 * 16384 * 4 = 1GB bitmap
-
-            // Max pixels = 16,384 * 16,384
-
             #region Preconditions
 
-            if (width < 0 || width > 8192)
-                throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 8,192");
+            if (width < 0 || width > maxDimension)
+                throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 16,383");
 
-            if (height < 0 || height > 15000)
-                throw new ArgumentOutOfRangeException(nameof(height), height, message: "Must be between 0 and 15,000");
+            if (height < 0 || height > maxDimension)
+                throw new ArgumentOutOfRangeException(nameof(height), height, message: "Must be between 0 and 16,383");
 
             #endregion
 
-            Width = width;
+            Width  = width;
             Height = height;
             Anchor = anchor;
-            Background = background;
-            Flags = flags;
+            Flags  = flags;
         }
 
         public Unit Height { get; }
@@ -50,38 +50,42 @@ namespace Carbon.Media.Processors
 
         public InterpolaterMode InterpolaterMode { get; } = InterpolaterMode.Lanczos3;
 
-        public string Background { get; }
-
-        // TODO: Calculate rectangle
-
         public Size CalcuateSize(Size source)
         {
-            int width = source.Width;
-            int height = source.Height;
+            int returnWidth  = source.Width;
+            int returnHeight = source.Height;
 
             if (Width == Unit.None) // auto
             {
                 double scale = Height.Value / source.Height;
 
-                width = (int)(width * scale);
+                returnWidth = (int)(returnWidth * scale);
             }
-            else
+            else if (Width.Type == UnitType.Percent)
             {
-                width = Width.Type == UnitType.Px ? (int)Width : (int)(width * Width);
+                returnWidth = (int)(source.Width * Width.Value);
+            }
+            else // px
+            {
+                returnWidth = (int)Width;
             }
 
             if (Height == Unit.None) // auto
             {
                 double scale = Width.Value / source.Width;
 
-                height = (int)(height * scale);
+                returnHeight = (int)(returnHeight * scale);
+            }
+            else if (Height.Type == UnitType.Percent)
+            {
+                returnHeight = (int)(source.Height * Height.Value);
             }
             else
             {
-                height = Height.Type == UnitType.Px ? (int)Height : (int)(height * Height);
+                returnHeight = (int)Height;
             }
 
-            return new Size(width, height);
+            return new Size(returnWidth, returnHeight);
         }
 
         #region Flags
@@ -106,7 +110,6 @@ namespace Carbon.Media.Processors
         public bool Upscale => Flags.HasFlag(ResizeFlags.Upscale);
 
         #endregion
-
 
         #region ICanonicalizable
 
@@ -173,17 +176,11 @@ namespace Carbon.Media.Processors
                 sb.Append(",anchor:");
                 sb.Append(Anchor.Value.ToCode());
             }
-
-            if (Background != null)
-            {
-                sb.Append(",background:");
-                sb.Append(Background);
-            }
         }
 
         private static readonly char[] x_x = new[] { 'x', '×' };
 
-        public static Resize Parse(string segment)
+        public static ResizeProcessor Parse(string segment)
         {
             #region Normalization
 
@@ -223,7 +220,6 @@ namespace Carbon.Media.Processors
                         switch (k)
                         {
                             case "anchor"     : anchor = CropAnchorHelper.Parse(v); break;
-                            case "background" : background = v;                     break;
                             default           : throw new Exception("Unknown resize argument:" + k);
                         }
                     }
@@ -233,7 +229,7 @@ namespace Carbon.Media.Processors
                     }
                 }
 
-                return new Resize(width, height, anchor, background, flags);
+                return new ResizeProcessor(width, height, anchor, flags);
             }
 
             else if (segment.Contains("-"))
@@ -242,23 +238,22 @@ namespace Carbon.Media.Processors
 
                 var parts = segment.Split(Seperators.Dash);
 
-                return new Resize(
+                return new ResizeProcessor(
                     size   : SizeHelper.Parse(parts[0]),
                     anchor : CropAnchorHelper.Parse(parts[1])
                 );
             }
 
             // 100x100
-            return new Resize(SizeHelper.Parse(segment));
+            return new ResizeProcessor(SizeHelper.Parse(segment));
         }
 
-        public static Resize operator * (Resize left, double scale)
+        public static ResizeProcessor operator * (ResizeProcessor left, double scale)
         {
-            return new Resize(
+            return new ResizeProcessor(
                 width       : (int)(left.Width * scale),
                 height      : (int)(left.Height * scale),
                 anchor      : left.Anchor,
-                background  : left.Background, 
                 flags       : left.Flags
             );
         }
