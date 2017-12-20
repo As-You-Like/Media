@@ -1,13 +1,13 @@
 ﻿namespace Carbon.Media
 {
-    public struct FourCC
+    public readonly struct FourCC
     {
         public FourCC(CodecId id)
         {
             CodecId = id;
         }
-        
-        public CodecId CodecId { get; }
+
+        public readonly CodecId CodecId;
 
         // int Value
 

@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public class AudioFormatInfo : IEquatable<AudioFormatInfo>
+    public readonly struct AudioFormatInfo : IEquatable<AudioFormatInfo>
     {
         private readonly SampleFormatInfo a;
 
@@ -30,13 +30,13 @@ namespace Carbon.Media
 
             a = SampleFormatInfo.Get(sampleFormat);
         }
-        
+
         // bitCount, isPlanar, ..
-        public SampleFormat SampleFormat { get; }
-        
-        public int SampleRate { get; }
-        
-        public ChannelLayout ChannelLayout { get; }
+        public readonly SampleFormat SampleFormat;
+
+        public readonly int SampleRate;
+
+        public readonly ChannelLayout ChannelLayout;
         
         public int ChannelCount => ChannelLayout.GetChannelCount();
 
@@ -61,8 +61,8 @@ namespace Carbon.Media
 
         public bool Equals(AudioFormatInfo other) =>
             SampleFormat  == other.SampleFormat &&
-            SampleRate    == SampleRate &&
-            ChannelLayout == ChannelLayout;
+            SampleRate    == other.SampleRate &&
+            ChannelLayout == other.ChannelLayout;
 
         #endregion
     }

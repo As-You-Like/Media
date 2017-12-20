@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Drawing
 {
-    public struct Font
+    public readonly struct Font
     {
         public Font(string name, string weight, Unit size)
         {
@@ -11,11 +11,11 @@ namespace Carbon.Media.Drawing
             Size   = size;
         }
 
-        public string Name { get; }
+        public readonly string Name;
 
-        public string Weight { get; }
+        public readonly string Weight;
 
-        public Unit Size { get; }
+        public readonly Unit Size;
 
         public override string ToString() => Name;
 

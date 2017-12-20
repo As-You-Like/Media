@@ -6,7 +6,7 @@ namespace Carbon.Media
     using static SampleFormatFlags;
 
     [DataContract]
-    public struct SampleFormatInfo
+    public readonly struct SampleFormatInfo : IEquatable<SampleFormatInfo>
     {
         public SampleFormatInfo(
             SampleFormat id, 
@@ -21,22 +21,32 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "id", Order = 1)]
-        public SampleFormat Id { get; }
+        public readonly SampleFormat Id;
 
         /// <summary>
         /// Bits per sample
         /// </summary>
         [DataMember(Name = "bitCount", Order = 3)]
-        public int BitCount { get; }
-        
+        public readonly int BitCount;
+
         [DataMember(Name = "flags", Order = 4)]
-        public SampleFormatFlags Flags { get; }
+        public readonly SampleFormatFlags Flags;
 
         [IgnoreDataMember]
-        public Type Type { get; }
+        public readonly Type Type;
 
         [IgnoreDataMember]
         public bool IsPlanar => Flags.HasFlag(Planar);
+
+        #region Equality
+
+        public bool Equals(SampleFormatInfo other) =>
+            Id       == other.Id &&
+            BitCount == other.BitCount &&
+            Type     == other.Type &&
+            Flags    == other.Flags;
+
+        #endregion
 
         public static readonly SampleFormatInfo Int8         = new SampleFormatInfo(SampleFormat.Int8,         8,  typeof(sbyte));
         public static readonly SampleFormatInfo Int16        = new SampleFormatInfo(SampleFormat.Int16,        16, typeof(short));       
@@ -73,5 +83,7 @@ namespace Carbon.Media
                 default: throw new ArgumentException("unexpected sample format:" + id);
             }
         }
+
+        
     }
 }
