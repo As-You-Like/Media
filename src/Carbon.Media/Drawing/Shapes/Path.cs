@@ -16,12 +16,12 @@ namespace Carbon.Media.Drawing
         {
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Stroke  = stroke;
-            Fill =   fill;
+            Fill    = fill;
         }
 
         // M150 0 L75 200 L225 200 Z
 
-        public string Content { get;  }
+        public string Content { get; }
 
         public string Stroke { get;  }
 
@@ -45,23 +45,25 @@ namespace Carbon.Media.Drawing
         {
             sb.Append("path(");
 
+            sb.Append(Content);
+
             foreach (var (key, value) in Args())
             {
-                sb.Append(",");
+                sb.Append(',');
 
                 sb.Append(key);
                 sb.Append(':');
                 sb.Append(value);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
-        public static new Path Parse(string key)
+        public static new Path Parse(string text)
         {
-            int argStart = key.IndexOf('(') + 1;
+            int argStart = text.IndexOf('(') + 1;
 
-            var args = ArgumentList.Parse(key.Substring(argStart, key.Length - argStart - 1));
+            var args = ArgumentList.Parse(text.Substring(argStart, text.Length - argStart - 1));
             
             var mode  = BlendMode.Normal;
             string content = null;

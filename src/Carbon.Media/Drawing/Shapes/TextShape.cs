@@ -28,9 +28,11 @@ namespace Carbon.Media.Drawing
 
         internal override IEnumerable<(string, string)> Args()
         {
-            if (Color != null) yield return ("color", Color);
+            if (Color != null)
+                yield return ("color", Color);
 
-            if (Font != null) yield return ("font", Font.ToString());
+            if (Font != null)
+                yield return ("font", Font.ToString());
 
             foreach (var arg in base.Args())
             {
@@ -48,14 +50,14 @@ namespace Carbon.Media.Drawing
 
             foreach (var (key, value) in Args())
             {
-                sb.Append(",");
+                sb.Append(',');
 
                 sb.Append(key);
                 sb.Append(':');
                 sb.Append(value);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public static new TextShape Parse(string key)

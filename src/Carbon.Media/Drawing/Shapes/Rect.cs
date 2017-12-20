@@ -20,17 +20,24 @@ namespace Carbon.Media.Drawing
         public override void WriteTo(StringBuilder sb)
         {
             sb.Append("retangle(");
-            
+
+            var i = 0;
+
             foreach (var (key, value) in Args())
             {
-                sb.Append(",");
+                if (i > 0)
+                {
+                    sb.Append(',');
+                }
 
                 sb.Append(key);
                 sb.Append(':');
                 sb.Append(value);
+
+                i++;
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public static new Rect Parse(string key)

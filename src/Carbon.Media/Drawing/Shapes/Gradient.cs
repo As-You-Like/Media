@@ -23,14 +23,14 @@ namespace Carbon.Media.Drawing
 
             foreach (var (key, value) in Args())
             {
-                sb.Append(",");
+                sb.Append(',');
 
                 sb.Append(key);
                 sb.Append(':');
                 sb.Append(value);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
 
         public static new Gradient Parse(string text)

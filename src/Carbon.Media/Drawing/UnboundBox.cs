@@ -22,10 +22,10 @@ namespace Carbon.Media.Drawing
         public Unit? Y                { get; set; }
         public Unit? Width            { get; set; } // 50% || 50px
         public Unit? Height           { get; set; }
-        public UnboundPadding Padding { get; set; } = UnboundPadding.Zero;
+        public UnboundPadding Padding { get; set; }
     }
 
-    public struct UnboundPadding : IEquatable<UnboundPadding>
+    public readonly struct UnboundPadding : IEquatable<UnboundPadding>
     {
         public static readonly UnboundPadding Zero = new UnboundPadding();
 
@@ -39,11 +39,8 @@ namespace Carbon.Media.Drawing
 
         public UnboundPadding(Unit value)
         {
-            #region Preconditions
-
-            if (value < 0) throw new ArgumentOutOfRangeException(nameof(value), value.Value, "Must be >= 0");
-
-            #endregion
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value), value.Value, "Must be >= 0");
 
             Top = value;
             Right = value;            
@@ -68,13 +65,13 @@ namespace Carbon.Media.Drawing
             Left = left;
         }
 
-        public Unit Top { get; }
+        public readonly Unit Top;
 
-        public Unit Right { get; }
+        public readonly Unit Right;
 
-        public Unit Bottom { get; }
+        public readonly Unit Bottom;
 
-        public Unit Left { get; }
+        public readonly Unit Left;
 
         public override string ToString()
         {
@@ -95,12 +92,10 @@ namespace Carbon.Media.Drawing
             return new UnboundPadding(Unit.Parse(text));
         }
 
-        public bool Equals(UnboundPadding other)
-        {
-            return Left   == other.Left
-                && Right  == other.Right
-                && Top    == other.Top
-                && Bottom == other.Bottom;
-        }
+        public bool Equals(UnboundPadding other) =>
+            Left   == other.Left && 
+            Right  == other.Right && 
+            Top    == other.Top &&
+            Bottom == other.Bottom;
     }
 }
