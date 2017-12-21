@@ -26,7 +26,7 @@ namespace Carbon.Media.Processors
                 return new ColorSpaceFilter(colorSpace);
             }
 
-            throw new Exception("Unknown colorSpace:" + segment);
+            throw new Exception("Invalid ColorSpace:" + segment);
         }
     }
 }

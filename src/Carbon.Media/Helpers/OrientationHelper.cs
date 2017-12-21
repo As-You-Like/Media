@@ -26,7 +26,7 @@ namespace Carbon.Media
                     case 8: return Rotate270;
                 }
 
-                throw new Exception("Unexpected orientation code:" + text);
+                throw new Exception("Invalid orientation code:" + text);
             }
 
             switch (text.ToLower())
@@ -47,7 +47,7 @@ namespace Carbon.Media
                 case "rotate270"      : return Rotate270;
             }
 
-            throw new Exception("Unexpected orientation:" + text);
+            throw new Exception("Invalid orientation:" + text);
         }
 
         public static Size GetOrientatedSize(Size size, ExifOrientation orientation)

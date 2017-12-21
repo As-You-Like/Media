@@ -48,8 +48,9 @@ namespace Carbon.Media.Codecs
                 case "avc1.4D401E" : return Main;
                 case "avc1.58A01E" : return Extended;
                 case "avc1.64001E" : return High;
-                default            : throw new Exception("unexpected profile: " + codec.Name);
             }
+
+            throw new Exception("Invalid H264 profile: " + codec.Name);
         }
     }
 

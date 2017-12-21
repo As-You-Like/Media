@@ -153,10 +153,11 @@ namespace Carbon.Media
 
                 // YUYV
                 case AV_PIX_FMT_YUYV422        : return PixelFormat.Yuyv422;     
-
-                default: throw new System.Exception("Unsupported pixel format:" + format);
             }
+
+            throw new Exception("Invalid AVPixelFormat:" + format);
         }
+
         public static AVPixelFormat ToAVFormat(this PixelFormat format)
         {
             switch (format)
@@ -306,9 +307,9 @@ namespace Carbon.Media
 
                 // YUYV                        
                 case PixelFormat.Yuyv422       : return AV_PIX_FMT_YUYV422;
-
-                default: throw new Exception("Unsupported pixel format:" + format);
             }
+
+            throw new Exception("Invalid PixelFormat:" + format);
         }
     }
 }

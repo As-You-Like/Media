@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
@@ -72,10 +73,9 @@ namespace Carbon.Media
                 case Rgb48         : return new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16) });
                 case Rgba128Float  : return new PixelFormatInfo(32, RGB, new[] { R(32), G(32), B(32), A(32) });
                 case Rgba64        : return new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16), A(16) });
-
-
-                default: throw new System.Exception("Unsupported pixelFormat:" + format);
             }
+
+            throw new Exception("Invalid PixelFormat:" + format);
         }
     }
 

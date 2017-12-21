@@ -112,7 +112,7 @@ namespace Carbon.Media.Processors
                 return new PadTransform(top, right, bottom, left);
             }
 
-            throw new Exception("Unexpected pad arguments:" + segment);
+            throw new Exception("Invalid pad arguments:" + segment);
         }
     }
 }

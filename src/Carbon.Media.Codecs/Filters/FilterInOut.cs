@@ -21,7 +21,7 @@ namespace Carbon.Media
 
             if (Pointer == null)
             {
-                throw new Exception("error allocating FilterInOut");
+                throw new Exception("FilterInOut was not allocated");
             }
 
             Pointer->name = ffmpeg.av_strdup(name);

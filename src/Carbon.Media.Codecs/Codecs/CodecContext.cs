@@ -16,7 +16,7 @@ namespace Carbon.Media.Codecs
 
             if (this.pointer == null)
             {
-                throw new Exception("error allocating codec context");
+                throw new Exception("CodecContext was not allocated");
             }
 
             ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults

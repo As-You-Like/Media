@@ -16,7 +16,7 @@ namespace Carbon.Media
 
             if (this.pointer == null)
             {
-                throw new Exception("could not allocate graph");
+                throw new Exception("AVFilterGraph was not allocated");
             }
         }
 
@@ -208,7 +208,6 @@ namespace Carbon.Media
                     decoder.Context.Width,
                     decoder.Context.Height,
                     null,
-                    0,
                     decoder.Context.TimeBase,
                     decoder.Context.AspectRatio
                 ));
@@ -221,7 +220,7 @@ namespace Carbon.Media
             {
                 if (audioDecoder.Context.ChannelLayout == ChannelLayout.Unknown)
                 {
-                    throw new Exception("Channl layout is unknown");
+                    throw new Exception("Invalid ChannelLayout:" + audioDecoder.Context.ChannelLayout);
 
                     // decoder.Context.ChannelLayout = (ChannelLayout)ffmpeg.av_get_default_channel_layout(decoder.Context.ChannelCount);
                 }
@@ -244,7 +243,7 @@ namespace Carbon.Media
             }
             else
             {
-                throw new Exception("Unexpected codec");
+                throw new Exception("Invalid codec");
             }   
 
             graph.Outputs = new FilterInOut("in",  bufferSource);

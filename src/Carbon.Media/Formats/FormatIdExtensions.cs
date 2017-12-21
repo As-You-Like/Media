@@ -85,7 +85,7 @@ namespace Carbon.Media
                 case WebM : return Mime.WebM;
             }
 
-            throw new Exception("Unexpected format:" + value.ToString());
+            throw new Exception("Invalid format:" + value.ToString());
         }
 
         public static string Canonicalize(this FormatId value)
@@ -132,12 +132,9 @@ namespace Carbon.Media
             {
                 return format;
             }
-            else
-            {
-                throw new Exception("Unsupported format:" + text);
-            }
+          
+            throw new Exception("Invalid format:" + text);
+            
         }
-        
-
     }
 }

@@ -49,9 +49,9 @@ namespace Carbon.Media
 
                 case "ne":
                 case "tr": return Top | Right;
-
-                default: throw new Exception("Unexpected anchor:" + text);
             }
+
+            throw new Exception("Invalid anchor:" + text);
         }
     }
 }

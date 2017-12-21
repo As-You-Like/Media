@@ -40,9 +40,9 @@ namespace Carbon.Media
                 case Int32Planar  : return 4;
                 case FloatPlanar  : return 4;
                 case DoublePlanar : return 8;
-                case Int64Planar  : return 8;
-                default: throw new Exception("Unsupported format:" + format);
-            }
+                case Int64Planar  : return 8;            }
+
+            throw new Exception("Invalid SampleFormat:" + format);
         }
     }
 }

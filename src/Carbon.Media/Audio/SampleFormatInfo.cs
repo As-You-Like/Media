@@ -78,12 +78,10 @@ namespace Carbon.Media
                 case SampleFormat.Int32Planar  : return Int32Planar;
                 case SampleFormat.FloatPlanar  : return FloatPlanar;
                 case SampleFormat.DoublePlanar : return DoublePlanar;
-                case SampleFormat.Int64Planar  : return Int64Planar;
-
-                default: throw new ArgumentException("unexpected sample format:" + id);
+                case SampleFormat.Int64Planar  : return Int64Planar;    
             }
-        }
 
-        
+            throw new ArgumentException("Invalid SampleFormat:" + id);
+        }        
     }
 }

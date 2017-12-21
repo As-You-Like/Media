@@ -59,6 +59,7 @@ namespace Carbon.Media
             {
                 case "bmp"  : return Bmp;
                 case "bgp"  : return Bpg;
+                case "cr2"  : return Cr2;
                 case "gif"  : return Gif;
                 case "dng"  : return Dng;
                 case "heif" : return Heif;
@@ -73,7 +74,7 @@ namespace Carbon.Media
                 case "webp" : return WebP;
             }
 
-            throw new Exception("Unsupported image format:" + text);
+            throw new Exception("Invalid ImageFormat:" + text);
         }
     }
 }

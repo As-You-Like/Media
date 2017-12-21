@@ -92,7 +92,7 @@ namespace Carbon.Media.Processors
                         case "progressive" : flags |= EncodingFlags.Progressive;                 break;
                         case "lossless"    : flags |= EncodingFlags.Lossless;                    break;
 
-                        default            : throw new Exception("unexpected encode argument:" + arg.Name);
+                        default            : throw new Exception("Invalid encode argument:" + arg.Name);
                     }
                 }
             }

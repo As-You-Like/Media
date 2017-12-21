@@ -25,7 +25,7 @@ namespace Carbon.Media
 
             if (pointer == null)
             {
-                throw new Exception("no filter returned for:" + name);
+                throw new Exception("Filter named '" + name + "' was not found");
             }
 
             return new Filter(pointer);

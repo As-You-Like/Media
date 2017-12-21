@@ -47,7 +47,7 @@ namespace Carbon.Media.Formats
                     {
                         case AudioEncoder _ : stream = VideoStream.Create(this, encoder); break;
                         case VideoEncoder _ : stream = AudioStream.Create(this, encoder); break;
-                        default             : throw new Exception("unexpected encoder type");
+                        default             : throw new Exception("Invalid encoder type");
                     }
 
                     stream.TimeBase = encoder.Context.TimeBase;

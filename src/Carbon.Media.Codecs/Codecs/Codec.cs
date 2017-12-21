@@ -53,7 +53,7 @@ namespace Carbon.Media.Codecs
         {
             if (pointer != null)
             {
-                throw new Exception("Already initialized");
+                throw new Exception("Codec is already initialized");
             }
 
             this.pointer = Get(Id, type);
@@ -71,7 +71,7 @@ namespace Carbon.Media.Codecs
             Open(null);
         }
 
-        internal void Open(Options options)
+        internal void Open(AvDictionary options)
         {
             if (isOpen)
             {

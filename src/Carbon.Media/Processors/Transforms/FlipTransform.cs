@@ -53,8 +53,9 @@ namespace Carbon.Media.Processors
             {
                 case "x" : return Horizontally;
                 case "y" : return Vertically;
-                default  : throw new ArgumentException("Unexpected axis:" + key);
             }
+
+            throw new ArgumentException("Invalid flip axis:" + key);
         }
     }
 

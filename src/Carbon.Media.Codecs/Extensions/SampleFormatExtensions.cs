@@ -24,9 +24,9 @@ namespace Carbon.Media
                 case AV_SAMPLE_FMT_DBLP : return SampleFormat.DoublePlanar;
                 case AV_SAMPLE_FMT_S64  : return SampleFormat.Int64;
                 case AV_SAMPLE_FMT_S64P : return SampleFormat.Int64Planar;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-              
-                default: throw new Exception("unexpected format:" + format.ToString());  
             }
+
+            throw new Exception("Invalid AVSampleFormat:" + format);
         }
 
         public static AVSampleFormat ToAVFormat(this SampleFormat format)
@@ -45,9 +45,9 @@ namespace Carbon.Media
                 case SampleFormat.DoublePlanar : return AV_SAMPLE_FMT_DBLP;
                 case SampleFormat.Int64        : return AV_SAMPLE_FMT_S64;
                 case SampleFormat.Int64Planar  : return AV_SAMPLE_FMT_S64P;
-
-                default: throw new Exception("unexpected format:" + format.ToString());
             }
+
+            throw new Exception("Invalid SampleFormat:" + format.ToString());
         }
     }
 }

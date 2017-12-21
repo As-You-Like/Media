@@ -54,7 +54,7 @@ namespace Carbon.Media
                     }
                     else
                     {
-                        throw new Exception("invalid resize flag:" + part);
+                        throw new Exception("Invalid resize flag:" + part);
                     }
 
                     flags |= part.ToEnum<ResizeFlags>(true);
