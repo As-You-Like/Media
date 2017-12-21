@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Carbon.Media
 {
-    public unsafe class Buffer
+    public unsafe class Buffer : IDisposable
     {
         private IntPtr pointer;
         private int length;
@@ -23,8 +23,6 @@ namespace Carbon.Media
         public static Buffer Allocate(int size)
         {
             // HGlobal = ProcessHeap
-            // AllocCoTaskMem = COMHeap
-            // Marshal.AllocHGlobal(size)
 
             return new Buffer(Marshal.AllocHGlobal(size), size);
         }
@@ -40,33 +38,18 @@ namespace Carbon.Media
             }
         }
 
-        public void Free()
-        {
-            // todo: ensure there are not oustanding references?
-
-            if (pointer != IntPtr.Zero)
-            {
-                // ffmpeg.av_free((void*)pointer);
-                
-                Marshal.FreeHGlobal(pointer);
-
-                // FreeCoTaskMem = COMHeap
-                pointer = IntPtr.Zero;
-            }
-        }
-
         public void Dispose()
         {
-            Dispose(true);
-
             GC.SuppressFinalize(this);
+
+            Dispose(true);
         }
 
         public void Dispose(bool disposing)
         {
             if (pointer != IntPtr.Zero)
             {
-                GC.SuppressFinalize(this);
+                Marshal.FreeHGlobal(pointer); //  FreeCoTaskMem = COMHeap
 
                 pointer = IntPtr.Zero;
             }

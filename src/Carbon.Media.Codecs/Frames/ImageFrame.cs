@@ -1,16 +1,16 @@
-﻿namespace Carbon.Media.Codecs
-{
-    // ImageFrame?
+﻿using System;
 
-    public class ImageFrame
+namespace Carbon.Media.Frames
+{
+    public class ImageFrame : IDisposable
     {
-        public ImageFrame(PixelFormat pixelFormat, int width, int height)
+        public ImageFrame(PixelFormat format, int width, int height)
         {
-            Format  = pixelFormat;
+            Format  = format;
             Width   = width;
             Height  = height;
-            Memory  = Buffer.Allocate(VideoFormatHelper.GetBufferSize(pixelFormat, width, height));
-            Strides = VideoFormatHelper.GetStrides(pixelFormat, width);
+            Memory  = Buffer.Allocate(VideoFormatHelper.GetBufferSize(format, width, height));
+            Strides = VideoFormatHelper.GetStrides(format, width);
         }
 
         public PixelFormat Format { get; }
@@ -18,9 +18,33 @@
         public int Width { get; }
 
         public int Height { get; }
-
+        
         public int[] Strides { get; }
 
         public Buffer Memory { get; }
+
+        private bool isDisposed = false;
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+
+            Dispose(true);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                Memory.Dispose();
+
+                isDisposed = true;
+            }
+        }
+
+        ~ImageFrame()
+        {
+            Dispose(false);
+        }
     }
 }
