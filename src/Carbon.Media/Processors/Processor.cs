@@ -22,6 +22,7 @@
                 case "crop"         : return CropTransform.Parse(segment);
                 case "rotate"       : return RotateTransform.Parse(segment);
                 case "flip"         : return FlipTransform.Parse(segment);
+                case "orient"       : return OrientTransform.Parse(segment);
                 case "pad"          : return PadTransform.Parse(segment);
 
                 case "page"         : return PageFilter.Parse(segment);
