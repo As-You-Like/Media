@@ -8,10 +8,11 @@
         {
             switch (text.ToLower())
             {
-                case "pjpg"   : return (Jpeg, EncodingFlags.Progressive);
-                case "png8"   : return (Png,  EncodingFlags._8bit);
-                case "png32"  : return (Png,  EncodingFlags._32bit);
-                case "webpll" : return (WebP, EncodingFlags.Lossless);
+                case "png"    : return (Png,  default);
+                case "jpeg"   : return (Jpeg, default);
+                case "gif"    : return (Gif,  default);
+                case "webp"   : return (WebP, default);
+                case "ico"    : return (Ico,  default);
 
                 // audio
                 case "aac"    : return (Aac, default);
@@ -22,6 +23,12 @@
                 // videos
                 case "webm"   : return (WebM, default);
                 case "mp4"    : return (Mp4, default);
+
+                case "pjpg"   : return (Jpeg, EncodingFlags.Progressive);
+                case "png8"   : return (Png,  EncodingFlags._8bit);
+                case "png32"  : return (Png,  EncodingFlags._32bit);
+                case "webpll" : return (WebP, EncodingFlags.Lossless);
+                case "webply" : return (WebP, default);
 
                 default       : return ((FormatId)ImageFormatHelper.Parse(text), default);
             }       
