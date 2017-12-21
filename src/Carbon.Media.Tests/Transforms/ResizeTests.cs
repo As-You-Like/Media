@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromPercentages()
         {
-            var resize = Resize.Parse("50%×50%");
+            var resize = ResizeTransform.Parse("50%×50%");
 
             Assert.Equal(0.5, resize.Width);
             Assert.Equal(0.5, resize.Height);
@@ -25,7 +25,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromFullKey1()
         {
-            var resize = Resize.Parse("resize(85x20-c)");
+            var resize = ResizeTransform.Parse("resize(85x20-c)");
 
             Assert.Equal(85d, resize.Width);
             Assert.Equal(20d, resize.Height);
@@ -39,7 +39,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void NamedArgs()
         {
-            var resize = Resize.Parse("85x20,carve|pad,anchor:center");
+            var resize = ResizeTransform.Parse("85x20,carve|pad,anchor:center");
 
             Assert.Equal(85d, resize.Width);
             Assert.Equal(20d, resize.Height);
@@ -52,18 +52,17 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void ToString1()
         {
-            var resize = Resize.Parse("85x20,carve|pad,anchor:center,background:red");
+            var resize = ResizeTransform.Parse("85x20,carve|pad,anchor:center");
 
-            Assert.Equal("85x20,pad|carve,anchor:c,background:red", resize.ToString());
-            Assert.Equal("red", resize.Background);
+            Assert.Equal("85x20,pad|carve,anchor:c", resize.ToString());
 
-            Assert.Equal("resize(85,20,pad|carve,anchor:c,background:red)", resize.Canonicalize());
+            Assert.Equal("resize(85,20,pad|carve,anchor:c)", resize.Canonicalize());
         }
 
         [Fact]
         public void NamedArgs2()
         {
-            var resize = Resize.Parse("960x540,fit|upscale,background:red");
+            var resize = ResizeTransform.Parse("960x540,fit|upscale");
 
             Assert.Equal(960, resize.Width);
             Assert.Equal(540, resize.Height);
@@ -74,13 +73,12 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.True(resize.Upscale);
             
-            Assert.Equal("red", resize.Background);
         }
 
         [Fact]
         public void Flags()
         {
-            var resize = new Resize(100, 100, ResizeFlags.Carve | ResizeFlags.Pad);
+            var resize = new ResizeTransform(100, 100, ResizeFlags.Carve | ResizeFlags.Pad);
 
             Assert.Equal(ResizeFlags.Pad, resize.Mode);   
         }
@@ -88,7 +86,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromPartialKey1()
         {
-            var resize = Resize.Parse("85x20-l");
+            var resize = ResizeTransform.Parse("85x20-l");
 
             Assert.Equal(85, resize.Width);
             Assert.Equal(20, resize.Height);
@@ -98,7 +96,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
 		public void FromFullKey()
 		{
-			var resize = Resize.Parse("resize(85x20)");
+			var resize = ResizeTransform.Parse("resize(85x20)");
 
 			Assert.Equal(85, resize.Width);
 			Assert.Equal(20, resize.Height);
@@ -107,7 +105,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Scaled()
         {
-            var resize = Resize.Parse("resize(85x20-l)") * 2d;
+            var resize = ResizeTransform.Parse("resize(85x20-l)") * 2d;
 
             Assert.Equal(85 * 2, resize.Width);
             Assert.Equal(20 * 2, resize.Height);
@@ -117,7 +115,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
 		public void FromPartialKey()
 		{
-			var resize = Resize.Parse("85x20");
+			var resize = ResizeTransform.Parse("85x20");
 
 			Assert.Equal(85, resize.Width);
 			Assert.Equal(20, resize.Height);

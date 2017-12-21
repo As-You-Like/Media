@@ -21,7 +21,7 @@
 
             segment = segment.Substring(argStart, segment.Length - argStart - 1);
 
-            return new OrientTransform(ExifOrientationHelper.Parse(segment));
+            return new OrientTransform(OrientationHelper.Parse(segment));
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class H264Profile : IEquatable<H264Profile>
+    public readonly struct H264Profile : IEquatable<H264Profile>
     {
         public H264Profile(string name, H264ProfileType type)
         {
@@ -10,9 +10,9 @@ namespace Carbon.Media.Codecs
             Type = type;
         }
 
-        public string Name { get; }
+        public readonly string Name;
 
-        public H264ProfileType Type { get; }
+        public readonly H264ProfileType Type;
 
         // Level
 
@@ -22,17 +22,17 @@ namespace Carbon.Media.Codecs
 
         public override int GetHashCode() => Name.GetHashCode();
 
-        public bool Equals(H264Profile other) => other?.Name == Name;
+        public bool Equals(H264Profile other) => other.Name == Name;
 
         public override bool Equals(object obj)
         {
-            return (obj as H264Profile)?.Equals(this) == true;
+            return obj is H264Profile other && Equals(other);
         }
 
         #endregion
 
-        public static readonly H264Profile Level0Simple   = new H264Profile("mp4v.20.9",   H264ProfileType.BP); // Visual Simple Profile Level 0
-        public static readonly H264Profile Level0Advanced = new H264Profile("mp4v.20.240", H264ProfileType.BP); // Visual Advanced Simple Profile Level 0
+        public static readonly H264Profile Level0Simple   = new H264Profile("mp4v.20.9",   H264ProfileType.BP);  // Visual Simple Profile Level 0
+        public static readonly H264Profile Level0Advanced = new H264Profile("mp4v.20.240", H264ProfileType.BP);  // Visual Advanced Simple Profile Level 0
         public static readonly H264Profile Baseline       = new H264Profile("avc1.42E01E", H264ProfileType.BP);  // Baseline
         public static readonly H264Profile Main           = new H264Profile("avc1.4D401E", H264ProfileType.MP);  // Main
         public static readonly H264Profile Extended       = new H264Profile("avc1.58A01E", H264ProfileType.XP);  // Extended
@@ -40,7 +40,6 @@ namespace Carbon.Media.Codecs
 
         public static H264Profile FromCodec(CodecInfo codec)
         {
-
             switch(codec.Name)
             {
                 case "mp4v.20.9"   : return Level0Simple;
@@ -54,7 +53,9 @@ namespace Carbon.Media.Codecs
         }
     }
 
-    public enum H264ProfileType
+    // LEVEL 1 - 5.2
+
+    public enum H264ProfileType : byte
     {   
         BP       = 1, // avc1.42E01E | Baseline 66
         MP       = 2, // avc1.4D401E | Main     77

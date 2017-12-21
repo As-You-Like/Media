@@ -7,13 +7,10 @@ namespace Carbon.Media
 {
     internal static class AudioFormatHelper
     {
-        public unsafe static int GetBufferSize(this AudioFormatInfo format, int sampleCount)
+        public unsafe static int GetBufferSize(in this AudioFormatInfo format, int sampleCount)
         {
             #region Preconditions
-
-            if (format == null)
-                throw new ArgumentNullException(nameof(format));
-
+            
             if (sampleCount <= 0)
                 throw new ArgumentException("Must be > 0");
 

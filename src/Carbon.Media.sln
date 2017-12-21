@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{86F5C099-4C31-4106-91FF-C624916A6311}"
 EndProject
@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Tests", "Carbo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Metadata", "Carbon.Media.Metadata\Carbon.Media.Metadata.csproj", "{828F20CD-2EF8-4156-BC7E-24A3C79A48EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Codecs", "Carbon.Media.Codecs\Carbon.Media.Codecs.csproj", "{6022D9C7-4480-464F-89E4-2A062E3648F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Processing", "Carbon.Media.Codecs\Carbon.Media.Processing.csproj", "{6022D9C7-4480-464F-89E4-2A062E3648F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Media.Metadata.Tests", "Carbon.Media.Metadata.Tests\Carbon.Media.Metadata.Tests.csproj", "{D7EF1A9C-8103-4DDB-9CC0-13E3BDA17153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Metadata.Tests", "Carbon.Media.Metadata.Tests\Carbon.Media.Metadata.Tests.csproj", "{D7EF1A9C-8103-4DDB-9CC0-13E3BDA17153}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Media.Processor", "Carbon.Media.Processor\Carbon.Media.Processor.csproj", "{CC3A5C1E-01AD-4B1F-8D19-1189F17DEA00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{D7EF1A9C-8103-4DDB-9CC0-13E3BDA17153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7EF1A9C-8103-4DDB-9CC0-13E3BDA17153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7EF1A9C-8103-4DDB-9CC0-13E3BDA17153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3A5C1E-01AD-4B1F-8D19-1189F17DEA00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3A5C1E-01AD-4B1F-8D19-1189F17DEA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3A5C1E-01AD-4B1F-8D19-1189F17DEA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3A5C1E-01AD-4B1F-8D19-1189F17DEA00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

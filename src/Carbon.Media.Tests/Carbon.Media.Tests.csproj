@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Carbon.Extensions" Version="0.13.0" />
-    <PackageReference Include="FFmpeg.AutoGen" Version="3.4.0" />
+    <PackageReference Include="FFmpeg.AutoGen" Version="3.4.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />

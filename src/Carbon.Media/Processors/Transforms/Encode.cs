@@ -91,7 +91,8 @@ namespace Carbon.Media.Processors
                         case "quality"     : quality = int.Parse(arg.Value);                     break;
                         case "progressive" : flags |= EncodingFlags.Progressive;                 break;
                         case "lossless"    : flags |= EncodingFlags.Lossless;                    break;
-                        case "profile"     : throw new Exception("profiles not yet supported");
+
+                        default            : throw new Exception("unexpected encode argument:" + arg.Name);
                     }
                 }
             }
@@ -99,12 +100,13 @@ namespace Carbon.Media.Processors
             return new Encode(format, quality, flags);
         }
     }
+
     public enum EncodingFlags
     {
         None = 0,
         Progressive = 1 << 1,
-        Lossless = 1 << 2,
-        _8bit = 1 << 3,
-        _32bit = 1 << 4
+        Lossless    = 1 << 2,
+        _8bit       = 1 << 3,
+        _32bit      = 1 << 4
     }
 }

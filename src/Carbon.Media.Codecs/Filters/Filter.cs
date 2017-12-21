@@ -4,7 +4,7 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe /*readonly*/ struct Filter
+    public unsafe readonly struct Filter
     {
         static Filter()
         {
@@ -12,14 +12,12 @@ namespace Carbon.Media
             ffmpeg.avfilter_register_all();
         }
 
-        private readonly AVFilter* pointer;
-
         public Filter(AVFilter* pointer)
         {
-            this.pointer = pointer;
+            Pointer = pointer;
         }
 
-        public AVFilter* Pointer => pointer;
+        public readonly AVFilter* Pointer;
 
         public static Filter FromName(string name)
         {

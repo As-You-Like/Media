@@ -48,9 +48,15 @@ namespace Carbon.Media.Tests
             // FLAC
             Assert.Equal(Mime.Flac, Check("664c6143000000220480048000000e0010"));
             Assert.Equal(Mime.Flac, Check("664c61430000002210001000000936004f"));
+
+            // GIF
+
+            Assert.Equal(Mime.Gif, Check("4749463839615203")); // GIF89a
+            Assert.Equal(Mime.Gif, Check("4749463839619001")); // GIF89a
+            Assert.Equal(Mime.Gif, Check("4749463839615203")); // GIF89a
+            Assert.Equal(Mime.Gif, Check("4749463839618002")); // GIF89a
         }
 
-        
         public Mime Check(string hexString)
         {
             var data = HexString.ToBytes(hexString);
@@ -59,14 +65,21 @@ namespace Carbon.Media.Tests
 
             if (mime == null)
             {
-                throw new Exception(string.Join(Environment.NewLine, new[] {
-                    string.Join(",", data.Take(20).ToArray()),
-                    Encoding.ASCII.GetString(data),
-                    hexString
-                }));
+                Throw(data);
             }
 
             return mime;
+        }
+
+        public void Throw(byte[] data)
+        {
+
+            
+            throw new Exception(string.Join(Environment.NewLine, new[] {
+                string.Join(",", data.Take(20).ToArray()),
+                Encoding.ASCII.GetString(data)
+            }));
+            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void A()
         {
-            var meta = Metadata.Parse("metadata(width,height)");
+            var meta = MetadataFilter.Parse("metadata(width,height)");
 
             Assert.Equal("width",  meta.Properties[0]);
             Assert.Equal("height", meta.Properties[1]);
@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void B()
         {
-            var meta = Metadata.Parse("metadata(width,height,colors(count:10))");
+            var meta = MetadataFilter.Parse("metadata(width,height,colors(count:10))");
 
             Assert.Equal("width",            meta.Properties[0]);
             Assert.Equal("height",           meta.Properties[1]);

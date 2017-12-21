@@ -2,7 +2,7 @@
 {
     public class H264EncoderOptions : VideoEncodingParameters
     {
-        public EntropyCoder EntropyCoder { get; set; }
+        public EntropyEncoding EntropyCoder { get; set; }
 
         public H264MotionEstimationMethod MotionEstimationMethod { get; set; }
 

@@ -14,6 +14,8 @@ namespace Carbon.Media.Tests
         [InlineData("10.5px", 10.5d, UnitType.Px)]
         [InlineData("50000", 50000d, UnitType.Px)]
 
+        [InlineData("50.5 m", 50.5, UnitType.Meter)]
+
         [InlineData("_", 0d, UnitType.None)]
         public void Normalize(string input, double value, UnitType type)
         {
@@ -29,6 +31,15 @@ namespace Carbon.Media.Tests
             Assert.Equal(new Unit(1), new Unit(1));
             Assert.True(new Unit(1) == new Unit(1));
             Assert.True(new Unit(1) != new Unit(2));
+
+            Assert.True(new Unit(5).Equals(new Unit(5)));
+        }
+
+
+        [Fact]
+        public void DefaultEqualToNone()
+        {
+            Assert.True(Unit.None == default(Unit));
         }
     }
 }

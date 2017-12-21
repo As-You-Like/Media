@@ -10,5 +10,9 @@
         public BitRate? MinimumBitRate { get; set; }
 
         public BitRate? MaximumBitRate { get; set; }
+        
+        public Rational? FrameRate { get; set; }
+        
+        public Rational? AspectRatio { get; set; }
     }
 }

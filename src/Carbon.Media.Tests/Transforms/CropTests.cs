@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FromPercentages()
         {
-            var crop = Crop.Parse("crop(50%,50%,960,540)");
+            var crop = CropTransform.Parse("crop(50%,50%,960,540)");
 
             Assert.Equal(0.5d, crop.X);
             Assert.Equal(0.5d, crop.Y);
@@ -20,7 +20,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void CropNewFormat()
         {
-            var crop = Crop.Parse("crop(0,0,960,540)");
+            var crop = CropTransform.Parse("crop(0,0,960,540)");
 
             Assert.Equal(0d  , crop.X);
             Assert.Equal(0d  , crop.Y);
@@ -33,7 +33,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
 		public void FromLegacyFormat()
 		{
-			var crop = Crop.Parse("crop:10-0_85x20");
+			var crop = CropTransform.Parse("crop:10-0_85x20");
 
 			Assert.Equal(10, crop.X);
 			Assert.Equal(0,  crop.Y);
@@ -44,7 +44,7 @@ namespace Carbon.Media.Processors.Tests
 		[Fact]
 		public void FromLegacyFormatShort()
 		{
-			var crop = Crop.Parse("0-0_85x20");
+			var crop = CropTransform.Parse("0-0_85x20");
 
 			Assert.Equal(0,  crop.X);
 			Assert.Equal(0,  crop.Y);

@@ -270,7 +270,7 @@ namespace Carbon.Media.Processors
                     continue;
                 }
 
-                var transform = Transform.Parse(segment);
+                var transform = Processor.Parse(segment);
 
                 switch (transform)
                 {

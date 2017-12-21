@@ -12,7 +12,7 @@ namespace Carbon.Media
 
         public AudioFrame(AudioFormatInfo format, int sampleCount)
         {
-            this.format = format ?? throw new ArgumentNullException(nameof(format));
+            this.format = format;
             Memory = Buffer.Allocate(AudioFormatHelper.GetBufferSize(format, sampleCount));
 
             void* channelPlanePointers = ffmpeg.av_malloc((ulong)IntPtr.Size * 8);

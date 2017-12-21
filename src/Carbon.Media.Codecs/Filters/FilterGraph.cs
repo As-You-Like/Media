@@ -91,7 +91,7 @@ namespace Carbon.Media
             return new FilterContext(sourceFilterContext);
         }
 
-        public FilterContext AddSource(AudioFormatInfo format)
+        public FilterContext AddSource(in AudioFormatInfo format)
         {
             AVFilterContext* filterContext;
 

@@ -55,5 +55,15 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(FormatId.Jpeg, encode.Format);
             Assert.True(encode.Flags.HasFlag(EncodingFlags.Progressive));
         }
+
+
+        [Fact]
+        public void LosslessTest()
+        {
+            var encode = Encode.Parse("WebP::encode(lossless:true)");
+
+            Assert.Equal(FormatId.WebP, encode.Format);
+            Assert.True(encode.Flags.HasFlag(EncodingFlags.Lossless));
+        }
     }
 }
