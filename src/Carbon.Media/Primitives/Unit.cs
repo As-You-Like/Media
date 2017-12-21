@@ -44,11 +44,13 @@ namespace Carbon.Media
 
         public static Unit Meters(double value) => new Unit(value, UnitType.Meter);
 
-
         // 50％
 
         public static Unit Parse(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             if (text == "_")
             {
                 return None;
@@ -85,11 +87,9 @@ namespace Carbon.Media
 
         #region Comparisions
 
-        public static bool operator >(Unit lhs, Unit rhs) =>
-            lhs.Value > rhs.Value;
+        public static bool operator >(Unit lhs, Unit rhs) => lhs.Value > rhs.Value;
 
-        public static bool operator <(Unit lhs, Unit rhs) =>
-            lhs.Value < rhs.Value;
+        public static bool operator <(Unit lhs, Unit rhs) => lhs.Value < rhs.Value;
 
         #endregion
 

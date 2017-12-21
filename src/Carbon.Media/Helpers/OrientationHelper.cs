@@ -26,18 +26,18 @@ namespace Carbon.Media
                 ? result 
                 : throw new Exception("Invalid Orientation: " + text);
 
-        public static ITransform[] GetTransforms(this ExifOrientation orientation)
+        public static IProcessor[] GetTransforms(this ExifOrientation orientation)
         {
             switch (orientation)
             {
-                case FlipHorizontal : return new ITransform[] { FlipTransform.Horizontally };
-                case Rotate180      : return new ITransform[] { new RotateTransform(180) };
-                case FlipVertical   : return new ITransform[] { FlipTransform.Vertically };
-                case Transpose      : return new ITransform[] { FlipTransform.Horizontally, new RotateTransform(270) };
-                case Rotate90       : return new ITransform[] { new RotateTransform(90) };
-                case Transverse     : return new ITransform[] { FlipTransform.Horizontally, new RotateTransform(90) };
-                case Rotate270      : return new ITransform[] { new RotateTransform(270) };
-                default             : return new ITransform[0];
+                case FlipHorizontal : return new IProcessor[] { FlipTransform.Horizontally };
+                case Rotate180      : return new IProcessor[] { new RotateTransform(180) };
+                case FlipVertical   : return new IProcessor[] { FlipTransform.Vertically };
+                case Transpose      : return new IProcessor[] { FlipTransform.Horizontally, new RotateTransform(270) };
+                case Rotate90       : return new IProcessor[] { new RotateTransform(90) };
+                case Transverse     : return new IProcessor[] { FlipTransform.Horizontally, new RotateTransform(90) };
+                case Rotate270      : return new IProcessor[] { new RotateTransform(270) };
+                default             : return new IProcessor[0];
             }
         }
     }

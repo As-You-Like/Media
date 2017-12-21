@@ -40,6 +40,7 @@ namespace Carbon.Media
                 case "horizontal" : return Horizontal;
 
                 case "rotate90"   : return Rotate90;
+                case "rotate180"  : return Rotate180;
                 case "rotate270"  : return Rotate270;
 
                 default: throw new Exception("Unexpected orientation:" + text);

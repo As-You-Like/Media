@@ -6,8 +6,6 @@ namespace Carbon.Media.Drawing
 {
     public class CommandReader : IDisposable
     {
-        private StringBuilder sb = new StringBuilder();
-
         private readonly StringReader reader;
 
         private int currentCode;
@@ -38,6 +36,8 @@ namespace Carbon.Media.Drawing
 
         public Shape ReadShape()
         {
+            var sb = StringBuilderCache.Aquire();
+
             do
             {
                 sb.Append(currentChar);
@@ -46,7 +46,7 @@ namespace Carbon.Media.Drawing
 
             sb.Append(Next()); // read )
 
-            return Shape.Parse(sb.Extract());
+            return Shape.Parse(StringBuilderCache.ExtractAndRelease(sb));
         }
 
         private char Next()
@@ -66,19 +66,6 @@ namespace Carbon.Media.Drawing
         public void Dispose()
         {
             reader.Dispose();
-        }
-    }
-
-
-    internal static class StringBuilderExtensions
-    {
-        public static string Extract(this StringBuilder sb)
-        {
-            var text = sb.ToString();
-
-            sb.Clear();
-
-            return text;
         }
     }
 }
