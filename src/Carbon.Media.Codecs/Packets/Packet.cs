@@ -118,11 +118,11 @@ namespace Carbon.Media
       
         #region Helpers
 
-        public bool IsKeyframe => Flags.HasFlag(PacketFlags.Keyframe);
+        public bool IsKeyframe => (Flags & PacketFlags.Keyframe) != 0; 
 
-        public bool IsCorrupt => Flags.HasFlag(PacketFlags.Corrupt);
+        public bool IsCorrupt => (Flags & PacketFlags.Corrupt) != 0;
 
-        public bool IsTrusted => Flags.HasFlag(PacketFlags.Trusted);
+        public bool IsTrusted => (Flags & PacketFlags.Trusted) != 0;
 
         #endregion
 

@@ -57,7 +57,7 @@ namespace Carbon.Media
         [DataMember(Name = "scaleMode", Order = 12), DefaultValue(ResizeFlags.Fit)]
         public ResizeFlags ScaleMode { get; set; }
         
-        public bool Upscale => ScaleMode.HasFlag(ResizeFlags.Upscale);
+        public bool Upscale => (ScaleMode & ResizeFlags.Upscale) != 0;
     }
 }
 

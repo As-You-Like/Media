@@ -107,9 +107,9 @@ namespace Carbon.Media.Processors
             }
         }
 
-        public bool Carve => Flags.HasFlag(ResizeFlags.Carve);
+        public bool Carve => (Flags & ResizeFlags.Carve) != 0;
 
-        public bool Upscale => Flags.HasFlag(ResizeFlags.Upscale);
+        public bool Upscale => (Flags & ResizeFlags.Upscale) != 0;
 
         #endregion
 

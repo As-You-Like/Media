@@ -36,7 +36,7 @@ namespace Carbon.Media
         public readonly Type Type;
 
         [IgnoreDataMember]
-        public bool IsPlanar => Flags.HasFlag(Planar);
+        public bool IsPlanar => (Flags & Planar) != 0;
 
         #region Equality
 

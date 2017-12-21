@@ -32,11 +32,11 @@ namespace Carbon.Media
         [DataMember(Name = "flags", Order = 4)]
         public readonly PixelFormatFlags Flags;
 
-        public bool IsPacked => Flags.HasFlag(PixelFormatFlags.Packed);
+        public bool IsPacked => (Flags & PixelFormatFlags.Packed) != 0;
 
-        public bool IsBigEndian => Flags.HasFlag(PixelFormatFlags.BigEndian);
-        
-        public bool IsPlanar => Flags.HasFlag(PixelFormatFlags.Planar);
+        public bool IsBigEndian => (Flags & PixelFormatFlags.BigEndian) != 0;
+
+        public bool IsPlanar => (Flags & PixelFormatFlags.Planar) != 0;
 
         // PackedFormat?
 

@@ -4,7 +4,7 @@ namespace Carbon.Media
 {
     using static ColorSpaceFlags;
 
-    public class ColorSpaceInfo
+    public readonly struct ColorSpaceInfo
     {
         public ColorSpaceInfo(
             string name,
@@ -16,11 +16,11 @@ namespace Carbon.Media
             Flags = flags;
         }
 
-        public string Name { get; }
+        public readonly string Name;
 
-        public ColorModel Model { get; }
+        public readonly ColorModel Model;
 
-        public ColorSpaceFlags Flags { get; }
+        public readonly ColorSpaceFlags Flags;
 
         // WhitePoint
 
@@ -29,7 +29,7 @@ namespace Carbon.Media
         // TODO: ColorTable (for indexed color spaces)
 
         // ICCData?
-        public bool IsWideGamut => Flags.HasFlag(WideGamut);
+        public bool IsWideGamut => (Flags & WideGamut) != 0;
 
         public static readonly ColorSpaceInfo Cmyk     = new ColorSpaceInfo("CMYK",      ColorModel.CMYK);
         public static readonly ColorSpaceInfo Rgb      = new ColorSpaceInfo("RGB",       ColorModel.RGB);
