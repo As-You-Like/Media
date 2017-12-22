@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum MeteringMode
+    public enum ExifMeteringMode : short
     {
         Unknown               = 0,
         Average               = 1,

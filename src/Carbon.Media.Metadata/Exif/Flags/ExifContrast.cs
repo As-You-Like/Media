@@ -1,9 +1,9 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum ExifContrast
+    public enum ExifContrast : short
     {
         Normal = 0,
-        Low    = 1,
-        High   = 2
+        Soft   = 1,
+        Hard   = 2
     }
 }

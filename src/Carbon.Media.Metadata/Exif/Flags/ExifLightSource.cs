@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum LightSource
+    public enum ExifLightSource
     {
         Unknown              = 0,
         Daylight             = 1,

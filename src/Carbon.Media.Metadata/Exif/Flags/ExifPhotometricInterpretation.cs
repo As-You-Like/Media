@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum PhotometricInterpretation
+    public enum ExifPhotometricInterpretation : ushort
     {
         WhiteIsZero      = 0,
         BlackIsZero      = 1,

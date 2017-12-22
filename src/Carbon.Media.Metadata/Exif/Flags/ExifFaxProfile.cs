@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum FaxProfile : byte
+    public enum ExifFaxProfile
     {
         Unknown = 0,
         S       = 1, // Minimal b&w lossless

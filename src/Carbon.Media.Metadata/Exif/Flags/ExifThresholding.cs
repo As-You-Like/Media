@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum Thresholding
+    public enum ExifThresholding
     {
         NoDitheringOrHalftoning     = 1,
         OrderedDitheringOrHalftone  = 2,

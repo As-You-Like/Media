@@ -6,6 +6,6 @@ namespace Carbon.Media.Metadata
     public class SensingInfo
     {
         [DataMember(Name = "method", Order = 1)]
-        public SensingMethod Method { get; set; }
+        public ExifSensingMethod Method { get; set; }
     }
 }

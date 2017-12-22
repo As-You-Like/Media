@@ -2,6 +2,7 @@
 {
     internal enum MetaFormat
     {
+        Any         = 0,
         Ansi        = 1 << 0,
         Boolean     = 1 << 1,
         Byte        = 1 << 2,

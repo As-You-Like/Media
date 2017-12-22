@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum ExposureProgram : short
+    public enum ExifExposureProgram : short
     {
         NotDefined       = 0,
         Manual           = 1,

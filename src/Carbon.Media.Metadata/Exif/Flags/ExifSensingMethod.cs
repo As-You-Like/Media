@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-	public enum SensingMethod : short
+	public enum ExifSensingMethod : short
 	{
 		NotDefined            = 1,
 		OneChipArea           = 2,

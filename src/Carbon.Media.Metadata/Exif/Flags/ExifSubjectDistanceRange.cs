@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum SubjectDistanceRange : short
+    public enum ExifSubjectDistanceRange : short
     {
         Unknown = 0,
         Macro   = 1,

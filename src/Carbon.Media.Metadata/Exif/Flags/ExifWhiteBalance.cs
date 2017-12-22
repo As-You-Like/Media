@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum WhiteBalance : byte
+    public enum ExifWhiteBalance : short
     {
         Auto   = 0,
         Manual = 1

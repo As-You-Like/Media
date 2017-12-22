@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum ExposureMode
+    public enum ExifExposureMode
 	{
 		Auto        = 0,
 		Manual      = 1,

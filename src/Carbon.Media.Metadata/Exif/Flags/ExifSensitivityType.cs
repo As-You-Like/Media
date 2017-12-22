@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-	public enum SensitivityType : byte
+	public enum ExifSensitivityType : byte
 	{
 		Unknown                                                      = 0,
 		StandardOutputSensitivity                                    = 1,

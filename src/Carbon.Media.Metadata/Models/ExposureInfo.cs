@@ -10,10 +10,10 @@ namespace Carbon.Media.Metadata
         public int? Index { get; set; }
 
         [DataMember(Name = "program", Order = 2, EmitDefaultValue = false)]
-        public ExposureProgram? Program { get; set; }
+        public ExifExposureProgram? Program { get; set; }
 
         [DataMember(Name = "mode", Order = 3, EmitDefaultValue = false)]
-        public ExposureMode? Mode { get; set; }
+        public ExifExposureMode? Mode { get; set; }
 
         [DataMember(Name = "time", Order = 4, EmitDefaultValue = false)]
         public TimeSpan? Time { get; set; }

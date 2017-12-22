@@ -94,7 +94,7 @@ namespace Carbon.Media.Metadata
         public SubjectInfo Subject { get; set; }
         
         [DataMember(Name = "whiteBalance", Order = 48, EmitDefaultValue = false)]
-        public WhiteBalance WhiteBalance { get; set; }
+        public ExifWhiteBalance WhiteBalance { get; set; }
 
         #endregion
     }

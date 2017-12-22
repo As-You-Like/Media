@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum SubfileType : byte
+    public enum ExifSubfileType
     {
         Full                                              = 0,
         ReducedResolution                                 = 1, 

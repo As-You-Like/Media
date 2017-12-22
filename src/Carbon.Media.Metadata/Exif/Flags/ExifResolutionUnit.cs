@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum ResolutionUnit : byte
+    public enum ExifResolutionUnit : short
     {
         None       = 1,
         Inch       = 2,

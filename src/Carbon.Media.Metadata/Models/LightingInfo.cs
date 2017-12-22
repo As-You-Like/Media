@@ -6,6 +6,6 @@ namespace Carbon.Media.Metadata
     public class LightingInfo
     {
         [DataMember(Name = "source", Order = 1)]
-        public LightSource Source { get; set; }
+        public ExifLightSource Source { get; set; }
     }
 }

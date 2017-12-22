@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-    public enum GainControl : byte
+    public enum ExifGainControl : short
     {
         None         = 0,
         LowGainUp    = 1,

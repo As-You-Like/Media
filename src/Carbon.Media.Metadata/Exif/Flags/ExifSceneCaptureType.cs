@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Metadata
 {
-	public enum SceneCaptureType : short
+	public enum ExifSceneCaptureType : short
 	{
 		Standard    = 0,
 		Landscape   = 1,
