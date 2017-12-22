@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public abstract class Shape
+    public abstract class DrawCommand
     {
-        public Shape(
+        public DrawCommand(
             UnboundBox box,
             Alignment? align,
             BlendMode blendMode,
@@ -50,26 +51,22 @@ namespace Carbon.Media.Drawing
 
         public override string ToString() => Canonicalize();
 
-        public static Shape Parse(string text)
+        public static DrawCommand Parse(string text)
         {
-            int argStart = text.IndexOf('(');
-
-            if (argStart == -1) return null;
-
-            var name = text.Substring(0, argStart);
-
-            switch (name)
+            var syntax = CallSyntax.Parse(text);
+            
+            switch (syntax.Name)
             {
-                case "circle"    : return Circle.Parse(text);
-                case "gradient"  : return Gradient.Parse(text);
-                case "image"     : return DrawImage.Parse(text);
-                case "path"      : return Path.Parse(text);
-                case "rectangle" : return Rect.Parse(text);
-                case "square"    : return Rect.Parse(text);
-                case "text"      : return TextShape.Parse(text);
-
-                default: throw new System.Exception("Unreconized shape:" + name);
+                case "circle"    : return DrawCircleCommand.Create(syntax);
+                case "gradient"  : return DrawGradientCommand.Create(syntax);
+                case "image"     : return DrawImageCommand.Create(syntax);
+                case "path"      : return DrawPathCommand.Create(syntax);
+                case "rectangle" : return DrawRectangleCommand.Create(syntax);
+                case "square"    : return DrawRectangleCommand.Create(syntax);
+                case "text"      : return DrawTextCommand.Create(syntax);
             }
+
+            throw new Exception("Invalid Command:" + syntax.Name);
         }
     }
 }

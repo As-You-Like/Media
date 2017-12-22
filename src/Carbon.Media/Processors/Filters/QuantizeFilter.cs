@@ -7,9 +7,9 @@ namespace Carbon.Media.Processors
     {
         public QuantizeFilter(int maxColors, string algorithm = null)
         {
-            if (maxColors <= 0)
+            if (maxColors <= 0 || maxColors > 256)
             {
-                throw new ArgumentException("Must be > 0", nameof(maxColors));
+                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be between 1 and 256");
             }
 
             MaxColors = maxColors;
@@ -50,13 +50,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static QuantizeFilter Parse(string segment)
+        public static QuantizeFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new QuantizeFilter(int.Parse(segment));
+            return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
 }

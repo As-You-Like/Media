@@ -15,18 +15,16 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static ColorSpaceFilter Parse(string segment)
+        public static ColorSpaceFilter Parse(string text)
         {
-            int argStart = segment.IndexOf('(') + 1;
+            var syntax = CallSyntax.Parse(text);
 
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            if (Enum.TryParse<ColorSpace>(segment, ignoreCase: true, out var colorSpace))
+            if (Enum.TryParse<ColorSpace>(syntax.Arguments[0].Value, ignoreCase: true, out var colorSpace))
             {
                 return new ColorSpaceFilter(colorSpace);
             }
 
-            throw new Exception("Invalid ColorSpace:" + segment);
+            throw new Exception("Invalid ColorSpace:" + syntax.Arguments[0].Value);
         }
     }
 }

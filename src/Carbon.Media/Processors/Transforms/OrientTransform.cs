@@ -15,13 +15,9 @@
 
         public override string ToString() => Canonicalize();
 
-        public static OrientTransform Parse(string segment)
+        public static OrientTransform Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new OrientTransform(OrientationHelper.Parse(segment));
+            return new OrientTransform(OrientationHelper.Parse(syntax.Arguments[0].Value));
         }
     }
 }

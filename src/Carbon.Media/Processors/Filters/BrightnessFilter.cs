@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace Carbon.Media.Processors
 {
@@ -17,13 +16,9 @@ namespace Carbon.Media.Processors
 
         public float Amount { get; }
 
-        public static BrightnessFilter Parse(string segment)
+        public static BrightnessFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new BrightnessFilter(float.Parse(segment));
+            return new BrightnessFilter(float.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"brightness({Amount})";

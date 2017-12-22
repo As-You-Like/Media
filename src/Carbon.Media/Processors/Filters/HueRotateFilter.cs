@@ -11,13 +11,9 @@
 
         // hue-rotate(90deg)
       
-        public static HueRotateFilter Parse(string segment)
-        {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new HueRotateFilter(int.Parse(segment.Replace("deg", "")));
+        public static HueRotateFilter Create(CallSyntax syntax)
+        {            
+            return new HueRotateFilter(int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
         }
 
         #region ToString()

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class Path : Shape
+    public sealed class DrawPathCommand : DrawCommand
     {
-        public Path(
+        public DrawPathCommand(
             string content,
             string stroke,
             string fill,
@@ -59,12 +59,8 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new Path Parse(string text)
+        public static DrawPathCommand Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(text.Substring(argStart, text.Length - argStart - 1));
-            
             var mode  = BlendMode.Normal;
             string content = null;
 
@@ -74,7 +70,7 @@ namespace Carbon.Media.Drawing
             var i = 0;
             var box = new UnboundBox();
 
-            foreach (var (k, v) in args)
+            foreach (var (k, v) in syntax.Arguments)
             {
                 if (i == 0)
                 {
@@ -98,7 +94,7 @@ namespace Carbon.Media.Drawing
                 i++;
             }
 
-            return new Path(
+            return new DrawPathCommand(
                 content : content, 
                 stroke  : stroke,
                 fill    : fill,

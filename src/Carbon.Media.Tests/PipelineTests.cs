@@ -556,7 +556,7 @@ namespace Carbon.Media.Processors.Tests
 
             var draw = pipe.Filters[0] as DrawFilter;
 
-            Assert.Equal("M150 0 L75 200 L225 200 Z", (draw.Commands[0] as Path).Content);
+            Assert.Equal("M150 0 L75 200 L225 200 Z", (draw.Commands[0] as DrawPathCommand).Content);
 
             Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(path(M150 0 L75 200 L225 200 Z))|>HEIF::encode", pipe.Canonicalize());
         }

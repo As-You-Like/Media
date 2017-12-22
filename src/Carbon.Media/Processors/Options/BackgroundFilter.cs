@@ -34,15 +34,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static BackgroundFilter Parse(string text)
+        public static BackgroundFilter Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            text = text.Substring(argStart, text.Length - argStart - 1);
-
-            return new BackgroundFilter(text);
+            return new BackgroundFilter(syntax.Arguments[0].Value);
         }
-
-     
     }
 }

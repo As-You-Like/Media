@@ -7,7 +7,7 @@ namespace Carbon.Media.Drawing.Tests
         [Fact]
         public void FromText()
         {
-            var overlay = Rect.Parse("rectangle(100,300,red,mode:burn,x:1,y:2,align:middle,padding:10px)");
+            var overlay = DrawRectangleCommand.Create(CallSyntax.Parse("rectangle(100,300,red,mode:burn,x:1,y:2,align:middle,padding:10px)"));
 
             Assert.Equal("red", overlay.Fill);
             Assert.Equal(BlendMode.Burn, overlay.BlendMode);

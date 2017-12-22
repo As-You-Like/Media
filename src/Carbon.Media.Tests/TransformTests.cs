@@ -103,7 +103,7 @@ namespace Carbon.Media.Tests
 
             var draw = (DrawFilter)transformation.GetTransforms()[0];
 
-            var text = (TextShape)draw.Commands[0];
+            var text = (DrawTextCommand)draw.Commands[0];
 
             Assert.Equal("Hello World", text.Content);
             Assert.Equal(14,            text.Font?.Size.Value);

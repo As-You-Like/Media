@@ -3,26 +3,23 @@ using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class DrawImage : Shape
+    public sealed class DrawGradientCommand : DrawCommand
     {
-        public DrawImage(       
-            string src,
+        public DrawGradientCommand(
+            string content,
             UnboundBox box,
             BlendMode blendMode = BlendMode.Normal,
-            Alignment align = Alignment.Left)
+            Alignment? align = null)
             : base(box, align, blendMode, ResizeFlags.None)
         {
-
-            Src = src ?? throw new ArgumentNullException(nameof(src));
+            Content = content;
         }
-
-        public string Src { get; set; }
-
-        // image(src.jpeg,width:100,x:0,y:0,align:center)
+        
+        public string Content { get; }
 
         public override void WriteTo(StringBuilder sb)
         {
-            sb.Append("image(");
+            sb.Append("gradient(");
 
             foreach (var (key, value) in Args())
             {
@@ -36,22 +33,18 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new DrawImage Parse(string text)
+        public static DrawGradientCommand Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(text.Substring(argStart, text.Length - argStart - 1));
-
-            (_, var name) = args[0];
+            (_, var name) = syntax.Arguments[0];
 
             var mode  = BlendMode.Normal;
             var align = Alignment.Left;
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < args.Length; i++)
+            for (var i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = args[i];
+                var (k, v) = syntax.Arguments[i];
                 
                 switch (k)
                 {
@@ -65,7 +58,11 @@ namespace Carbon.Media.Drawing
                 }
             }
 
-            return new DrawImage(name, box, mode, align);
+            return new DrawGradientCommand(name, box, mode, align);
         }
     }
 }
+
+/*
+overlay(red,mode:burn)
+*/

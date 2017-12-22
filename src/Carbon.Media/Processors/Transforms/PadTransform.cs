@@ -78,41 +78,27 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static PadTransform Parse(string segment)
+        public static PadTransform Create(CallSyntax syntax)
         {
-            #region Normalization
-
-            int argStart = segment.IndexOf('(') + 1;
-            
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            #endregion
-            
-            if (!segment.Contains(","))
-            {       
-                return new PadTransform(int.Parse(segment));
-            }
-
-            string[] parts = segment.Split(Seperators.Comma);
-                       
-            if (parts.Length == 2)
+            switch (syntax.Arguments.Length)
             {
-                var a = int.Parse(parts[0]); // Top & Bottom
-                var b = int.Parse(parts[1]); // Left & Right
-                
-                return new PadTransform(a, b, a, b);
-            }
-            else if (parts.Length == 4)
-            {                              
-                int top    = int.Parse(parts[0]); 
-                int right  = int.Parse(parts[1]); 
-                int bottom = int.Parse(parts[2]);
-                int left   = int.Parse(parts[3]); 
+                case 1:
+                    return new PadTransform(int.Parse(syntax.Arguments[0].Value));
+                case 2:
+                    var a = int.Parse(syntax.Arguments[0].Value); // Top  & bottom
+                    var b = int.Parse(syntax.Arguments[1].Value); // Left & right
 
-                return new PadTransform(top, right, bottom, left);
-            }
+                    return new PadTransform(a, b, a, b);
+                case 4:
+                    int top    = int.Parse(syntax.Arguments[0].Value);
+                    int right  = int.Parse(syntax.Arguments[1].Value);
+                    int bottom = int.Parse(syntax.Arguments[2].Value);
+                    int left   = int.Parse(syntax.Arguments[3].Value);
 
-            throw new Exception("Invalid pad arguments:" + segment);
+                    return new PadTransform(top, right, bottom, left);
+            }
+            
+            throw new Exception("Invalid pad arguments:" + string.Join(",", syntax.Arguments));
         }
     }
 }

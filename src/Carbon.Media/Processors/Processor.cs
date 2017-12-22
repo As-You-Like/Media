@@ -10,56 +10,54 @@
         {
             var indexOfArg = segment.IndexOfAny(argStartChars);
 
-            var name = indexOfArg > -1
-                ? segment.Substring(0, indexOfArg)
-                : segment;
+            var syntax = CallSyntax.Parse(segment);
 
-            switch (name)
+            switch (syntax.Name)
             {
                 // Transforms
                 case "resize"       : return ResizeTransform.Parse(segment);
-                case "scale"        : return ScaleTransform.Parse(segment);
-                case "crop"         : return CropTransform.Parse(segment);
-                case "rotate"       : return RotateTransform.Parse(segment);
-                case "flip"         : return FlipTransform.Parse(segment);
-                case "orient"       : return OrientTransform.Parse(segment);
-                case "pad"          : return PadTransform.Parse(segment);
+                case "scale"        : return ScaleTransform.Create(syntax);
+                case "crop"         : return CropTransform.Parse(segment); // still supports legacy syntax...
+                case "rotate"       : return RotateTransform.Create(syntax);
+                case "flip"         : return FlipTransform.Create(syntax);
+                case "orient"       : return OrientTransform.Create(syntax);
+                case "pad"          : return PadTransform.Create(syntax);
 
-                case "page"         : return PageFilter.Parse(segment);
-                case "frame"        : return FrameFilter.Parse(segment);        
-                case "background"   : return BackgroundFilter.Parse(segment);
+                case "page"         : return PageFilter.Create(syntax);
+                case "frame"        : return FrameFilter.Create(syntax);        
+                case "background"   : return BackgroundFilter.Create(syntax);
                 
                 // web filters
-                case "blur"         : return BlurFilter.Parse(segment);
-                case "brightness"   : return BrightnessFilter.Parse(segment);
-                case "contrast"     : return ContrastFilter.Parse(segment);
-                case "grayscale"    : return GrayscaleFilter.Parse(segment);
-                case "rotateHue"    : return HueRotateFilter.Parse(segment);
-                case "hueRotate"    : return HueRotateFilter.Parse(segment);
-                case "hue-rotate"   : return HueRotateFilter.Parse(segment);
-                case "invert"       : return InvertFilter.Parse(segment);
-                case "opacity"      : return OpacityFilter.Parse(segment);
-                case "saturate"     : return SaturateFilter.Parse(segment);
-                case "sepia"        : return SepiaFilter.Parse(segment);
+                case "blur"         : return BlurFilter.Create(syntax);
+                case "brightness"   : return BrightnessFilter.Create(syntax);
+                case "contrast"     : return ContrastFilter.Create(syntax);
+                case "grayscale"    : return GrayscaleFilter.Create(syntax);
+                case "rotateHue"    : return HueRotateFilter.Create(syntax);
+                case "hueRotate"    : return HueRotateFilter.Create(syntax);
+                case "hue-rotate"   : return HueRotateFilter.Create(syntax);
+                case "invert"       : return InvertFilter.Create(syntax);
+                case "opacity"      : return OpacityFilter.Create(syntax);
+                case "saturate"     : return SaturateFilter.Create(syntax);
+                case "sepia"        : return SepiaFilter.Create(syntax);
 
                 // General Filters           
-                case "highlight"    : return HighlightFilter.Parse(segment);
-                case "gamma"        : return GammaFilter.Parse(segment);
-                case "halftone"     : return HalftoneFilter.Parse(segment);
-                case "pixelate"     : return PixelateFilter.Parse(segment);
-                case "quantize"     : return QuantizeFilter.Parse(segment);
-                case "sharpen"      : return SharpenFilter.Parse(segment);
-                case "vibrance"     : return VibranceFilter.Parse(segment);
+                case "highlight"    : return HighlightFilter.Create(syntax);
+                case "gamma"        : return GammaFilter.Create(syntax);
+                case "halftone"     : return HalftoneFilter.Create(syntax);
+                case "pixelate"     : return PixelateFilter.Create(syntax);
+                case "quantize"     : return QuantizeFilter.Create(syntax);
+                case "sharpen"      : return SharpenFilter.Create(syntax);
+                case "vibrance"     : return VibranceFilter.Create(syntax);
 
                 // Audio Filters
-                case "volume"       : return VolumeFilter.Parse(segment);
+                case "volume"       : return VolumeFilter.Create(syntax);
 
                 // Drawing
                 case "draw"         : return DrawFilter.Parse(segment);
 
                 // Other
                 case "metadata"     : return MetadataFilter.Parse(segment);
-                case "quality"      : return Quality.Parse(segment);
+                case "quality"      : return QualityFilter.Create(syntax);
 
                 // Boolean Options
                 case "lossless"     : return LosslessFilter.Default;
@@ -74,7 +72,7 @@
                     }
                     else
                     {
-                        return CustomFilter.Parse(segment);
+                        return CustomFilter.Create(syntax);
                     }
             }
         }

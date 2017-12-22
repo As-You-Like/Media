@@ -33,9 +33,9 @@
             Value = value;
         }
 
-        public readonly string Name;
+        public string Name { get; }
 
-        public readonly string Value;
+        public string Value { get; }
 
         public void Deconstruct(out string name, out string value)
         {

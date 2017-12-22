@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class TextShape : Shape
+    public sealed class DrawTextCommand : DrawCommand
     {
-        public TextShape(
+        public DrawTextCommand(
             string text,
             UnboundBox box,
             Font? font = null,
@@ -60,13 +60,9 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new TextShape Parse(string key)
+        public static DrawTextCommand Create(CallSyntax syntax)
         {
-            var argStart = key.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(key.Substring(argStart, key.Length - argStart - 1));
-            
-            (_, var content) = args[0]; // TODO: Base64 support
+            (_, var content) = syntax.Arguments[0]; // TODO: Base64 support
 
             var box = new UnboundBox();
 
@@ -75,9 +71,9 @@ namespace Carbon.Media.Drawing
             Font? font = null;
             BlendMode mode = BlendMode.Normal;
 
-            for (var i = 1; i < args.Length; i++)
+            for (var i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = args[i];
+                var (k, v) = syntax.Arguments[i];
                 
                 switch (k)
                 {
@@ -93,7 +89,7 @@ namespace Carbon.Media.Drawing
                 }
             }
 
-            return new TextShape(content, box, font, align, mode, color);
+            return new DrawTextCommand(content, box, font, align, mode, color);
         }
     }
 }

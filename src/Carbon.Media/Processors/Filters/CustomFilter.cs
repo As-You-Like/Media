@@ -55,20 +55,9 @@ namespace Carbon.Media.Processors
 
         // name(args)
 
-        public static CustomFilter Parse(string key)
+        public static CustomFilter Create(CallSyntax syntax)
         {
-            int argStart = key.IndexOf('(') + 1;
-
-            if (argStart == 0)
-            {
-                return new CustomFilter(key, Array.Empty<Argument>());
-            }
-
-            var name = key.Substring(0, argStart - 1);
-
-            var args = ArgumentList.Parse(key.Substring(argStart, key.Length - argStart - 1));
-            
-            return new CustomFilter(name, args);
+            return new CustomFilter(syntax.Name, syntax.Arguments);
         }
     }
 }

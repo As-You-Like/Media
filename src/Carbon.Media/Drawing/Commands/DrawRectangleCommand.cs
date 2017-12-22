@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class Rect : Shape
+    public sealed class DrawRectangleCommand : DrawCommand
     {
-        public Rect(
+        public DrawRectangleCommand(
             string color,
             UnboundBox box,
             BlendMode mode = BlendMode.Normal,
@@ -40,12 +40,8 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new Rect Parse(string key)
+        public static DrawRectangleCommand Create(CallSyntax syntax)
         {
-            int argStart = key.IndexOf('(') + 1;
-         
-            var args = ArgumentList.Parse(key.Substring(argStart, key.Length - argStart - 1));
-
             string fill = null;
             var mode  = BlendMode.Normal;
             Alignment? align = null;
@@ -54,7 +50,7 @@ namespace Carbon.Media.Drawing
 
             var i = 0;
 
-            foreach(var (k, v) in args)
+            foreach(var (k, v) in syntax.Arguments)
             {
                 if (k == null) // positional
                 {
@@ -83,7 +79,7 @@ namespace Carbon.Media.Drawing
                 }
             }
 
-            return new Rect(fill, box, mode, align);
+            return new DrawRectangleCommand(fill, box, mode, align);
         }
     }
 }

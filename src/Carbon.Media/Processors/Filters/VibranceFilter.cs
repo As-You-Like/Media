@@ -39,13 +39,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static VibranceFilter Parse(string segment)
+        public static VibranceFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new VibranceFilter(float.Parse(segment));
+            return new VibranceFilter(float.Parse(syntax.Arguments[0].Value));
         }
     }
 }

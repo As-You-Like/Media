@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void A()
         {
-            var filter = CustomFilter.Parse("starburst(count:100)");
+            var filter = CustomFilter.Create(CallSyntax.Parse("starburst(count:100)"));
 
             Assert.Equal("starburst", filter.Name);
             Assert.Equal("count", filter.Arguments[0].Name);
@@ -17,7 +17,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void B()
         {
-            var filter = CustomFilter.Parse("starburst");
+            var filter = CustomFilter.Create(CallSyntax.Parse("starburst"));
 
             Assert.Equal("starburst", filter.Name);
             Assert.Empty(filter.Arguments);

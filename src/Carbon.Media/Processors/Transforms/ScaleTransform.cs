@@ -65,19 +65,15 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static ScaleTransform Parse(string segment)
+        public static ScaleTransform Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(segment.Substring(argStart, segment.Length - argStart - 1));
-
             int width = 0;
             int height = 0;
             var mode = InterpolaterMode.Box;
 
             var i = 0;
 
-            foreach (var (key, value) in args)
+            foreach (var (key, value) in syntax.Arguments)
             {
                 switch (i)
                 {

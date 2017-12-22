@@ -9,13 +9,9 @@
 
         public float Amount { get; }
 
-        public static HalftoneFilter Parse(string segment)
+        public static HalftoneFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new HalftoneFilter(float.Parse(segment));
+            return new HalftoneFilter(float.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"halftone({Amount})";

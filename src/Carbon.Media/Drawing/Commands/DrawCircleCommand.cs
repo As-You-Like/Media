@@ -2,9 +2,9 @@
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class Circle : Shape
+    public sealed class DrawCircleCommand : DrawCommand
     {
-        public Circle(
+        public DrawCircleCommand(
             int radius,
             UnboundBox box,
             BlendMode mode = BlendMode.Normal)
@@ -37,13 +37,9 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new Circle Parse(string text)
+        public static DrawCircleCommand Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(text.Substring(argStart, text.Length - argStart - 1));
-            
-            var radius = int.Parse(args[0].Value);
+            var radius = int.Parse(syntax.Arguments[0].Value);
             
             var mode  = BlendMode.Normal;
 
@@ -52,9 +48,9 @@ namespace Carbon.Media.Drawing
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < args.Length; i++)
+            for (var i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = args[i];
+                var (k, v) = syntax.Arguments[i];
                 
                 switch (k)
                 {
@@ -69,7 +65,7 @@ namespace Carbon.Media.Drawing
                 }
             }
 
-            return new Circle(radius, box, mode);
+            return new DrawCircleCommand(radius, box, mode);
         }
     }
 }

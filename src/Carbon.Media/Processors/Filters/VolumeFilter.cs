@@ -6,12 +6,10 @@ namespace Carbon.Media.Processors
     {
         public VolumeFilter(float amount)
         {
-            #region Preconditions
-
             if (amount < 0)
-                throw new ArgumentException("Must be >= 0", nameof(amount));
-
-            #endregion
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be >= 0");
+            }
 
             Amount = amount;
         }
@@ -22,13 +20,9 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static VolumeFilter Parse(string segment)
+        public static VolumeFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new VolumeFilter((float)Unit.Parse(segment).Value);
+            return new VolumeFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

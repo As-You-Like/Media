@@ -2,12 +2,14 @@
 
 namespace Carbon.Media.Processors
 {
-    public sealed class Quality : IProcessor
+    public sealed class QualityFilter : IProcessor
     {
-        public Quality(int value)
+        public QualityFilter(int value)
         {
             if (value < 0 && value > 100)
+            {
                 throw new ArgumentOutOfRangeException(nameof(value), value, "Must be between 0 & 100");
+            }
 
             Value = value;
         }
@@ -25,13 +27,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static Quality Parse(string segment)
+        public static QualityFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            var arg = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new Quality(int.Parse(arg));
+            return new QualityFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
 }

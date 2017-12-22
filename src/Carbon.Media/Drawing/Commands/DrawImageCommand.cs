@@ -3,23 +3,26 @@ using System.Text;
 
 namespace Carbon.Media.Drawing
 {
-    public sealed class Gradient : Shape
+    public sealed class DrawImageCommand : DrawCommand
     {
-        public Gradient(
-            string content,
+        public DrawImageCommand(       
+            string src,
             UnboundBox box,
             BlendMode blendMode = BlendMode.Normal,
-            Alignment? align = null)
+            Alignment align = Alignment.Left)
             : base(box, align, blendMode, ResizeFlags.None)
         {
-            Content = content;
+
+            Src = src ?? throw new ArgumentNullException(nameof(src));
         }
-        
-        public string Content { get; }
+
+        public string Src { get; set; }
+
+        // image(src.jpeg,width:100,x:0,y:0,align:center)
 
         public override void WriteTo(StringBuilder sb)
         {
-            sb.Append("gradient(");
+            sb.Append("image(");
 
             foreach (var (key, value) in Args())
             {
@@ -33,22 +36,18 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static new Gradient Parse(string text)
+        public static DrawImageCommand Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            var args = ArgumentList.Parse(text.Substring(argStart, text.Length - argStart - 1));
-
-            (_, var name) = args[0];
+            (_, var name) = syntax.Arguments[0];
 
             var mode  = BlendMode.Normal;
             var align = Alignment.Left;
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < args.Length; i++)
+            for (var i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = args[i];
+                var (k, v) = syntax.Arguments[i];
                 
                 switch (k)
                 {
@@ -62,11 +61,7 @@ namespace Carbon.Media.Drawing
                 }
             }
 
-            return new Gradient(name, box, mode, align);
+            return new DrawImageCommand(name, box, mode, align);
         }
     }
 }
-
-/*
-overlay(red,mode:burn)
-*/

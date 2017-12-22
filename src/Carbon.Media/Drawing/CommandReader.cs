@@ -20,7 +20,7 @@ namespace Carbon.Media.Drawing
             Next();
         }
 
-        public bool TryRead(out Shape shape)
+        public bool TryRead(out DrawCommand shape)
         {
             while (currentChar == ',')
             {
@@ -34,7 +34,7 @@ namespace Carbon.Media.Drawing
             }
         }
 
-        public Shape ReadShape()
+        public DrawCommand ReadShape()
         {
             var sb = StringBuilderCache.Aquire();
 
@@ -46,7 +46,7 @@ namespace Carbon.Media.Drawing
 
             sb.Append(Next()); // read )
 
-            return Shape.Parse(StringBuilderCache.ExtractAndRelease(sb));
+            return DrawCommand.Parse(StringBuilderCache.ExtractAndRelease(sb));
         }
 
         private char Next()

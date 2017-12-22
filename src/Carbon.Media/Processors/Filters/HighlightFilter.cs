@@ -9,13 +9,9 @@
 
         public float Amount { get; }
 
-        public static HighlightFilter Parse(string segment)
-        {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new HighlightFilter(float.Parse(segment));
+        public static HighlightFilter Create(CallSyntax syntax)
+        {            
+            return new HighlightFilter(float.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"highlight({Amount})";

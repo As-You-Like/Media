@@ -39,13 +39,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static ContrastFilter Parse(string segment)
+        public static ContrastFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new ContrastFilter((float)Unit.Parse(segment).Value);
+            return new ContrastFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

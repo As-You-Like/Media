@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void A()
         {
-            var pad = PadTransform.Parse("pad(1,2,3,4)");
+            var pad = PadTransform.Create(CallSyntax.Parse("pad(1,2,3,4)"));
 
             Assert.Equal(1, pad.Top);
             Assert.Equal(2, pad.Right);
@@ -20,7 +20,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Shorthand1()
         {
-            var pad = PadTransform.Parse("pad(1)");
+            var pad = PadTransform.Create(CallSyntax.Parse("pad(1)"));
             
             Assert.Equal(1, pad.Top);
             Assert.Equal(1, pad.Right);
@@ -33,7 +33,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Shorthand2()
         {
-            var pad = PadTransform.Parse("pad(10,20)");
+            var pad = PadTransform.Create(CallSyntax.Parse("pad(10,20)"));
 
             Assert.Equal(10, pad.Top);
             Assert.Equal(20, pad.Right);

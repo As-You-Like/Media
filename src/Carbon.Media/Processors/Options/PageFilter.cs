@@ -36,13 +36,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static PageFilter Parse(string text)
+        public static PageFilter Create(CallSyntax syntax)
         {
-            int argStart = text.IndexOf('(') + 1;
-
-            text = text.Substring(argStart, text.Length - argStart - 1);
-
-            return new PageFilter(int.Parse(text));
+            return new PageFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
 }

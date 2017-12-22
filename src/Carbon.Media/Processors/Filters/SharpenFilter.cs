@@ -33,13 +33,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static SharpenFilter Parse(string segment)
+        public static SharpenFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new SharpenFilter((float)Unit.Parse(segment).Value);
+            return new SharpenFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

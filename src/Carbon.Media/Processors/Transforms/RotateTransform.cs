@@ -22,18 +22,9 @@
 
         public override string ToString() => $"rotate({Angle})";
 
-        public static RotateTransform Parse(string key)
+        public static RotateTransform Create(CallSyntax syntax)
         {
-            #region Normalization
-
-            if (key.StartsWith("rotate("))
-            {
-                key = key.Substring(7, key.Length - 8);
-            }
-
-            #endregion
-
-            return new RotateTransform(angle: int.Parse(key.Replace("deg", "")));
+            return new RotateTransform(angle: int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
         }
     }
 }

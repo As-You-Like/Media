@@ -30,13 +30,9 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static OpacityFilter Parse(string segment)
+        public static OpacityFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new OpacityFilter((float)Unit.Parse(segment).Value);
+            return new OpacityFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

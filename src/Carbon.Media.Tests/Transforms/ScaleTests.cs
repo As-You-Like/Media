@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void A()
         {
-            var scale = ScaleTransform.Parse("scale(800,600)");
+            var scale = ScaleTransform.Create(CallSyntax.Parse("scale(800,600)"));
 
             Assert.Equal(800, scale.Width);
             Assert.Equal(600, scale.Height);
@@ -22,7 +22,7 @@ namespace Carbon.Media.Processors.Tests
             
             Assert.Equal("scale(800,600,lanczos3)", scale.Canonicalize());
 
-            scale = ScaleTransform.Parse(scale.Canonicalize());
+            scale = ScaleTransform.Create(CallSyntax.Parse(scale.Canonicalize()));
 
             Assert.Equal(800, scale.Width);
             Assert.Equal(600, scale.Height);

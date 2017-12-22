@@ -133,7 +133,7 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation Draw(params Shape[] shapes)
+        public MediaTransformation Draw(params DrawCommand[] shapes)
         {
             Apply(new DrawFilter(shapes));
 
@@ -170,7 +170,7 @@ namespace Carbon.Media
 
         public MediaTransformation WithQuality(int value)
         {
-            Apply(new Quality(value));
+            Apply(new QualityFilter(value));
 
             return this;
         }

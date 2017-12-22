@@ -131,7 +131,7 @@ namespace Carbon.Media.Processors
 
                     crop = c;
                 }
-                else if (transform is Quality q)
+                else if (transform is QualityFilter q)
                 {
                     quality = q.Value;
                 }

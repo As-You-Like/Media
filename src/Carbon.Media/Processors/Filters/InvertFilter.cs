@@ -25,13 +25,9 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static InvertFilter Parse(string segment)
+        public static InvertFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new InvertFilter(float.Parse(segment));
+            return new InvertFilter(float.Parse(syntax.Arguments[0].Value));
         }
     }
 }

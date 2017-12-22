@@ -24,13 +24,9 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static PixelateFilter Parse(string segment)
+        public static PixelateFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new PixelateFilter(int.Parse(segment));
+            return new PixelateFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
 }

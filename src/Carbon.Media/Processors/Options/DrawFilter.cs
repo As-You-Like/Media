@@ -8,12 +8,12 @@ namespace Carbon.Media.Processors
 {
     public class DrawFilter : IProcessor, ICanonicalizable
     {
-        public DrawFilter(IReadOnlyList<Shape> commands)
+        public DrawFilter(IReadOnlyList<DrawCommand> commands)
         {
             Commands = commands ?? throw new ArgumentNullException(nameof(commands));
         }
 
-        public IReadOnlyList<Shape> Commands { get; }
+        public IReadOnlyList<DrawCommand> Commands { get; }
 
         #region ICanonicalizable
 
@@ -53,7 +53,7 @@ namespace Carbon.Media.Processors
 
             var reader = new CommandReader(text.Substring(argStart, text.Length - argStart - 1));
             
-            var commands = new List<Shape>();
+            var commands = new List<DrawCommand>();
 
             while (reader.TryRead(out var command))
             {

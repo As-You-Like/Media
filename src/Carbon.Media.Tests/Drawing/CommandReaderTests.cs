@@ -13,7 +13,7 @@ namespace Carbon.Media.Drawing.Tests
 
             Assert.True(reader.TryRead(out var command));
 
-            var circle = command as Circle;
+            var circle = command as DrawCircleCommand;
 
             Assert.Equal(5, circle.Radius);
 
@@ -29,13 +29,13 @@ namespace Carbon.Media.Drawing.Tests
 
             Assert.True(reader.TryRead(out var circleCommand));
 
-            var circle = circleCommand as Circle;
+            var circle = (DrawCircleCommand)circleCommand;
 
             Assert.Equal(5, circle.Radius);
 
             Assert.True(reader.TryRead(out var c));
 
-            var textShape = (TextShape)c;
+            var textShape = (DrawTextCommand)c;
 
             Assert.Equal("hello", textShape.Content);
             Assert.Equal(10, textShape.Box.X);

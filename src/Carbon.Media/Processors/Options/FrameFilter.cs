@@ -37,13 +37,9 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static FrameFilter Parse(string segment)
+        public static FrameFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new FrameFilter(int.Parse(segment));
+            return new FrameFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
 }

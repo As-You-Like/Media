@@ -7,7 +7,9 @@ namespace Carbon.Media.Drawing.Tests
         [Fact]
         public void FromFullKey()
         {
-            var draw = TextShape.Parse("text(Hello World,font:10px Helvetica,align:middle,x:0,y:10,width:100,padding:10,color:red)");
+            var syntax = CallSyntax.Parse("text(Hello World,font:10px Helvetica,align:middle,x:0,y:10,width:100,padding:10,color:red)");
+
+            var draw = DrawTextCommand.Create(syntax);
 
             Assert.Equal("Hello World",     draw.Content);
             Assert.Equal(Alignment.Middle,  draw.Align);

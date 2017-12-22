@@ -22,15 +22,11 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static BlurFilter Parse(string segment)
+        public static BlurFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-            
             // allows the px unit
 
-            return new BlurFilter((float)Unit.Parse(segment).Value);
+            return new BlurFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

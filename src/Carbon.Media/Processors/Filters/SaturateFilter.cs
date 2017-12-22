@@ -17,13 +17,9 @@ namespace Carbon.Media.Processors
 
         public float Amount { get; }
 
-        public static SaturateFilter Parse(string segment)
+        public static SaturateFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new SaturateFilter((float)Unit.Parse(segment).Value);
+            return new SaturateFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
 
         #region ToString()

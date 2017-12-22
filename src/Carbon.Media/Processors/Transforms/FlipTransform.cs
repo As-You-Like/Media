@@ -38,24 +38,15 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static FlipTransform Parse(string key)
+        public static FlipTransform Create(CallSyntax syntax)
         {
-            #region Normalization
-
-            if (key.StartsWith("flip("))
-            {
-                key = key.Remove(0, 5).TrimEnd(')');
-            }
-
-            #endregion
-
-            switch (key)
+            switch (syntax.Arguments[0].Value)
             {
                 case "x" : return Horizontally;
                 case "y" : return Vertically;
             }
 
-            throw new ArgumentException("Invalid flip axis:" + key);
+            throw new ArgumentException("Invalid flip axis:" + syntax.Arguments[0].Value);
         }
     }
 

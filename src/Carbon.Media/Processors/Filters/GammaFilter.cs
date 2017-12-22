@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace Carbon.Media.Processors
 {
@@ -23,13 +22,9 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static GammaFilter Parse(string segment)
+        public static GammaFilter Create(CallSyntax syntax)
         {
-            int argStart = segment.IndexOf('(') + 1;
-
-            segment = segment.Substring(argStart, segment.Length - argStart - 1);
-
-            return new GammaFilter((float)Unit.Parse(segment).Value);
+            return new GammaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }
