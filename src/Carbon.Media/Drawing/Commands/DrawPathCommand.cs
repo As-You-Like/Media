@@ -27,15 +27,15 @@ namespace Carbon.Media.Drawing
 
         public string Fill { get; }
 
-        internal override IEnumerable<(string, string)> Args()
+        internal override IEnumerable<Argument> GetArguments()
         {
             if (Fill != null)
-                yield return ("fill", Fill);
+                yield return new Argument("fill", Fill);
 
             if (Stroke != null)
-                yield return ("stroke", Stroke);
+                yield return new Argument("stroke", Stroke);
 
-            foreach (var arg in base.Args())
+            foreach (var arg in base.GetArguments())
             {
                 yield return arg;
             }
@@ -47,7 +47,7 @@ namespace Carbon.Media.Drawing
 
             sb.Append(Content);
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 sb.Append(',');
 

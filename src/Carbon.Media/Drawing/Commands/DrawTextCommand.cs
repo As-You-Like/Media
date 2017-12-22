@@ -26,15 +26,12 @@ namespace Carbon.Media.Drawing
 
         public Font? Font { get; }
 
-        internal override IEnumerable<(string, string)> Args()
+        internal override IEnumerable<Argument> GetArguments()
         {
-            if (Color != null)
-                yield return ("color", Color);
+            if (Color != null) yield return new Argument("color", Color);
+            if (Font != null)  yield return new Argument("font", Font.ToString());
 
-            if (Font != null)
-                yield return ("font", Font.ToString());
-
-            foreach (var arg in base.Args())
+            foreach (var arg in base.GetArguments())
             {
                 yield return arg;
             }
@@ -48,7 +45,7 @@ namespace Carbon.Media.Drawing
 
             sb.Append(Content);
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 sb.Append(',');
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace Carbon.Media.Drawing
 {
@@ -21,7 +20,7 @@ namespace Carbon.Media.Drawing
         {
             sb.Append("gradient(");
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 sb.Append(',');
 

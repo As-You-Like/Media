@@ -24,7 +24,7 @@ namespace Carbon.Media.Drawing
         {
             sb.Append("image(");
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 sb.Append(',');
 

@@ -26,16 +26,16 @@ namespace Carbon.Media.Drawing
 
         public ResizeFlags ScaleMode { get; set; } // Scale within the box
 
-        internal virtual IEnumerable<(string, string)> Args()
+        internal virtual IEnumerable<Argument> GetArguments()
         {
             // Mode
 
-            if (Box.X != null)                            yield return ("x"       , Box.X.Value.ToString());
-            if (Box.Y != null)                            yield return ("y"       , Box.Y.Value.ToString());
-            if (Box.Width != null)                        yield return ("width"   , Box.Width.Value.ToString());
-            if (Box.Height != null)                       yield return ("height"  , Box.Width.Value.ToString());
-            if (Align != null)                            yield return ("align"   , Align.Value.ToLower());
-            if (!Box.Padding.Equals(UnboundPadding.Zero)) yield return ("padding" , Box.Padding.ToString());
+            if (Box.X != null)                            yield return new Argument("x"       , Box.X.Value.ToString());
+            if (Box.Y != null)                            yield return new Argument("y"       , Box.Y.Value.ToString());
+            if (Box.Width != null)                        yield return new Argument("width"   , Box.Width.Value.ToString());
+            if (Box.Height != null)                       yield return new Argument("height"  , Box.Width.Value.ToString());
+            if (Align != null)                            yield return new Argument("align"   , Align.Value.ToLower());
+            if (!Box.Padding.Equals(UnboundPadding.Zero)) yield return new Argument("padding" , Box.Padding.ToString());
         }
 
         public string Canonicalize()

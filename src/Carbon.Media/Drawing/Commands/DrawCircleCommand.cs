@@ -25,7 +25,7 @@ namespace Carbon.Media.Drawing
 
             sb.Append(Radius);
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 sb.Append(',');
 

@@ -79,7 +79,7 @@ namespace Carbon.Media.Metadata.Tests
                 Exposure    = new ExposureInfo { Time = TimeSpan.FromSeconds(1) },
                 Lens        = new LensInfo("Canon", "EF-S 35mm f/2.8 Macro IS STM"),
                 Location    = new GpsData { Altitude = Unit.Meters(10.5), Latitude = 2, Longitude = 3 },
-                Lighting    = new LightingInfo { Source = LightSource.D50 },
+                Lighting    = new LightingInfo { Source = ExifLightSource.D50 },
                 Software    = new SoftwareInfo { Name = "Photoshop" },
                 Owner       = new ActorInfo {  Name = "Willy Wonka" }
             };

@@ -23,7 +23,7 @@ namespace Carbon.Media.Drawing
 
             var i = 0;
 
-            foreach (var (key, value) in Args())
+            foreach (var (key, value) in GetArguments())
             {
                 if (i > 0)
                 {

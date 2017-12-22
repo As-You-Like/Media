@@ -23,10 +23,12 @@ namespace Carbon.Media.Metadata.Tests
             Assert.Equal("GPSAltitude", result.Name);
             Assert.Equal(6, result.Code);
 
+            /*
             result = MetadataMap.Get(ExifTag.Acceleration);
 
             Assert.Equal("Acceleration", result.Name);
             Assert.Equal(37892,          result.Code);
+            */
         }
     }
 }
