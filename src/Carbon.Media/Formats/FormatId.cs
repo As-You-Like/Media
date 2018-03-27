@@ -4,13 +4,8 @@
     {
         // Applications
         Doc    = 1100,
-        Eot    = 1150,
         Json   = 1400,
-        Otf    = 1550,
         Pdf    = 1600,
-        Ttf    = 1700,
-        Woff   = 1850,
-        Woff2  = 1851,
         
         // Audio Only Formats
         Aac    = 2000,
@@ -110,6 +105,15 @@
         Xmf      = 240, // eXtensible Music Format         | xdf  | audio
                  
         Hls      = 250, // HTTP Live Streaming              | m3u8
+
+
+
+        // Fonts ---------------------------
+        Eot   = 10_000,
+        Otf   = 10_001,
+        Ttf   = 10_002,
+        Woff  = 10_003,
+        Woff2 = 10_004,
     }
 }
 

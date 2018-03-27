@@ -83,6 +83,7 @@ namespace Carbon.Media
         public static readonly MagicNumber Flv = new MagicNumber(0x46, 0x4C, 0x56, 0x01);
 
         public static readonly MagicNumber Gif87a = FromASCII("GIF87a");
+
         public static readonly MagicNumber Gif89a = FromASCII("GIF89a");
         
 

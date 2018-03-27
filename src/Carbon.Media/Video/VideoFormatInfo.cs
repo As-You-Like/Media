@@ -8,21 +8,17 @@ namespace Carbon.Media
             PixelFormat pixelFormat,
             int width,
             int height,
-            int[] strides,
-            int bufferSize)
-            : this(pixelFormat, width, height, strides, bufferSize, new Rational(1, 1), new Rational(1, 1)) { }
+            int[] strides)
+            : this(pixelFormat, width, height, strides, new Rational(1, 1), new Rational(1, 1)) { }
 
         public VideoFormatInfo(
             PixelFormat pixelFormat,
             int width, 
             int height, 
             int[] strides, 
-            int bufferSize,
             Rational timeBase,
             Rational aspectRatio)
         {
-            #region Preconditions
-
             if (pixelFormat == default)
                 throw new ArgumentException("Required", nameof(pixelFormat));
 
@@ -32,13 +28,10 @@ namespace Carbon.Media
             if (height <= 0)
                 throw new ArgumentException("Must be > 0", nameof(height));
 
-            #endregion
-
             PixelFormat = pixelFormat;
             Width       = width;
             Height      = height;
             Strides     = strides;
-            BufferSize  = bufferSize;
             TimeBase    = timeBase;
             AspectRatio = aspectRatio;
         }
@@ -52,10 +45,7 @@ namespace Carbon.Media
         // The strides & buffer size are determined by the height & width + pixelFormat
 
         public int[] Strides { get; }
-        
-        // Calcuate?
-        public int BufferSize { get; }
-        
+
         // Allows for variable rate...
         public Rational TimeBase { get; }
 
@@ -66,6 +56,7 @@ namespace Carbon.Media
         public bool Equals(VideoFormatInfo other) =>
             PixelFormat == other.PixelFormat &&
             Width       == other.Width &&
-            Height      == other.Height;
+            Height      == other.Height &&
+            AspectRatio == other.AspectRatio;
     }
 }

@@ -10,11 +10,8 @@ namespace Carbon.Media
     {
         public Rational(long numerator, long denominator)
         {
-            #region Preconditions
-
-            if (denominator == 0) throw new DivideByZeroException("denominator may not be 0");
-
-            #endregion
+            if (denominator == 0)
+                throw new DivideByZeroException("denominator may not be 0");
 
             Numerator = numerator;
             Denominator = denominator;
@@ -45,11 +42,9 @@ namespace Carbon.Media
             return new Rational(num, den);
         }
 
-        public static bool operator >(Rational left, Rational right) =>
-            left.ToDouble() > right.ToDouble();
+        public static bool operator > (Rational lhs, Rational rhs) => lhs.ToDouble() > rhs.ToDouble();
 
-        public static bool operator <(Rational left, Rational right) =>
-            left.ToDouble() < right.ToDouble();
+        public static bool operator < (Rational lhs, Rational rhs) => lhs.ToDouble() < rhs.ToDouble();
 
         public double ToDouble() => Numerator / (double)Denominator;
 
@@ -102,7 +97,6 @@ namespace Carbon.Media
         }
 
         #region IEquatable
-
 
         public bool Equals(Rational other) =>
             Numerator == other.Numerator && 

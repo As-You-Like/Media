@@ -7,15 +7,11 @@ namespace Carbon.Media
     {
         public static string Normalize(string format)
         {
-            #region Preconditions
-
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
             if (format.Length == 0)
                 throw new ArgumentException("Must not be empty", nameof(format));
-
-            #endregion
 
             if (format[0] == '.')
             {
@@ -44,11 +40,7 @@ namespace Carbon.Media
 
         public static string FromPath(string path)
         {
-            #region Preconditions
-
             if (path == null) throw new ArgumentNullException(nameof(path));
-
-            #endregion
 
             var extension = Path.GetExtension(path);
 

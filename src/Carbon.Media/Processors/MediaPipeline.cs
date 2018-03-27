@@ -43,6 +43,8 @@ namespace Carbon.Media.Processors
 
         public MetadataFilter Metadata { get; set; }
 
+        public DateTime? Expires { get; set; }
+
         public Encode Encode { get; set; }
 
         // lossless?
@@ -215,6 +217,10 @@ namespace Carbon.Media.Processors
                     quality = 100;
                     encodingFlags |= EncodingFlags.Lossless;
                 }
+                else if (transform is ExpiresFilter expires)
+                {
+                    pipeline.Expires = expires.Timestamp;
+                }
                 else if (transform is Encode encode)
                 {
                     pipeline.Encode = quality != null || encodingFlags != default
@@ -309,7 +315,12 @@ namespace Carbon.Media.Processors
             var sb = StringBuilderCache.Aquire();
 
             sb.Append("blob#" + Source.Key);
-            
+
+            if (Expires != null)
+            {
+                sb.Append("|>expires(" + new DateTimeOffset(Expires.Value).ToUnixTimeSeconds() + ")");
+            }
+
             if (Encode.Format == FormatId.Json && Metadata != null)
             {
                 sb.Append("|>");

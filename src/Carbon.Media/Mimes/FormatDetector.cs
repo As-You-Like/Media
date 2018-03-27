@@ -17,9 +17,7 @@
             Mime.Ogv,
             Mime.Pdf,
             Mime.Psd,
-            Mime.Wav,
-           
-            // Mime.Exe
+            Mime.Wav
         };
 
         public static Mime Detect(byte[] buffer) // TODO: Span<byte>

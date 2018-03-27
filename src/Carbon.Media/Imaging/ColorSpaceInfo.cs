@@ -16,11 +16,11 @@ namespace Carbon.Media
             Flags = flags;
         }
 
-        public readonly string Name;
+        public string Name { get; }
 
-        public readonly ColorModel Model;
+        public ColorModel Model { get; }
 
-        public readonly ColorSpaceFlags Flags;
+        public ColorSpaceFlags Flags { get; }
 
         // WhitePoint
 

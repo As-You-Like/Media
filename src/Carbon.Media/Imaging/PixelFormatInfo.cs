@@ -5,9 +5,9 @@ namespace Carbon.Media
 {
     using static ColorChannel;
     using static ColorModel;
-    using static PixelFormat;
 
-    public readonly struct PixelFormatInfo
+    [DataContract]
+    public class PixelFormatInfo
     {
         public PixelFormatInfo(
             int bitsPerPixel,
@@ -22,57 +22,86 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "bitsPerPixel", Order = 1)]
-        public readonly int BitsPerPixel;
+        public int BitsPerPixel { get; }
 
         [DataMember(Name = "colorModel", Order = 2)]
-        public readonly ColorModel ColorModel;
+        public ColorModel ColorModel { get; }
 
         [DataMember(Name = "channels", Order = 3)]
-        public readonly ColorChannel[] Channels;
+        public ColorChannel[] Channels { get; }
 
         [DataMember(Name = "flags", Order = 4)]
-        public readonly PixelFormatFlags Flags;
+        public PixelFormatFlags Flags { get; }
 
         public bool IsPacked => (Flags & PixelFormatFlags.Packed) != 0;
 
         public bool IsBigEndian => (Flags & PixelFormatFlags.BigEndian) != 0;
 
         public bool IsPlanar => (Flags & PixelFormatFlags.Planar) != 0;
-
+        
+        public bool IsPremultiplied => (Flags & PixelFormatFlags.Premultiplied) != 0;
+        
         // PackedFormat?
 
         // Type (float, uint, Fixed)
+
+        public static readonly PixelFormatInfo Bgr101010     = new PixelFormatInfo(10, RGB, new[] { B(10), G(10), R(10) });
+        public static readonly PixelFormatInfo Bgr24         = new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8)  });
+        public static readonly PixelFormatInfo Bgr32         = new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8) });
+        public static readonly PixelFormatInfo Bgr555        = new PixelFormatInfo( 5, RGB, new[] { B(5),  G(6),  R(7) });
+        public static readonly PixelFormatInfo Bgr565        = new PixelFormatInfo( 5, RGB, new[] { B(5),  G(6),  R(7) });
+        public static readonly PixelFormatInfo Bgra32        = new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8), A(8) });
+
+        public static readonly PixelFormatInfo Cmyk32        =  new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8)  });
+        public static readonly PixelFormatInfo Cmyk64        =  new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16) });
+        public static readonly PixelFormatInfo Cmyka40       =  new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8),  A(8) });
+        public static readonly PixelFormatInfo Cmyka80       =  new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16), A(16) });
+                                                              
+        public static readonly PixelFormatInfo BlackWhite    =  new PixelFormatInfo(1, Monochrome, new[] { Key(1) });
+        public static readonly PixelFormatInfo Gray2         =  new PixelFormatInfo(2, Monochrome, new[] { Key(2) });
+        public static readonly PixelFormatInfo Gray4         =  new PixelFormatInfo(4, Monochrome, new[] { Key(4) });
+        public static readonly PixelFormatInfo Gray8         =  new PixelFormatInfo(8, Monochrome, new[] { Key(8) });
+        public static readonly PixelFormatInfo Gray16        =  new PixelFormatInfo(16, Monochrome, new[] { Key(16) });
+        public static readonly PixelFormatInfo Gray32Float   =  new PixelFormatInfo(32, Monochrome, new[] { Key(32) });
+                                                              
+        public static readonly PixelFormatInfo Pbgra32       = new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8),  A(8) }, PixelFormatFlags.Premultiplied);
+        public static readonly PixelFormatInfo Prgba128Float = new PixelFormatInfo(32, RGB, new[] { B(16), G(16), R(16), A(16) }, PixelFormatFlags.Premultiplied);
+                                                              
+        public static readonly PixelFormatInfo Rgb24         =  new PixelFormatInfo( 8, RGB, new[] { R(8),  G(8),  B(8) });
+        public static readonly PixelFormatInfo Rgb48         =  new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16) });
+        public static readonly PixelFormatInfo Rgba128Float  =  new PixelFormatInfo(32, RGB, new[] { R(32), G(32), B(32), A(32) });
+        public static readonly PixelFormatInfo Rgba64        =  new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16), A(16) });
 
         public static PixelFormatInfo Get(PixelFormat format)
         {
             switch (format)
             {
-                case Bgr101010     : return new PixelFormatInfo(10, RGB, new[] { B(10), G(10), R(10) });
-                case Bgr24         : return new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8)  });
-                case Bgr32         : return new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8) });
-                case Bgr555        : return new PixelFormatInfo( 5, RGB, new[] { B(5),  G(6),  R(7) });
-                case Bgr565        : return new PixelFormatInfo( 5, RGB, new[] { B(5),  G(6),  R(7) });
-                case Bgra32        : return new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8), A(8) });
+                case PixelFormat.Bgr101010     : return Bgr101010;
+                case PixelFormat.Bgr24         : return Bgr24;
+                case PixelFormat.Bgr32         : return Bgr32;   
+                case PixelFormat.Bgr555        : return Bgr555;   
+                case PixelFormat.Bgr565        : return Bgr565;  
+                case PixelFormat.Bgra32        : return Bgra32;
 
-                case Cmyk32        : return new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8)  });
-                case Cmyk64        : return new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16) });
-                case Cmyka40       : return new PixelFormatInfo( 8, CMYK, new[] { Cyan(8),  Magenta(8),  Yellow(8),  Key(8),  A(8) });
-                case Cmyka80       : return new PixelFormatInfo(16, CMYK, new[] { Cyan(16), Magenta(16), Yellow(16), Key(16), A(16) });
+                case PixelFormat.Cmyk32        : return Cmyk32;
+                case PixelFormat.Cmyk64        : return Cmyk64; 
+                case PixelFormat.Cmyka40       : return Cmyka40;
+                case PixelFormat.Cmyka80       : return Cmyka80;
 
-                case BlackWhite    : return new PixelFormatInfo(1,  Monochrome, new[] { Key(1) });
-                case Gray2         : return new PixelFormatInfo(2,  Monochrome, new[] { Key(2) });
-                case Gray4         : return new PixelFormatInfo(4,  Monochrome, new[] { Key(4) });
-                case Gray8         : return new PixelFormatInfo(8,  Monochrome, new[] { Key(8) });
-                case Gray16        : return new PixelFormatInfo(16, Monochrome, new[] { Key(16) });
-                case Gray32Float   : return new PixelFormatInfo(32, Monochrome, new[] { Key(32) });
+                case PixelFormat.BlackWhite    : return BlackWhite;
+                case PixelFormat.Gray2         : return Gray2;
+                case PixelFormat.Gray4         : return Gray4;
+                case PixelFormat.Gray8         : return Gray8;
+                case PixelFormat.Gray16        : return Gray16;
+                case PixelFormat.Gray32Float   : return Gray32Float;
 
-                case Pbgra32       : return new PixelFormatInfo( 8, RGB, new[] { B(8),  G(8),  R(8),  A(8) });
-                case Prgba128Float : return new PixelFormatInfo(32, RGB, new[] { B(16), G(16), R(16), A(16) });
+                case PixelFormat.Pbgra32       : return Pbgra32;
+                case PixelFormat.Prgba128Float : return Prgba128Float;
 
-                case Rgb24         : return new PixelFormatInfo( 8, RGB, new[] { R(8),  G(8),  B(8) });
-                case Rgb48         : return new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16) });
-                case Rgba128Float  : return new PixelFormatInfo(32, RGB, new[] { R(32), G(32), B(32), A(32) });
-                case Rgba64        : return new PixelFormatInfo(16, RGB, new[] { R(16), G(16), B(16), A(16) });
+                case PixelFormat.Rgb24         : return Rgb24;
+                case PixelFormat.Rgb48         : return Rgb48;
+                case PixelFormat.Rgba128Float  : return Rgba128Float;
+                case PixelFormat.Rgba64        : return Rgba64;
             }
 
             throw new Exception("Invalid PixelFormat:" + format);

@@ -55,19 +55,18 @@
         [BitsPerPixel(48)]  Rgb48             = 42, // RGB   | 16:16:16              | 48bppRGB     | 48RGB
         [BitsPerPixel(48)]  Rgb48be           = 43, // RGB   | 16:16:16
         [BitsPerPixel(48)]  Rgb48le           = 44, // RGB   | 16:16:16
-        [BitsPerPixel(48)]  Rgb48Half         = 45, // RGB   | 16:16:16   | Half X 3 | 48bppRGBHalf |
+        [BitsPerPixel(48)]  Rgb48Half         = 45, // RGB   | 16:16:16              | 48bppRGBHalf |
         [BitsPerPixel(128)] Rgb128Float       = 46, // RGB   | 32:32:32:?
         [BitsPerPixel(128)] Rgb128FixedPoint  = 47, // RGB   | 32:32:32:?
                                                              
         // RGBA                                              
         [BitsPerPixel(32)]  Rgba32            = 51, // RGBA  |                        |           | 32RGBA       
-        [BitsPerPixel(64)]  Rgba64            = 52, // RGBA  |                        | 
+        [BitsPerPixel(64)]  Rgba64            = 52, // RGBA  | 16:16:16:16            | 
         [BitsPerPixel(64)]  Rgba64be          = 53, // RGBA  | 16:16:16:16
-        [BitsPerPixel(64)]  Rgba64le          = 54, // RGBA  | 
+        [BitsPerPixel(64)]  Rgba64le          = 54, // RGBA  | 16:16:16:16f
         [BitsPerPixel(128)] Rgba128Float      = 55, // RGBA  |
         [BitsPerPixel(32)]  Rgba1010102       = 56, // RGBA  | 10:10:10:2 
-        [BitsPerPixel(32)]  Rgba1010102XR     = 57, // RGBA  | 10:10:10:2 
-
+        [BitsPerPixel(32)]  Rgba1010102XR     = 57, // RGBA  | 10:10:10:2
 
         /*
         // GBR
@@ -240,7 +239,7 @@
         // Four CC Codecs
 
         [BitsPerPixel(16)] P016 = 1002, // Planar, 4:2:0
-        [BitsPerPixel(10)] P010 = 1003, // Planar, 4:2:0
+        [BitsPerPixel(10)] P010 = 1003, // Planar, 4:2:0fRgba
         [BitsPerPixel(16)] P216 = 1004, // Planar, 4:2:2
         [BitsPerPixel(10)] P210 = 1005, // Planar, 4:2:2
         [BitsPerPixel(16)] Y216 = 1006, // Packed, 4:2:2

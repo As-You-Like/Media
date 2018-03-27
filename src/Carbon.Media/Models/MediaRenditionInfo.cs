@@ -93,7 +93,7 @@ namespace Carbon.Media
         {
             var dotIndex = transformPath.LastIndexOf('.');
 
-            var newTransformPath = transformPath.Substring(0, dotIndex) + "." + format;
+            var newTransformPath = (dotIndex > -1 ? transformPath.Substring(0, dotIndex) : transformPath) + "." + format;
 
             return new MediaRenditionInfo(host, sourcePath, newTransformPath, Width, Height, seperator, signer);
         }
@@ -152,10 +152,5 @@ namespace Carbon.Media
             }
         }
         public override string ToString() => Url;
-    }
-
-    public interface IUrlSigner
-    {
-        string Sign(string path);
     }
 }
