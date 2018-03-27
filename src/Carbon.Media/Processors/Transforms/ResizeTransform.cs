@@ -243,7 +243,7 @@ namespace Carbon.Media.Processors
                         {
                             case "anchor" : anchor = CropAnchorHelper.Parse(value); break;
                             case null     : flags = ResizeFlagsHelper.Parse(value); break;
-                            default       : throw new Exception("Unknown resize argument:" + key);
+                            default       : throw new Exception("Invalid resize argument:" + key);
                         }
                     }
                 }

@@ -2,22 +2,16 @@
 {
     public static class Processor
     {
-        // TODO: Remove colon once crop has been migrated to new syntax
-
-        private static readonly char[] argStartChars = { '(', ':' };
-
-        public static IProcessor Parse(string segment)
+        public static IProcessor Parse(string text)
         {
-            var indexOfArg = segment.IndexOfAny(argStartChars);
-
-            var syntax = CallSyntax.Parse(segment);
+            var syntax = CallSyntax.Parse(text);
 
             switch (syntax.Name)
             {
                 // Transforms
-                case "resize"       : return ResizeTransform.Parse(segment);
+                case "resize"       : return ResizeTransform.Parse(text);
                 case "scale"        : return ScaleTransform.Create(syntax);
-                case "crop"         : return CropTransform.Parse(segment); // still supports legacy syntax...
+                case "crop"         : return CropTransform.Create(syntax);
                 case "rotate"       : return RotateTransform.Create(syntax);
                 case "flip"         : return FlipTransform.Create(syntax);
                 case "orient"       : return OrientTransform.Create(syntax);
@@ -53,22 +47,23 @@
                 case "volume"       : return VolumeFilter.Create(syntax);
 
                 // Drawing
-                case "draw"         : return DrawFilter.Parse(segment);
+                case "draw"         : return DrawFilter.Parse(text);
 
                 // Other
-                case "metadata"     : return MetadataFilter.Parse(segment);
+                case "metadata"     : return MetadataFilter.Parse(text);
                 case "quality"      : return QualityFilter.Create(syntax);
+                case "expires"      : return ExpiresFilter.Create(syntax);
 
-                // Boolean Options
+                // Flags
                 case "lossless"     : return LosslessFilter.Default;
                 case "debug"        : return DebugFilter.Default;
 
                 default             :
                     // JPEG::encode
 
-                    if (segment.Contains("encode"))
+                    if (text.Contains("encode"))
                     {
-                        return Encode.Parse(segment);
+                        return Encode.Parse(text);
                     }
                     else
                     {

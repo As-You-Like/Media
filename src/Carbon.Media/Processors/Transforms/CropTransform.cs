@@ -45,10 +45,12 @@ namespace Carbon.Media.Processors
             return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
         }
 
-        public Rectangle GetRectangle(Size source)
-        {
-            return new Rectangle((int)X.Value, (int)Y.Value, (int)Width.Value, (int)Height.Value);
-        }
+        public Rectangle GetRectangle(Size source) => new Rectangle(
+            x      : (int)X.Value, 
+            y      : (int)Y.Value, 
+            width  : (int)Width.Value, 
+            height : (int)Height.Value
+        );
 
         public CropTransform Scale(double xScale, double yScale) => new CropTransform(
             x      : (int)(X * xScale),
@@ -90,58 +92,25 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        // OLD: crop:0-0_100x100
-        // NEW: crop(0,0,100,100)
+        // crop(0,0,100,100)
+        // crop(0.5,0.5,0.5,0.5)
+        // crop(x:10,y:100)
+        
         public override string ToString() => Canonicalize();
 
-        public static CropTransform Parse(string key)
+        public static CropTransform Create(CallSyntax syntax)
         {
-            string[] parts;
+            return new CropTransform(
+                x      : Unit.Parse(syntax.Arguments[0].Value),
+                y      : Unit.Parse(syntax.Arguments[1].Value),
+                width  : Unit.Parse(syntax.Arguments[2].Value),
+                height : Unit.Parse(syntax.Arguments[3].Value)
+            );
+        }
 
-            // New Format
-            // crop(0,0,100,100)
-            // crop(0.5,0.5,0.5,0.5)
-            // crop(x:10,y:100)
-
-            if (key.StartsWith("crop("))
-            {
-                key = key.Remove(0, 5);
-
-                key = key.Substring(0, key.Length - 1);
-
-                parts = key.Split(Seperators.Comma);
-
-                return new CropTransform(
-                    x      : Unit.Parse(parts[0]),
-                    y      : Unit.Parse(parts[1]),
-                    width  : Unit.Parse(parts[2]),
-                    height : Unit.Parse(parts[3])
-                );
-            }
-
-            // Legacy FORMAT
-            // crop:0-0_100x100
-
-            #region Normalization
-
-            if (key.StartsWith("crop:"))
-            {
-                key = key.Remove(0, 5);
-            }
-
-            #endregion
-
-            // 0-0_100x100
-
-            parts = key.Split(Seperators.Underscore); // '_'
-
-            var locationParts = parts[0].Split(Seperators.Dash); // '-'
-            var size = SizeHelper.Parse(parts[1]);
-
-            Unit x = Unit.Parse(locationParts[0]), // '-'
-                 y = Unit.Parse(locationParts[1]);
-
-            return new CropTransform(x, y, size.Width, size.Height);
+        public static CropTransform Parse(string text)
+        {
+            return Create(CallSyntax.Parse(text));
         }
     }
 }
