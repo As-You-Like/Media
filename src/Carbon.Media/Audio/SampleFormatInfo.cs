@@ -21,19 +21,19 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "id", Order = 1)]
-        public readonly SampleFormat Id;
+        public SampleFormat Id { get; }
 
         /// <summary>
         /// Bits per sample
         /// </summary>
         [DataMember(Name = "bitCount", Order = 3)]
-        public readonly int BitCount;
+        public int BitCount { get; }
 
         [DataMember(Name = "flags", Order = 4)]
-        public readonly SampleFormatFlags Flags;
+        public SampleFormatFlags Flags { get; }
 
         [IgnoreDataMember]
-        public readonly Type Type;
+        public Type Type { get; }
 
         [IgnoreDataMember]
         public bool IsPlanar => (Flags & Planar) != 0;

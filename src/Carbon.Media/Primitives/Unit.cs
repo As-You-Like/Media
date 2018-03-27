@@ -15,10 +15,10 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "value", Order = 1)]
-        public readonly UnitType Type;
+        public UnitType Type { get; }
 
         [DataMember(Name = "value", Order = 2)]
-        public readonly double Value;
+        public double Value { get; }
 
         public static implicit operator double(Unit unit) => unit.Value;
 
@@ -34,6 +34,7 @@ namespace Carbon.Media
             {
                 case UnitType.Percent : return (Value * 100) + "％";
                 case UnitType.Meter   : return Value + " m";
+                case UnitType.Second  : return Value + " s";
                 default               : return Value.ToString();
             }
         }
@@ -117,6 +118,7 @@ namespace Carbon.Media
         None    = 0,
         Px      = 1,
         Percent = 2,
-        Meter   = 10
+        Meter   = 10, // m
+        Second  = 20  // s
     }
 }

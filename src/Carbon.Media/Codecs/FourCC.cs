@@ -7,7 +7,7 @@
             CodecId = id;
         }
 
-        public readonly CodecId CodecId;
+        public CodecId CodecId { get; }
 
         // int Value
 

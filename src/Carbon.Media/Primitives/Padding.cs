@@ -30,13 +30,13 @@ namespace Carbon.Media
             Left   = value;
         }
 
-        public readonly int Top;
+        public int Top { get; }
 
-        public readonly int Right;
+        public int Right { get; }
 
-        public readonly int Bottom;
+        public int Bottom { get; }
 
-        public readonly int Left;
+        public int Left { get; }
         
         public static Padding operator +(Padding lhs, Padding rhs) 
         {

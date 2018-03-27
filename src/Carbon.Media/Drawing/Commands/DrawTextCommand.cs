@@ -9,7 +9,7 @@ namespace Carbon.Media.Drawing
         public DrawTextCommand(
             string text,
             UnboundBox box,
-            Font? font = null,
+            Font font = null,
             Alignment? align = null,
             BlendMode blendMode = BlendMode.Normal,
             string color = null)
@@ -24,7 +24,7 @@ namespace Carbon.Media.Drawing
 
         public string Color { get; }
 
-        public Font? Font { get; }
+        public Font Font { get; }
 
         internal override IEnumerable<Argument> GetArguments()
         {
@@ -65,7 +65,7 @@ namespace Carbon.Media.Drawing
 
             string color = null;
             Alignment? align = null;
-            Font? font = null;
+            Font font = null;
             BlendMode mode = BlendMode.Normal;
 
             for (var i = 1; i < syntax.Arguments.Length; i++)
@@ -81,7 +81,7 @@ namespace Carbon.Media.Drawing
                     case "width"    : box.Width   = Unit.Parse(v);             break;
                     case "height"   : box.Height  = Unit.Parse(v);             break;
                     case "padding"  : box.Padding = UnboundPadding.Parse(v);   break;
-                    case "font"     : font        = Drawing.Font.Parse(v);     break;
+                    case "font"     : font        = Font.Parse(v);             break;
                     case "color"    : color = v;                               break;
                 }
             }

@@ -18,7 +18,7 @@ namespace Carbon.Media.Processors.Tests
         }
 
         [Fact]
-        public void CropNewFormat()
+        public void A()
         {
             var crop = CropTransform.Parse("crop(0,0,960,540)");
 
@@ -31,25 +31,16 @@ namespace Carbon.Media.Processors.Tests
         }
 
         [Fact]
-		public void FromLegacyFormat()
-		{
-			var crop = CropTransform.Parse("crop:10-0_85x20");
+        public void B()
+        {
+            var crop = CropTransform.Parse("crop(x:0,y:0,width:960,height:540)");
 
-			Assert.Equal(10, crop.X);
-			Assert.Equal(0,  crop.Y);
-			Assert.Equal(85, crop.Width);
-			Assert.Equal(20, crop.Height);
-		}
+            Assert.Equal(0d,  crop.X);
+            Assert.Equal(0d,  crop.Y);
+            Assert.Equal(960, crop.Width);
+            Assert.Equal(540, crop.Height);
 
-		[Fact]
-		public void FromLegacyFormatShort()
-		{
-			var crop = CropTransform.Parse("0-0_85x20");
-
-			Assert.Equal(0,  crop.X);
-			Assert.Equal(0,  crop.Y);
-			Assert.Equal(85, crop.Width);
-			Assert.Equal(20, crop.Height);
-		}
-	}
+            Assert.Equal("crop(0,0,960,540)", crop.ToString());
+        }
+    }
 }

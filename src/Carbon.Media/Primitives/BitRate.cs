@@ -14,7 +14,7 @@ namespace Carbon.Media
         }
 
         [DataMember(Name = "value", Order = 1)]
-        public readonly long Value;
+        public long Value { get; }
 
         public double Kbps => Value / 1000d;
 

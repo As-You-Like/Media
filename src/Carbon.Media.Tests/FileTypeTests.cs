@@ -71,15 +71,12 @@ namespace Carbon.Media.Tests
             return mime;
         }
 
-        public void Throw(byte[] data)
-        {
-
-            
+        private void Throw(byte[] data)
+        {   
             throw new Exception(string.Join(Environment.NewLine, new[] {
                 string.Join(",", data.Take(20).ToArray()),
                 Encoding.ASCII.GetString(data)
             }));
-            
         }
     }
 }

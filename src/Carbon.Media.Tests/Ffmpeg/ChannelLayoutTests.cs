@@ -67,8 +67,6 @@ namespace Carbon.Media.Ffmpeg.Tests
         {
             Assert.Equal(536870912,  (long)DownmixLeft);
             Assert.Equal(1073741824, (long)DownmixRight);
-
-            // throw new Exception(Convert.ToString((long)DownmixLeft, 2).PadLeft(64, '0'));
         }
 
         [Fact]
@@ -78,11 +76,6 @@ namespace Carbon.Media.Ffmpeg.Tests
             {
                 var count   = layout.GetChannelCount();
                 var count2 = ffmpeg.av_get_channel_layout_nb_channels((ulong)layout);
-
-                if (count != count2)
-                {
-                    throw new Exception(layout + "|" + count + "|" + count2);
-                }
 
                 Assert.Equal(count, count2);
             }

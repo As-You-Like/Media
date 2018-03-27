@@ -4,15 +4,13 @@ namespace Carbon.Media
 {
     public readonly struct AudioFormatInfo : IEquatable<AudioFormatInfo>
     {
-        private readonly SampleFormatInfo a;
+        private readonly SampleFormatInfo sampleFormatInfo;
 
         public AudioFormatInfo(
             SampleFormat sampleFormat, 
             ChannelLayout channelLayout, 
             int sampleRate)
         {
-            #region Preconditions
-
             if (sampleFormat == SampleFormat.Unknown)
                 throw new ArgumentException("Must not be unknown", nameof(sampleFormat));
 
@@ -22,33 +20,31 @@ namespace Carbon.Media
             if (channelLayout == default)
                 throw new ArgumentException("Must not be unknown", nameof(channelLayout));
 
-            #endregion
-
             SampleFormat  = sampleFormat;
             SampleRate    = sampleRate;
             ChannelLayout = channelLayout;
 
-            a = SampleFormatInfo.Get(sampleFormat);
+            sampleFormatInfo = SampleFormatInfo.Get(sampleFormat);
         }
 
         // bitCount, isPlanar, ..
-        public readonly SampleFormat SampleFormat;
+        public SampleFormat SampleFormat { get; }
 
-        public readonly int SampleRate;
+        public int SampleRate { get; }
 
-        public readonly ChannelLayout ChannelLayout;
-        
+        public ChannelLayout ChannelLayout { get; }
+
         public int ChannelCount => ChannelLayout.GetChannelCount();
 
         #region Helpers
 
-        public int BitsPerSample => a.BitCount;
+        public int BitsPerSample => sampleFormatInfo.BitCount;
 
-        public bool IsPlanar => a.IsPlanar;
+        public bool IsPlanar => sampleFormatInfo.IsPlanar;
         
-        public int LineCount => a.IsPlanar ? ChannelCount : 1; // PlaneCount?
+        public int LineCount => sampleFormatInfo.IsPlanar ? ChannelCount : 1; // PlaneCount?
 
-        public int LineSize => a.IsPlanar ? (BitsPerSample >> 3) : (BitsPerSample >> 3) * ChannelCount;
+        public int LineSize => sampleFormatInfo.IsPlanar ? (BitsPerSample >> 3) : (BitsPerSample >> 3) * ChannelCount;
 
         #endregion
 

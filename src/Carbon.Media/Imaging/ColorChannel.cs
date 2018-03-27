@@ -8,9 +8,9 @@
             BitCount  = bitCount;
         }
 
-        public readonly ColorComponent Component;
+        public ColorComponent Component { get; }
 
-        public readonly byte BitCount;
+        public byte BitCount { get; }
         
         public static ColorChannel R(byte bitCount)       => new ColorChannel(ColorComponent.R,       bitCount);
         public static ColorChannel G(byte bitCount)       => new ColorChannel(ColorComponent.G,       bitCount);

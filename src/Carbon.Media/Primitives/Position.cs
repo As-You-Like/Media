@@ -8,9 +8,9 @@
             Y = y;
         }
 
-        public readonly int X;
+        public int X { get; }
 
-        public readonly int Y;
+        public int Y { get; }
     }  
 }
 

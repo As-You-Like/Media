@@ -19,7 +19,7 @@ namespace Carbon.Media.Processors.Tests
 
         private static readonly MediaSource gif_200x200 = new MediaSource("1", 200, 200);
 
-        // 22626389/480x444/crop:0-33_480x360.jpeg
+        // 22626389/480x444/crop(0,33,480,360).jpeg
 
         [Fact]
         public void CropExact()
@@ -306,6 +306,21 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal(new Size(1200, 630), pipe.FinalSize);
         }
+
+        [Fact]
+        public void Expires1()
+        {
+            var a = MediaTransformation.ParsePath("1/expires(1514686554).jpeg", jpeg_180x180);
+
+            var filter = a.GetTransforms()[0] as ExpiresFilter;
+
+            Assert.Equal("2017-12-31T02:15:54.0000000Z", filter.Timestamp.ToString("o"));
+
+            var pipe = MediaPipeline.From(a);
+
+            Assert.Equal("blob#1|>expires(1514686554)|>scale(180,180,lanczos3)|>JPEG::encode", pipe.Canonicalize());
+        }
+        
 
         [Fact]
         public void Contain2()
