@@ -15,29 +15,29 @@ namespace Carbon.Media.Metadata
             { "/app0/{ushort=4}",   new ExifTagInfo("Xthumbnail") },
             { "/app0/{ushort=5}",   new ExifTagInfo("Ythumbnail") },
             { "/app0/{ushort=6}",   new ExifTagInfo("ThumbnailData") },
-									
-			// GIFS
-			{ "/imgdesc/Left",                    new ExifTagInfo("Left",                    Short) },	    // UInt16
-			{ "/imgdesc/Top",                     new ExifTagInfo("Top",                     Short) },	    // UInt16
-			{ "/imgdesc/Height",                  new ExifTagInfo("Height",                  Short) },	    // UInt16
-			{ "/imgdesc/Width",                   new ExifTagInfo("Width",                   Short) },	    // UInt16
-			{ "/imgdesc/LocalColorTableFlag",     new ExifTagInfo("LocalColorTableFlag",     Boolean) },	// Bool
-			{ "/imgdesc/InterlaceFlag",           new ExifTagInfo("InterlaceFlag",           Boolean) },	// Bool
-			
-			{ "/grctlext/Disposal",               new ExifTagInfo("Disposal",                Byte) },	    // Byte
-			{ "/grctlext/Delay",                  new ExifTagInfo("Delay",                   Short) },	    // UInt16
-			{ "/grctlext/TransparentColorIndex",  new ExifTagInfo("TransparentColorIndex",   Byte) },	    // Byte
-			{ "/grctlext/TransparencyFlag",       new ExifTagInfo("TransparencyFlag",        Boolean) },	// Bool
-			{ "/grctlext/UserInputFlag",          new ExifTagInfo("UserInputFlag",           Boolean) },	// Bool
-			{ "/grctlext/GlobalColorTableFlag",   new ExifTagInfo("GlobalColorTableFlag",    Boolean) },	// Bool
-			{ "/grctlext/ColorResolution",        new ExifTagInfo("ColorResolution",         Byte) },	    // Byte
-
-
-			// MISC
-			{ "/tEXt/{str=Software}",   new ExifTagInfo("Software",  Ansi) },
+            						
+            // GIFS
+            { "/imgdesc/Left",                    new ExifTagInfo("Left",                    Short) },	    // UInt16
+            { "/imgdesc/Top",                     new ExifTagInfo("Top",                     Short) },	    // UInt16
+            { "/imgdesc/Height",                  new ExifTagInfo("Height",                  Short) },	    // UInt16
+            { "/imgdesc/Width",                   new ExifTagInfo("Width",                   Short) },	    // UInt16
+            { "/imgdesc/LocalColorTableFlag",     new ExifTagInfo("LocalColorTableFlag",     Boolean) },	// Bool
+            { "/imgdesc/InterlaceFlag",           new ExifTagInfo("InterlaceFlag",           Boolean) },	// Bool
+            
+            { "/grctlext/Disposal",               new ExifTagInfo("Disposal",                Byte) },	    // Byte
+            { "/grctlext/Delay",                  new ExifTagInfo("Delay",                   Short) },	    // UInt16
+            { "/grctlext/TransparentColorIndex",  new ExifTagInfo("TransparentColorIndex",   Byte) },	    // Byte
+            { "/grctlext/TransparencyFlag",       new ExifTagInfo("TransparencyFlag",        Boolean) },	// Bool
+            { "/grctlext/UserInputFlag",          new ExifTagInfo("UserInputFlag",           Boolean) },	// Bool
+            { "/grctlext/GlobalColorTableFlag",   new ExifTagInfo("GlobalColorTableFlag",    Boolean) },	// Bool
+            { "/grctlext/ColorResolution",        new ExifTagInfo("ColorResolution",         Byte) },	    // Byte
+            
+            
+            // MISC
+            { "/tEXt/{str=Software}",   new ExifTagInfo("Software",  Ansi) },
             { "/xmp/xmp:CreatorTool",   new ExifTagInfo("Software",  Ansi) },
             { "{str=Copyright Notice}", new ExifTagInfo("Copyright", Ansi) },	// /app13/{ushort=0}/{ulonglong=61857348781060}/iptc/{str=Copyright Notice}
-			{ "{str=By-line}",          new ExifTagInfo("Author",    Ansi) },	// /app13/{ushort=0}/{ulonglong=61857348781060}/iptc/{str=By-line}
+            { "{str=By-line}",          new ExifTagInfo("Author",    Ansi) },	// /app13/{ushort=0}/{ulonglong=61857348781060}/iptc/{str=By-line}
 		};
 
         private static readonly Dictionary<ExifTag, ExifTagInfo> TagsToTypes = new Dictionary<ExifTag, ExifTagInfo> {

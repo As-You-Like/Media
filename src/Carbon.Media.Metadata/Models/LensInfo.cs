@@ -1,19 +1,20 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Carbon.Media
+namespace Carbon.Media.Metadata
 {
     [DataContract]
     public class LensInfo
     {
         public LensInfo() { }
 
-        public LensInfo(string make, string model)
+        public LensInfo(Make make, string model)
         {
             Make  = make;
             Model = model;
         }
 
-        // Id = 1
+        [DataMember(Name = "id", Order = 1, EmitDefaultValue = false)]
+        public long Id { get; set; }
 
         // e.g. Canon
         [DataMember(Name = "make", Order = 2, EmitDefaultValue = false)]

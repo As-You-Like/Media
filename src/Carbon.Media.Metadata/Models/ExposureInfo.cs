@@ -14,11 +14,15 @@ namespace Carbon.Media.Metadata
 
         [DataMember(Name = "mode", Order = 3, EmitDefaultValue = false)]
         public ExifExposureMode? Mode { get; set; }
+        
+        // public Rational Aperture { get; set; }
+
+        // aka shutter speed
 
         [DataMember(Name = "time", Order = 4, EmitDefaultValue = false)]
         public TimeSpan? Time { get; set; }
-
-        //         // Method (Shutter?)
+        
+        // Method (Shutter?)
 
     }
 }

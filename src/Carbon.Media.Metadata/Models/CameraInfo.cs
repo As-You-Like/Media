@@ -1,19 +1,22 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Carbon.Media
+namespace Carbon.Media.Metadata
 {
     [DataContract]
     public class CameraInfo
     {
         public CameraInfo() { }
 
-        public CameraInfo(string make, string model)
+        public CameraInfo(Make make, Model model, string serialNumber = null)
         {
-            Make = make;
-            Model = model;
+            Make         = make;
+            Model        = model;
+            SerialNumber = serialNumber;
         }
 
-        // Id = 1
+        [DataMember(Name = "id", Order = 1, EmitDefaultValue = false)]
+        public long Id { get; set; }
+
         // e.g. Canon
         // aka Manfacturer
         [DataMember(Name = "make", Order = 2)]

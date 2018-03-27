@@ -74,10 +74,10 @@ namespace Carbon.Media.Metadata.Tests
                 Height      = 3000,
                 PixelFormat = PixelFormat.Rgba64,
                 ColorSpace  = ColorSpace.RGB,
-                Camera      = new CameraInfo("Canon", "EOS 5D"),
+                Camera      = new CameraInfo(Make.Canon, new Model("EOS 5D")),
                 Copyright   = "©2018 Willy Wonka. All Rights Reserved.",
                 Exposure    = new ExposureInfo { Time = TimeSpan.FromSeconds(1) },
-                Lens        = new LensInfo("Canon", "EF-S 35mm f/2.8 Macro IS STM"),
+                Lens        = new LensInfo(Make.Canon, "EF-S 35mm f/2.8 Macro IS STM"),
                 Location    = new GpsData { Altitude = Unit.Meters(10.5), Latitude = 2, Longitude = 3 },
                 Lighting    = new LightingInfo { Source = ExifLightSource.D50 },
                 Software    = new SoftwareInfo { Name = "Photoshop" },
@@ -124,8 +124,8 @@ namespace Carbon.Media.Metadata.Tests
     ""source"": ""D50""
   },
   ""location"": {
-    ""longitude"": 3,
     ""latitude"": 2,
+    ""longitude"": 3,
     ""altitude"": ""10.5 m""
   },
   ""software"": {

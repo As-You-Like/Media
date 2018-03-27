@@ -6,7 +6,7 @@ namespace Carbon.Media.Metadata
     public class SubjectInfo
     {
         // Id = 1
-
+        
         [DataMember(Name = "subject", Order = 2)]
         public string Type { get; set; }
 

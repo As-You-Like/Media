@@ -34,7 +34,7 @@
         GPSDateStamp                = 29,
         GPSDifferential             = 30,    
         SubfileType                 = 254,
-        OldSubfileType              = 255, // the old subfile type
+        OldSubfileType              = 255,
         ImageWidth                  = 256,
         ImageLength                 = 257,
         BitsPerSample               = 258,
@@ -46,8 +46,8 @@
         FillOrder                   = 266,
         DocumentName                = 269,
         ImageDescription            = 270,
-        Make                        = 271,    // The manufacturer of the recording device
-        Model                       = 272,    // The model of the recording device
+        Make                        = 271, // The manufacturer of the recording device
+        Model                       = 272, // The model of the recording device
         StripOffsets                = 273,
         Orientation                 = 274,
         SamplesPerPixel             = 277,
