@@ -64,5 +64,17 @@ namespace Carbon.Media.Tests
 
 			Assert.True(formats.All(format => Mime.FromFormat(format).Type == MediaType.Video));
 		}
-	}
+
+
+
+        [Fact]
+        public void FontTypeTests()
+        {
+            var formats = new[] {
+                "otf", "ttf", "woff", "woff2"
+            };
+
+            Assert.True(formats.All(format => Mime.FromFormat(format).Type == MediaType.Font));
+        }
+    }
 }

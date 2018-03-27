@@ -70,6 +70,11 @@ namespace Carbon.Media
             { "video/ogg",                      Ogv },
             { "video/webm",                     WebM },
             { "video/x-ms-wmv",                 Wmv },
+
+            // Fonts --------------------------------------------
+            { "font/ttf",                       Ttf },
+            { "font/woff",                      Woff },
+            { "font/woff2",                     Woff2 }
         };
 
         internal static readonly Dictionary<string, Mime> FormatToMimeMap = new Dictionary<string, Mime> {
@@ -79,17 +84,13 @@ namespace Carbon.Media
 			{ "atom",   Atom },	  // Document	    Atom
 			{ "blob",   Blob },	  // Data		    Binary Blob
 			{ "doc",    Doc },	  // Document	    Word
-			{ "eot",    Eot },    // Font		    EOT
             { "icc",    Icc },    // Color Profile
             { "mpd",    Mpd },	  // Dash
 			{ "js",     Js },	  // Script		    JavaScript
 			{ "json",   Json },	  // Data		    JSON
 			{ "swf",    Swf },	  // Plugin		    Flash
-			{ "ttf",    Ttf },	  // Font		    TTF
 			{ "pdf",    Pdf },	  // Document	    PDF
-			{ "xap",    Xap },	  // Plugin		    Silverlight
-			{ "woff",   Woff },	  // Font		    WOFF
-            { "woff2",  Woff2 },  // Font           WOFF2
+			{ "xap",    Xap },    // Plugin		    Silverlight
 			{ "zip",    Zip },	  // Package	    ZIP			
 
 			// Audio --------------------------------------------
@@ -151,6 +152,13 @@ namespace Carbon.Media
             { "qt",     Mov },
             { "webm",   WebM },
             { "wmv",    Wmv },
+
+            // Fonts --------------------------------------------
+            { "eot",    Eot },
+            { "ttf",    Ttf },
+            { "otf",    Otf },
+			{ "woff",   Woff },	 
+            { "woff2",  Woff2 },
         };
     }
 }

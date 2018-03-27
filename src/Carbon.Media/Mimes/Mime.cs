@@ -10,15 +10,11 @@ namespace Carbon.Media
 
         internal Mime(string name, string[] formats)
         {
-            #region Preconditions
-
             if (formats == null)
                 throw new ArgumentNullException(nameof(formats));
 
             if (formats.Length == 0)
                 throw new ArgumentException("Must not be empty", paramName: nameof(formats));
-
-            #endregion
 
             Name       = name ?? throw new ArgumentNullException(nameof(name));
             Formats    = formats;
@@ -54,21 +50,19 @@ namespace Carbon.Media
 
         #endregion
 
-        #region Casts
-
         public static implicit operator string(Mime mime) => mime.Name;
 
-        #endregion
+        public void Deconstruct(out MediaType type, out string name)
+        {
+            type = Type;
+            name = Name.Split('/')[1];
+        }
 
         #region Static Constructors
 
         public static Mime Parse(string name)
         {
-            #region Preconditions
-
             if (name == null) throw new ArgumentNullException(nameof(name));
-
-            #endregion
 
             Mime mime;
 
@@ -90,27 +84,24 @@ namespace Carbon.Media
             throw new Exception($"No mime found for '{name}'.");
         }
 
-        public static Mime FromPath(string path) => 
-            FromExtension(Path.GetExtension(path));
+        public static Mime FromPath(string path)
+        {
+            return FromExtension(Path.GetExtension(path));
+        }
 
         public static Mime FromExtension(string extension)
         {
-            #region Preconditions
-
-            if (extension == null) throw new ArgumentNullException("extension");
-
-            #endregion
+            if (extension == null) throw new ArgumentNullException(nameof(extension));
 
             return FromFormat(extension.TrimStart('.'));
         }
 
         public static Mime FromFormat(string format)
         {
-            #region Preconditions
-
-            if (format == null) throw new ArgumentNullException(nameof(format));
-
-            #endregion
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
 
             if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out Mime mime))
             {
@@ -120,6 +111,16 @@ namespace Carbon.Media
             {
                 throw new Exception($"No mime match for '{format}'.");
             }
+        }
+
+        public static bool TryGetFromFormat(string format, out Mime mime)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+
+            return MimeHelper.FormatToMimeMap.TryGetValue(format, out mime);
         }
 
         #endregion
@@ -143,13 +144,6 @@ namespace Carbon.Media
         public static readonly Mime Js   = new Mime("application/javascript", "js");
         public static readonly Mime Json = new Mime("application/json", "json");
 
-        // Applications - Fonts 
-        public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
-        public static readonly Mime Otf   = new Mime("application/font-sfnt",         new[] { "otf" }, new[] { MagicNumber.Otf });
-        public static readonly Mime Ttf   = new Mime("application/x-font-ttf",        "ttf");
-        public static readonly Mime Woff  = new Mime("application/font-woff",         "woff");   // https://www.w3.org/TR/WOFF/#appendix-b
-        public static readonly Mime Woff2 = new Mime("application/font-woff2",        "woff2");
-
         // Applications - Color Profiles
         public static readonly Mime Icc = new Mime("application/vnd.iccprofile", "icc");
 
@@ -170,6 +164,7 @@ namespace Carbon.Media
         public static readonly Mime Oga      = new Mime("audio/ogg",         "oga");
         public static readonly Mime Opus     = new Mime("audio/opus",        new[] { "opus" }, new[] { MagicNumber.Opus });
         public static readonly Mime Spx      = new Mime("audio/speex",       "spx");
+        public static readonly Mime Qcelp    = new Mime("audio/qcelp",       "qcelp");
         public static readonly Mime Ra       = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
         public static readonly Mime Wav      = new Mime("audio/wav",         new[] { "wav", "wave" }, new[] { MagicNumber.Wav1, MagicNumber.Wav2 });
         public static readonly Mime Wma      = new Mime("audio/x-ms-wma",    new[] { "wma" }, new[] { MagicNumber.Wma });
@@ -221,6 +216,15 @@ namespace Carbon.Media
 
         public static readonly Mime _3GP_Audio  = new Mime("audio/3gpp",   "3gp"); // Can be audio or video...
         public static readonly Mime _3GP2_Audio = new Mime("audio/3gpp2",  "3g2"); // Can be audio or video...
+
+
+
+        // Fonts 
+        public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
+        public static readonly Mime Otf   = new Mime("font/otf",   new[] { "otf" }, new[] { MagicNumber.Otf });
+        public static readonly Mime Ttf   = new Mime("font/ttf",   "ttf");
+        public static readonly Mime Woff  = new Mime("font/woff",  "woff");
+        public static readonly Mime Woff2 = new Mime("font/woff2", "woff2");
     }
 }
 
