@@ -19,18 +19,21 @@ namespace Carbon.Media
 
     public static class SizeHelper
     {
-        public static Size Parse(string size)
+        public static Size Parse(string text)
         {
-            if (size == null) throw new ArgumentNullException(nameof(size));
+            if (text == null) throw new ArgumentNullException(nameof(text));
 
-            var parts = size.Split(Seperators.x);
+            int indexOfX = text.IndexOf('x');
 
-            if (parts.Length != 2)
+            if (indexOfX == -1)
             {
-                throw new ArgumentException($"Invalid size. Was '{size}'.");
+                throw new ArgumentException($"Invalid size. Was '{text}'.");
             }
 
-            return new Size(int.Parse(parts[0]), int.Parse(parts[1]));
+            return new Size(
+                width: int.Parse(text.Substring(0, indexOfX)), 
+                height: int.Parse(text.Substring(indexOfX + 1))
+            );
         }
     }
 }

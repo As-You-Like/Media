@@ -10,8 +10,7 @@ namespace Carbon.Media
     {
         public Rational(long numerator, long denominator)
         {
-            if (denominator == 0)
-                throw new DivideByZeroException("denominator may not be 0");
+            if (denominator == 0) throw new DivideByZeroException("denominator may not be 0");
 
             Numerator = numerator;
             Denominator = denominator;
@@ -42,9 +41,9 @@ namespace Carbon.Media
             return new Rational(num, den);
         }
 
-        public static bool operator > (Rational lhs, Rational rhs) => lhs.ToDouble() > rhs.ToDouble();
+        public static bool operator >(Rational lhs, Rational rhs) => lhs.ToDouble() > rhs.ToDouble();
 
-        public static bool operator < (Rational lhs, Rational rhs) => lhs.ToDouble() < rhs.ToDouble();
+        public static bool operator <(Rational lhs, Rational rhs) => lhs.ToDouble() < rhs.ToDouble();
 
         public double ToDouble() => Numerator / (double)Denominator;
 
@@ -81,14 +80,17 @@ namespace Carbon.Media
 
         public static Rational Parse(string text)
         {
-            var parts = text.Split(forwardSlash); // '/'
+            int slashIndex = text.IndexOf('/');
 
-            if (parts.Length == 1)
+            if (slashIndex == -1)
             {
-                return new Rational(long.Parse(parts[0]), 1);
+                return new Rational(long.Parse(text), 1);
             }
-
-            return new Rational(long.Parse(parts[0]), long.Parse(parts[1]));
+    
+            return new Rational(
+                numerator   : long.Parse(text.Substring(0, slashIndex)),
+                denominator : long.Parse(text.Substring(slashIndex + 1))
+            );
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
@@ -99,7 +101,7 @@ namespace Carbon.Media
         #region IEquatable
 
         public bool Equals(Rational other) =>
-            Numerator == other.Numerator && 
+            Numerator == other.Numerator &&
             Denominator == other.Denominator;
 
         public override int GetHashCode()

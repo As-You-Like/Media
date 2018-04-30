@@ -55,7 +55,7 @@ namespace Carbon.Media
         public void Deconstruct(out MediaType type, out string name)
         {
             type = Type;
-            name = Name.Split('/')[1];
+            name = Name.Substring(Name.IndexOf('/') + 1);
         }
 
         #region Static Constructors

@@ -2,7 +2,7 @@
 
 namespace System.Text
 {
-    public static class StringBuilderCache
+    internal static class StringBuilderCache
     {
         [ThreadStatic]
         static StringBuilder cachedInstance;

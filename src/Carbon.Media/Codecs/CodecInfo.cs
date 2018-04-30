@@ -26,11 +26,11 @@ namespace Carbon.Media
         public override int GetHashCode() => Name.GetHashCode();
 
         public bool Equals(CodecInfo other) =>
-            Id == other?.Id &&
-            Name == other?.Name; 
+            other != null &&
+            Id == other.Id &&
+            Name == other.Name; 
 
-        public override bool Equals(object obj) =>
-            (obj as CodecInfo)?.Equals(this) == true;
+        public override bool Equals(object obj) => obj is CodecInfo other && Equals(other);
 
         #endregion
 
@@ -38,13 +38,8 @@ namespace Carbon.Media
 
         public static CodecInfo Parse(string name)
         {
-            #region Preconditions
-
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            #endregion
-
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            
             switch (name.ToUpper())
             {
                 // H264 Profiles

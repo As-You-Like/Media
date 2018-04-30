@@ -11,15 +11,11 @@ namespace Carbon.Media
             SampleFormat sampleFormat = default, 
             int? sampleRate = null)
         {
-            #region Preconditions
-
             if (string.IsNullOrEmpty(codec))
                 throw new ArgumentException("Required", nameof(codec));
 
             if (sampleRate != null && sampleRate.Value <= 0)
                 throw new ArgumentOutOfRangeException("Must be > 0", sampleRate.Value, nameof(sampleRate));
-
-            #endregion
 
             Codec        = codec;
             BitRate      = bitRate;

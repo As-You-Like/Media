@@ -77,7 +77,7 @@ namespace Carbon.Media
 
         public override bool Equals(object obj)
         {
-            return obj is Padding padding && padding.Equals(this);
+            return obj is Padding other && other.Equals(this);
         }
         
         public override int GetHashCode()

@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media.Processors
+﻿using System;
+
+namespace Carbon.Media.Processors
 {
     using static FormatId;
     
@@ -6,6 +8,8 @@
     {
         public static (FormatId id, EncodingFlags flags) ParseFormat(string text)
         {
+            if (text == null) throw new ArgumentNullException(nameof(text));
+
             switch (text.ToLower())
             {
                 case "png"    : return (Png,  default);

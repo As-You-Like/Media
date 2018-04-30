@@ -37,7 +37,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawCircleCommand Create(CallSyntax syntax)
+        public static DrawCircleCommand Create(in CallSyntax syntax)
         {
             var radius = int.Parse(syntax.Arguments[0].Value);
             

@@ -19,10 +19,8 @@ namespace Carbon.Media
             }
 
             // Ensure the format is in lowercase
-            if (!format.IsLower())
-            {
-                format = format.ToLower();
-            }
+            // NOTE: This does not allocate (if already lowercase) on .NET CORE 2.1
+            format = format.ToLower();
             
             switch (format)
             {

@@ -170,7 +170,6 @@
         Vima           = 69662, // VIMA
         VmdAudio       = 86027, // Sierra VMD audio
         Vorbis         = 86021, //           
-        Voxware        = 86048, // Voxware MetaSound	
         WavPack        = 86041, // WavPack [wv]            
         Wma1           = 86023, // Windows Media Audio 1                | MediaFoundation
         Wma2           = 86024, // Windows Media Audio 2                | MediaFoundation
@@ -444,3 +443,7 @@
         Ttf = 98304,
     }
 }
+
+// APTX
+// APTX_HD
+// SBC

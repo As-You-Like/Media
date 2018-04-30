@@ -16,8 +16,10 @@ namespace Carbon.Media
         [DataMember(Name = "value", Order = 1)]
         public long Value { get; }
 
+        [IgnoreDataMember]
         public double Kbps => Value / 1000d;
 
+        [IgnoreDataMember]
         public double Mbps => Value / (1000d * 1000d);
 
         // Kb/s

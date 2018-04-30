@@ -57,7 +57,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawTextCommand Create(CallSyntax syntax)
+        public static DrawTextCommand Create(in CallSyntax syntax)
         {
             (_, var content) = syntax.Arguments[0]; // TODO: Base64 support
 

@@ -102,11 +102,9 @@ namespace Carbon.Media
             Type == other.Type && 
             Value == other.Value;
 
-        public static bool operator ==(Unit lhs, Unit rhs) =>
-            lhs.Equals(rhs);
+        public static bool operator ==(Unit lhs, Unit rhs) => lhs.Equals(rhs);
 
-        public static bool operator !=(Unit lhs, Unit rhs) =>
-            !lhs.Equals(rhs);
+        public static bool operator !=(Unit lhs, Unit rhs) => !lhs.Equals(rhs);
 
         public override int GetHashCode() => (Type, Value).GetHashCode();
         
