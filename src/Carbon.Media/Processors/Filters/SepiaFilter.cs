@@ -7,14 +7,7 @@ namespace Carbon.Media.Processors
     {
         public SepiaFilter(float amount)
         {
-            #region Preconditions
-
-            if (amount < 0)
-            {
-                throw new ArgumentException("Must be >= 0", nameof(amount));
-            }
-
-            #endregion
+            if (amount < 0) throw new ArgumentException("Must be >= 0", nameof(amount));
 
             if (amount > 1)  // clamped to 1
             {
@@ -49,7 +42,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static SepiaFilter Create(CallSyntax syntax)
+        public static SepiaFilter Create(in CallSyntax syntax)
         {
             return new SepiaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

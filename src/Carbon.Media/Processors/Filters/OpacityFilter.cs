@@ -6,14 +6,10 @@ namespace Carbon.Media.Processors
     {
         public OpacityFilter(float amount)
         {
-            #region Validation
-
             if (amount < 0)
             {
                 throw new ArgumentException("Must be >= 0", nameof(amount));
             }
-
-            #endregion
 
             if (amount > 1) // clamp to 1
             {
@@ -30,7 +26,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static OpacityFilter Create(CallSyntax syntax)
+        public static OpacityFilter Create(in CallSyntax syntax)
         {
             return new OpacityFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

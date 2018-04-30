@@ -25,7 +25,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static InvertFilter Create(CallSyntax syntax)
+        public static InvertFilter Create(in CallSyntax syntax)
         {
             return new InvertFilter(float.Parse(syntax.Arguments[0].Value));
         }

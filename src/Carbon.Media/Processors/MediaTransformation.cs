@@ -233,17 +233,11 @@ namespace Carbon.Media
 
         public static MediaTransformation ParsePath(string path, IMediaInfo source = null)
         {
-            #region Preconditions
-
             if (path == null)
                 throw new ArgumentNullException(nameof(path));
 
             if (path.Length < 3)
-            {
                 throw new ArgumentException("May not be empty", nameof(path));
-            }
-
-            #endregion
 
             if (path[0] == '/')
             {
@@ -264,7 +258,7 @@ namespace Carbon.Media
             string transformString = path.Substring(firstSeperatorIndex + 1, lastDotIndex - (firstSeperatorIndex + 1));
             string format          = path.Substring(lastDotIndex + 1);
 
-            var segments = transformString.Split(Seperators.ForwardSlash);
+            string[] segments = transformString.Split(Seperators.ForwardSlash);
 
             var transforms = ParseTransforms(segments);
 

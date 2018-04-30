@@ -50,7 +50,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static QuantizeFilter Create(CallSyntax syntax)
+        public static QuantizeFilter Create(in CallSyntax syntax)
         {
             return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value));
         }

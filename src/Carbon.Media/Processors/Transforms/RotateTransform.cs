@@ -22,7 +22,7 @@
 
         public override string ToString() => $"rotate({Angle})";
 
-        public static RotateTransform Create(CallSyntax syntax)
+        public static RotateTransform Create(in CallSyntax syntax)
         {
             return new RotateTransform(angle: int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
         }

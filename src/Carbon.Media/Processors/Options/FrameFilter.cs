@@ -7,8 +7,7 @@ namespace Carbon.Media.Processors
     {
         public FrameFilter(int number)
         {
-            if (number < 0)
-                throw new ArgumentException("Must be > 0", nameof(number));
+            if (number < 0) throw new ArgumentException("Must be > 0", nameof(number));
 
             Number = number;
         }
@@ -37,7 +36,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static FrameFilter Create(CallSyntax syntax)
+        public static FrameFilter Create(in CallSyntax syntax)
         {
             return new FrameFilter(int.Parse(syntax.Arguments[0].Value));
         }

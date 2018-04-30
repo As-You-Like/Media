@@ -36,7 +36,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static PageFilter Create(CallSyntax syntax)
+        public static PageFilter Create(in CallSyntax syntax)
         {
             return new PageFilter(int.Parse(syntax.Arguments[0].Value));
         }

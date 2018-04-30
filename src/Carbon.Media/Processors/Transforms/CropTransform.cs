@@ -8,16 +8,12 @@ namespace Carbon.Media.Processors
     {
         public CropTransform(Unit x, Unit y, Unit width, Unit height)
         {
-            #region Preconditions
-
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width), width, "Must be greater than 0");
 
             if (height <= 0)
                 throw new ArgumentOutOfRangeException(nameof(height), height, "Must be greater than 0");
-
-            #endregion
-
+            
             X = x;
             Y = y;
             Width = width;
@@ -98,7 +94,7 @@ namespace Carbon.Media.Processors
         
         public override string ToString() => Canonicalize();
 
-        public static CropTransform Create(CallSyntax syntax)
+        public static CropTransform Create(in CallSyntax syntax)
         {
             return new CropTransform(
                 x      : Unit.Parse(syntax.Arguments[0].Value),

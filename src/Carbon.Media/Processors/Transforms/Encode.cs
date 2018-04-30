@@ -84,15 +84,15 @@ namespace Carbon.Media.Processors
             {
                 var args = ArgumentList.Parse(segment.Substring(argStart, segment.Length - argStart - 1));
 
-                foreach (var arg in args)
-                {                    
-                    switch (arg.Name)
+                foreach (var (key, value) in args)
+                {
+                    switch (key)
                     {
-                        case "quality"     : quality = int.Parse(arg.Value);                     break;
-                        case "progressive" : flags |= EncodingFlags.Progressive;                 break;
-                        case "lossless"    : flags |= EncodingFlags.Lossless;                    break;
+                        case "quality"     : quality = int.Parse(value);           break;
+                        case "progressive" : flags |= EncodingFlags.Progressive;   break;
+                        case "lossless"    : flags |= EncodingFlags.Lossless;      break;
 
-                        default            : throw new Exception("Invalid encode argument:" + arg.Name);
+                        default            : throw new Exception("Invalid encode argument:" + key);
                     }
                 }
             }

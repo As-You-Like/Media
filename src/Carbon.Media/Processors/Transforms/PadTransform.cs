@@ -78,7 +78,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static PadTransform Create(CallSyntax syntax)
+        public static PadTransform Create(in CallSyntax syntax)
         {
             switch (syntax.Arguments.Length)
             {

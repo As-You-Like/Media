@@ -9,8 +9,8 @@
 
         public float Amount { get; }
 
-        public static HighlightFilter Create(CallSyntax syntax)
-        {            
+        public static HighlightFilter Create(in CallSyntax syntax)
+        {
             return new HighlightFilter(float.Parse(syntax.Arguments[0].Value));
         }
 

@@ -15,7 +15,7 @@ namespace Carbon.Media.Processors
 
             if (end > start)
                 throw new ArgumentException("end may not be after the start");
-            
+
             Start = start;
             End = end;
         }
@@ -46,7 +46,7 @@ namespace Carbon.Media.Processors
 
             sb.Append(End.TotalSeconds);
             sb.Append('s');
-            
+
             sb.Append(')');
         }
 

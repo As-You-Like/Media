@@ -33,7 +33,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static SharpenFilter Create(CallSyntax syntax)
+        public static SharpenFilter Create(in CallSyntax syntax)
         {
             return new SharpenFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

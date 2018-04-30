@@ -39,7 +39,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static VibranceFilter Create(CallSyntax syntax)
+        public static VibranceFilter Create(in CallSyntax syntax)
         {
             return new VibranceFilter(float.Parse(syntax.Arguments[0].Value));
         }

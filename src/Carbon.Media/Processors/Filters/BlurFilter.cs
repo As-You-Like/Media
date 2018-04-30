@@ -22,7 +22,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static BlurFilter Create(CallSyntax syntax)
+        public static BlurFilter Create(in CallSyntax syntax)
         {
             // allows the px unit
 

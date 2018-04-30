@@ -17,7 +17,7 @@ namespace Carbon.Media.Processors
 
         public float Amount { get; }
 
-        public static SaturateFilter Create(CallSyntax syntax)
+        public static SaturateFilter Create(in CallSyntax syntax)
         {
             return new SaturateFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

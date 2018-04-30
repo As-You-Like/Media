@@ -20,7 +20,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static VolumeFilter Create(CallSyntax syntax)
+        public static VolumeFilter Create(in CallSyntax syntax)
         {
             return new VolumeFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

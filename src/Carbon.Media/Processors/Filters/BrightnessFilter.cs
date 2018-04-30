@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors
 
         public float Amount { get; }
 
-        public static BrightnessFilter Create(CallSyntax syntax)
+        public static BrightnessFilter Create(in CallSyntax syntax)
         {
             return new BrightnessFilter(float.Parse(syntax.Arguments[0].Value));
         }

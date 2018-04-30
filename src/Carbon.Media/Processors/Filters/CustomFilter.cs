@@ -7,7 +7,7 @@ namespace Carbon.Media.Processors
     {
         public CustomFilter(string name, Argument[] args)
         {
-            Name      = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Arguments = args;
         }
 
@@ -18,7 +18,7 @@ namespace Carbon.Media.Processors
         public string Canonicalize()
         {
             var sb = StringBuilderCache.Aquire();
-            
+
             WriteTo(sb);
 
             return StringBuilderCache.ExtractAndRelease(sb);
@@ -29,35 +29,36 @@ namespace Carbon.Media.Processors
             sb.Append(Name);
             sb.Append('(');
 
-            var i = 0;
-
-            foreach (var (key, value) in Arguments)
+            for (int i = 0; i < Arguments.Length; i++)
             {
+                ref Argument arg = ref Arguments[i];
+
                 if (i > 0)
                 {
                     sb.Append(',');
                 }
 
-                if (key != null)
+                if (arg.Name != null)
                 {
-                    sb.Append(key);
+                    sb.Append(arg.Name);
                     sb.Append(':');
                 }
 
-                sb.Append(value);
+                sb.Append(arg.Value);
 
                 i++;
             }
+
             sb.Append(')');
         }
 
-        public override string ToString() =>  Canonicalize();
+        public override string ToString() => Canonicalize();
 
-        // name(args)
-
-        public static CustomFilter Create(CallSyntax syntax)
+        public static CustomFilter Create(in CallSyntax syntax)
         {
             return new CustomFilter(syntax.Name, syntax.Arguments);
         }
     }
 }
+
+// name(args)

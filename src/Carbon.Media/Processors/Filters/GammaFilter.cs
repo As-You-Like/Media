@@ -22,7 +22,7 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static GammaFilter Create(CallSyntax syntax)
+        public static GammaFilter Create(in CallSyntax syntax)
         {
             return new GammaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
@@ -31,4 +31,4 @@ namespace Carbon.Media.Processors
 
 // 1 - 3 (default = 2.2)
 
-//gamma(1.1, 3.6, 0)
+// gamma(1.1, 3.6, 0)

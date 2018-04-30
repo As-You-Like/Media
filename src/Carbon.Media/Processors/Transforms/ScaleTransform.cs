@@ -65,7 +65,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static ScaleTransform Create(CallSyntax syntax)
+        public static ScaleTransform Create(in CallSyntax syntax)
         {
             int width = 0;
             int height = 0;

@@ -34,7 +34,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static BackgroundFilter Create(CallSyntax syntax)
+        public static BackgroundFilter Create(in CallSyntax syntax)
         {
             return new BackgroundFilter(syntax.Arguments[0].Value);
         }

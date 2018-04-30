@@ -10,9 +10,9 @@
         public int Degrees { get; }
 
         // hue-rotate(90deg)
-      
-        public static HueRotateFilter Create(CallSyntax syntax)
-        {            
+
+        public static HueRotateFilter Create(in CallSyntax syntax)
+        {
             return new HueRotateFilter(int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
         }
 

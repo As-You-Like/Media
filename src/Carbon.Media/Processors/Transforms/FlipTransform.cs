@@ -38,7 +38,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static FlipTransform Create(CallSyntax syntax)
+        public static FlipTransform Create(in CallSyntax syntax)
         {
             switch (syntax.Arguments[0].Value)
             {

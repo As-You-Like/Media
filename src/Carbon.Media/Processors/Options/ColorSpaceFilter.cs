@@ -15,10 +15,8 @@ namespace Carbon.Media.Processors
 
         public override string ToString() => Canonicalize();
 
-        public static ColorSpaceFilter Parse(string text)
+        public static ColorSpaceFilter Parse(in CallSyntax syntax)
         {
-            var syntax = CallSyntax.Parse(text);
-
             if (Enum.TryParse<ColorSpace>(syntax.Arguments[0].Value, ignoreCase: true, out var colorSpace))
             {
                 return new ColorSpaceFilter(colorSpace);

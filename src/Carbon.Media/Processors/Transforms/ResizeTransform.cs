@@ -194,16 +194,15 @@ namespace Carbon.Media.Processors
                 segment = segment.Substring(argStart, segment.Length - argStart - 1);
             }
 
-            // 100x100-c
-            if (segment.Contains("-"))
+            int dashIndex = segment.IndexOf('-');
+
+            // {width}x{height}-{anchor}
+            // e.g. 100x100-c
+            if (dashIndex > -1)
             {
-                // {width}x{height}-{anchor}
-
-                var parts = segment.Split(Seperators.Dash);
-
                 return new ResizeTransform(
-                    size   : SizeHelper.Parse(parts[0]),
-                    anchor : CropAnchorHelper.Parse(parts[1])
+                    size   : SizeHelper.Parse(segment.Substring(0, dashIndex)),
+                    anchor : CropAnchorHelper.Parse(segment.Substring(dashIndex + 1))
                 );
             }
             else if (segment.Contains(","))
