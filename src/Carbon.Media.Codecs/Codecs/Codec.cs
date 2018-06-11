@@ -25,13 +25,13 @@ namespace Carbon.Media.Codecs
 
         protected Codec(AVCodecContext* context, CodecType type)
         {
-            this.Id = (CodecId)context->codec_id;
+            this.Id = (context->codec_id).ToCodecId();
 
             this.type = type;
 
             this.pointer = context->codec;
 
-            this.context = new CodecContext(context, this);
+            this.context = new CodecContext(context, this);            
         }
         
         public CodecId Id { get; }
@@ -162,8 +162,8 @@ namespace Carbon.Media.Codecs
         {
             switch (type)
             {
-                case CodecType.Encoder  : return ffmpeg.avcodec_find_encoder((AVCodecID)id);
-                default                 : return ffmpeg.avcodec_find_decoder((AVCodecID)id);
+                case CodecType.Encoder  : return ffmpeg.avcodec_find_encoder(id.ToAVCodecID());
+                default                 : return ffmpeg.avcodec_find_decoder(id.ToAVCodecID());
             }
         }
 

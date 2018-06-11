@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
+    [DataContract]
     public class CodecInfo : IEquatable<CodecInfo>, ICodec
     {
         internal CodecInfo(CodecId id, string name)
