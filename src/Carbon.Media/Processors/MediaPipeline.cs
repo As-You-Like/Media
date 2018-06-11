@@ -9,8 +9,8 @@ namespace Carbon.Media.Processors
     {
         public IMediaInfo Source { get; set; } // Input
 
-        public int? PageNumber { get; set; } // FrameIndex?
-
+        public int? PageNumber { get; set; }
+        
         // 1. Flip
         public FlipTransform Flip { get; set; }
 
@@ -94,10 +94,7 @@ namespace Carbon.Media.Processors
             Rectangle? crop = null;
             EncodingFlags encodingFlags = EncodingFlags.None;
 
-            var box = new Box {
-                Width = sourceSize.Width,
-                Height = sourceSize.Height
-            };
+            var box = new PaddedBox(sourceSize.Width, sourceSize.Height);
 
             int? quality = null;
 
@@ -106,6 +103,10 @@ namespace Carbon.Media.Processors
                 if (transform is PageFilter page)
                 {
                     pipeline.PageNumber = page.Number;
+                }
+                else if (transform is FrameFilter frame)
+                {
+                    pipeline.PageNumber = frame.Number;
                 }
                 else if (transform is BackgroundFilter background)
                 {
@@ -180,10 +181,10 @@ namespace Carbon.Media.Processors
                 else if (transform is PadTransform pad)
                 {
                     box.Padding = new Padding(
-                        top: box.Padding.Top + pad.Top,
-                        right: box.Padding.Right + pad.Right,
-                        bottom: box.Padding.Bottom + pad.Bottom,
-                        left: box.Padding.Left + pad.Left
+                        top    : box.Padding.Top + pad.Top,
+                        right  : box.Padding.Right + pad.Right,
+                        bottom : box.Padding.Bottom + pad.Bottom,
+                        left   : box.Padding.Left + pad.Left
                     );
                 }
                 else if (transform is RotateTransform rotate)
@@ -249,7 +250,7 @@ namespace Carbon.Media.Processors
 
         public static MediaPipeline Parse(string text)
         {
-            var segments = text.Split(splitOn, count: 50, options: StringSplitOptions.None);
+            string[] segments = text.Split(splitOn, count: 50, options: StringSplitOptions.None);
 
             /*
                blob#1 
@@ -265,11 +266,11 @@ namespace Carbon.Media.Processors
 
             foreach (var segment in segments)
             {
-                var poundIndex = segment.IndexOf('#');
+                int poundIndex = segment.IndexOf('#');
 
                 if (poundIndex > -1)
                 {
-                    var id = segment.Substring(poundIndex + 1); // '#'
+                    string id = segment.Substring(poundIndex + 1); // '#'
 
                     result.Source = new MediaInfo(id, 100, 100);
 

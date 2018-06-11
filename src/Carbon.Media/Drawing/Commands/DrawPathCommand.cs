@@ -59,7 +59,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawPathCommand Create(CallSyntax syntax)
+        public static DrawPathCommand Create(in CallSyntax syntax)
         {
             var mode  = BlendMode.Normal;
             string content = null;

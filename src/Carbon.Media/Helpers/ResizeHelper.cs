@@ -23,7 +23,7 @@ namespace Carbon.Media
         }
 
         // Fits a padded box into the bounds
-        public static void Fit(ref Box rect, Size bounds, bool upscale = false)
+        public static void Fit(ref PaddedBox rect, Size bounds, bool upscale = false)
         {
             var outerSize = new Size(rect.OuterWidth, rect.OuterHeight);
 
@@ -42,7 +42,7 @@ namespace Carbon.Media
             rect.Height = target.Height;
         }
         
-        public static Box Pad(
+        public static PaddedBox Pad(
             Size source, 
             Size bounds, 
             CropAnchor anchor = CropAnchor.Center,
@@ -99,7 +99,7 @@ namespace Carbon.Media
 
             var padding = new Padding(top, right, bottom, left);
 
-            return new Box(size, padding);
+            return new PaddedBox(size, padding);
         }
 
         // Align the box within the bounds

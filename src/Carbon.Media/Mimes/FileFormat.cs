@@ -38,11 +38,7 @@ namespace Carbon.Media
 
         public static string FromPath(string path)
         {
-            if (path == null) throw new ArgumentNullException(nameof(path));
-
-            var extension = Path.GetExtension(path);
-
-            return Normalize(extension);
+            return Normalize(Path.GetExtension(path));
         }
     }
 }

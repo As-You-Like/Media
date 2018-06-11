@@ -8,7 +8,7 @@
 
             var args = new Argument[parts.Length];
 
-            for (var i = 0; i < parts.Length; i++)
+            for (int i = 0; i < parts.Length; i++)
             {
                 var part = parts[i];
 

@@ -60,12 +60,8 @@ namespace Carbon.Media.Processors
         // PNG::encode
         // WebP::encode
 
-        #region Helpers
-
         [IgnoreDataMember]
         public Mime Mime => Format.ToMime();
-
-        #endregion
 
         // With (quality)
         public static Encode Parse(string segment)

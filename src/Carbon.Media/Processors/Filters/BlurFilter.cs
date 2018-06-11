@@ -4,8 +4,6 @@ namespace Carbon.Media.Processors
 {
     public class BlurFilter : IFilter
     {
-        // Specified as a length
-
         public BlurFilter(float radius)
         {
             if (radius < 0 || radius > 2000)
@@ -24,8 +22,6 @@ namespace Carbon.Media.Processors
 
         public static BlurFilter Create(in CallSyntax syntax)
         {
-            // allows the px unit
-
             return new BlurFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }

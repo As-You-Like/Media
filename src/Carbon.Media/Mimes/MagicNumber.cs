@@ -18,11 +18,12 @@ namespace Carbon.Media
 
         public int Offset { get; }
 
+        // TODO: ReadOnlySpan<byte>
         public bool Matches(byte[] data)
         {
             if (data.Length < Data.Length) return false;
 
-            for (var i = 0; i <= data.Length; i++)
+            for (int i = 0; i <= data.Length; i++)
             {
                 if (i > Data.Length - 1) break;
 
@@ -43,7 +44,7 @@ namespace Carbon.Media
 
             var nullableBytes = new byte?[bytes.Length];
 
-            for (var i = 0; i < bytes.Length; i++)
+            for (int i = 0; i < bytes.Length; i++)
             {
                 nullableBytes[i] = bytes[i];
             }

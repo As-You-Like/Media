@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
@@ -30,12 +31,16 @@ namespace Carbon.Media
             Left   = value;
         }
 
+        [DataMember(Name = "top", Order = 1)]
         public int Top { get; }
 
+        [DataMember(Name = "right", Order = 2)]
         public int Right { get; }
 
+        [DataMember(Name = "bottom", Order = 3)]
         public int Bottom { get; }
 
+        [DataMember(Name = "left", Order = 4)]
         public int Left { get; }
         
         public static Padding operator +(Padding lhs, Padding rhs) 

@@ -21,12 +21,14 @@ namespace Carbon.Media.Drawing
 
         public static Font Parse(string text)
         {
-            var parts = text.Split(Seperators.Space);
-
-            if (parts.Length == 1)
+            int spaceIndex = text.IndexOf(' ');
+            
+            if (spaceIndex == -1)
             {
                 return new Font(text, "normal", new Unit(12, UnitType.Px));
             }
+
+            string[] parts = text.Split(Seperators.Space);
 
             // 12px Name
 

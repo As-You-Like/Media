@@ -1,43 +1,60 @@
 ﻿using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    public struct Box
+    [DataContract]
+    public readonly struct Box
     {
-        public Box(Size size)
-            : this(size.Width, size.Height) { }
+        public Box(Rectangle rectangle)
+            : this(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height) { }
 
-        public Box(Size size, Padding margin)
-            : this(size.Width, size.Height)
+        public Box(double x, double y, double width, double height)
         {
-            Padding = margin;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
         }
 
-        public Box(int width, int height)
-        {
-            X       = 0;
-            Y       = 0;
-            Width   = width;
-            Height  = height;
-            Padding = Padding.Zero;
-        }
-        
-        public Padding Padding;
-  
-        public int X;
+        [DataMember(Name = "x", Order = 1)]
+        public double X { get; }
 
-        public int Y;
+        [DataMember(Name = "y", Order = 2)]
+        public double Y { get; }
 
-        // excluding padding
-        public int Width;
+        [DataMember(Name = "width", Order = 3)]
+        public double Width { get; }
 
-        // excluding padding
-        public int Height;
-
-        public Size Size => new Size(Width, Height);
-
-        public int OuterWidth  => Width + Padding.Left + Padding.Right;
-
-        public int OuterHeight => Height + Padding.Top + Padding.Bottom;
+        [DataMember(Name = "height", Order = 4)]
+        public double Height { get; }
     }
 }
+
+/*
+PageBox ArtBox { get; }
+
+PageBox BleedBox { get; }
+
+PageBox CropBox { get; }
+
+PageBox MediaBox { get; }
+
+PageBox TrimBox { get; }
+*/
+
+// { 
+//   boxes: [ 
+//     { type: "media", ... },
+//     { type: "bleed", ... },
+//     { type: "trim",  ... },
+//     { type: "art",   ... },
+// ]
+
+// [ MediaBox
+//   [ Bleed Box 
+//      [ Trim Box 
+//         [ Art Box ]
+//      ]
+//   ]
+// ]

@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Media
 {
-    // TODO: Remove in .NET next...
-
     internal static class Seperators
     {
         public static readonly char[] Space        = { ' ' };

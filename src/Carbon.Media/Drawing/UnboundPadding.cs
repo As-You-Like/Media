@@ -27,14 +27,10 @@ namespace Carbon.Media.Drawing
 
         public UnboundPadding(Unit top, Unit right, Unit bottom, Unit left)
         {
-            #region Preconditions
-
             if (top < 0)    throw new ArgumentOutOfRangeException(nameof(top),    top.Value,    "Must be >= 0");
             if (right < 0)  throw new ArgumentOutOfRangeException(nameof(right),  right.Value,  "Must be >= 0");
             if (bottom < 0) throw new ArgumentOutOfRangeException(nameof(bottom), bottom.Value, "Must be >= 0");
             if (left < 0)   throw new ArgumentOutOfRangeException(nameof(left),   left.Value,   "Must be >= 0");
-
-            #endregion
 
             Top = top;
             Right = right;

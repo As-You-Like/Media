@@ -273,9 +273,9 @@ namespace Carbon.Media
         {
             var transforms = new IProcessor[segments.Length];
 
-            for (var i = 0; i < segments.Length; i++)
+            for (int i = 0; i < segments.Length; i++)
             {
-                var segment = segments[i];
+                string segment = segments[i];
 
                 if (segment.Length == 0)
                 {

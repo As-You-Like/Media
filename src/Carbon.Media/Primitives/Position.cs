@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media.Processors
+﻿using System.Runtime.Serialization;
+
+namespace Carbon.Media.Processors
 {
     public readonly struct Position
     {
@@ -8,8 +10,10 @@
             Y = y;
         }
 
+        [DataMember(Name = "x", Order = 1)]
         public int X { get; }
 
+        [DataMember(Name = "y", Order = 2)]
         public int Y { get; }
     }  
 }

@@ -8,8 +8,7 @@
         Left    = 2,
         Bottom  = 3,
         Right   = 4,
-        Middle  = 5,
-        Center  = 6
+        Center  = 5
     }
 
     // Justify?
@@ -24,7 +23,6 @@
                 case Left   : return "left";
                 case Bottom : return "bottom";
                 case Right  : return "right";
-                case Middle : return "middle";
                 case Center : return "center";
                 default     : return "unknown";
             }

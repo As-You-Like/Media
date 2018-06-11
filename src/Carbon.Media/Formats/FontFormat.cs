@@ -2,10 +2,10 @@
 {
     public enum FontFormat
     {
-        Eot     = 10_000,  
-        Otf     = 10_001,  
-        Ttf     = 10_002,
-        Woff    = 10_003,  
-        Woff2   = 10_004,                                                                                  
+        Eot   = FormatId.Eot,  
+        Otf   = FormatId.Otf,
+        Ttf   = FormatId.Ttf,
+        Woff  = FormatId.Woff,  
+        Woff2 = FormatId.Woff2                                                                                  
     }
 }

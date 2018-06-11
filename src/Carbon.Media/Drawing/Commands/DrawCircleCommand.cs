@@ -12,8 +12,8 @@ namespace Carbon.Media.Drawing
         {
             Radius = radius;
         }
-        
-        public int Radius { get; set; }
+
+        public int Radius { get; }
 
         public string Stroke { get; set; }
 
@@ -40,28 +40,28 @@ namespace Carbon.Media.Drawing
         public static DrawCircleCommand Create(in CallSyntax syntax)
         {
             var radius = int.Parse(syntax.Arguments[0].Value);
-            
-            var mode  = BlendMode.Normal;
+
+            var mode = BlendMode.Normal;
 
             string stroke = null;
             string fill = null;
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < syntax.Arguments.Length; i++)
+            for (int i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = syntax.Arguments[i];
-                
-                switch (k)
+                ref Argument arg = ref syntax.Arguments[i];
+
+                switch (arg.Name)
                 {
-                    case "fill"   : fill = v;   break;
-                    case "stroke" : stroke = v; break;
-                    case "mode"   : mode        = v.ToEnum<BlendMode>(true);  break;
-                    case "x"      : box.X       = Unit.Parse(v);              break;
-                    case "y"      : box.Y       = Unit.Parse(v);              break;
-                    case "width"  : box.Width   = Unit.Parse(v);              break;
-                    case "height" : box.Height  = Unit.Parse(v);              break;
-                    case "padding": box.Padding = UnboundPadding.Parse(v);    break;
+                    case "fill"     : fill = arg.Value; break;
+                    case "stroke"   : stroke = arg.Value; break;
+                    case "mode"     : mode = arg.Value.ToEnum<BlendMode>(true); break;
+                    case "x"        : box.X = Unit.Parse(arg.Value); break;
+                    case "y"        : box.Y = Unit.Parse(arg.Value); break;
+                    case "width"    : box.Width = Unit.Parse(arg.Value); break;
+                    case "height"   : box.Height = Unit.Parse(arg.Value); break;
+                    case "padding"  : box.Padding = UnboundPadding.Parse(arg.Value); break;
                 }
             }
 

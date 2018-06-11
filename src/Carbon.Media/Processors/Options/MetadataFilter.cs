@@ -68,13 +68,13 @@ namespace Carbon.Media.Processors
             // get text inside parathesis
             key = key.Substring(9, key.Length - 10);
 
-            if (key.StartsWith("{"))
+            if (key[0] == '{')
             {
                 // trim { } 
                 key = key.Substring(1, key.Length - 2);
             }
 
-            var properties = key.Split(Seperators.Comma);
+            string[] properties = key.Split(Seperators.Comma);
 
             return new MetadataFilter(properties);
         }

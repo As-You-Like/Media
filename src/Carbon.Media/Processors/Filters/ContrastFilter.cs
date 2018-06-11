@@ -39,7 +39,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static ContrastFilter Create(CallSyntax syntax)
+        public static ContrastFilter Create(in CallSyntax syntax)
         {
             return new ContrastFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }

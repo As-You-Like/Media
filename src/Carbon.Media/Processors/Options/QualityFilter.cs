@@ -27,7 +27,7 @@ namespace Carbon.Media.Processors
 
         #endregion
 
-        public static QualityFilter Create(CallSyntax syntax)
+        public static QualityFilter Create(in CallSyntax syntax)
         {
             return new QualityFilter(int.Parse(syntax.Arguments[0].Value));
         }

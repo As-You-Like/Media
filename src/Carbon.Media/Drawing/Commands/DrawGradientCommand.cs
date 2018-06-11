@@ -32,7 +32,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawGradientCommand Create(CallSyntax syntax)
+        public static DrawGradientCommand Create(in CallSyntax syntax)
         {
             (_, var name) = syntax.Arguments[0];
 
@@ -41,19 +41,19 @@ namespace Carbon.Media.Drawing
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < syntax.Arguments.Length; i++)
+            for (int i = 1; i < syntax.Arguments.Length; i++)
             {
-                var (k, v) = syntax.Arguments[i];
+                ref Argument arg = ref syntax.Arguments[i];
                 
-                switch (k)
+                switch (arg.Name)
                 {
-                    case "mode"   : mode        = v.ToEnum<BlendMode>(true); break;
-                    case "align"  : align       = v.ToEnum<Alignment>(true); break;
-                    case "x"      : box.X       = Unit.Parse(v);             break;
-                    case "y"      : box.Y       = Unit.Parse(v);             break;
-                    case "width"  : box.Width   = Unit.Parse(v);             break;
-                    case "height" : box.Height  = Unit.Parse(v);             break;
-                    case "padding": box.Padding = UnboundPadding.Parse(v);   break;
+                    case "mode"   : mode        = arg.Value.ToEnum<BlendMode>(true); break;
+                    case "align"  : align       = arg.Value.ToEnum<Alignment>(true); break;
+                    case "x"      : box.X       = Unit.Parse(arg.Value);             break;
+                    case "y"      : box.Y       = Unit.Parse(arg.Value);             break;
+                    case "width"  : box.Width   = Unit.Parse(arg.Value);             break;
+                    case "height" : box.Height  = Unit.Parse(arg.Value);             break;
+                    case "padding": box.Padding = UnboundPadding.Parse(arg.Value);   break;
                 }
             }
 

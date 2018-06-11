@@ -2,9 +2,10 @@
 {
     public enum SubtitleFormat
     {
-        Gpac  = 10000, 
-        Sub   = 10001, // SubRip
-        TeXML = 10002, 
-        Trt   = 10003  
-    }
+        Cmml  = 10000, // Continuous Media Markup Language
+        Gpac  = 10300, 
+        Sub   = 10501, // SubRip
+        TeXML = 10700, 
+        Trt   = 10701  
+    } 
 }

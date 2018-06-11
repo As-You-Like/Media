@@ -26,15 +26,11 @@ namespace Carbon.Media.Processors
 
         public ResizeTransform(Unit width, Unit height, CropAnchor? anchor, ResizeFlags flags)
         {
-            #region Preconditions
-
             if (width < 0 || width > Constants.MaxWidth)
                 throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 16,383");
 
             if (height < 0 || height > Constants.MaxHeight)
                 throw new ArgumentOutOfRangeException(nameof(height), height, message: "Must be between 0 and 16,383");
-
-            #endregion
 
             Width  = width;
             Height = height;
@@ -181,6 +177,7 @@ namespace Carbon.Media.Processors
 
         private static readonly char[] x_x = new[] { 'x', '×' };
 
+        // 100×100
         // 100x100
         // 100x100,contain
         // 100x100-c
@@ -195,7 +192,7 @@ namespace Carbon.Media.Processors
             }
 
             int dashIndex = segment.IndexOf('-');
-
+            
             // {width}x{height}-{anchor}
             // e.g. 100x100-c
             if (dashIndex > -1)
@@ -205,7 +202,7 @@ namespace Carbon.Media.Processors
                     anchor : CropAnchorHelper.Parse(segment.Substring(dashIndex + 1))
                 );
             }
-            else if (segment.Contains(","))
+            else if (segment.IndexOf(',') > -1)
             {
                 var args = ArgumentList.Parse(segment);
 
@@ -214,35 +211,35 @@ namespace Carbon.Media.Processors
                 ResizeFlags flags = default;
                 CropAnchor? anchor = null;
 
-                for (var i = 0; i < args.Length; i++)
+                for (int i = 0; i < args.Length; i++)
                 {
-                    var (key, value) = args[i];
+                    ref Argument arg = ref args[i];
 
-                    if (i == 0 && value.IndexOfAny(x_x) > -1)
+                    int xIndex = arg.Value.IndexOfAny(x_x);
+
+                    if (i == 0 && xIndex > -1)
                     {
-                        var size = value.Split(x_x);
-
-                        width  = Unit.Parse(size[0]);
-                        height = Unit.Parse(size[1]);
+                        width  = Unit.Parse(arg.Value.Substring(0, xIndex));
+                        height = Unit.Parse(arg.Value.Substring(xIndex + 1));
 
                         continue;
                     }
 
                     if (i == 0 && width == default)
                     {
-                        width = Unit.Parse(value);
+                        width = Unit.Parse(arg.Value);
                     }
                     else if (i == 1 && height == default)
                     {
-                        height = Unit.Parse(value);
+                        height = Unit.Parse(arg.Value);
                     }
                     else
                     {
-                        switch (key)
+                        switch (arg.Name)
                         {
-                            case "anchor" : anchor = CropAnchorHelper.Parse(value); break;
-                            case null     : flags = ResizeFlagsHelper.Parse(value); break;
-                            default       : throw new Exception("Invalid resize argument:" + key);
+                            case "anchor" : anchor = CropAnchorHelper.Parse(arg.Value); break;
+                            case null     : flags = ResizeFlagsHelper.Parse(arg.Value); break;
+                            default       : throw new Exception("Invalid resize argument:" + arg.Name);
                         }
                     }
                 }
@@ -251,12 +248,12 @@ namespace Carbon.Media.Processors
             }
             else
             {
-                var size = segment.Split(x_x);
-                
+                int xIndex = segment.IndexOfAny(x_x);
+
                 // 100x100
                 return new ResizeTransform(
-                    width  : Unit.Parse(size[0]), 
-                    height : Unit.Parse(size[1])
+                    width  : Unit.Parse(segment.Substring(0, xIndex)),
+                    height : Unit.Parse(segment.Substring(xIndex + 1))
                 );
             }
         }

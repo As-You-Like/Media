@@ -46,7 +46,7 @@ namespace Carbon.Media
 
         public override int GetHashCode() => Name.GetHashCode();
 
-        public override bool Equals(object obj) => (obj as Mime)?.Equals(this) == true;
+        public override bool Equals(object obj) => obj is Mime other && Equals(other);
 
         #endregion
 
@@ -91,9 +91,15 @@ namespace Carbon.Media
 
         public static Mime FromExtension(string extension)
         {
-            if (extension == null) throw new ArgumentNullException(nameof(extension));
+            if (extension == null)
+                throw new ArgumentNullException(nameof(extension));
+            
+            if (extension[0] == '.')
+            {
+                extension = extension.Substring(1);
+            }
 
-            return FromFormat(extension.TrimStart('.'));
+            return FromFormat(extension);
         }
 
         public static Mime FromFormat(string format)
@@ -129,7 +135,7 @@ namespace Carbon.Media
         public static readonly Mime Blob = new Mime("application/octet-stream", "blob");
 
         // Applications
-        public static readonly Mime Ai   = new Mime("application/illustrator",       new[] { "ai" });
+        public static readonly Mime Ai   = new Mime("application/postscript",        new[] { "ai" });
         public static readonly Mime Atom = new Mime("application/atom+xml",          "atom");
         public static readonly Mime Doc  = new Mime("application/msword",            new[] { "doc" }, new[] { MagicNumber.Doc });
         public static readonly Mime M3u8 = new Mime("application/x-mpegURL",         "m3u8");
@@ -217,9 +223,7 @@ namespace Carbon.Media
         public static readonly Mime _3GP_Audio  = new Mime("audio/3gpp",   "3gp"); // Can be audio or video...
         public static readonly Mime _3GP2_Audio = new Mime("audio/3gpp2",  "3g2"); // Can be audio or video...
 
-
-
-        // Fonts 
+        // Fonts ------
         public static readonly Mime Eot   = new Mime("application/vnd.ms-fontobject", "eot");
         public static readonly Mime Otf   = new Mime("font/otf",   new[] { "otf" }, new[] { MagicNumber.Otf });
         public static readonly Mime Ttf   = new Mime("font/ttf",   "ttf");

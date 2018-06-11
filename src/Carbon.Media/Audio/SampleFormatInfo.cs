@@ -6,7 +6,7 @@ namespace Carbon.Media
     using static SampleFormatFlags;
 
     [DataContract]
-    public readonly struct SampleFormatInfo : IEquatable<SampleFormatInfo>
+    public class SampleFormatInfo : IEquatable<SampleFormatInfo>
     {
         public SampleFormatInfo(
             SampleFormat id, 
@@ -82,6 +82,6 @@ namespace Carbon.Media
             }
 
             throw new ArgumentException("Invalid SampleFormat:" + id);
-        }        
+        }
     }
 }

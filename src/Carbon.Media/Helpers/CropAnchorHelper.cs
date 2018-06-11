@@ -46,7 +46,7 @@ namespace Carbon.Media
                 case "tr": return Top | Right;
             }
 
-            throw new Exception("Invalid anchor:" + text);
+            throw new Exception("Invalid CropAnchor :" + text);
         }
     }
 }

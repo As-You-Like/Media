@@ -6,10 +6,7 @@ namespace Carbon.Media
 
     public readonly struct ColorSpaceInfo
     {
-        public ColorSpaceInfo(
-            string name,
-            ColorModel model,
-            ColorSpaceFlags flags = default)
+        public ColorSpaceInfo(string name, ColorModel model, ColorSpaceFlags flags = default)
         {
             Name  = name ?? throw new ArgumentNullException(nameof(name));
             Model = model;
@@ -29,6 +26,7 @@ namespace Carbon.Media
         // TODO: ColorTable (for indexed color spaces)
 
         // ICCData?
+
         public bool IsWideGamut => (Flags & WideGamut) != 0;
 
         public static readonly ColorSpaceInfo Cmyk     = new ColorSpaceInfo("CMYK",      ColorModel.CMYK);

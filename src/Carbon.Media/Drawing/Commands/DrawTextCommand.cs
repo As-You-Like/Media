@@ -68,7 +68,7 @@ namespace Carbon.Media.Drawing
             Font font = null;
             BlendMode mode = BlendMode.Normal;
 
-            for (var i = 1; i < syntax.Arguments.Length; i++)
+            for (int i = 1; i < syntax.Arguments.Length; i++)
             {
                 var (k, v) = syntax.Arguments[i];
                 

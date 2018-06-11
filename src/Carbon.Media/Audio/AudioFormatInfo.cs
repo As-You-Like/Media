@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public readonly struct AudioFormatInfo : IEquatable<AudioFormatInfo>
+    public class AudioFormatInfo : IEquatable<AudioFormatInfo>
     {
         private readonly SampleFormatInfo sampleFormatInfo;
 
@@ -12,7 +12,7 @@ namespace Carbon.Media
             int sampleRate)
         {
             if (sampleFormat == SampleFormat.Unknown)
-                throw new ArgumentException("Must not be unknown", nameof(sampleFormat));
+                throw new ArgumentException("Must not be Unknown", nameof(sampleFormat));
 
             if (sampleRate <= 0)
                 throw new ArgumentException("Must be > 0", nameof(sampleRate));

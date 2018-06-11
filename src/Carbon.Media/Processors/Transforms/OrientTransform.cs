@@ -1,7 +1,5 @@
 ﻿namespace Carbon.Media.Processors
 {
-    // used to override the orientation...
-
     public sealed class OrientTransform : IProcessor
     {
         public OrientTransform(ExifOrientation orientation)
@@ -15,9 +13,11 @@
 
         public override string ToString() => Canonicalize();
 
-        public static OrientTransform Create(CallSyntax syntax)
+        public static OrientTransform Create(in CallSyntax syntax)
         {
             return new OrientTransform(OrientationHelper.Parse(syntax.Arguments[0].Value));
         }
     }
 }
+
+// used to override the orientation...

@@ -36,7 +36,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawImageCommand Create(CallSyntax syntax)
+        public static DrawImageCommand Create(in CallSyntax syntax)
         {
             (_, var name) = syntax.Arguments[0];
 
@@ -45,7 +45,7 @@ namespace Carbon.Media.Drawing
 
             var box = new UnboundBox();
 
-            for (var i = 1; i < syntax.Arguments.Length; i++)
+            for (int i = 1; i < syntax.Arguments.Length; i++)
             {
                 var (k, v) = syntax.Arguments[i];
                 

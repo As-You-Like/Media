@@ -35,18 +35,14 @@ namespace Carbon.Media
     {
         public static ResizeFlags Parse(string text)
         {
-            #region Preconditions
-
             if (text == null)
                 throw new ArgumentNullException(nameof(text));
-
-            #endregion
 
             if (text.Contains("|"))
             {
                 var flags = ResizeFlags.None;
 
-                foreach (var part in text.Split(Seperators.Bar))
+                foreach (string part in text.Split(Seperators.Bar))
                 {
                     if (Enum.TryParse(part, true, out ResizeFlags flag))
                     {

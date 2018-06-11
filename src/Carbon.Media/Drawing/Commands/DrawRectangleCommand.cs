@@ -40,7 +40,7 @@ namespace Carbon.Media.Drawing
             sb.Append(')');
         }
 
-        public static DrawRectangleCommand Create(CallSyntax syntax)
+        public static DrawRectangleCommand Create(in CallSyntax syntax)
         {
             string fill = null;
             var mode  = BlendMode.Normal;
@@ -50,7 +50,7 @@ namespace Carbon.Media.Drawing
 
             var i = 0;
 
-            foreach(var (k, v) in syntax.Arguments)
+            foreach (var (k, v) in syntax.Arguments)
             {
                 if (k == null) // positional
                 {

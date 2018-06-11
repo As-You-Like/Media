@@ -1,8 +1,26 @@
 ﻿namespace Carbon.Media
 {
     public enum FormatId
-    {
+    {   
+        // Containers & Streaming Protocols (0 - 1000)
+        _3GP     = 1,   // 3GP                             | 3gp  | audio, video, subtitle
+        _3GP2    = 2,   // 3GP2                            | 3g2  | audio, video, subtitle
+        Adts     = 10,  // Audio Data Transport Stream
+        Au       = 14,  // by Sun Microyststems            | ?    | audio
+        Dmf      = 41,  // DivX Media Format               | ?    | audio, video        
+        Fits     = 59,  // Flexible Image Transport System | ?    | image
+        Matroska = 130, // Matroska Multimedia Container   | ?    | audio (mka), video (mkv), subtitles (mks)
+        MJ2      = 132, // Motion JPEG 2000                | mj2  | image
+        Mxf      = 138, // Material eXchange Format        | mxf  | ?
+        Ogg      = 155, // OGG                             | ogg  | audio (oga), video (ogv)
+        Rmff     = 184, // RealMedia File Format           | rm   | audio (ra), video
+        Wave     = 230, // Waveform Audio Format           | wav  | audio
+        Xmf      = 240, // eXtensible Music Format         | xdf  | audio
+                 
+        Hls      = 250, // HTTP Live Streaming              | m3u8
+
         // Applications
+        Ai     = 1020, // Adobe Illustrator Artwork
         Doc    = 1100,
         Json   = 1400,
         Pdf    = 1600,
@@ -31,6 +49,7 @@
 
         // Image Formats
         _3fr = 4005, // Hasselblad
+        Apng = 4040, // Animated PNG
         Art  = 4050, // ART
         Bmp  = 4101, // BMP
         Bpg  = 4105, // Better Portable Graphics
@@ -40,6 +59,7 @@
         Cur  = 4140, // Windows Cursor
         Dcm  = 4160, // DICOM
         Dcr  = 4165, // Kodak Raw
+        Dds  = 4146, // DirectDraw Surface
         Dng  = 4170, // Digital Negative (Adobe Raw)
         Dpx  = 4175, // Digital Picture Exchange
         Exr  = 4200, // OpenEXR
@@ -88,25 +108,6 @@
         Wmv    = 9090, // Windows 
 
         // TODO: Subtitle formats
-
-        // Multimedia Containers & Streaming Protocols (0 - 1000)
-        _3GP     = 1,   // 3GP                             | 3gp  | audio, video, subtitle
-        _3GP2    = 2,   // 3GP2                            | 3g2  | audio, video, subtitle
-        Adts     = 10,  // 
-        Au       = 14,  // by Sun Microyststems            | ?    | audio
-        Dmf      = 41,  // DivX Media Format               | ?    | audio, video        
-        Fits     = 59,  // Flexible Image Transport System | ?    | image
-        Matroska = 130, // Matroska Multimedia Container   | ?    | audio (mka), video (mkv), subtitles (mks)
-        MJ2      = 132, // Motion JPEG 2000                | mj2  | image
-        Mxf      = 138, // Material eXchange Format        | mxf  | ?
-        Ogg      = 155, // OGG                             | ogg  | audio (oga), video (ogv)
-        Rmff     = 184, // RealMedia File Format           | rm   | audio (ra), video
-        Wave     = 230, // Waveform Audio Format           | wav  | audio
-        Xmf      = 240, // eXtensible Music Format         | xdf  | audio
-                 
-        Hls      = 250, // HTTP Live Streaming              | m3u8
-
-
 
         // Fonts ---------------------------
         Eot   = 10_000,
