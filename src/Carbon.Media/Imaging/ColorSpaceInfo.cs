@@ -2,9 +2,7 @@
 
 namespace Carbon.Media
 {
-    using static ColorSpaceFlags;
-
-    public readonly struct ColorSpaceInfo
+    public class ColorSpaceInfo
     {
         public ColorSpaceInfo(string name, ColorModel model, ColorSpaceFlags flags = default)
         {
@@ -27,11 +25,11 @@ namespace Carbon.Media
 
         // ICCData?
 
-        public bool IsWideGamut => (Flags & WideGamut) != 0;
+        public bool IsWideGamut => (Flags & ColorSpaceFlags.WideGamut) != 0;
 
         public static readonly ColorSpaceInfo Cmyk     = new ColorSpaceInfo("CMYK",      ColorModel.CMYK);
         public static readonly ColorSpaceInfo Rgb      = new ColorSpaceInfo("RGB",       ColorModel.RGB);
         public static readonly ColorSpaceInfo AdobeRgb = new ColorSpaceInfo("Adobe RGB", ColorModel.RGB);
-        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    ColorModel.RGB, WideGamut);
+        public static readonly ColorSpaceInfo DciP3    = new ColorSpaceInfo("DCI-P3",    ColorModel.RGB, ColorSpaceFlags.WideGamut);
     }
 }
