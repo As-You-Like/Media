@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Carbon.Media</AssemblyName>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Version>1.33.0</Version>
+    <Version>1.34.1</Version>
     <LangVersion>7.3</LangVersion>
     
     <!-- Package Details-->
@@ -14,5 +14,9 @@
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/carbon/Media</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
 
 </Project>
