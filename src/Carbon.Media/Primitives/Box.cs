@@ -1,13 +1,18 @@
 ﻿using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
     [DataContract]
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct Box
     {
         public Box(Rectangle rectangle)
             : this(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height) { }
+
+        public Box(RectangleF rectangle)
+          : this(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height) { }
 
         public Box(double x, double y, double width, double height)
         {
@@ -42,14 +47,6 @@ PageBox MediaBox { get; }
 
 PageBox TrimBox { get; }
 */
-
-// { 
-//   boxes: [ 
-//     { type: "media", ... },
-//     { type: "bleed", ... },
-//     { type: "trim",  ... },
-//     { type: "art",   ... },
-// ]
 
 // [ MediaBox
 //   [ Bleed Box 
