@@ -14,7 +14,7 @@ namespace Carbon.Media
             Type = type;
         }
 
-        [DataMember(Name = "value", Order = 1)]
+        [DataMember(Name = "type", Order = 1)]
         public UnitType Type { get; }
 
         [DataMember(Name = "value", Order = 2)]
@@ -46,13 +46,15 @@ namespace Carbon.Media
         public static Unit Meters(double value) => new Unit(value, UnitType.Meter);
 
         // 50％
+        // 50m
+        // 50 m
 
         public static Unit Parse(string text)
         {
             if (text == null)
                 throw new ArgumentNullException(nameof(text));
 
-            if (text == "_")
+            if (text.Length == 1 && text[0] == '_')
             {
                 return None;
             }
@@ -64,7 +66,7 @@ namespace Carbon.Media
                 return new Unit(double.Parse(text), UnitType.Px);
             }
 
-            else if (text.EndsWith("％") || text.EndsWith("%"))
+            else if (text[text.Length - 1] == '％' || text[text.Length - 1] =='%')
             {
                 text = text.Substring(0, text.Length - 1);
 
@@ -78,7 +80,7 @@ namespace Carbon.Media
                 return new Unit(double.Parse(text), UnitType.Meter);
             }
 
-            if (text.Contains("."))
+            if (text.IndexOf('.') > -1)
             {
                 return new Unit(double.Parse(text), UnitType.Percent);
             }
@@ -97,9 +99,9 @@ namespace Carbon.Media
         #region Equality
 
         public override bool Equals(object obj) => obj is Unit other && Equals(other);
-         
-        public bool Equals(Unit other) => 
-            Type == other.Type && 
+
+        public bool Equals(Unit other) =>
+            Type == other.Type &&
             Value == other.Value;
 
         public static bool operator ==(Unit lhs, Unit rhs) => lhs.Equals(rhs);
@@ -107,16 +109,7 @@ namespace Carbon.Media
         public static bool operator !=(Unit lhs, Unit rhs) => !lhs.Equals(rhs);
 
         public override int GetHashCode() => (Type, Value).GetHashCode();
-        
-        #endregion
-    }
 
-    public enum UnitType
-    {
-        None    = 0,
-        Px      = 1,
-        Percent = 2,
-        Meter   = 10, // m
-        Second  = 20  // s
+        #endregion
     }
 }
