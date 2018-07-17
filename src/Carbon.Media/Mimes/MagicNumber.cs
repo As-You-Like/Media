@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media
 {
-    public sealed class MagicNumber
+    public sealed class MagicNumber // preamble?
     {
         public MagicNumber(params byte?[] data)
             : this(data, 0) { }
@@ -18,18 +18,17 @@ namespace Carbon.Media
 
         public int Offset { get; }
 
-        // TODO: ReadOnlySpan<byte>
-        public bool Matches(byte[] data)
+        public bool Matches(ReadOnlySpan<byte> preamble)
         {
-            if (data.Length < Data.Length) return false;
+            if (preamble.Length < Data.Length) return false;
 
-            for (int i = 0; i <= data.Length; i++)
+            for (int i = 0; i <= preamble.Length; i++)
             {
                 if (i > Data.Length - 1) break;
 
                 if (Data[i] == null) continue;
 
-                if (Data[i].Value != data[i + Offset])
+                if (Data[i].Value != preamble[i + Offset])
                 {
                     return false;
                 }

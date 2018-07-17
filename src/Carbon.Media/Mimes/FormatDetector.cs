@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public static class FormatDetector
     {
@@ -20,7 +22,7 @@
             Mime.Wav
         };
 
-        public static Mime Detect(byte[] buffer) // TODO: Span<byte>
+        public static Mime Detect(ReadOnlySpan<byte> buffer)
         {
             foreach (var mime in mimes)
             {
