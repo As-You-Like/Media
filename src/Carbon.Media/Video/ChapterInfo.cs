@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 namespace Carbon.Media
 {
     [DataContract]
-    public class Chapter
+    public class ChapterInfo
     {
-        public Chapter(
+        public ChapterInfo(
             TimeSpan start,
             TimeSpan end, 
             Dictionary<string, string> metadata)
