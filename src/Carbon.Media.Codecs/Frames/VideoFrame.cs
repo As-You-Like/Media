@@ -34,7 +34,9 @@ namespace Carbon.Media
 
             Strides = format.Strides;
 
-            Memory = Buffer.Allocate(format.BufferSize);
+            var bufferSize = format.GetBufferSize();
+
+            Memory = Buffer.Allocate(bufferSize);
 
             // Fill the pointers
            
