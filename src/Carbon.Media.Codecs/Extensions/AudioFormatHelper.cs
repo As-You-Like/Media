@@ -7,14 +7,9 @@ namespace Carbon.Media
 {
     internal static class AudioFormatHelper
     {
-        public unsafe static int GetBufferSize(in this AudioFormatInfo format, int sampleCount)
-        {
-            #region Preconditions
-            
-            if (sampleCount <= 0)
-                throw new ArgumentException("Must be > 0");
-
-            #endregion
+        public unsafe static int GetBufferSize(this AudioFormatInfo format, int sampleCount)
+        {            
+            if (sampleCount <= 0) throw new ArgumentException("Must be > 0");
 
             return ffmpeg.av_samples_get_buffer_size(
                 linesize    : null,
@@ -27,7 +22,7 @@ namespace Carbon.Media
 
         public unsafe static SampleFormat[] GetSampleFormats(CodecId codecId)
         {
-            var codec = ffmpeg.avcodec_find_encoder((AVCodecID)codecId);
+            var codec = ffmpeg.avcodec_find_encoder(codecId.ToAVCodecID());
 
             var result = new List<SampleFormat>();
 
@@ -42,7 +37,7 @@ namespace Carbon.Media
 
         public static unsafe int[] GetSupportedSampleRates(CodecId codecId)
         {
-            var codec = ffmpeg.avcodec_find_encoder((AVCodecID)codecId);
+            var codec = ffmpeg.avcodec_find_encoder(codecId.ToAVCodecID());
 
             var result = new List<int>();
 
@@ -57,7 +52,7 @@ namespace Carbon.Media
 
         public static unsafe ChannelLayout[] GetSupportedChannelLayouts(CodecId codecId)
         {
-            var encoder = ffmpeg.avcodec_find_encoder((AVCodecID)codecId);
+            var encoder = ffmpeg.avcodec_find_encoder(codecId.ToAVCodecID());
 
             if (encoder->channel_layouts == null) return Array.Empty<ChannelLayout>();
 
