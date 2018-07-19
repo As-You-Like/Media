@@ -4,11 +4,14 @@ namespace Carbon.Media.IO
 {
     public unsafe class PacketList
     {
-        AVPacketList* pointer;
+        private AVPacketList* pointer;
 
-        public PacketList()
+        public PacketList(AVPacketList* pointer)
         {
+            this.pointer = pointer;
         }
+
+        public AVPacketList* Pointer => pointer;
 
         public Packet Current => default;
 
