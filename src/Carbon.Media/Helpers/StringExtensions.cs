@@ -5,7 +5,7 @@ namespace Carbon.Media
     internal static class StringExtensions
     {
         public static TEnum ToEnum<TEnum>(this string self, bool ignoreCase)
-            where TEnum : struct
+            where TEnum : struct, Enum
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
             
