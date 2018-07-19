@@ -76,8 +76,6 @@ namespace Carbon.Media
             return Numerator + "/" + Denominator;
         }
 
-        private static readonly char[] forwardSlash = { '/' };
-
         public static Rational Parse(string text)
         {
             int slashIndex = text.IndexOf('/');
