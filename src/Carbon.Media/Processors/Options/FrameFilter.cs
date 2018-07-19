@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class FrameFilter : IProcessor, ICanonicalizable
+    public sealed class FrameFilter : IProcessor, ICanonicalizable
     {
         public FrameFilter(int number)
         {
