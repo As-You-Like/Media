@@ -10,15 +10,11 @@ namespace Carbon.Media
 
         public VideoFrame(PixelFormat pixelFormat, int width, int height)
         {
-            #region Preconditions
-
             if (width <= 0)
                 throw new ArgumentException("Must be > 0", nameof(width));
 
             if (height <= 0)
                 throw new ArgumentException("Must be > 0", nameof(height));
-
-            #endregion
 
             Format = pixelFormat;
             Width  = width;

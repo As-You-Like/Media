@@ -6,32 +6,31 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media.IO
 {
-    public unsafe class IOContext : IDisposable
+    public unsafe sealed class IOContext : IDisposable
     {
         private readonly Stream stream;
 
-        const int defaultBufferSize = 8192;
+        const int defaultBufferSize = 16384 * 2;
+        readonly byte* buffer;
 
-        byte* buffer;
-
-        private byte[] temp = new byte[defaultBufferSize];
+        private readonly byte[] temp = new byte[defaultBufferSize];
 
         public IOContext(Stream stream, bool writable = false)
         {
             this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
 
-            ulong paddingLength = writable ? 0ul : ffmpeg.FF_INPUT_BUFFER_PADDING_SIZE;
+            ulong paddingLength = writable ? 0ul : ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE;
 
             buffer = (byte*)ffmpeg.av_malloc(defaultBufferSize + paddingLength);
 
             Pointer = ffmpeg.avio_alloc_context(
-                buffer: buffer,
-                buffer_size: defaultBufferSize,
-                write_flag: writable ? 1 : 0,
-                opaque: null,
-                read_packet: (avio_alloc_context_read_packet)Read,
-                write_packet: (avio_alloc_context_write_packet)Write,
-                seek: (avio_alloc_context_seek)Seek
+                buffer       : buffer,
+                buffer_size  : defaultBufferSize,
+                write_flag   : writable ? 1 : 0,
+                opaque       : null,
+                read_packet  : (avio_alloc_context_read_packet)Read,
+                write_packet : (avio_alloc_context_write_packet)Write,
+                seek         : (avio_alloc_context_seek)Seek
             );
             
             Pointer->seekable = ffmpeg.AVIO_SEEKABLE_NORMAL | ffmpeg.AVIO_SEEKABLE_TIME;
@@ -56,8 +55,9 @@ namespace Carbon.Media.IO
         {
             // Console.Write("read" + " " + bufferSize);
 
+            // Console.WriteLine(bufferSize + "/" + defaultBufferSize);
 
-            int read = stream.Read(temp, 0, bufferSize);
+            int read = stream.Read(temp.AsSpan(0, bufferSize));
 
             Marshal.Copy(temp, 0, (IntPtr)buf, read);
 

@@ -31,7 +31,7 @@ namespace Carbon.Media
         {
             if (size != Length)
             {
-                // Reallocate the  & update the pointer
+                // Reallocate the & update the pointer
                 pointer = Marshal.ReAllocHGlobal(pointer, (IntPtr)size);
 
                 this.length = size;

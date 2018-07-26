@@ -1,9 +1,10 @@
 ﻿using System;
+
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs.Resampling
 {
-    public unsafe class AudioResampler
+    public unsafe class AudioResampler : IDisposable
     {
         private SwrContext* pointer;
 
@@ -61,13 +62,6 @@ namespace Carbon.Media.Codecs.Resampling
 
             Console.WriteLine($"resampled {inFrame.SampleFormat} {inFrame.SampleCount} -> {outFormat.SampleFormat} {outFrame.SampleCount} | {sampleCount} | {outFrame.ChannelCount} | {outFrame.Memory.Length}");
         }
-
-        /*
-        public void Convert(byte** input, byte** output, int frameSize)
-        {
-            ffmpeg.swr_convert(pointer, output, frameSize, input, frameSize);
-        }
-        */
 
         private int GetOutputSampleCount(int inSampleCount)
         {

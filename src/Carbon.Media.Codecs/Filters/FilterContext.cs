@@ -4,23 +4,19 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe class FilterContext
+    public unsafe readonly struct FilterContext
     {
         public FilterContext(AVFilterContext* pointer)
         {
-            #region Preconditions
-
             if (pointer == null)
             {
                 throw new ArgumentNullException(nameof(pointer));
             }
 
-            #endregion
-
             Pointer = pointer;
         }
 
-        public AVFilterContext* Pointer { get; }
+        public readonly AVFilterContext* Pointer;
 
         public string Name => Marshal.PtrToStringAnsi((IntPtr)Pointer->name);
 

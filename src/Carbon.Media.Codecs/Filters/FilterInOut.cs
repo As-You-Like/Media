@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using FFmpeg.AutoGen;
 
@@ -8,12 +9,10 @@ namespace Carbon.Media
     {
         public FilterInOut(string name, FilterContext filterContext)
         {
-            #region Preconditions
-
             if (string.IsNullOrEmpty(name))
+            {
                 throw new ArgumentException("Required", nameof(name));
-
-            #endregion
+            }
 
             FilterContext = filterContext;
 

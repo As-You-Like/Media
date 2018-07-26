@@ -2,16 +2,14 @@
 {
     public class ResamplerParameters
     {
-        public SampleFormat InSampleFormat { get; set; }
+        public ResamplerParameters(AudioFormatInfo input, AudioFormatInfo output)
+        {
+            Input = input;
+            Output = output;
+        }
 
-        public ChannelLayout InChannelLayout { get; set; }
+        public AudioFormatInfo Input { get; }
 
-        public int InSampleRate { get; set; }
-
-        public SampleFormat OutSampleFormat { get; set; }
-
-        public ChannelLayout OutChannelLayout { get; set; }
-
-        public int OutSampleRate { get; set; }
+        public AudioFormatInfo Output { get; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Carbon.Media.Codecs;
 using FFmpeg.AutoGen;
@@ -109,7 +108,7 @@ namespace Carbon.Media
             Console.WriteLine("HEX:" + ((long)format.ChannelLayout).ToString("x"));
             Console.WriteLine("HEX2:" + hexChannelLayout);
 
-            var args = string.Join(":",
+            var args = string.Join(':',
                 $"time_base=1/{format.SampleRate}",
                 $"sample_rate={format.SampleRate}",
                 $"sample_fmt={sampleFormatName}",
@@ -145,12 +144,7 @@ namespace Carbon.Media
         // Push to the buffer source
         public void PushFrame(Frame frame)
         {
-            #region Preconditions
-
-            if (frame == null)
-                throw new ArgumentNullException(nameof(frame));
-
-            #endregion
+            if (frame == null) throw new ArgumentNullException(nameof(frame));
 
             // Console.WriteLine("pushing frame to:" + bufferSource.Name);
 
@@ -186,16 +180,12 @@ namespace Carbon.Media
             Codec encoder,
             string filterSpecification)
         {
-            #region Preconditions
-
             if (decoder == null)
                 throw new ArgumentNullException(nameof(decoder));
 
             if (encoder == null)
                 throw new ArgumentNullException(nameof(encoder));
             
-            #endregion
-
             FilterContext bufferSource = default; 
             FilterContext bufferSink = default;
 

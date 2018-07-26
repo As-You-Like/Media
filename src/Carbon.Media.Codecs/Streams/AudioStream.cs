@@ -28,7 +28,7 @@ namespace Carbon.Media
 
             if (stream->codec == null)
             {
-                throw new Exception("missing codec");
+                throw new ArgumentException("Stream is missing a Codec");
             }
 
             return new AudioStream(stream);

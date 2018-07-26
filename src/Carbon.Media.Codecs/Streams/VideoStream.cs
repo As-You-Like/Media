@@ -45,8 +45,6 @@ namespace Carbon.Media
         
         public static VideoStream Create(Format format, Codec codec)
         {
-            #region Preconditions
-
             if (format == null)
             {
                 throw new ArgumentNullException(nameof(format));
@@ -56,8 +54,6 @@ namespace Carbon.Media
             {
                 throw new ArgumentNullException(nameof(codec));
             }
-
-            #endregion
 
             var stream = ffmpeg.avformat_new_stream(format.Context.Pointer, codec.Pointer);
             

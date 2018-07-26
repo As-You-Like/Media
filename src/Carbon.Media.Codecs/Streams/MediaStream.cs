@@ -10,14 +10,7 @@ namespace Carbon.Media
 
         protected MediaStream(AVStream* pointer, CodecType codecType = CodecType.Decoder)
         {
-            #region Preconditions
-
-            if (pointer == null)
-            {
-                throw new ArgumentNullException(nameof(pointer));
-            }
-
-            #endregion
+            if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
             this.pointer = pointer;
             
@@ -103,10 +96,10 @@ namespace Carbon.Media
 
             switch (pointer->codec->codec_type)
             {
-                case AVMediaType.AVMEDIA_TYPE_AUDIO     : stream = new AudioStream(pointer); break;
-                case AVMediaType.AVMEDIA_TYPE_VIDEO     : stream = new VideoStream(pointer); break;
-                case AVMediaType.AVMEDIA_TYPE_SUBTITLE  : stream = new SubtitleStream(pointer); break;
-                default                                 : stream = new UnknownStream(pointer); break;
+                case AVMediaType.AVMEDIA_TYPE_AUDIO    : stream = new AudioStream(pointer); break;
+                case AVMediaType.AVMEDIA_TYPE_VIDEO    : stream = new VideoStream(pointer); break;
+                case AVMediaType.AVMEDIA_TYPE_SUBTITLE : stream = new SubtitleStream(pointer); break;
+                default                                : stream = new UnknownStream(pointer); break;
             }
             
             ffmpeg.avcodec_parameters_from_context(stream.Pointer->codecpar, stream.Codec.Context.Pointer).EnsureSuccess();
@@ -120,5 +113,3 @@ namespace Carbon.Media
         }
     }
 }
-
- 

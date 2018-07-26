@@ -15,12 +15,8 @@ namespace Carbon.Media
 
         private Packet(AVPacket* pointer)
         {
-            #region Preconditions
-
             if (pointer == null)
                 throw new ArgumentNullException(nameof(pointer));
-
-            #endregion
 
             this.pointer = pointer;
         }
@@ -52,18 +48,12 @@ namespace Carbon.Media
         /// <summary>
         /// Decompression timestamp
         /// </summary>
-        public Timestamp DecodeTimestamp
-        {
-            get => new Timestamp(Dts, timebase);
-        }
+        public Timestamp DecodeTimestamp => new Timestamp(Dts, timebase);
 
         /// <summary>
         /// Presentation timestamp
         /// </summary>
-        public Timestamp PresentTimestamp
-        {
-            get => new Timestamp(Pts, timebase);
-        }
+        public Timestamp PresentTimestamp => new Timestamp(Pts, timebase);
 
         public Timestamp Duration
         {
@@ -128,7 +118,7 @@ namespace Carbon.Media
 
         public static Packet Allocate()
         {
-            var pointer = ffmpeg.av_packet_alloc();
+            AVPacket* pointer = ffmpeg.av_packet_alloc();
 
             ffmpeg.av_init_packet(pointer);
 
