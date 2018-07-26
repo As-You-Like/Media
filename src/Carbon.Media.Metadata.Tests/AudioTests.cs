@@ -13,7 +13,7 @@ namespace Carbon.Media.Metadata.Tests
             var audio = new AudioInfo {
                 Format        = "aac",
                 Codec         = "mp4a.40.2",
-                ChannelCount  = 2,
+                // ChannelCount  = 2,
                 ChannelLayout = ChannelLayout.Stereo,
                 Duration      = TimeSpan.FromSeconds(30)
             };
@@ -28,7 +28,6 @@ namespace Carbon.Media.Metadata.Tests
   ""format"": ""aac"",
   ""codec"": ""mp4a.40.2"",
   ""duration"": ""00:00:30"",
-  ""channelCount"": 2,
   ""channelLayout"": ""Stereo""
 }", JsonObject.FromObject(audio).ToString());
         }
