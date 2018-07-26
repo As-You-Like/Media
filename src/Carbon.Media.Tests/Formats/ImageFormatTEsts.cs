@@ -5,6 +5,7 @@ namespace Carbon.Media.Tests
     public class ImageFormatTests
     {
         [Theory]
+        [InlineData(ImageFormat.Apng, 4040)]
         [InlineData(ImageFormat.Bmp,  4101)]
         [InlineData(ImageFormat.Bpg,  4105)]
         [InlineData(ImageFormat.Dng,  4170)]
