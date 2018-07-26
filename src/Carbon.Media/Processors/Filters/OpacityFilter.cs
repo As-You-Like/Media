@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public class OpacityFilter : IFilter
     {
-        public OpacityFilter(float amount)
+        public OpacityFilter(double amount)
         {
             if (amount < 0)
             {
@@ -20,7 +20,7 @@ namespace Carbon.Media.Processors
         }
 
         // range: 0 (full effect) - 1 (unchanged)
-        public float Amount { get; }
+        public double Amount { get; }
 
         public string Canonicalize() => $"opacity({Amount})";
 
@@ -28,7 +28,7 @@ namespace Carbon.Media.Processors
 
         public static OpacityFilter Create(in CallSyntax syntax)
         {
-            return new OpacityFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new OpacityFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public class InvertFilter : IFilter
     {
-        public InvertFilter(float amount)
+        public InvertFilter(double amount)
         {
             if (amount < 0)
             {
@@ -19,7 +19,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         public string Canonicalize() => $"invert({Amount})";
 
@@ -27,7 +27,7 @@ namespace Carbon.Media.Processors
 
         public static InvertFilter Create(in CallSyntax syntax)
         {
-            return new InvertFilter(float.Parse(syntax.Arguments[0].Value));
+            return new InvertFilter(double.Parse(syntax.Arguments[0].Value));
         }
     }
 }

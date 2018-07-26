@@ -5,7 +5,7 @@ namespace Carbon.Media.Processors
 {
     public class VibranceFilter : IFilter, ICanonicalizable
     {
-        public VibranceFilter(float amount)
+        public VibranceFilter(double amount)
         {
             if (amount < -10 || amount > 10)
             {
@@ -15,7 +15,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         #region ICanonicalizable
 
@@ -41,7 +41,7 @@ namespace Carbon.Media.Processors
 
         public static VibranceFilter Create(in CallSyntax syntax)
         {
-            return new VibranceFilter(float.Parse(syntax.Arguments[0].Value));
+            return new VibranceFilter(double.Parse(syntax.Arguments[0].Value));
         }
     }
 }

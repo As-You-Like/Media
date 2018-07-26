@@ -6,7 +6,7 @@ namespace Carbon.Media.Processors
     {
         // public static readonly GammaFilter Default = new GammaFilter(2.2);
 
-        public GammaFilter(float amount)
+        public GammaFilter(double amount)
         {
             if (amount < 0 || amount > 5)
             {
@@ -16,7 +16,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         public string Canonicalize() => $"gamma({Amount})";
 
@@ -24,7 +24,7 @@ namespace Carbon.Media.Processors
 
         public static GammaFilter Create(in CallSyntax syntax)
         {
-            return new GammaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new GammaFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

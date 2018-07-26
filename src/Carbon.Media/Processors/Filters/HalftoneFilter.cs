@@ -2,16 +2,16 @@
 {
     public class HalftoneFilter : IFilter
     {
-        public HalftoneFilter(float amount)
+        public HalftoneFilter(double amount)
         {
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         public static HalftoneFilter Create(in CallSyntax syntax)
         {
-            return new HalftoneFilter(float.Parse(syntax.Arguments[0].Value));
+            return new HalftoneFilter(double.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"halftone({Amount})";

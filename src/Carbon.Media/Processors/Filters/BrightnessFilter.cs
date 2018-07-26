@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public class BrightnessFilter : IFilter
     {
-        public BrightnessFilter(float amount)
+        public BrightnessFilter(double amount)
         {
             if (amount < -10 || amount > 10)
             {
@@ -14,11 +14,11 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         public static BrightnessFilter Create(in CallSyntax syntax)
         {
-            return new BrightnessFilter(float.Parse(syntax.Arguments[0].Value));
+            return new BrightnessFilter(double.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"brightness({Amount})";

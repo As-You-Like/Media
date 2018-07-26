@@ -4,12 +4,12 @@ namespace Carbon.Media.Processors
 {
     public class SharpenFilter : IFilter, ICanonicalizable
     {
-        public SharpenFilter(float amount)
+        public SharpenFilter(double amount)
         {
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         #region ICanonicalizable
 
@@ -35,7 +35,7 @@ namespace Carbon.Media.Processors
 
         public static SharpenFilter Create(in CallSyntax syntax)
         {
-            return new SharpenFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SharpenFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

@@ -2,16 +2,16 @@
 {
     public class HighlightFilter : IFilter
     {
-        public HighlightFilter(float amount)
+        public HighlightFilter(double amount)
         {
             Amount = amount;
         }
 
-        public float Amount { get; }
+        public double Amount { get; }
 
         public static HighlightFilter Create(in CallSyntax syntax)
         {
-            return new HighlightFilter(float.Parse(syntax.Arguments[0].Value));
+            return new HighlightFilter(double.Parse(syntax.Arguments[0].Value));
         }
 
         public string Canonicalize() => $"highlight({Amount})";
