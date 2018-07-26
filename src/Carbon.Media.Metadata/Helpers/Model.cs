@@ -31,7 +31,6 @@ namespace Carbon.Media.Metadata
         
         public string Name { get; }
 
-
         public static implicit operator string(Model model) => model.Name;
     }
 }

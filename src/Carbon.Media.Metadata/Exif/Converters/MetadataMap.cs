@@ -332,7 +332,7 @@ namespace Carbon.Media.Metadata
             // /{ushort=7}
             try
             {
-                var parts = path.Split('/');
+                string[] parts = path.Split('/');
 
                 var code = int.Parse(parts[parts.Length - 1].Replace("{ushort=", "").Replace("}", ""));
 

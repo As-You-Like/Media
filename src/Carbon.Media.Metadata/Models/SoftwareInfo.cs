@@ -35,7 +35,7 @@ namespace Carbon.Media.Metadata
             string platform = null;
             string version = null;
 
-            var parts = text.Split(' ');
+            string[] parts = text.Split(' ');
             
             if (text.StartsWith("Adobe Photoshop") && parts.Length > 2)
             {

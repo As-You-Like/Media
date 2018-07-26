@@ -56,7 +56,6 @@ namespace Carbon.Media.Processors.Tests
             Assert.True(encode.Flags.HasFlag(EncodingFlags.Progressive));
         }
 
-
         [Fact]
         public void LosslessTest()
         {
