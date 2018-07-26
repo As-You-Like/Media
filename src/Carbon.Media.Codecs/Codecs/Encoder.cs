@@ -81,6 +81,5 @@ namespace Carbon.Media.Codecs
         }
 
         #endregion
-
     }
 }

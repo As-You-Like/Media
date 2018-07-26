@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public enum ChannelMode
+    public enum FlacChannelMode
     {
         Auto        = 1,
         Indepedent  = 2,

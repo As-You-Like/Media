@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Runtime.CompilerServices;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
@@ -203,8 +203,6 @@ namespace Carbon.Media.Codecs
         // TimeBase
         // Compression
         // Quality
-       
-
 
         #endregion
 

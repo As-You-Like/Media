@@ -1,17 +1,28 @@
-﻿namespace Carbon.Media.Codecs
+﻿using FFmpeg.AutoGen;
+
+namespace Carbon.Media.Codecs
 {
     public enum CodecCapabilities : long
     {
         None                 = 0,
-        Dr1                  = 1 << 1,
-        Truncated            = 1 << 3,  // 8
-        HardwareAcceleration = 1 << 4,  // 16
+        Dr1                  = ffmpeg.AV_CODEC_CAP_DR1,
+        Truncated            = ffmpeg.AV_CODEC_CAP_TRUNCATED,
+
+        /// <summary>
         /// Encoder or decoder requires flushing with NULL input at the end in order to give the complete and correct output.
-        Delay                = 1 << 5,  // 32
-        Subframes            = 1 << 8, 
-        Experimental         = 1 << 9,
-        FrameThreading       = 1 << 12,
-        IntraOnly            = 0x40000000,
-        Lossless             = 0x80000000, // 2147483648
+        /// </summary>
+        Delay                = ffmpeg.AV_CODEC_CAP_DELAY,
+        Subframes            = ffmpeg.AV_CODEC_CAP_SUBFRAMES,
+        Experimental         = ffmpeg.AV_CODEC_CAP_EXPERIMENTAL,
+        FrameThreads         = ffmpeg.AV_CODEC_CAP_FRAME_THREADS,
+        IntraOnly            = ffmpeg.AV_CODEC_CAP_INTRA_ONLY,
+        Lossless             = ffmpeg.AV_CODEC_CAP_LOSSLESS,
+        HardwareAcceleration = ffmpeg.AV_CODEC_CAP_HARDWARE,
+
+        /// <summary>
+        /// Codec can be fed a final frame with a smaller size.
+        /// </summary>
+        SmallLastFrame = ffmpeg.AV_CODEC_CAP_SMALL_LAST_FRAME
     }
+
 }

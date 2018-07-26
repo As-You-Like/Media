@@ -1,5 +1,4 @@
-﻿using System;
-using FFmpeg.AutoGen;
+﻿using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {

@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class H264Encoder : VideoEncoder
+    public sealed class H264Encoder : VideoEncoder
     {
         private readonly H264EncoderOptions options;
 

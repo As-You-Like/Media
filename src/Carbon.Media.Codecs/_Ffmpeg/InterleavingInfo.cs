@@ -8,8 +8,8 @@
             ChuckDuration = chuckDuration;
         }
 
-        public readonly long ChuckSize;
+        public long ChuckSize { get; }
 
-        public readonly long ChuckDuration;
+        public long ChuckDuration { get; }
     }
 }

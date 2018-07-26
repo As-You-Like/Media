@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Formats
 {
-    public class GifDemuxer : Demuxer
+    public sealed class GifDemuxer : Demuxer
     {
         public GifDemuxer()
             : base(FormatId.Gif) { }

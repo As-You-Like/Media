@@ -6,12 +6,6 @@ namespace Carbon.Media
 {
     public unsafe readonly struct Filter
     {
-        static Filter()
-        {
-            // ensure the filters are registred
-            ffmpeg.avfilter_register_all();
-        }
-
         public Filter(AVFilter* pointer)
         {
             Pointer = pointer;

@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class HevcEncodingOptions : VideoEncodingParameters
+    public sealed class HevcEncodingOptions : VideoEncodingParameters
     {
         public HevcPreset? Preset { get; set; }
 

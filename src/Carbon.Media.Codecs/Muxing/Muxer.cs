@@ -75,8 +75,6 @@ namespace Carbon.Media.Formats
 
         public void WritePacket(Packet packet)
         {
-            // ffmpeg.av_write_frame(Context.Pointer, packet.Pointer);
-
             ffmpeg.av_interleaved_write_frame(Context.Pointer, packet.Pointer).EnsureSuccess();
         }
 

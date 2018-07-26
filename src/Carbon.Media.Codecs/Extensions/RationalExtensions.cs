@@ -21,7 +21,7 @@ namespace Carbon.Media
             return ToAVRational(rational.Value);
         }
 
-        public static AVRational ToAVRational(this Rational rational)
+        public static AVRational ToAVRational(this in Rational rational)
         {
             return new AVRational {
                 num = (int)rational.Numerator,

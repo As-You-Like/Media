@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public unsafe class AacEncoder : AudioEncoder
+    public unsafe sealed class AacEncoder : AudioEncoder
     {
         public static readonly SampleFormat[] sampleFormats = new[] { SampleFormat.FloatPlanar };
 
@@ -20,9 +20,11 @@ namespace Carbon.Media.Codecs
                 Context.BitRate = options.BitRate;
             }
 
-            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
-            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
-            Console.WriteLine(string.Join(",", AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
+            /*
+            Console.WriteLine(string.Join(',', AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
+            Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
+            Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
+            */
 
             Open(options.ToOptions());
         }

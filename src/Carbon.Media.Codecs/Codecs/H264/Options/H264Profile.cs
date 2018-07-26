@@ -10,9 +10,9 @@ namespace Carbon.Media.Codecs
             Type = type;
         }
 
-        public readonly string Name;
+        public string Name { get; }
 
-        public readonly H264ProfileType Type;
+        public H264ProfileType Type { get; }
 
         // Level
 

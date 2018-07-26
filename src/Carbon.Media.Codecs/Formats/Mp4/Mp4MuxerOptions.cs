@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Formats
 {
-    public class Mp4MuxerOptions
+    public sealed class Mp4MuxerOptions
     {
         /// <summary>
         /// Reserves space for the moov atom at the beginning of the file instead of placing the moov atom at the end

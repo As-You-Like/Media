@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class AacEncodingParameters : AudioEncodingParameters
+    public sealed class AacEncodingParameters : AudioEncodingParameters
     {
         public AacEncodingParameters() { }
 
@@ -19,7 +19,7 @@
 
         public AacCoder? Coder { get; set; }
 
-        internal Options ToOptions()
+        internal AvDictionary ToOptions()
         {
             // CBR mode = -b:a
             // VBR
@@ -27,7 +27,7 @@
             // Constant Bitrate
             // -b:a
 
-            var options = new Options();
+            var options = new AvDictionary();
 
             if (BitRate != null)
             {
