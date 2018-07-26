@@ -66,9 +66,8 @@ namespace Carbon.Media.IO
 
         long Seek(void* opaque, long offset, int whence)
         {
-            Console.WriteLine("seek:" + whence);
 
-            Console.WriteLine((SeekFlags)whence + "/" + (SeekOrigin)whence);
+            Console.WriteLine("seek: " + (SeekFlags)whence + "/" + (SeekOrigin)whence);
 
             if (whence == ffmpeg.AVSEEK_SIZE)
             {
