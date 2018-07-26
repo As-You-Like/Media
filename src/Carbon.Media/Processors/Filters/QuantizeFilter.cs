@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class QuantizeFilter : IFilter
+    public sealed class QuantizeFilter : IFilter
     {
-        public QuantizeFilter(int maxColors, string algorithm = null)
+        public QuantizeFilter(int maxColors, string algorithm = null, bool? dither = null)
         {
             if (maxColors <= 0 || maxColors > 256)
             {
@@ -14,11 +14,14 @@ namespace Carbon.Media.Processors
 
             MaxColors = maxColors;
             Algorithm = algorithm;
+            Dither = dither;
         }
 
         public int MaxColors { get; }
 
         public string Algorithm { get; } // wu....
+
+        public bool? Dither { get; }
 
         #region ToString()
 
@@ -43,6 +46,12 @@ namespace Carbon.Media.Processors
                 sb.Append(Algorithm);
             }
 
+            if (Dither != null)
+            {
+                sb.Append(",dither:");
+                sb.Append(Dither.Value ? "true" : "false");
+            }
+
             sb.Append(')');
         }
 
@@ -52,7 +61,21 @@ namespace Carbon.Media.Processors
 
         public static QuantizeFilter Create(in CallSyntax syntax)
         {
-            return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value));
+            bool? dither = null;
+
+            syntax.TryGetValue("algorithm", out string algorithm);
+
+            if (algorithm == null && syntax.Arguments.Length > 1 && syntax.Arguments[1].Name == null)
+            {
+                algorithm = syntax.Arguments[1].Value;
+            }
+
+            if (syntax.TryGetValue("dither", out string ditherValue))
+            {
+                dither = (ditherValue == "true" || ditherValue == "1");
+            }
+
+            return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value), algorithm, dither);
         }
     }
 }
