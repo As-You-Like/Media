@@ -14,6 +14,25 @@ namespace Carbon.Media
 
         public Argument[] Arguments { get; }
 
+        public bool TryGetValue(string name, out string value)
+        {
+            for (int i = 0; i < Arguments.Length; i++)
+            {
+                ref Argument arg = ref Arguments[i];
+
+                if (arg.Name == name)
+                {
+                    value = arg.Value;
+
+                    return true;
+                }
+            }
+
+            value = null;
+
+            return false;
+        }
+
         public static CallSyntax Parse(string text)
         {
             if (text == null)
