@@ -31,8 +31,6 @@ namespace Carbon.Media
             int nullTerminatorIndex = errorBytes.IndexOf(nullTerminator);
 
             return Encoding.UTF8.GetString(errorBytes.Slice(0, nullTerminatorIndex));
-
-            return result;
         }
     }
 }
