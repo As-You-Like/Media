@@ -1,10 +1,8 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public class DebugFilter : IProcessor
+    public sealed class DebugFilter : IProcessor
     {
         public static readonly DebugFilter Default = new DebugFilter();
-
-        public static DebugFilter Parse(string segment) => Default;
 
         #region ICanonicalizable
 

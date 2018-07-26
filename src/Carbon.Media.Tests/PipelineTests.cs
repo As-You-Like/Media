@@ -22,6 +22,18 @@ namespace Carbon.Media.Processors.Tests
         // 22626389/480x444/crop(0,33,480,360).jpeg
 
         [Fact]
+        public void DebugMode()
+        {
+            var pipeline = MediaPipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode|>debug");
+
+            Assert.Equal("blob#pipe|>crop(0,0,200,200)|>JPEG::encode|>debug", pipeline.Canonicalize());
+
+            Assert.Equal(new Size(200, 200), pipeline.FinalSize);
+
+            Assert.True(pipeline.IsDebug);
+        }
+
+        [Fact]
         public void CropExact()
         {
             var pipeline = MediaPipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode");

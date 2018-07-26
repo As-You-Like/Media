@@ -10,7 +10,9 @@ namespace Carbon.Media.Processors
         public IMediaInfo Source { get; set; } // Input
 
         public int? PageNumber { get; set; }
-        
+
+        public string BackgroundColor { get; set; }
+
         // 1. Flip
         public FlipTransform Flip { get; set; }
 
@@ -28,8 +30,6 @@ namespace Carbon.Media.Processors
         // If the resize mode was set to pad (or padding was added after) 
         public Padding Padding { get; set; } 
 
-        public string BackgroundColor { get; set; }
-
         public Position Position => new Position(Padding.Left, Padding.Top);
         
         public Size FinalSize => new Size(
@@ -46,6 +46,8 @@ namespace Carbon.Media.Processors
         public DateTime? Expires { get; set; }
 
         public Encode Encode { get; set; }
+
+        public bool IsDebug { get; set; }
 
         // lossless?
 
@@ -181,10 +183,10 @@ namespace Carbon.Media.Processors
                 else if (transform is PadTransform pad)
                 {
                     box.Padding = new Padding(
-                        top    : box.Padding.Top + pad.Top,
-                        right  : box.Padding.Right + pad.Right,
-                        bottom : box.Padding.Bottom + pad.Bottom,
-                        left   : box.Padding.Left + pad.Left
+                        top: box.Padding.Top + pad.Top,
+                        right: box.Padding.Right + pad.Right,
+                        bottom: box.Padding.Bottom + pad.Bottom,
+                        left: box.Padding.Left + pad.Left
                     );
                 }
                 else if (transform is RotateTransform rotate)
@@ -227,6 +229,10 @@ namespace Carbon.Media.Processors
                     pipeline.Encode = quality != null || encodingFlags != default
                         ? new Encode(encode.Format, quality, encode.Flags | encodingFlags) // set the quality
                         : encode;
+                }
+                else if (transform is DebugFilter)
+                {
+                    pipeline.IsDebug = true;
                 }
                 else
                 {
@@ -302,6 +308,9 @@ namespace Carbon.Media.Processors
                     case Encode encode:
                         result.Encode = encode;
                         break;
+                    case DebugFilter _:
+                        result.IsDebug = true;
+                        break;
                     default:
                         result.Filters.Add(transform);
                         break;
@@ -319,7 +328,9 @@ namespace Carbon.Media.Processors
 
             if (Expires != null)
             {
-                sb.Append("|>expires(" + new DateTimeOffset(Expires.Value).ToUnixTimeSeconds() + ")");
+                sb.Append("|>expires(");
+                sb.Append(new DateTimeOffset(Expires.Value).ToUnixTimeSeconds());
+                sb.Append(')');
             }
 
             if (Encode.Format == FormatId.Json && Metadata != null)
@@ -334,12 +345,16 @@ namespace Carbon.Media.Processors
 
             if (PageNumber != null)
             {
-                sb.Append("|>page(" + PageNumber + ")");
+                sb.Append("|>page(");
+                sb.Append(PageNumber);
+                sb.Append(')');
             }
 
             if (BackgroundColor != null)
             {
-                sb.Append("|>background(" + BackgroundColor + ")");
+                sb.Append("|>background(");
+                sb.Append(BackgroundColor);
+                sb.Append(')');
             }
 
             if (Flip != null)
@@ -396,6 +411,11 @@ namespace Carbon.Media.Processors
             sb.Append("|>");
 
             Encode.WriteTo(sb);
+
+            if (IsDebug)
+            {
+                sb.Append("|>debug");
+            }
 
             return StringBuilderCache.ExtractAndRelease(sb);
         }
