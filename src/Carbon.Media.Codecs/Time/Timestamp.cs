@@ -11,13 +11,13 @@ namespace Carbon.Media
             TimeBase = timeBase;
         }
 
-        public readonly long Value;
+        public long Value { get; }
 
-        public readonly Rational TimeBase;
+        public Rational TimeBase { get; }
 
         public TimeSpan TimeSpan => TimeSpan.FromTicks(GetTimestamp(Timebases.DotNetTicks));
 
-        public long GetTimestamp(Rational targetTimeBase)
+        public long GetTimestamp(in Rational targetTimeBase)
         {
             return ffmpeg.av_rescale_q(
                 Value,
@@ -26,7 +26,7 @@ namespace Carbon.Media
             );
         }
         
-        public Timestamp Transform(Rational targetTimeBase)
+        public Timestamp Transform(in Rational targetTimeBase)
         {
             return new Timestamp(GetTimestamp(targetTimeBase), targetTimeBase);
         }
