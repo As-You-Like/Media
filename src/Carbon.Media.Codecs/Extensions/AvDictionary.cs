@@ -3,16 +3,16 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
-    internal unsafe class Options
+    internal unsafe class AvDictionary
     {
-        public Options() { }
+        public AvDictionary() { }
 
-        private Options(AVDictionary* pointer)
+        private AvDictionary(AVDictionary* pointer)
         {
             Pointer = pointer;
         }
 
-        public AVDictionary* Pointer;
+        public readonly AVDictionary* Pointer;
 
         public void Set(string key, long value)
         {
@@ -30,7 +30,7 @@ namespace Carbon.Media.Codecs
             }
         }
 
-        public static Options Parse(string text)
+        public static AvDictionary Parse(string text)
         {
             AVDictionary* pointer;
 
@@ -38,7 +38,7 @@ namespace Carbon.Media.Codecs
             
             ffmpeg.av_dict_parse_string(&pointer, text, "=", ",", 0).EnsureSuccess();
 
-            return new Options(pointer);   
+            return new AvDictionary(pointer);   
         }
     }
 }
