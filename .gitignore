@@ -8,3 +8,5 @@ src/packages
 project.lock.json
 /build
 /FFmpeg
+*.dll
+*.exe
