@@ -7,9 +7,13 @@ namespace Carbon.Media.Processors
     {
         public QuantizeFilter(int maxColors, string algorithm = null, bool? dither = null)
         {
-            if (maxColors <= 0 || maxColors > 256)
+            if (maxColors <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be between 1 and 256");
+                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be greater than 0");
+            }
+            else if (maxColors > 256)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be less than 256");
             }
 
             MaxColors = maxColors;

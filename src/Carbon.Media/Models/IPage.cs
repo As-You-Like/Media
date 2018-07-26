@@ -4,11 +4,11 @@
     {
         int Number { get; }
 
-        int Rotation { get; }
-
         int Width { get; }
 
         int Height { get; }
+
+        int Rotation { get; }
     }
 }
 

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class BackgroundFilter : IFilter, ICanonicalizable
+    public sealed class BackgroundFilter : IFilter, ICanonicalizable
     {
         public BackgroundFilter(string color)
         {

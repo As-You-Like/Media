@@ -9,8 +9,6 @@ namespace Carbon.Media
     public sealed class MediaRenditionInfo : ISize
     {
         private readonly string host;
-        private readonly string sourcePath;
-        private readonly string transformPath;
         private readonly string seperator;
         private readonly IUrlSigner signer;
 
@@ -48,11 +46,11 @@ namespace Carbon.Media
             string seperator = "/",
             IUrlSigner signer = null)
         {
-            this.host               = host;
-            this.sourcePath         = sourcePath    ?? throw new ArgumentNullException(nameof(sourcePath));
-            this.transformPath      = transformPath;
-            this.seperator          = seperator     ?? throw new ArgumentNullException(nameof(seperator));
-            this.signer             = signer;
+            this.host      = host;
+            SourcePath     = sourcePath    ?? throw new ArgumentNullException(nameof(sourcePath));
+            TransformPath  = transformPath;
+            this.seperator = seperator     ?? throw new ArgumentNullException(nameof(seperator));
+            this.signer    = signer;
 
             Width  = width;
             Height = height;
@@ -62,22 +60,22 @@ namespace Carbon.Media
 
         public int Height { get; }
 
+        public string SourcePath { get; }
+
+        public string TransformPath { get; }
+
         [IgnoreDataMember]
         public bool IsEmpty => Width == 0 || Height == 0;
 
-        public string SourcePath => sourcePath;
-
-        public string TransformPath => transformPath;
-
         public MediaRenditionInfo Blur(int radius)
         {
-            var dotIndex = transformPath.LastIndexOf('.');
-            var spec     = transformPath.Substring(0, dotIndex);
-            var format   = transformPath.Substring(dotIndex + 1);
+            var dotIndex = TransformPath.LastIndexOf('.');
+            var spec     = TransformPath.Substring(0, dotIndex);
+            var format   = TransformPath.Substring(dotIndex + 1);
 
             var newTransformPath = $"{spec}/blur({radius}).{format}";
 
-            return new MediaRenditionInfo(host, sourcePath, newTransformPath, Width, Height, seperator, signer);
+            return new MediaRenditionInfo(host, SourcePath, newTransformPath, Width, Height, seperator, signer);
         }
 
         public MediaRenditionInfo Crop(Rectangle rect)
@@ -91,11 +89,11 @@ namespace Carbon.Media
 
         public MediaRenditionInfo WithFormat(string format)
         {
-            var dotIndex = transformPath.LastIndexOf('.');
+            var dotIndex = TransformPath.LastIndexOf('.');
 
-            var newTransformPath = (dotIndex > -1 ? transformPath.Substring(0, dotIndex) : transformPath) + "." + format;
+            var newTransformPath = (dotIndex > -1 ? TransformPath.Substring(0, dotIndex) : TransformPath) + "." + format;
 
-            return new MediaRenditionInfo(host, sourcePath, newTransformPath, Width, Height, seperator, signer);
+            return new MediaRenditionInfo(host, SourcePath, newTransformPath, Width, Height, seperator, signer);
         }
 
         public MediaRenditionInfo Scale(double scale)
@@ -146,9 +144,9 @@ namespace Carbon.Media
         {
             get
             {
-                if (TransformPath == null) return sourcePath;
+                if (TransformPath == null) return SourcePath;
 
-                return SourcePath + seperator + TransformPath;
+                return string.Concat(SourcePath, seperator, TransformPath);
             }
         }
         public override string ToString() => Url;

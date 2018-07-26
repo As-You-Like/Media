@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processors
 {
-    public class VibranceFilter : IFilter, ICanonicalizable
+    public sealed class VibranceFilter : IFilter, ICanonicalizable
     {
         public VibranceFilter(double amount)
         {
