@@ -10,13 +10,9 @@ namespace Carbon.Media
 
         private SwsContext(FFmpeg.AutoGen.SwsContext* pointer)
         {
-            #region Preconditions
-
             if (pointer == null)
                 throw new ArgumentNullException(nameof(pointer));
-
-            #endregion
-
+            
             this.pointer = pointer;
         }
 
@@ -66,7 +62,12 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            ffmpeg.sws_freeContext(pointer);
+            if (pointer != null)
+            {
+                ffmpeg.sws_freeContext(pointer);
+
+                pointer = null;
+            }
         }
 
         ~SwsContext()
