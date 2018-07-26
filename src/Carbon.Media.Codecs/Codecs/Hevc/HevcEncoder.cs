@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class HevcEncoder : Encoder
+    public sealed class HevcEncoder : Encoder
     {
         private readonly HevcEncodingOptions options;
 

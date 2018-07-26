@@ -1,8 +1,10 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class Mp3EncodingParameters : AudioEncodingParameters
+    public sealed class Mp3EncodingParameters : AudioEncodingParameters
     {
-        internal Options ToOptions()
+        // supported channels (Mono, Stereo)
+
+        internal AvDictionary ToOptions()
         {
             // CBR mode = -b:a
             // VBR
@@ -10,7 +12,7 @@
             // Constant Bitrate
             // -b:a
 
-            var options = new Options();
+            var options = new AvDictionary();
 
             // options.Set("codec", "libmp3lame");
 

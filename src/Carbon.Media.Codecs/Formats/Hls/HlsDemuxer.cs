@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Formats
 {
-    public class HlsDemuxer : Demuxer
+    public sealed class HlsDemuxer : Demuxer
     {
         public HlsDemuxer()
             : base(FormatId.Hls) { }

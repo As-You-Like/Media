@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Formats
 {
-    public class Mp4Muxer : Muxer
+    public sealed class Mp4Muxer : Muxer
     {
         private readonly Mp4MuxerOptions options;
 

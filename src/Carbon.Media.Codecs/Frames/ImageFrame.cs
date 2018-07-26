@@ -13,6 +13,8 @@ namespace Carbon.Media.Frames
             Strides = VideoFormatHelper.GetStrides(format, width);
         }
 
+        // Allocate?
+
         public PixelFormat Format { get; }
 
         public int Width { get; }

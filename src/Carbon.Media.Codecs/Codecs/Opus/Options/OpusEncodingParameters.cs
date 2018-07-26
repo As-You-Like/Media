@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Codecs
 {
-    public class OpusEncodingParameters : AudioEncodingParameters
+    public sealed class OpusEncodingParameters : AudioEncodingParameters
     {
         public OpusEncodingParameters()
         {

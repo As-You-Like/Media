@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Formats
 {
-    public class HlsMuxer : Muxer
+    public sealed class HlsMuxer : Muxer
     {
         private readonly HslMuxerParamaters options;
 
