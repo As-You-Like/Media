@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public sealed class GrayscaleFilter : IFilter
     {
-        public GrayscaleFilter(double amount)
+        public GrayscaleFilter(float amount)
         {
             if (amount < 0)
             {
@@ -19,7 +19,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public double Amount { get; }
+        public float Amount { get; }
 
         public string Canonicalize() => $"grayscale({Amount})";
 
@@ -27,7 +27,7 @@ namespace Carbon.Media.Processors
 
         public static GrayscaleFilter Create(in CallSyntax syntax)
         {
-            return new GrayscaleFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new GrayscaleFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

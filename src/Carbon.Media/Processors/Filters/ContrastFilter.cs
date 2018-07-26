@@ -5,7 +5,7 @@ namespace Carbon.Media.Processors
 {
     public class ContrastFilter : IFilter, ICanonicalizable
     {
-        public ContrastFilter(double amount)
+        public ContrastFilter(float amount)
         {
             if (amount < -10 || amount > 10)
             {
@@ -15,7 +15,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public double Amount { get; }
+        public float Amount { get; }
 
         #region ICanonicalizable
 
@@ -41,7 +41,7 @@ namespace Carbon.Media.Processors
 
         public static ContrastFilter Create(in CallSyntax syntax)
         {
-            return new ContrastFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new ContrastFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

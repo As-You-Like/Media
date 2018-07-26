@@ -5,7 +5,7 @@ namespace Carbon.Media.Processors
 {
     public class SaturateFilter : IFilter, ICanonicalizable
     {
-        public SaturateFilter(double amount)
+        public SaturateFilter(float amount)
         {
             if (amount < -2 || amount > 2)
             {
@@ -15,11 +15,11 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public double Amount { get; }
+        public float Amount { get; }
 
         public static SaturateFilter Create(in CallSyntax syntax)
         {
-            return new SaturateFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SaturateFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
 
         #region ToString()

@@ -69,7 +69,7 @@ namespace Carbon.Media
         public static readonly CodecInfo Aac    = new CodecInfo(CodecId.Aac,    "aac");
         public static readonly CodecInfo AacLC  = new CodecInfo(CodecId.Aac,    "mp4a.40.2");  // AAC-low complexity
         public static readonly CodecInfo AacHE  = new CodecInfo(CodecId.Aac,    "mp4a.40.5");  // AAC-high efficiency
-        public static readonly CodecInfo Alac   = new CodecInfo(CodecId.Alac,   "alac");       // Apple Lossless
+        public static readonly CodecInfo Alac   = new CodecInfo(CodecId.Alac,   "alac");      // Apple Lossless
         public static readonly CodecInfo Mp3    = new CodecInfo(CodecId.Mp3,    "mp3");
         public static readonly CodecInfo Wma    = new CodecInfo(CodecId.Wma1,   "wma");
         public static readonly CodecInfo Opus   = new CodecInfo(CodecId.Opus,   "opus");

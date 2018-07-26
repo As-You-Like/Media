@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public class BlurFilter : IFilter
     {
-        public BlurFilter(double radius)
+        public BlurFilter(float radius)
         {
             if (radius < 0 || radius > 2000)
             {
@@ -14,7 +14,7 @@ namespace Carbon.Media.Processors
             Amount = radius;
         }
 
-        public double Amount { get; }
+        public float Amount { get; }
 
         public string Canonicalize() => $"blur({Amount})";
 
@@ -22,7 +22,7 @@ namespace Carbon.Media.Processors
 
         public static BlurFilter Create(in CallSyntax syntax)
         {
-            return new BlurFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new BlurFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

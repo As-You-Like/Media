@@ -29,8 +29,6 @@ namespace Carbon.Media.Processors
 
         public static QualityFilter Create(in CallSyntax syntax)
         {
-            string arg = syntax.Arguments[0].Value;
-
             return new QualityFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }

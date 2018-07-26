@@ -5,12 +5,9 @@ namespace Carbon.Media.Processors
 {
     public class SepiaFilter : IFilter, ICanonicalizable
     {
-        public SepiaFilter(double amount)
+        public SepiaFilter(float amount)
         {
-            if (amount < 0)
-            {
-                throw new ArgumentException("Must be >= 0", nameof(amount));
-            }
+            if (amount < 0) throw new ArgumentException("Must be >= 0", nameof(amount));
 
             if (amount > 1)  // clamped to 1
             {
@@ -21,7 +18,7 @@ namespace Carbon.Media.Processors
         }
 
         // range: 0 (unchanged) - 1 (full effect)
-        public double Amount { get; }
+        public float Amount { get; }
 
         #region ICanonicalizable
 
@@ -47,7 +44,7 @@ namespace Carbon.Media.Processors
 
         public static SepiaFilter Create(in CallSyntax syntax)
         {
-            return new SepiaFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SepiaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

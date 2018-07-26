@@ -4,7 +4,7 @@ namespace Carbon.Media.Processors
 {
     public class VolumeFilter : IFilter
     {
-        public VolumeFilter(double amount)
+        public VolumeFilter(float amount)
         {
             if (amount < 0)
             {
@@ -14,7 +14,7 @@ namespace Carbon.Media.Processors
             Amount = amount;
         }
 
-        public double Amount { get; }
+        public float Amount { get; }
 
         public string Canonicalize() => $"volume({Amount})";
 
@@ -22,7 +22,7 @@ namespace Carbon.Media.Processors
 
         public static VolumeFilter Create(in CallSyntax syntax)
         {
-            return new VolumeFilter(Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new VolumeFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
         }
     }
 }

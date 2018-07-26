@@ -1,8 +1,10 @@
 ﻿namespace Carbon.Media.Processors
 {
-    public sealed class LosslessFilter : IProcessor
+    public class LosslessFilter : IProcessor
     {
         public static readonly LosslessFilter Default = new LosslessFilter();
+
+        public static LosslessFilter Parse(string segment) => Default;
 
         #region ICanonicalizable
 
