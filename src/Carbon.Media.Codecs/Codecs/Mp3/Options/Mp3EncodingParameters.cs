@@ -2,7 +2,15 @@
 {
     public sealed class Mp3EncodingParameters : AudioEncodingParameters
     {
-        // supported channels (Mono, Stereo)
+        // TODO: ssupported channel layouts (Mono, Stereo)
+
+        public Mp3EncodingParameters() { }
+
+        public Mp3EncodingParameters(BitRate bitRate, ChannelLayout channelLayout = ChannelLayout.Stereo)
+        {
+            this.BitRate = bitRate;
+            this.ChannelLayout = channelLayout;
+        }
 
         internal AvDictionary ToOptions()
         {
