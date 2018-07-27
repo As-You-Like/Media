@@ -30,8 +30,10 @@ namespace Carbon.Media.Formats
         
         public override FormatType Type => FormatType.Muxer;
         
-        public void Initialize(Encoder[] encoders)
+        public void Initialize(params Encoder[] encoders)
         {
+            if (encoders == null) throw new ArgumentNullException(nameof(encoders));
+
             var streams = new MediaStream[encoders.Length];
 
             for (var i = 0; i < streams.Length; i++)
@@ -70,7 +72,7 @@ namespace Carbon.Media.Formats
         
         public virtual void WriteHeader()
         {
-            ffmpeg.avformat_write_header(Context.Pointer, null).EnsureSuccess();
+            ffmpeg.avformat_write_header(Context.Pointer, options: null).EnsureSuccess();
         }
 
         public void WritePacket(Packet packet)
