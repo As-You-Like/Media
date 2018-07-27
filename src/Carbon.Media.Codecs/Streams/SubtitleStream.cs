@@ -7,6 +7,6 @@ namespace Carbon.Media
         public SubtitleStream(AVStream* pointer)
             : base(pointer) { }
 
-        public override MediaType Type => MediaType.Subtitle;
+        public override MediaType Type => MediaType.Text;
     }
 }
