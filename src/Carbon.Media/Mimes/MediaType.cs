@@ -12,11 +12,7 @@
         Multipart   = 7,
         Text        = 8,
         Video       = 9,
-
-        Font        = 10, // 2017-02 | https://tools.ietf.org/html/rfc8081#section-4.4.5
-
-        // Non-Standard
-        Subtitle   = 100
+        Font        = 10 // 2017-02 | https://tools.ietf.org/html/rfc8081#section-4.4.5
     }
 }
 
