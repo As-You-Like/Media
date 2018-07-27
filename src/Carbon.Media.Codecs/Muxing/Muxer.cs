@@ -92,11 +92,16 @@ namespace Carbon.Media.Formats
 
         public void Open(Stream outputStream)
         {
-            this.ioContext = new IOContext(outputStream, writable: true);
-            
+            Open(new IOContext(outputStream, writable: true));
+        }
+
+        internal void Open(IOContext ioContext)
+        {
+            this.ioContext = ioContext ?? throw new ArgumentNullException(nameof(ioContext));
+
             Context.Pointer->flags |= ffmpeg.AVFMT_FLAG_CUSTOM_IO;
 
-            Context.Pointer->pb = ioContext.Pointer;         
+            Context.Pointer->pb = ioContext.Pointer;
         }
 
         public override void Cleanup()
