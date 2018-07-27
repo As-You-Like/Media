@@ -13,7 +13,7 @@ namespace Carbon.Media
             if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
             this.pointer = pointer;
-            
+
             Codec = Codec.Create(this, codecType);
         }
 
@@ -80,7 +80,7 @@ namespace Carbon.Media
         //  1800 timer ticks, then r_frame_rate will be 50/1.
 
         public Rational FrameRate => pointer->r_frame_rate.ToRational();
-        
+
         #region Interleaving
 
         public InterleavingInfo Interleaving => new InterleavingInfo(
@@ -92,21 +92,25 @@ namespace Carbon.Media
 
         public static MediaStream Create(AVStream* pointer, CodecType codecType = CodecType.Decoder)
         {
-            MediaStream stream;
+            MediaStream stream = InternalCreate(pointer);
 
-            switch (pointer->codec->codec_type)
-            {
-                case AVMediaType.AVMEDIA_TYPE_AUDIO    : stream = new AudioStream(pointer); break;
-                case AVMediaType.AVMEDIA_TYPE_VIDEO    : stream = new VideoStream(pointer); break;
-                case AVMediaType.AVMEDIA_TYPE_SUBTITLE : stream = new SubtitleStream(pointer); break;
-                default                                : stream = new UnknownStream(pointer); break;
-            }
-            
+            // Setup the parameters from the current context
             ffmpeg.avcodec_parameters_from_context(stream.Pointer->codecpar, stream.Codec.Context.Pointer).EnsureSuccess();
-            
+
             return stream;
         }
-        
+
+        private static MediaStream InternalCreate(AVStream* pointer)
+        {
+            switch (pointer->codec->codec_type)
+            {
+                case AVMediaType.AVMEDIA_TYPE_AUDIO    : return new AudioStream(pointer);
+                case AVMediaType.AVMEDIA_TYPE_VIDEO    : return new VideoStream(pointer); 
+                case AVMediaType.AVMEDIA_TYPE_SUBTITLE : return new SubtitleStream(pointer); 
+                default                                : return new UnknownStream(pointer); 
+            }
+        }
+
         public void Dispose()
         {
             Codec?.Dispose();

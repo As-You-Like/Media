@@ -15,7 +15,7 @@ namespace Carbon.Media
         public ChannelLayout ChannelLayout => Codec.Context.ChannelLayout;
 
         public SampleFormat SampleFormat => Codec.Context.SampleFormat;
-       
+
         public int SampleRate => Codec.Context.SampleRate;
 
         public int BlockAlignment => Codec.Context.BlockAlignment;
