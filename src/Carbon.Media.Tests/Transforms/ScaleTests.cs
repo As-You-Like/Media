@@ -3,7 +3,7 @@
 namespace Carbon.Media.Processors.Tests
 {
     public class ScaleTests
-	{
+    {
         [Fact]
         public void A()
         {
@@ -19,7 +19,7 @@ namespace Carbon.Media.Processors.Tests
         public void B()
         {
             var scale = new ScaleTransform(800, 600, InterpolaterMode.Lanczos3);
-            
+
             Assert.Equal("scale(800,600,lanczos3)", scale.Canonicalize());
 
             scale = ScaleTransform.Create(CallSyntax.Parse(scale.Canonicalize()));

@@ -9,14 +9,12 @@ namespace Carbon.Media.Tests
 		[Fact]
 		public void IntMappingTests()
 		{
-			Assert.Equal(1, (int)MediaType.Application);
-			Assert.Equal(2, (int)MediaType.Audio);
-			Assert.Equal(4, (int)MediaType.Image);
-			Assert.Equal(8, (int)MediaType.Text);
-			Assert.Equal(9, (int)MediaType.Video);
-
-            // Non-Standard
-            Assert.Equal(100, (int)MediaType.Subtitle);
+			Assert.Equal(1,  (int)MediaType.Application);
+			Assert.Equal(2,  (int)MediaType.Audio);
+			Assert.Equal(4,  (int)MediaType.Image);
+			Assert.Equal(8,  (int)MediaType.Text);
+			Assert.Equal(9,  (int)MediaType.Video);
+            Assert.Equal(10, (int)MediaType.Font);
         }
 
         [Fact]
@@ -64,8 +62,6 @@ namespace Carbon.Media.Tests
 
 			Assert.True(formats.All(format => Mime.FromFormat(format).Type == MediaType.Video));
 		}
-
-
 
         [Fact]
         public void FontTypeTests()

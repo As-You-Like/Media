@@ -533,7 +533,7 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void FilterTest1()
         {
-            var t = MediaTransformation.ParsePath("33695921/100x100/" + string.Join("/", 
+            var t = MediaTransformation.ParsePath("33695921/100x100/" + string.Join('/', 
                 "blur(1)",
                 "brightness(1)",
                 "contrast(1)",

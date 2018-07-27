@@ -74,7 +74,7 @@ namespace Carbon.Media.Tests
         private void Throw(byte[] data)
         {   
             throw new Exception(string.Join(Environment.NewLine, new[] {
-                string.Join(",", data.Take(20).ToArray()),
+                string.Join(',', data.Take(20).ToArray()),
                 Encoding.ASCII.GetString(data)
             }));
         }
