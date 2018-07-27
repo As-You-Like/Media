@@ -52,12 +52,11 @@ namespace Carbon.Media
         {
             pointer->pb = source.Pointer;
             
-            Console.WriteLine(pointer->flags);
+            // Console.WriteLine(pointer->flags);
 
             pointer->flags |= ffmpeg.AVFMT_FLAG_CUSTOM_IO;
 
             AVInputFormat* inputFormat = null;
-            // Console.WriteLine("probings");
 
             ffmpeg.av_probe_input_buffer(source.Pointer, &inputFormat, null, null, 0, 0).EnsureSuccess();
 
@@ -68,6 +67,21 @@ namespace Carbon.Media
                 ffmpeg.avformat_open_input(ps, "", inputFormat, null).EnsureSuccess();
             }
 
+            SetupStreams();
+        }
+
+        public void Open(Uri url)
+        {
+            fixed (AVFormatContext** ps = &pointer)
+            {
+                ffmpeg.avformat_open_input(ps, url.ToString(), null, null).EnsureSuccess();
+            }
+            
+            SetupStreams();
+        }
+
+        private void SetupStreams()
+        {
             ffmpeg.avformat_find_stream_info(pointer, null).EnsureSuccess(); // populate the streams
 
             var streams = new MediaStream[pointer->nb_streams];
@@ -80,29 +94,6 @@ namespace Carbon.Media
             }
 
             // Note: the codecs still need intilized
-
-            Streams = streams;
-        }
-
-        public void Open(Uri url)
-        {
-            fixed (AVFormatContext** c = &pointer)
-            {
-                ffmpeg.avformat_open_input(c, url.ToString(), null, null).EnsureSuccess();
-            }
-            
-            ffmpeg.avformat_find_stream_info(pointer, null).EnsureSuccess(); // populate the streams
-
-            // note: the codec still needs to be initilized
-
-            var streams = new MediaStream[pointer->nb_streams];
-
-            for (int i = 0; i < pointer->nb_streams; i++)
-            {
-                var stream = MediaStream.Create(pointer->streams[i]);
-
-                streams[i] = stream;
-            }
 
             Streams = streams;
         }
