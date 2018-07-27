@@ -1,4 +1,5 @@
-﻿using FFmpeg.AutoGen;
+﻿using System;
+using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
@@ -9,5 +10,10 @@ namespace Carbon.Media.Codecs
 
         public VideoDecoder(AVCodecContext* context)
             : base(context) { }
+
+        public VideoFormatInfo GetFormatInfo()
+        {
+            return new VideoFormatInfo(Context.PixelFormat, Context.Width, Context.Height);
+        }
     }
 }
