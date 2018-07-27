@@ -10,7 +10,7 @@ namespace Carbon.Media
         public Frame()
         {
             this.pointer = ffmpeg.av_frame_alloc();
-
+            
             if (pointer == null)
             {
                 throw new Exception("Did not allocate frame");
@@ -26,7 +26,7 @@ namespace Carbon.Media
         /// <summary>
         /// Decoding time (from packet)
         /// </summary>
-        public long DecodingTime
+        public long Dts
         {
             get => pointer->pkt_dts;
             set => pointer->pkt_dts = value;
@@ -35,7 +35,7 @@ namespace Carbon.Media
         /// <summary>
         /// Presentation time
         /// </summary>
-        public long PresentationTime
+        public long Pts
         {
             get => pointer->pts;
             set => pointer->pts = value;

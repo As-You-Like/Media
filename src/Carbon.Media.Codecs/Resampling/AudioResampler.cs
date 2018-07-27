@@ -51,8 +51,8 @@ namespace Carbon.Media.Codecs.Resampling
             if (sampleCount < 0) throw new FFmpegException(sampleCount);
 
             outFrame.SampleCount      = sampleCount;
-            outFrame.DecodingTime     = inFrame.DecodingTime;
-            outFrame.PresentationTime = inFrame.PresentationTime;
+            outFrame.Dts     = inFrame.Dts;
+            outFrame.Pts = inFrame.Pts;
             outFrame.ChannelCount     = outFormat.ChannelCount;
             outFrame.SampleRate       = outFormat.SampleRate;
             outFrame.ChannelLayout    = outFormat.ChannelLayout;
