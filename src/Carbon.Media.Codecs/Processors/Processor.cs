@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.IO;
 using Carbon.Media.Formats;
 using Carbon.Media.IO;
 using Carbon.Media.Processors;
@@ -15,10 +15,11 @@ namespace Carbon.Media.Processing
             this.pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
         }
 
-        public void Process(IOContext input, IOContext output)
+        public void Process(Stream inputStream, Stream outputStream)
         {
             // - build a filter graph from the pipeline (deinterlace, scale, etc)
 
+            using (var input = new IOContext(inputStream))
             using (var demuxer = Demuxer.Open(input)) // detects the format & create an AV context
             using (var muxer = new Muxer(FormatId.Mp4))
             {

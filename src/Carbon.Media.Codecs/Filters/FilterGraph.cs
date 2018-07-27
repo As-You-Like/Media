@@ -97,17 +97,8 @@ namespace Carbon.Media
             var sampleFormatName = ffmpeg.av_get_sample_fmt_name(format.SampleFormat.ToAVFormat());
 
             var channelLayoutHex = ((ulong)format.ChannelLayout);
-
-            var hexChannelLayout = ((long)format.ChannelLayout).ToString("x"); /* BitConverter.ToString(
-                BitConverter.GetBytes((ulong)format.ChannelLayout).Reverse().ToArray()
-            ).Replace("-", string.Empty);
-            */
-
-            // 0x{hexChannelLayout}
-
-            Console.WriteLine("HEX:" + ((long)format.ChannelLayout).ToString("x"));
-            Console.WriteLine("HEX2:" + hexChannelLayout);
-
+            var hexChannelLayout = ((long)format.ChannelLayout).ToString("x");
+            
             var args = string.Join(':',
                 $"time_base=1/{format.SampleRate}",
                 $"sample_rate={format.SampleRate}",
@@ -133,13 +124,6 @@ namespace Carbon.Media
         // sourceOutput
         // sinkInput
 
-        public enum BufferSourceFlags
-        {
-            None          = 0,
-            NoCheckFormat = 1,
-            Push          = 4,
-            KeepRef       = 8
-        }
     
         // Push to the buffer source
         public void PushFrame(Frame frame)

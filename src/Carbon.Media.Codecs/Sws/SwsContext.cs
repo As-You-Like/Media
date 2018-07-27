@@ -19,7 +19,7 @@ namespace Carbon.Media
         public static SwsContext Create(
             int sourceWidth, 
             int sourceHeight, 
-            PixelFormat sourceFormat, 
+            PixelFormat sourcePixelFormat, 
             int targetWidth, 
             int targetHeight,
             PixelFormat targetFormat, 
@@ -28,7 +28,7 @@ namespace Carbon.Media
             var pointer = ffmpeg.sws_getContext(
                 sourceWidth, 
                 sourceHeight, 
-                sourceFormat.ToAVFormat(), 
+                sourcePixelFormat.ToAVFormat(), 
                 targetWidth, 
                 targetHeight,
                 targetFormat.ToAVFormat(),

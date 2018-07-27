@@ -12,7 +12,6 @@ namespace Carbon.Media.Codecs
         internal VideoEncoder(AVCodecContext* context)
             : base(context) { }
 
-
         #region Options
 
         public int MaxBFrames
@@ -22,7 +21,6 @@ namespace Carbon.Media.Codecs
         }
 
         #endregion
-
 
         public Rational[] SupportedFrameRates
         {

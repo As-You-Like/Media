@@ -57,7 +57,7 @@ namespace Carbon.Media.Codecs
 
         public Rational TimeBase
         {
-            get => new Rational(pointer->time_base.num, pointer->time_base.den);
+            get => pointer->time_base.ToRational();
             set => pointer->time_base = value.ToAVRational();
         }
 

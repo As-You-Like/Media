@@ -202,7 +202,6 @@ namespace Carbon.Media
                 case PixelFormat.Bgr48be       : return AV_PIX_FMT_BGR48BE;
                 case PixelFormat.Bgr48le       : return AV_PIX_FMT_BGR48LE;
 
-
                 // Gray
                 case PixelFormat.Gray8         : return AV_PIX_FMT_GRAY8;
                 case PixelFormat.Gray9be       : return AV_PIX_FMT_GRAY9BE;

@@ -86,9 +86,9 @@ namespace Carbon.Media
         {
             timebase = targetTimeBase;
 
-            Pts               = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
-            Dts               = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
-            pointer->duration = new Timestamp(pointer->duration, sourceTimeBase).Transform(targetTimeBase).Value;
+            Pts      = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
+            Dts      = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
+            Duration = new Timestamp(pointer->duration, sourceTimeBase).Transform(targetTimeBase);
         }
 
         // frees the packet for reuse
@@ -144,7 +144,7 @@ namespace Carbon.Media
         {
             if (pointer != null)
             {
-                Console.WriteLine("disposing packet");
+                Console.WriteLine("Disposing Packet");
 
                 Clear();
 
