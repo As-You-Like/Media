@@ -5,13 +5,12 @@ namespace Carbon.Media
 {
     internal static class VideoFormatHelper
     {
-        public static VideoFormatInfo Get(PixelFormat pixelFormat, int width, int height, int align = 8)
+        public static VideoFormatInfo Get(PixelFormat pixelFormat, int width, int height)
         {
             return new VideoFormatInfo(
                 pixelFormat,
                 width,
                 height,
-                GetStrides(pixelFormat, width, align),
                 Timebases.Ffmpeg,
                 new Rational(1, 1)
             );

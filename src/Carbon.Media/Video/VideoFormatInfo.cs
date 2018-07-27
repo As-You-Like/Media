@@ -7,15 +7,13 @@ namespace Carbon.Media
         public VideoFormatInfo(
             PixelFormat pixelFormat,
             int width,
-            int height,
-            int[] strides)
-            : this(pixelFormat, width, height, strides, new Rational(1, 1), new Rational(1, 1)) { }
+            int height)
+            : this(pixelFormat, width, height,  new Rational(1, 1), new Rational(1, 1)) { }
 
         public VideoFormatInfo(
             PixelFormat pixelFormat,
             int width, 
             int height, 
-            int[] strides, 
             Rational timeBase,
             Rational aspectRatio)
         {
@@ -31,7 +29,6 @@ namespace Carbon.Media
             PixelFormat = pixelFormat;
             Width       = width;
             Height      = height;
-            Strides     = strides;
             TimeBase    = timeBase;
             AspectRatio = aspectRatio;
         }
@@ -41,10 +38,6 @@ namespace Carbon.Media
         public int Width { get; }
 
         public int Height { get; }
-
-        // The strides & buffer size are determined by the height & width + pixelFormat
-
-        public int[] Strides { get; }
 
         // Allows for variable rate...
         public Rational TimeBase { get; }
