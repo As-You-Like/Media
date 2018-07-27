@@ -6,10 +6,10 @@ namespace Carbon.Media.Codecs
     {
         private readonly FlacEncodingParameters options;
 
-        public FlacEncoder(FlacEncodingParameters options)
+        public FlacEncoder(FlacEncodingParameters parameters)
             : base(CodecId.Flac)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.options = parameters ?? throw new ArgumentNullException(nameof(parameters));
         }
     }
 }

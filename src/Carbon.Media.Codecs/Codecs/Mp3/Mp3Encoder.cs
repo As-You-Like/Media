@@ -1,10 +1,11 @@
 ﻿using System;
+using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
     public sealed class Mp3Encoder : AudioEncoder
     {
-        private readonly Mp3EncodingParameters options;
+        private readonly Mp3EncodingParameters parameters;
 
         private static readonly ChannelLayout[] channlLayouts = {
             ChannelLayout.Mono,
@@ -22,7 +23,7 @@ namespace Carbon.Media.Codecs
         public Mp3Encoder(Mp3EncodingParameters parameters)
             : base(CodecId.Mp3)
         {
-            this.options = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            this.parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
             // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
@@ -43,5 +44,13 @@ namespace Carbon.Media.Codecs
         public override SampleFormat[] SampleFormats => sampleFormats;
 
         public override int[] SampleRates => sampleRates;
+
+
+        public override string GetFilterGraph()
+        {
+            string sampleFormat = ffmpeg.av_get_sample_fmt_name(Context.SampleFormat.ToAVFormat());
+
+            return $"aresample={Context.SampleRate},aformat=sample_fmts={sampleFormat}:channel_layouts=stereo,asetnsamples=n=1024:p=0";
+        }
     }
 }
