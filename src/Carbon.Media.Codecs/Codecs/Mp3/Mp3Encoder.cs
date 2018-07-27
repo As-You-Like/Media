@@ -19,25 +19,25 @@ namespace Carbon.Media.Codecs
 
         private static readonly int[] sampleRates = { 44100, 48000, 32000, 22050, 24000, 16000, 11025, 12000, 8000 };
 
-        public Mp3Encoder(Mp3EncodingParameters options)
+        public Mp3Encoder(Mp3EncodingParameters parameters)
             : base(CodecId.Mp3)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.options = parameters ?? throw new ArgumentNullException(nameof(parameters));
 
             // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
             // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
             // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
 
-            SetFormat(options.GetFormatInfo());
+            SetFormat(parameters.GetFormatInfo());
 
-            if (options.BitRate != null)
+            if (parameters.BitRate != null)
             {
-                Context.BitRate = options.BitRate;
+                Context.BitRate = parameters.BitRate;
             }
 
             // requires global header?
 
-            Open(options.ToOptions());
+            Open(parameters.ToOptions());
         }
 
         public override SampleFormat[] SampleFormats => sampleFormats;
