@@ -12,6 +12,9 @@ namespace Carbon.Media
         {
             switch (format)
             {
+                // Unknown
+                case AV_PIX_FMT_NONE           : return PixelFormat.Unknown;
+
                 // Ayuv
                 case AV_PIX_FMT_AYUV64BE       : return PixelFormat.Ayuv64be;
                 case AV_PIX_FMT_AYUV64LE       : return PixelFormat.Ayuv64le;
@@ -162,6 +165,9 @@ namespace Carbon.Media
         {
             switch (format)
             {
+                // Unknown
+                case PixelFormat.Unknown       : return AV_PIX_FMT_NONE;
+
                 // Ayuv
                 case PixelFormat.Ayuv64be      : return AV_PIX_FMT_AYUV64BE;
                 case PixelFormat.Ayuv64le      : return AV_PIX_FMT_AYUV64LE;
