@@ -33,6 +33,7 @@
         Amr    = 2016, // Adaptive Multi-Rate ACELP
         Ape    = 2018, // Monkey's Audio (APE)
         Flac   = 2105, // Free Lossless Audio Codec
+        M4a    = 2290, // 
         Mp1    = 2300, // MPEG-1 Audio Layer I
         Mp2    = 2301, // MPEG-1 Audio Layer II
         Mp3    = 2302, // MPEG-1 Audio Layer III
