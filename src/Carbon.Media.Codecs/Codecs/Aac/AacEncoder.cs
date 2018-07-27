@@ -1,4 +1,4 @@
-﻿using System;
+﻿using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
@@ -32,5 +32,12 @@ namespace Carbon.Media.Codecs
         public override SampleFormat[] SampleFormats => sampleFormats;
 
         public override int[] SampleRates => sampleRates;
+        
+        public override string GetFilterGraph()
+        {
+            string sampleFormat = ffmpeg.av_get_sample_fmt_name(Context.SampleFormat.ToAVFormat());
+
+            return $"aresample={Context.SampleRate},aformat=sample_fmts={sampleFormat}:channel_layouts=stereo,asetnsamples=n=1024:p=0";
+        }
     }
 }
