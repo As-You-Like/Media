@@ -10,7 +10,19 @@ namespace Carbon.Media.Codecs
             this.SampleRate = 48000;
         }
 
-        // Note: delays lower then 20ms will reduce quality
+        // NOTE: delays lower then 20ms will reduce quality
         public TimeSpan Delay { get; set; }
+        
+        internal AvDictionary ToOptions()
+        {
+            var options = new AvDictionary();
+            
+            if (BitRate != null)
+            {
+                options.Set("b", BitRate.Value.Value); // in bits per second
+            }
+
+            return options;
+        }
     }
 }
