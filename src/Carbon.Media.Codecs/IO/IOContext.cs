@@ -9,7 +9,7 @@ namespace Carbon.Media.IO
     {
         private readonly Stream stream;
 
-        const int defaultBufferSize = 16384 * 2;
+        const int defaultBufferSize = 16384;
         readonly byte* buffer;
 
         private readonly avio_alloc_context_read_packet read;
@@ -55,11 +55,19 @@ namespace Carbon.Media.IO
 
         int Read(void* opaque, byte* buf, int bufferSize)
         {
-            // Console.Write("read" + " " + bufferSize);
+            if (stream.Position >= stream.Length)
+            {
+                return ffmpeg.AVERROR_EOF;
+            }
 
             Span<byte> buffer = new Span<byte>(buf, bufferSize);
 
-            return stream.Read(buffer);
+            int result = stream.Read(buffer);
+
+            // Console.WriteLine("read" + " " + bufferSize + " / " + result + " | " + stream.Position);
+            
+            return result;
+
         }
 
         long Seek(void* opaque, long offset, int whence)
