@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 
 using FFmpeg.AutoGen;
 
@@ -13,7 +12,9 @@ namespace Carbon.Media.IO
         const int defaultBufferSize = 16384 * 2;
         readonly byte* buffer;
 
-        private readonly byte[] temp = new byte[defaultBufferSize];
+        private readonly avio_alloc_context_read_packet read;
+        private readonly avio_alloc_context_write_packet write;
+        private readonly avio_alloc_context_seek seek;
 
         public IOContext(Stream stream, bool writable = false)
         {
@@ -23,14 +24,19 @@ namespace Carbon.Media.IO
 
             buffer = (byte*)ffmpeg.av_malloc(defaultBufferSize + paddingLength);
 
+            // reference to prevent garbage collection
+            read = Read;
+            write = Write;
+            seek = Seek;
+
             Pointer = ffmpeg.avio_alloc_context(
                 buffer       : buffer,
                 buffer_size  : defaultBufferSize,
                 write_flag   : writable ? 1 : 0,
                 opaque       : null,
-                read_packet  : (avio_alloc_context_read_packet)Read,
-                write_packet : (avio_alloc_context_write_packet)Write,
-                seek         : (avio_alloc_context_seek)Seek
+                read_packet  : read,
+                write_packet : write,
+                seek         : seek
             );
             
             Pointer->seekable = ffmpeg.AVIO_SEEKABLE_NORMAL | ffmpeg.AVIO_SEEKABLE_TIME;
@@ -40,13 +46,9 @@ namespace Carbon.Media.IO
 
         int Write(void* opaque, byte* buf, int bufferSize)
         {
-            // Console.WriteLine("write" + " " + bufferSize);
+            var span = new ReadOnlySpan<byte>(buf, bufferSize);
 
-            Marshal.Copy((IntPtr)buf, temp, 0, bufferSize);
-
-            stream.Write(temp, 0, bufferSize);
-
-            // Console.WriteLine("-written");
+            stream.Write(span);
 
             return bufferSize;
         }
@@ -55,18 +57,13 @@ namespace Carbon.Media.IO
         {
             // Console.Write("read" + " " + bufferSize);
 
-            // Console.WriteLine(bufferSize + "/" + defaultBufferSize);
+            Span<byte> buffer = new Span<byte>(buf, bufferSize);
 
-            int read = stream.Read(temp.AsSpan(0, bufferSize));
-
-            Marshal.Copy(temp, 0, (IntPtr)buf, read);
-
-            return read;
+            return stream.Read(buffer);
         }
 
         long Seek(void* opaque, long offset, int whence)
         {
-
             Console.WriteLine("seek: " + (SeekFlags)whence + "/" + (SeekOrigin)whence);
 
             if (whence == ffmpeg.AVSEEK_SIZE)
