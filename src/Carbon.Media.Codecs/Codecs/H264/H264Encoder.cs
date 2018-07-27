@@ -4,12 +4,12 @@ namespace Carbon.Media.Codecs
 {
     public sealed class H264Encoder : VideoEncoder
     {
-        private readonly H264EncoderOptions options;
+        private readonly H264EncodingParameters options;
 
-        public H264Encoder(H264EncoderOptions options)
+        public H264Encoder(H264EncodingParameters paramaters)
              : base(CodecId.H264)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.options = paramaters ?? throw new ArgumentNullException(nameof(paramaters));
         }
     }
 }

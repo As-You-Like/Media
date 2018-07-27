@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Codecs
 {
-    public class H264EncoderOptions : VideoEncodingParameters
+    public sealed class H264EncodingParameters : VideoEncodingParameters
     {
         public EntropyEncoding EntropyCoder { get; set; }
 
