@@ -12,8 +12,16 @@ namespace Carbon.Media.Processors.Tests
         [InlineData("png",  FormatId.Png,  "image/png")]
         [InlineData("webp", FormatId.WebP, "image/webp")]
 
+        // Audio
+        [InlineData("aac",  FormatId.Aac,  "audio/aac")]
+        [InlineData("m4a",  FormatId.M4a,  "audio/mp4")]
+        [InlineData("mp3",  FormatId.Mp3,  "audio/mpeg")]
+        // [InlineData("oga",  FormatId.Oga,  "audio/ogg")]
+        [InlineData("opus", FormatId.Opus, "audio/opus")]
+
         // Videos
         [InlineData("mp4", FormatId.Mp4, "video/mp4")]
+
         public void A(string name, FormatId format, string mime)
         {
             var encode = Encode.Parse($"{name}::encode(quality:95)");
