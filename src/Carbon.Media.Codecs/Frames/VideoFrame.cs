@@ -8,13 +8,14 @@ namespace Carbon.Media
         private byte_ptrArray4 planePointers;
         private int_array4 linesizes;
 
+        public VideoFrame(VideoFormatInfo format)
+            : this(format.PixelFormat, format.Width, format.Height) { }
+
         public VideoFrame(PixelFormat pixelFormat, int width, int height)
         {
-            if (width <= 0)
-                throw new ArgumentException("Must be > 0", nameof(width));
-
-            if (height <= 0)
-                throw new ArgumentException("Must be > 0", nameof(height));
+            if (pixelFormat == default) throw new ArgumentException("Must not be Unknown", nameof(pixelFormat));
+            if (width <= 0) throw new ArgumentException("Must be > 0", nameof(width));
+            if (height <= 0) throw new ArgumentException("Must be > 0", nameof(height));
 
             Format = pixelFormat;
             Width  = width;
@@ -28,11 +29,10 @@ namespace Carbon.Media
 
             var format = VideoFormatHelper.Get(pixelFormat, width, height);
 
-            Strides = format.Strides;
+            const int align = 8;
 
-            var bufferSize = format.GetBufferSize();
-
-            Memory = Buffer.Allocate(bufferSize);
+            Strides = format.GetStrides(align); 
+            Memory  = Buffer.Allocate(format.GetBufferSize(align));
 
             // Fill the pointers
            
@@ -46,59 +46,28 @@ namespace Carbon.Media
                 pixelFormat.ToAVFormat(),
                 width,
                 height,
-                1           // align = 8 ?
+                align
             );
-
-
-            /*
-            ffmpeg.av_image_fill_pointers(
-                data      : ref planeArray,                     // pointers array to be filled with the pointer for each image plane
-                pix_fmt   : (AVPixelFormat)pointer->format,        
-                height    : Height,
-                ptr       : (byte*)Memory.Pointer,              // the pointer to a buffer which will contain the image
-                linesizes : GetStridesArray()
-            );
-            */
         }
 
-        public void Update(IntPtr planeData, int planeIndex = 0)
+        public void Update(byte* planeData, int planeIndex = 0)
         {
             if (planeIndex < 0 || planeIndex >= Strides.Length)
             {
                 throw new ArgumentOutOfRangeException("out of range");
             }
 
-            var bytewidth = ffmpeg.av_image_get_linesize((AVPixelFormat)pointer->format, Width, planeIndex);
+            var lineByteCount = ffmpeg.av_image_get_linesize((AVPixelFormat)pointer->format, Width, planeIndex);
 
             ffmpeg.av_image_copy_plane(
-                dst          : PlaneDataPointers[(uint)planeIndex],
+                dst          : planePointers[(uint)planeIndex],
                 dst_linesize : Strides[planeIndex],
-                src          : (byte*)planeData,
+                src          : planeData,
                 src_linesize : Strides[planeIndex],
-                bytewidth    : bytewidth,
+                bytewidth    : lineByteCount,
                 height       : Height
             );
         }
-
-        /*
-        public void Sync()
-        {
-            var planeArray   = GetPlanesArray();
-            var stridesArray = GetStridesArray();
-
-            ffmpeg.av_image_copy(
-                dst_data        : ref planeArray,
-                dst_linesizes   : ref stridesArray,
-                src_data        : pointer->extended_data,
-                src_linesizes   : pointer->linesize,
-                pix_fmt         : (AVPixelFormat)pointer->format,
-                width           : Width,
-                height          : Height
-
-            );
-            
-        }
-        */
 
         public PixelFormat Format { get; }
 
@@ -106,13 +75,15 @@ namespace Carbon.Media
 
         public int Height { get; }
 
+        public int[] Strides { get; }
+
         /// <summary>
         /// The order the frame is encoded within the bitstream (coded picture number)
         /// </summary>
         public long CodedIndex => pointer->coded_picture_number;
 
         /// <summary>
-        /// The order the frame is presented (e.g. display picture number)
+        /// The order the frame is presented
         /// </summary>
         public long PresentationIndex => pointer->display_picture_number;
 
@@ -134,15 +105,15 @@ namespace Carbon.Media
         public AVColorSpace ColorSpace
         {
             get => pointer->colorspace;
-            set => pointer->colorspace = value;
+            // set => pointer->colorspace = value;
         }
 
         /// <summary>
         /// The length (size) of each picture line (plane?)
         /// </summary>
-        public int[] Strides { get; }
+        // public int[] Strides { get; }
 
-        public int_array4 LineSizes => linesizes;
+        // public int_array4 LineSizes => linesizes;
 
         // Pointers to the individual planes
         public byte_ptrArray4 PlaneDataPointers => planePointers;
@@ -155,13 +126,4 @@ namespace Carbon.Media
 
         // IsKeyFrame
     }
-
-    /*
-    public class Plane
-    {
-        public IntPtr Pointer { get; set; }
-
-        public int Stride { get; set; }
-    }
-    */
 }
