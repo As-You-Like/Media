@@ -21,6 +21,11 @@ namespace Carbon.Media
             return ffmpeg.av_image_get_buffer_size(format.PixelFormat.ToAVFormat(), format.Width, format.Height, align);
         }
 
+        public static int[] GetStrides(this VideoFormatInfo format, int align = 8)
+        {
+            return GetStrides(format.PixelFormat, format.Width, align);
+        }
+
         public static int GetBufferSize(PixelFormat pixelFormat, int width, int height, int align = 8)
         {
             return ffmpeg.av_image_get_buffer_size(pixelFormat.ToAVFormat(), width, height, align);
