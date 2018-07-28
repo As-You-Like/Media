@@ -11,6 +11,8 @@ namespace Carbon.Media.Processors
 
         public int? PageNumber { get; set; }
 
+        public int? FrameNumber { get; set; }
+
         public string BackgroundColor { get; set; }
 
         // 1. Flip
@@ -108,7 +110,7 @@ namespace Carbon.Media.Processors
                 }
                 else if (transform is FrameFilter frame)
                 {
-                    pipeline.PageNumber = frame.Number;
+                    pipeline.FrameNumber = frame.Number;
                 }
                 else if (transform is BackgroundFilter background)
                 {
@@ -290,6 +292,10 @@ namespace Carbon.Media.Processors
                     case PageFilter page:
                         result.PageNumber = page.Number;
                         break;
+                    case FrameFilter frame:
+                        result.FrameNumber = frame.Number;
+                        break;
+
                     case BackgroundFilter bg:
                         result.BackgroundColor = bg.Color;
                         break;
@@ -341,6 +347,13 @@ namespace Carbon.Media.Processors
                 Encode.WriteTo(sb);
 
                 return sb.ToString();
+            }
+
+            if (FrameNumber != null)
+            {
+                sb.Append("|>frame(");
+                sb.Append(FrameNumber);
+                sb.Append(')');
             }
 
             if (PageNumber != null)
