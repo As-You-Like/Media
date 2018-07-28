@@ -11,21 +11,22 @@ namespace Carbon.Media
     public unsafe class Packet : IDisposable
     {
         private AVPacket* pointer;
-        private Rational timebase = Timebases.Ffmpeg;
 
         private Packet(AVPacket* pointer)
         {
-            if (pointer == null)
-                throw new ArgumentNullException(nameof(pointer));
+            if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
             this.pointer = pointer;
         }
 
         public AVPacket* Pointer => pointer;
 
-        public Buffer Memory => pointer->buf != null
-            ? new Buffer((IntPtr)pointer->data, pointer->size)
-            : null;
+        public Buffer GetMemory()
+        {
+            if (pointer == null || pointer->buf == null) return null;
+
+            return new Buffer((IntPtr)pointer->data, pointer->size);
+        }
 
         public int StreamIndex
         {
@@ -45,25 +46,15 @@ namespace Carbon.Media
             set => pointer->pts = value;
         }
 
-        /// <summary>
-        /// Decompression timestamp
-        /// </summary>
-        public Timestamp DecodeTimestamp => new Timestamp(Dts, timebase);
-
-        /// <summary>
-        /// Presentation timestamp
-        /// </summary>
-        public Timestamp PresentTimestamp => new Timestamp(Pts, timebase);
-
-        public Timestamp Duration
+        public long Duration
         {
-            get => new Timestamp(pointer->duration, timebase);
-            set => pointer->duration = value.Value;
+            get => pointer->duration;
+            set => pointer->duration = value;
         }
 
-        public Timestamp ConvergenceDuration
+        public long ConvergenceDuration
         {
-            get => new Timestamp(pointer->convergence_duration, timebase);
+            get => pointer->convergence_duration;
         }
 
         /// <summary>
@@ -76,25 +67,17 @@ namespace Carbon.Media
             set => pointer->pos = value;
         }
 
-        public Rational TimeBase
-        {
-            get => timebase;
-            set => timebase = value;
-        }
-
         public void UpdateTimebase(Rational sourceTimeBase, Rational targetTimeBase)
         {
-            timebase = targetTimeBase;
-
             Pts      = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
             Dts      = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
-            Duration = new Timestamp(pointer->duration, sourceTimeBase).Transform(targetTimeBase);
+            Duration = new Timestamp(pointer->duration, sourceTimeBase).Transform(targetTimeBase).Value;
         }
 
         // frees the packet for reuse
-        public void Clear()
+        public void Unref()
         {
-            if (pointer->buf != null)
+            if (pointer != null && pointer->buf != null)
             {
                 ffmpeg.av_packet_unref(pointer);
             }
@@ -135,26 +118,24 @@ namespace Carbon.Media
             Dispose(true);
         }
 
+        private void Dispose(bool disposing)
+        {
+            if (pointer == null) return;
+            
+            Console.WriteLine("Disposing Packet");
+                
+            fixed (AVPacket** p = &pointer)
+            {
+                // unreferences & frees the packet
+                ffmpeg.av_packet_free(p);
+            }
+                
+            pointer = null;
+        }
+
         ~Packet()
         {
             Dispose(false);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (pointer != null)
-            {
-                Console.WriteLine("Disposing Packet");
-
-                Clear();
-
-                fixed (AVPacket** p = &pointer)
-                {
-                    ffmpeg.av_packet_free(p);
-                }
-
-                pointer = null;
-            }
         }
     }
 }
