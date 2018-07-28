@@ -11,19 +11,19 @@ namespace Carbon.Media
     {
         public static ExifOrientation Parse(string text)
         {
-            if (char.IsDigit(text[0]))
+            if (text.Length == 1 && char.IsDigit(text[0]))
             {
-                switch (int.Parse(text))
+                switch (text[0])
                 {
-                    case 0: return None;
-                    case 1: return Horizontal;
-                    case 2: return FlipHorizontal;
-                    case 3: return Rotate180;
-                    case 4: return FlipVertical;
-                    case 5: return Transpose;
-                    case 6: return Rotate90;
-                    case 7: return Transverse;
-                    case 8: return Rotate270;
+                    case '0': return None;
+                    case '1': return Horizontal;
+                    case '2': return FlipHorizontal;
+                    case '3': return Rotate180;
+                    case '4': return FlipVertical;
+                    case '5': return Transpose;
+                    case '6': return Rotate90;
+                    case '7': return Transverse;
+                    case '8': return Rotate270;
                 }
 
                 throw new Exception("Invalid orientation code:" + text);
