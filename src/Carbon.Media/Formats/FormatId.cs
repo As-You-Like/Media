@@ -47,7 +47,7 @@
         Wma    = 2805, // Windows Media Audio
         Wmal   = 2806, // Windows Media Audio Lossless
         Wv     = 2850, // WavPack
-
+        
         // Image Formats
         _3fr = 4005, // Hasselblad
         Apng = 4040, // Animated PNG

@@ -61,6 +61,7 @@ namespace Carbon.Media
                 // Audio
                 case Aac  : return Mime.Aac;
                 case Flac : return Mime.Flac;
+                case M4a  : return Mime.M4a; 
                 case Mp3  : return Mime.Mp3;
                 case Opus : return Mime.Opus;
 

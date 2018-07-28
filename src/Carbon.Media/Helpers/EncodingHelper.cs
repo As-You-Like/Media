@@ -21,6 +21,7 @@ namespace Carbon.Media.Processors
                 // audio
                 case "aac"    : return (Aac, default);
                 case "flac"   : return (Flac, default);
+                case "m4a"    : return (M4a, default);
                 case "mp3"    : return (Mp3, default);
                 case "opus"   : return (Opus, default);
 
