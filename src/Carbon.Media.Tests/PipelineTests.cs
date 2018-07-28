@@ -34,6 +34,26 @@ namespace Carbon.Media.Processors.Tests
         }
 
         [Fact]
+        public void Frame()
+        {
+            var pipeline = MediaPipeline.Parse("blob#pipe|>frame(3)|>JPEG::encode");
+
+            Assert.Equal("blob#pipe|>frame(3)|>JPEG::encode", pipeline.Canonicalize());
+
+            Assert.Equal(3, pipeline.FrameNumber);
+        }
+
+        [Fact]
+        public void Page()
+        {
+            var pipeline = MediaPipeline.Parse("blob#11|>page(3)|>crop(0,0,200,200)|>JPEG::encode");
+
+            Assert.Equal("blob#11|>page(3)|>crop(0,0,200,200)|>JPEG::encode", pipeline.Canonicalize());
+
+            Assert.Equal(3, pipeline.PageNumber);
+        }
+
+        [Fact]
         public void CropExact()
         {
             var pipeline = MediaPipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode");
@@ -166,7 +186,6 @@ namespace Carbon.Media.Processors.Tests
 
             Assert.Equal("blob#1|>rotate(90deg)|>crop(3,0,40,100)|>scale(360,480,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
-
 
         [Fact]
         public void Crop4()
