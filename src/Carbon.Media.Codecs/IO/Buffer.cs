@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Carbon.Media
 {
-    public unsafe class Buffer : IDisposable
+    public unsafe sealed class Buffer : IDisposable
     {
         private IntPtr pointer;
         private int length;
@@ -47,12 +47,11 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            if (pointer != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(pointer); //  FreeCoTaskMem = COMHeap
+            if (pointer == IntPtr.Zero) return;
 
-                pointer = IntPtr.Zero;
-            }
+            Marshal.FreeHGlobal(pointer); //  FreeCoTaskMem = COMHeap
+
+            pointer = IntPtr.Zero;
         }
 
         ~Buffer()

@@ -53,9 +53,13 @@ namespace Carbon.Media
         // public Dictionary<string, string> Metadata { get; set; }
 
         // Prepares the frame for reuse
-        public void Clear()
+        public void Unref()
         {
             ffmpeg.av_frame_unref(pointer);
+        }
+
+        internal virtual void OnDisposing()
+        {
         }
 
         public void Dispose()
@@ -67,22 +71,23 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            if (pointer != null)
+            if (pointer == null) return;
+            
+            fixed (AVFrame** p = &pointer)
             {
-                fixed (AVFrame** p = &pointer)
-                {
-                    ffmpeg.av_frame_free(p);
-                }
-
-                Memory?.Dispose();
-
-                pointer = null;
+                ffmpeg.av_frame_free(p);
             }
+
+            Memory?.Dispose();
+
+            OnDisposing();
+
+            pointer = null;
         }
 
         ~Frame()
         {
-            Dispose(true);
+            Dispose(false);
         }
     }
 }

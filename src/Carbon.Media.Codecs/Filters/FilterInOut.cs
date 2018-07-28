@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe struct FilterInOut
+    public unsafe struct FilterInOut : IDisposable
     {
         public FilterInOut(string name, FilterContext filterContext)
         {
@@ -39,10 +38,19 @@ namespace Carbon.Media
 
         public void Dispose()
         {
+            Dispose(true);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (Pointer == null) return;
+
             fixed (AVFilterInOut** p = &Pointer)
             {
                 ffmpeg.avfilter_inout_free(p);
             }
+
+            Pointer = null;
         }
     }
 }

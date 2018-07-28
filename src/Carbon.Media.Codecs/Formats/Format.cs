@@ -5,9 +5,11 @@ namespace Carbon.Media.Formats
 {
     public abstract class Format : IDisposable
     {
+        private bool isDisposed = false;
+
         protected Format(FormatId id)
         {
-            Id      = id;
+            Id = id;
             Context = new FormatContext();
         }
 
@@ -37,32 +39,25 @@ namespace Carbon.Media.Formats
             return null;
         }
 
-        public void Dump(int streamIndex)
+        public unsafe void Dump(int streamIndex)
         {
-            unsafe
-            {
-                ffmpeg.av_dump_format(Context.Pointer, streamIndex, null, Type == FormatType.Demuxer ? 1 : 0);
-            }
+            ffmpeg.av_dump_format(Context.Pointer, streamIndex, null, Type == FormatType.Demuxer ? 1 : 0);
         }
 
-        public virtual void Cleanup()
-        {
-        }
+
+        internal virtual void OnDisposing() { }
 
         // public void Probe() { }
-        
+
         public virtual void Dispose()
         {
+            if (isDisposed) return;
+
             Context?.Dispose();
 
-            /*
-            foreach (var stream in Streams)
-            {
-                stream.Dispose();
-            }
-            */
+            OnDisposing();
 
-            Cleanup();
+            isDisposed = true;
         }
     }
 }

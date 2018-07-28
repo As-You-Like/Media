@@ -30,20 +30,23 @@ namespace Carbon.Media.Formats
 
             int result = ffmpeg.av_read_frame(Context.Pointer, tempPacket.Pointer);
 
-            if (result == 0)
+            if (result == 0) // OK
             {
-                var outputStream = Context.Streams[tempPacket.StreamIndex];
+                // AVPacket.pts, AVPacket.dts and AVPacket.duration timing information will be set if known.
+                // They may also be unset (i.e. AV_NOPTS_VALUE for pts/dts, 0 for duration) if the stream does not provide them.
+                // The timing information will be in AVStream.time_base units, 
+                // i.e. it has to be multiplied by the timebase to convert them to seconds.
 
-                tempPacket.TimeBase = outputStream.TimeBase; // set the timebase
+                MediaStream outputStream = Context.Streams[tempPacket.StreamIndex];
+                
+                // tempPacket.TimeBase = outputStream.TimeBase; // set the timebase
 
                 packet = tempPacket;
 
                 return true;
             }
-            
-            // 0 if OK, < 0 on error or end of file
-            
-            if (result == -541478725) // EOF
+                        
+            else if (result == -541478725) // EOF
             {
                 IsEof = true;
 
@@ -78,7 +81,7 @@ namespace Carbon.Media.Formats
             return new Demuxer(context);
         }
 
-        public override void Cleanup()
+        internal override void OnDisposing()
         {
             tempPacket?.Dispose();
         }

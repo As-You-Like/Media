@@ -8,10 +8,7 @@ namespace Carbon.Media
     {
         public FilterContext(AVFilterContext* pointer)
         {
-            if (pointer == null)
-            {
-                throw new ArgumentNullException(nameof(pointer));
-            }
+            if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
             Pointer = pointer;
         }
@@ -33,6 +30,6 @@ namespace Carbon.Media
         public void SetOption(string name, long value)
         {
             ffmpeg.av_opt_set_int(Pointer, name, value, ffmpeg.AV_OPT_SEARCH_CHILDREN);
-        }
+        }        
     }
 }

@@ -115,7 +115,6 @@ namespace Carbon.Media
                 graph_ctx : pointer
             ).EnsureSuccess();
 
-
             Console.WriteLine("added source:" + Marshal.PtrToStringAnsi((IntPtr)filterContext->name));
 
             return new FilterContext(filterContext);
@@ -181,7 +180,6 @@ namespace Carbon.Media
                     decoder.Context.PixelFormat,
                     decoder.Context.Width,
                     decoder.Context.Height,
-                    null,
                     decoder.Context.TimeBase,
                     decoder.Context.AspectRatio
                 ));
@@ -236,29 +234,40 @@ namespace Carbon.Media
             return graph;
         }
 
-
-
         public string Dump()
         {
             var data = ffmpeg.avfilter_graph_dump(pointer, null);
 
             return Marshal.PtrToStringAnsi((IntPtr)data);
-
         }
+
         public void Dispose()
         {
-            if (pointer != null)
+            GC.SuppressFinalize(this);
+
+            Dispose(true);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (pointer == null) return;
+
+            Console.WriteLine("Disposing FilterGraph");
+
+            fixed (AVFilterGraph** p = &pointer)
             {
-                fixed (AVFilterGraph** p = &pointer)
-                {
-                    ffmpeg.avfilter_graph_free(p);
-                }
-
-                Inputs.Dispose();
-                Outputs.Dispose();
-
-                pointer = null;
+                ffmpeg.avfilter_graph_free(p);
             }
+
+            Inputs.Dispose();
+            Outputs.Dispose();
+
+            pointer = null;
+        }
+
+        ~FilterGraph()
+        {
+            Dispose(false);
         }
     }
 }

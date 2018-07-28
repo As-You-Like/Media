@@ -9,8 +9,8 @@ namespace Carbon.Media.IO
     {
         private readonly Stream stream;
 
-        const int defaultBufferSize = 16384;
-        readonly byte* buffer;
+        const int defaultBufferSize = 32768;
+        private readonly byte* buffer;
 
         private readonly avio_alloc_context_read_packet read;
         private readonly avio_alloc_context_write_packet write;
@@ -72,7 +72,7 @@ namespace Carbon.Media.IO
 
         long Seek(void* opaque, long offset, int whence)
         {
-            Console.WriteLine("seek: " + (SeekFlags)whence + "/" + (SeekOrigin)whence);
+            // Console.WriteLine("seek: " + offset + ":" + (SeekFlags)whence + "/" + (SeekOrigin)whence);
 
             if (whence == ffmpeg.AVSEEK_SIZE)
             {
@@ -81,6 +81,8 @@ namespace Carbon.Media.IO
 
             if (!stream.CanSeek)
             {
+                Console.WriteLine("cannot seek");
+
                 return -1;
             }
 
@@ -98,19 +100,18 @@ namespace Carbon.Media.IO
 
         public void Dispose(bool disposing)
         {
+            if (Pointer == null) return;
+            
             Console.WriteLine("Disposing IOContext");
 
-            if (Pointer != null)
+            ffmpeg.av_freep(&Pointer->buffer);
+
+            fixed (AVIOContext** p = &Pointer)
             {
-                ffmpeg.av_freep(&Pointer->buffer);
-
-                fixed (AVIOContext** p = &Pointer)
-                {
-                    ffmpeg.avio_context_free(p);
-                }
-
-                Pointer = null;
+                ffmpeg.avio_context_free(p);
             }
+
+            Pointer = null;
         }
 
         ~IOContext()

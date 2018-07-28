@@ -119,7 +119,7 @@ namespace Carbon.Media.Formats
             Context.Pointer->pb = ioContext.Pointer;
         }
 
-        internal override void Cleanup()
+        internal override void OnDisposing()
         {
             ioContext?.Dispose();
 

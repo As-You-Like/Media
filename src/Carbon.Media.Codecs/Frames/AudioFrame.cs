@@ -4,18 +4,20 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe class AudioFrame : Frame
+    public unsafe sealed class AudioFrame : Frame
     {
         public AudioFrame() { }
 
         private readonly AudioFormatInfo format;
+        private void* channelPlanePointers;
 
         public AudioFrame(AudioFormatInfo format, int sampleCount)
         {
-            this.format = format;
+            this.format = format ?? throw new ArgumentNullException(nameof(format));
+
             Memory = Buffer.Allocate(AudioFormatHelper.GetBufferSize(format, sampleCount));
 
-            void* channelPlanePointers = ffmpeg.av_malloc((ulong)IntPtr.Size * 8);
+            channelPlanePointers = ffmpeg.av_malloc((ulong)IntPtr.Size * 8);
             
             new Span<IntPtr>(channelPlanePointers, 8).Clear(); // ensure the pointers are clear
 
@@ -116,6 +118,13 @@ namespace Carbon.Media
             );
         }
 
-        // Dispose (dataPlanes)
+        internal override void OnDisposing()
+        {
+            // Console.WriteLine("Disposing AudioFrame");
+
+            ffmpeg.av_free(channelPlanePointers);
+
+            channelPlanePointers = null;
+        }
     }
 }

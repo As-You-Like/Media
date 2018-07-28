@@ -64,7 +64,7 @@ namespace Carbon.Media
 
             fixed (AVFormatContext** ps = &pointer)
             {
-                ffmpeg.avformat_open_input(ps, "", inputFormat, null).EnsureSuccess();
+                ffmpeg.avformat_open_input(ps, url: "", inputFormat, options: null).EnsureSuccess();
             }
 
             SetupStreams();
@@ -98,21 +98,29 @@ namespace Carbon.Media
             Streams = streams;
         }
         
-        public void Seek(long streamIndex, long position)
+        /*
+        public void Seek(int streamIndex, long position)
         {
-            var time = new Timestamp(position, Streams[0].TimeBase);
+            var time = new Timestamp(position, Streams[streamIndex].TimeBase);
 
-             // ffmpeg.avformat_seek_file(pointer, streamIndex, time )
+             ffmpeg.avformat_seek_file(pointer, streamIndex, time )
         }
+        */
 
         public bool CanSeek => pointer->pb->seekable == 1;
 
         public void Dispose()
         {
+            if (pointer == null) return;
+
+            Console.WriteLine("Disposing FormatContext");
+
             fixed (AVFormatContext** p = &pointer)
             {
                 ffmpeg.avformat_close_input(p);
             }
+
+            pointer = null;
         }
     }
 }
