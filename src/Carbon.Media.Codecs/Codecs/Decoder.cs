@@ -19,16 +19,15 @@ namespace Carbon.Media.Codecs
         /// </summary>
         public OperationStatus TrySendPacket(Packet packet)
         {
-            var result = ffmpeg.avcodec_send_packet(Context.Pointer, packet.Pointer);
+            int result = ffmpeg.avcodec_send_packet(Context.Pointer, packet.Pointer);
 
-            if (result == 0) return OperationStatus.Ok;
-            
             switch (result)
             {
-                case -11        : throw new FFmpegException(result); // Internal buffer full
+                case 0          : return OperationStatus.Ok;
                 case -541478725 : return OperationStatus.EOF;
             }
 
+            // -11 (Internal buffer is full)
             throw new FFmpegException(result);
         }
 

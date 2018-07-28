@@ -17,11 +17,11 @@ namespace Carbon.Media.Processing
             this.profile = profile ?? throw new ArgumentNullException(nameof(profile));
         }
 
-        public void Start(Stream inputStream, Stream outputStream, CancellationToken ct = default)
+        public unsafe void Process(Stream inputStream, Stream outputStream, CancellationToken ct = default)
         {
-            var audioFrame = new AudioFrame();
             var filteredFrame = new AudioFrame();
-
+            
+            using (var packet = Packet.Allocate())
             using (var input = new IOContext(inputStream))
             using (var output = new IOContext(outputStream, true))
             using (var demuxer = Demuxer.Open(input))
@@ -29,8 +29,8 @@ namespace Carbon.Media.Processing
             {
                 muxer.Open(output);
 
-                var audioStream = (AudioStream)demuxer.GetStream(MediaType.Audio);
-                var audioFormat = new AudioFormatInfo(audioStream.SampleFormat, audioStream.ChannelLayout, audioStream.SampleRate);
+                var audioStream  = (AudioStream)demuxer.GetStream(MediaType.Audio);
+                var audioFormat  = new AudioFormatInfo(audioStream.SampleFormat, audioStream.ChannelLayout, audioStream.SampleRate);
                 var audioDecoder = (AudioDecoder)audioStream.Codec;
                 var audioEncoder = GetAudioEncoder(audioStream);
 
@@ -38,6 +38,14 @@ namespace Carbon.Media.Processing
                 // var videoDecoder = (VideoDecoder)videoStream.Codec;
                 // var videoFrame   = new VideoFrame(videoStream.PixelFormat, videoStream.Width, videoStream.Height);
                 // var videoEncoder = new H264Encoder(new H264EncodingParameters());
+
+                /*
+                Console.WriteLine(audioStream.SampleFormat 
+                    + " " + audioStream.ChannelCount
+                    + "|" + audioStream.SampleRate 
+                    + "|" + audioStream.Duration.Value.TimeSpan.ToString()
+                );
+                */
 
                 audioEncoder.Open();
 
@@ -51,23 +59,43 @@ namespace Carbon.Media.Processing
                     filterSpecification: audioEncoder.GetFilterGraph()
                 );
 
-                Console.WriteLine(audioGraph.Dump());
+                // Console.WriteLine(audioGraph.Dump());
 
                 audioDecoder.Open(); // open the audio decoder
                 // videoDecoder.Open(); // open the video decoder
 
-                muxer.WriteHeader();
+                var options = new AvDictionary();
+
+
+                if (profile.Format == FormatId.M4a || profile.Format == FormatId.Mp4)
+                {
+                    // https://stackoverflow.com/questions/25688313/how-to-use-ffmpeg-faststart-flag-programmatically
+                    options.SetFlag("movflags", "faststart", 0);
+                }
+
+                muxer.WriteHeader(); // options
 
                 int frameNumber = 0;
 
-                while (demuxer.TryReadPacket(out var packet))
+                while (demuxer.TryReadPacket(packet))
                 {
                     ct.ThrowIfCancellationRequested();
 
                     if (packet.StreamIndex == audioStream.Index)
                     {
+                        // rescale the packet timebase
+                        /*
+                        ffmpeg.av_packet_rescale_ts(
+                            packet.Pointer,
+                            audioDecoder.Context.Pointer->time_base,
+                            audioEncoder.Context.Pointer->time_base
+                        );
+                        */
+
                         if (audioDecoder.TrySendPacket(packet) == OperationStatus.Ok)
                         {
+                            packet.Unref();
+
                             var af = new AudioFrame();
 
                             if (audioDecoder.TryGetFrame(af) == OperationStatus.Ok)
@@ -82,23 +110,24 @@ namespace Carbon.Media.Processing
 
                                         // av_rescale_q(samples_count, (AVRational){1, c->sample_rate}, c->time_base)
 
-                                        if (audioEncoder.TryGetPacket(out var encodedAudioPacket) == OperationStatus.Ok)
+                                        if (audioEncoder.TryGetPacket(packet) == OperationStatus.Ok)
                                         {
+                                            muxer.WritePacket(packet);
 
-                                            muxer.WritePacket(encodedAudioPacket);
+                                            packet.Unref();
                                         }
                                     }
+
+                                    filteredFrame.Unref();
+
+                                    frameNumber++;
                                 }
-
-                                audioFrame.Clear();
-                                filteredFrame.Clear();
-
-                                frameNumber++;
                             }
 
                             af.Dispose();
                         }
                     }
+
                     /*
                     else if (packet.StreamIndex == videoStream.Index)
                     {
@@ -110,33 +139,29 @@ namespace Carbon.Media.Processing
                     }
                     */
 
-                    packet.Clear();
+                    packet.Unref();
                 }
 
-                audioEncoder.Complete();
                 audioDecoder.Complete();
+                audioEncoder.Complete();
 
-                /*
-                // Get the remaining video frames
-                while (videoDecoder.TryGetFrame(videoFrame) == OperationStatus.Ok)
-                {
-                    Console.WriteLine("- drained video frame");
-                }
-                */
-
-                while (audioEncoder.TryGetPacket(out var audioPacket) == OperationStatus.Ok)
+                while (audioEncoder.TryGetPacket(packet) == OperationStatus.Ok)
                 {
                     Console.WriteLine("- writing final audio packet");
 
-                    muxer.WritePacket(audioPacket);
+                    muxer.WritePacket(packet);
 
-                    audioPacket.Clear();
+                    packet.Unref();
                 }
 
                 muxer.WriteTrailer();
 
-                audioFrame.Dispose();
                 audioGraph.Dispose();
+
+                filteredFrame.Dispose();
+
+                // audioDecoder.Dispose();
+                // audioEncoder.Dispose();
 
                 Console.WriteLine("done");
             }
@@ -155,6 +180,7 @@ namespace Carbon.Media.Processing
                         SampleRate = stream.SampleRate,
                         ChannelLayout = stream.ChannelLayout
                     });
+                case FormatId.M4a:
                 case FormatId.Mp4:
                 case FormatId.Aac:
                     return new AacEncoder(new AacEncodingParameters {
@@ -175,4 +201,5 @@ namespace Carbon.Media.Processing
 }
 
 // references
+// https://gist.github.com/Ruslan-B/43d3a4219f39b99f0c9685290dcd23cc
 // https://ffmpeg.org/doxygen/trunk/doc_2examples_2muxing_8c-example.html

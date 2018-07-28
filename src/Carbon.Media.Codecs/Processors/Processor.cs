@@ -18,7 +18,8 @@ namespace Carbon.Media.Processing
         public void Process(Stream inputStream, Stream outputStream)
         {
             // - build a filter graph from the pipeline (deinterlace, scale, etc)
-
+            
+            using (var packet = Packet.Allocate())
             using (var input = new IOContext(inputStream))
             using (var demuxer = Demuxer.Open(input)) // detects the format & create an AV context
             using (var muxer = new Muxer(FormatId.Mp4))
@@ -26,8 +27,8 @@ namespace Carbon.Media.Processing
                 muxer.WriteHeader();
 
                 // if the header is incomplete, fill in the missing details from the next few frames
-
-                while (demuxer.TryReadPacket(out var packet))
+                
+                while (demuxer.TryReadPacket(packet))
                 {
                     var stream = demuxer.Context.Streams[packet.StreamIndex];
 
@@ -38,7 +39,7 @@ namespace Carbon.Media.Processing
 
                     muxer.WritePacket(packet);
 
-                    packet.Clear();
+                    packet.Unref();
                 }
 
                 muxer.WriteTrailer();

@@ -12,46 +12,35 @@ namespace Carbon.Media.Codecs
         internal Encoder(AVCodecContext* context)
             : base(context, CodecType.Encoder) { }
 
-        // FilterContext?
-
         public OperationStatus TryEncode(Frame frame)
         {
             var result = ffmpeg.avcodec_send_frame(context.Pointer, frame.Pointer);
-
-            if (result == 0) return OperationStatus.Ok;
-
+            
             switch (result)
             {
+                case 0          : return OperationStatus.Ok;
                 case -11        : return OperationStatus.Again;
                 case -541478725 : return OperationStatus.EOF;
+                default         : throw new FFmpegException(result);
             }
-
-            throw new FFmpegException(result);
         }
 
         public void Complete()
         {
-            Console.WriteLine("Sending drain signal");
-
+            // Sends a drain single
             ffmpeg.avcodec_send_frame(context.Pointer, null);
         }
-
-        private readonly Packet tempPacket = Packet.Allocate();
         
-        public OperationStatus TryGetPacket(out Packet packet)
+        public OperationStatus TryGetPacket(Packet packet)
         {
-            var result = ffmpeg.avcodec_receive_packet(context.Pointer, tempPacket.Pointer);
-            
-            if (result == 0)
-            {
-                tempPacket.StreamIndex = Stream.Index;
+            var result = ffmpeg.avcodec_receive_packet(context.Pointer, packet.Pointer);
 
-                packet = tempPacket;
+            if (result == 0) // Success, we've recieved a compressed frame
+            {
+                packet.StreamIndex = Stream.Index;
 
                 return OperationStatus.Ok;
             }
-
-            packet = default;
 
             switch (result)
             {
@@ -60,11 +49,6 @@ namespace Carbon.Media.Codecs
             }
 
             throw new FFmpegException(result);
-        }
-
-        public override void Cleanup()
-        {
-            tempPacket?.Dispose();
         }
 
         #region Helpers

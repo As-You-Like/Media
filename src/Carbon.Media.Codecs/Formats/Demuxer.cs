@@ -21,14 +21,12 @@ namespace Carbon.Media.Formats
 
         public override FormatType Type => FormatType.Demuxer;
 
-        private readonly Packet tempPacket = Packet.Allocate();
-
         // Packets are either Video or Audio data
-        public bool TryReadPacket(out Packet packet)
+        public bool TryReadPacket(Packet packet)
         {
             if (IsEof) throw new EndOfStreamException("Cannot read past the end of stream");
 
-            int result = ffmpeg.av_read_frame(Context.Pointer, tempPacket.Pointer);
+            int result = ffmpeg.av_read_frame(Context.Pointer, packet.Pointer);
 
             if (result == 0) // OK
             {
@@ -37,11 +35,9 @@ namespace Carbon.Media.Formats
                 // The timing information will be in AVStream.time_base units, 
                 // i.e. it has to be multiplied by the timebase to convert them to seconds.
 
-                MediaStream outputStream = Context.Streams[tempPacket.StreamIndex];
+                MediaStream outputStream = Context.Streams[packet.StreamIndex];
                 
                 // tempPacket.TimeBase = outputStream.TimeBase; // set the timebase
-
-                packet = tempPacket;
 
                 return true;
             }
@@ -79,11 +75,6 @@ namespace Carbon.Media.Formats
             context.Open(source);
 
             return new Demuxer(context);
-        }
-
-        internal override void OnDisposing()
-        {
-            tempPacket?.Dispose();
         }
     }
 }
