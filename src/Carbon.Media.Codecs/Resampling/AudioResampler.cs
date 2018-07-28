@@ -4,28 +4,28 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs.Resampling
 {
-    public unsafe class AudioResampler : IDisposable
+    public unsafe sealed class AudioResampler : IDisposable
     {
         private SwrContext* pointer;
 
-        private readonly AudioFormatInfo inFormat;
-        private readonly AudioFormatInfo outFormat;
+        private readonly AudioFormatInfo sourceFormat;
+        private readonly AudioFormatInfo targetFormat;
 
-        public AudioResampler(AudioFormatInfo inFormat, AudioFormatInfo outFormat)
+        public AudioResampler(AudioFormatInfo sourceFormat, AudioFormatInfo targetFormat)
         {
             this.pointer = ffmpeg.swr_alloc();
-            this.inFormat = inFormat;
-            this.outFormat = outFormat;
+            this.sourceFormat = sourceFormat;
+            this.targetFormat = targetFormat;
 
             // In
-            ffmpeg.av_opt_set_int(pointer,        "in_channel_layout", (long)inFormat.ChannelLayout, 0);
-            ffmpeg.av_opt_set_int(pointer,        "in_sample_rate", inFormat.SampleRate, 0);
-            ffmpeg.av_opt_set_sample_fmt(pointer, "in_sample_fmt", inFormat.SampleFormat.ToAVFormat(), 0);
+            ffmpeg.av_opt_set_int(pointer,        "in_channel_layout",  (long)sourceFormat.ChannelLayout, 0);
+            ffmpeg.av_opt_set_int(pointer,        "in_sample_rate",     sourceFormat.SampleRate, 0);
+            ffmpeg.av_opt_set_sample_fmt(pointer, "in_sample_fmt",      sourceFormat.SampleFormat.ToAVFormat(), 0);
 
             // Out
-            ffmpeg.av_opt_set_int(pointer,        "out_channel_layout", (long)outFormat.ChannelLayout, 0);
-            ffmpeg.av_opt_set_int(pointer,        "out_sample_rate", outFormat.SampleRate, 0);
-            ffmpeg.av_opt_set_sample_fmt(pointer, "out_sample_fmt", outFormat.SampleFormat.ToAVFormat(), 0);
+            ffmpeg.av_opt_set_int(pointer,        "out_channel_layout", (long)targetFormat.ChannelLayout, 0);
+            ffmpeg.av_opt_set_int(pointer,        "out_sample_rate",    targetFormat.SampleRate, 0);
+            ffmpeg.av_opt_set_sample_fmt(pointer, "out_sample_fmt",     targetFormat.SampleFormat.ToAVFormat(), 0);
 
             // filter_size
             // phase_shift
@@ -34,50 +34,53 @@ namespace Carbon.Media.Codecs.Resampling
             ffmpeg.swr_init(pointer).EnsureSuccess();
         }
 
-        public void Convert(AudioFrame inFrame, AudioFrame outFrame)
+        public void Convert(AudioFrame source, AudioFrame target)
         {
-            int targetSamples = GetOutputSampleCount(inFrame.SampleCount);
+            int targetSamples = GetOutputSampleCount(source.SampleCount);
 
-            outFrame.Resize(targetSamples);
+            target.Resize(targetSamples);
             
             var sampleCount = ffmpeg.swr_convert(
                 s         : pointer,
-                @out      : outFrame.Pointer->extended_data,
+                @out      : target.Pointer->extended_data,
                 out_count : targetSamples,
-                @in       : inFrame.Pointer->extended_data, // pointer to the planes / data
-                in_count  : inFrame.SampleCount
+                @in       : source.Pointer->extended_data, // pointer to the planes / data
+                in_count  : source.SampleCount
             );
 
             if (sampleCount < 0) throw new FFmpegException(sampleCount);
 
-            outFrame.SampleCount      = sampleCount;
-            outFrame.Dts     = inFrame.Dts;
-            outFrame.Pts = inFrame.Pts;
-            outFrame.ChannelCount     = outFormat.ChannelCount;
-            outFrame.SampleRate       = outFormat.SampleRate;
-            outFrame.ChannelLayout    = outFormat.ChannelLayout;
-            outFrame.SampleFormat     = outFormat.SampleFormat;
+            target.SampleCount      = sampleCount;
+            target.Dts              = source.Dts;
+            target.Pts              = source.Pts;
+            target.ChannelCount     = targetFormat.ChannelCount;
+            target.SampleRate       = targetFormat.SampleRate;
+            target.ChannelLayout    = targetFormat.ChannelLayout;
+            target.SampleFormat     = targetFormat.SampleFormat;
 
             // TODO: Set the presentation time & duration
 
-            Console.WriteLine($"resampled {inFrame.SampleFormat} {inFrame.SampleCount} -> {outFormat.SampleFormat} {outFrame.SampleCount} | {sampleCount} | {outFrame.ChannelCount} | {outFrame.Memory.Length}");
+            Console.WriteLine($"resampled {source.SampleFormat} {source.SampleCount} -> {targetFormat.SampleFormat} {target.SampleCount} | {sampleCount} | {target.ChannelCount} | {target.Memory.Length}");
         }
 
         private int GetOutputSampleCount(int inSampleCount)
         {
-            long delaySampleCount = ffmpeg.swr_get_delay(pointer, inFormat.SampleRate);
+            long delaySampleCount = ffmpeg.swr_get_delay(pointer, sourceFormat.SampleRate);
 
             return (int)ffmpeg.av_rescale_rnd(
                 delaySampleCount + inSampleCount, 
-                outFormat.SampleRate,
-                inFormat.SampleRate,
+                targetFormat.SampleRate,
+                sourceFormat.SampleRate,
                 AVRounding.AV_ROUND_UP
             );
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
-          
+            fixed (SwrContext** p = &pointer)
+            {
+                ffmpeg.swr_free(p);
+            }
         }
     }
 }
