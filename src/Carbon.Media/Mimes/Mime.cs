@@ -91,8 +91,7 @@ namespace Carbon.Media
 
         public static Mime FromExtension(string extension)
         {
-            if (extension == null)
-                throw new ArgumentNullException(nameof(extension));
+            if (extension == null) throw new ArgumentNullException(nameof(extension));
             
             if (extension[0] == '.')
             {
@@ -104,10 +103,7 @@ namespace Carbon.Media
 
         public static Mime FromFormat(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            if (format == null) throw new ArgumentNullException(nameof(format));
 
             if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out Mime mime))
             {
@@ -121,10 +117,7 @@ namespace Carbon.Media
 
         public static bool TryGetFromFormat(string format, out Mime mime)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            if (format == null) throw new ArgumentNullException(nameof(format));
 
             return MimeHelper.FormatToMimeMap.TryGetValue(format, out mime);
         }
@@ -135,7 +128,7 @@ namespace Carbon.Media
         public static readonly Mime Blob = new Mime("application/octet-stream", "blob");
 
         // Applications
-        public static readonly Mime Ai   = new Mime("application/postscript",        new[] { "ai" });
+        public static readonly Mime Ai   = new Mime("application/postscript",        new[] { "ai" } );
         public static readonly Mime Atom = new Mime("application/atom+xml",          "atom");
         public static readonly Mime Doc  = new Mime("application/msword",            new[] { "doc" }, new[] { MagicNumber.Doc });
         public static readonly Mime M3u8 = new Mime("application/x-mpegURL",         "m3u8");
@@ -148,7 +141,7 @@ namespace Carbon.Media
 
         // Applications - Programing Languages & Data Formats
         public static readonly Mime Js   = new Mime("application/javascript", "js");
-        public static readonly Mime Json = new Mime("application/json", "json");
+        public static readonly Mime Json = new Mime("application/json",       "json");
 
         // Applications - Color Profiles
         public static readonly Mime Icc = new Mime("application/vnd.iccprofile", "icc");
@@ -207,6 +200,7 @@ namespace Carbon.Media
         public static readonly Mime F4v      = new Mime("video/mp4",        "mp4");
         public static readonly Mime Flv      = new Mime("video/x-flv",      new[] { "flv" }, new[] { MagicNumber.Flv });
         public static readonly Mime Mkv      = new Mime("video/x-matroska", new[] { "mkv", "mk3d", "mks" });
+        public static readonly Mime M4v      = new Mime("video/mp4",        "m4v");
         public static readonly Mime Mov      = new Mime("video/quicktime",  "mov");
         public static readonly Mime Mp4      = new Mime("video/mp4",        new[] { "mp4", "m4v" });
         public static readonly Mime Mpeg     = new Mime("video/mpeg",       "mpeg");
@@ -215,7 +209,7 @@ namespace Carbon.Media
         public static readonly Mime WebM     = new Mime("video/webm",       "webm");
         public static readonly Mime Wmv      = new Mime("video/x-ms-wmv",   "wmv");
 
-        // Containers (Audio & Video Variations) ----
+        // Multimedia Containers
         public static readonly Mime _3GP     = new Mime("video/3gpp",      "3gp");
         public static readonly Mime _3GP2    = new Mime("video/3gpp2",     "3g2"); 
         public static readonly Mime Mxf      = new Mime("application/mxf", "mxf");
