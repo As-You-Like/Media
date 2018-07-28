@@ -2,15 +2,14 @@
 
 namespace Carbon.Media.Frames
 {
-    public class ImageFrame : IDisposable
+    public sealed class ImageFrame : IDisposable
     {
-        public ImageFrame(PixelFormat format, int width, int height)
+        public ImageFrame(PixelFormat format, int width, int height, Buffer memory)
         {
-            Format  = format;
-            Width   = width;
-            Height  = height;
-            Memory  = Buffer.Allocate(VideoFormatHelper.GetBufferSize(format, width, height));
-            Strides = VideoFormatHelper.GetStrides(format, width);
+            Format = format;
+            Width = width;
+            Height = height;
+            Memory = memory ?? throw new ArgumentNullException(nameof(memory));
         }
 
         // Allocate?
@@ -21,11 +20,23 @@ namespace Carbon.Media.Frames
 
         public int Height { get; }
         
-        public int[] Strides { get; }
+        // public int[] Strides { get; }
 
         public Buffer Memory { get; }
 
         private bool isDisposed = false;
+
+        public ImageFrame Create(PixelFormat format, int width, int height)
+        {
+            if (width <= 0)  throw new ArgumentException("Must be > 0", nameof(width));
+            if (height <= 0) throw new ArgumentException("Must be > 0", nameof(height));
+
+            var memory = Buffer.Allocate(VideoFormatHelper.GetBufferSize(format, width, height));
+
+            return new ImageFrame(format, width, height, memory);
+        
+            // Strides = VideoFormatHelper.GetStrides(format, width);
+        }
 
         public void Dispose()
         {
@@ -36,12 +47,11 @@ namespace Carbon.Media.Frames
 
         public void Dispose(bool disposing)
         {
-            if (isDisposed)
-            {
-                Memory.Dispose();
+            if (isDisposed) return;
+            
+            Memory.Dispose();
 
-                isDisposed = true;
-            }
+            isDisposed = true;
         }
 
         ~ImageFrame()
