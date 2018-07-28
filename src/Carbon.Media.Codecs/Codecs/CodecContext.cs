@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
     public unsafe class CodecContext
     {
+        private bool isDisposed = false;
         protected AVCodecContext* pointer;
 
         public CodecContext(Codec codec)
@@ -18,6 +18,8 @@ namespace Carbon.Media.Codecs
             {
                 throw new Exception("CodecContext was not allocated");
             }
+
+            // avcodec_parameters_to_context???
 
             ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults
         }
@@ -125,7 +127,7 @@ namespace Carbon.Media.Codecs
             get => pointer->height;
             set => pointer->height = value;
         }
-
+        
         public int CodedWidth => pointer->coded_width;
 
         public int CodedHeight => pointer->coded_height;
@@ -208,15 +210,14 @@ namespace Carbon.Media.Codecs
 
         public void Dispose()
         {
-            if (pointer != null)
+            if (isDisposed) return;
+            
+            fixed (AVCodecContext** p = &pointer)
             {
-                fixed (AVCodecContext** p = &pointer)
-                {
-                    ffmpeg.avcodec_free_context(p);
-                }
-
-                pointer = null;
+                ffmpeg.avcodec_free_context(p);
             }
+
+            isDisposed = true;
         }
     }
 }

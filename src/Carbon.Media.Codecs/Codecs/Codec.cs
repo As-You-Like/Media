@@ -128,24 +128,23 @@ namespace Carbon.Media.Codecs
             }
         }
 
-        public virtual void Cleanup()
+        protected virtual void OnDisposing()
         {
         }
 
         public void Dispose()
         {
-            if (context != null)
-            {
-                ffmpeg.avcodec_close(context.Pointer); // does not dispose the context
+            if (context == null) return;
 
-                context.Dispose();
+            Console.WriteLine("Disposing Codec");
 
-                pointer = null;
+            context.Dispose();
 
-                context = null;
+            pointer = null;
 
-                Cleanup();
-            }
+            context = null;
+
+            OnDisposing();
         }
 
         #region Passthrough
