@@ -16,6 +16,11 @@ namespace Carbon.Media.Formats
         public Muxer(FormatId format)
             : base(format)
         {
+            if (format == FormatId.M4a)
+            {
+                format = FormatId.Mp4;
+            }
+
             var fmt = ffmpeg.av_guess_format(format.ToString().ToLower(), null, format.ToMime());
 
             if (fmt == null)
@@ -49,7 +54,7 @@ namespace Carbon.Media.Formats
                     {
                         case AudioEncoder _ : stream = VideoStream.Create(this, encoder); break;
                         case VideoEncoder _ : stream = AudioStream.Create(this, encoder); break;
-                        default             : throw new Exception("Invalid encoder type");
+                        default             : throw new Exception("Invalid encoder type:" + encoder.GetType().Name);
                     }
 
                     stream.TimeBase = encoder.Context.TimeBase;
@@ -70,9 +75,19 @@ namespace Carbon.Media.Formats
             this.Context.Streams = streams;
         }
         
-        public virtual void WriteHeader()
+        public virtual void WriteHeader(AvDictionary options = null)
         {
-            ffmpeg.avformat_write_header(Context.Pointer, options: null).EnsureSuccess();
+            if (options != null)
+            {
+                fixed (AVDictionary** p = &options.Pointer)
+                {
+                    ffmpeg.avformat_write_header(Context.Pointer, options: p).EnsureSuccess();
+                }
+            }
+            else
+            {
+                ffmpeg.avformat_write_header(Context.Pointer, options: null).EnsureSuccess();
+            }
         }
 
         public void WritePacket(Packet packet)
@@ -104,9 +119,11 @@ namespace Carbon.Media.Formats
             Context.Pointer->pb = ioContext.Pointer;
         }
 
-        public override void Cleanup()
+        internal override void Cleanup()
         {
             ioContext?.Dispose();
+
+            ioContext = null;
         }
 
         public static Muxer Create(FormatId format, Stream stream)
