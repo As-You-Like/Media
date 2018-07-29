@@ -1,6 +1,4 @@
-﻿using System;
-
-using FFmpeg.AutoGen;
+﻿using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
@@ -31,7 +29,7 @@ namespace Carbon.Media.Codecs
             ffmpeg.avcodec_send_frame(context.Pointer, null);
         }
         
-        public OperationStatus TryGetPacket(Packet packet)
+        public OperationStatus TryReadPacket(Packet packet)
         {
             var result = ffmpeg.avcodec_receive_packet(context.Pointer, packet.Pointer);
 
