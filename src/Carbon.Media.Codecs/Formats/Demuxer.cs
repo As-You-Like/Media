@@ -25,7 +25,7 @@ namespace Carbon.Media.Formats
         public bool TryReadPacket(Packet packet)
         {
             if (IsEof) throw new EndOfStreamException("Cannot read past the end of stream");
-
+            
             int result = ffmpeg.av_read_frame(Context.Pointer, packet.Pointer);
 
             if (result == 0) // OK
@@ -45,8 +45,6 @@ namespace Carbon.Media.Formats
             else if (result == -541478725) // EOF
             {
                 IsEof = true;
-
-                packet = default;
 
                 return false;
             }
@@ -68,13 +66,27 @@ namespace Carbon.Media.Formats
             return new Demuxer(context);
         }
 
+        public static Demuxer Open(FileInfo file)
+        {
+            var context = new FormatContext();
+
+            context.Open(file);
+
+            return new Demuxer(context);
+        }
+
+        public static Demuxer Open(Stream stream)
+        {
+            return Open(new IOContext(stream));
+        }
+
         public static Demuxer Open(IOContext source)
         {
             var context = new FormatContext();
 
             context.Open(source);
 
-            return new Demuxer(context);
+            return new Demuxer(context) { ioContext = source };
         }
     }
 }
