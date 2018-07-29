@@ -6,7 +6,7 @@ namespace Carbon.Media.Codecs
     public unsafe class CodecContext
     {
         private bool isDisposed = false;
-        protected AVCodecContext* pointer;
+        private AVCodecContext* pointer;
 
         public CodecContext(Codec codec)
         {
@@ -20,8 +20,10 @@ namespace Carbon.Media.Codecs
             }
 
             // avcodec_parameters_to_context???
-
-            ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults
+            
+            // https://lists.ffmpeg.org/pipermail/ffmpeg-cvslog/2016-June/100911.html
+            // https://trac.ffmpeg.org/ticket/2216 (calling this after avcodec_alloc_context3 causes a memory leak)
+            // ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults
         }
 
         public CodecContext(AVCodecContext* pointer, Codec codec)
@@ -212,6 +214,13 @@ namespace Carbon.Media.Codecs
         {
             if (isDisposed) return;
             
+            // These should be managed....
+            // ffmpeg.av_freep(&pointer->extradata);
+            // ffmpeg.av_freep(&pointer->subtitle_header);
+            // ffmpeg.av_freep(&pointer->intra_matrix);
+            // ffmpeg.av_freep(&pointer->inter_matrix);
+            // ffmpeg.av_freep(&pointer->rc_override);
+           
             fixed (AVCodecContext** p = &pointer)
             {
                 ffmpeg.avcodec_free_context(p);
