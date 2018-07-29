@@ -1,4 +1,5 @@
 ﻿using System;
+using Carbon.Media.IO;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Formats
@@ -6,6 +7,7 @@ namespace Carbon.Media.Formats
     public abstract class Format : IDisposable
     {
         private bool isDisposed = false;
+        protected IOContext ioContext;
 
         protected Format(FormatId id)
         {
@@ -44,18 +46,19 @@ namespace Carbon.Media.Formats
             ffmpeg.av_dump_format(Context.Pointer, streamIndex, null, Type == FormatType.Demuxer ? 1 : 0);
         }
 
-
-        internal virtual void OnDisposing() { }
-
         // public void Probe() { }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             if (isDisposed) return;
 
+            // Console.WriteLine("Disposing " + this.GetType().Name);
+            
             Context?.Dispose();
+            
+            ioContext?.Dispose();
 
-            OnDisposing();
+            ioContext = null;
 
             isDisposed = true;
         }
