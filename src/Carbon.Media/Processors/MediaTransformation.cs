@@ -196,7 +196,7 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation Blur(double radius)
+        public MediaTransformation Blur(float radius)
         {
             Apply(new BlurFilter(radius));
 
