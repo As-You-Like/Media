@@ -1,6 +1,4 @@
-﻿using System;
-
-using FFmpeg.AutoGen;
+﻿using FFmpeg.AutoGen;
 
 using Xunit;
 
@@ -59,7 +57,7 @@ namespace Carbon.Media.Ffmpeg.Tests
 
         static ChannelLayoutTests()
         {
-            FFmpegBinariesHelper.RegisterFFmpegBinaries();
+            FFmpegHelper.RegisterBinaries();
         }
 
         [Fact]
@@ -72,6 +70,8 @@ namespace Carbon.Media.Ffmpeg.Tests
         [Fact]
         public void ChannelCountEquality()
         {
+            FFmpegHelper.RegisterBinaries();
+
             foreach (var layout in layouts)
             {
                 var count   = layout.GetChannelCount();
