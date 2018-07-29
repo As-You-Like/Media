@@ -1,28 +1,34 @@
 ﻿using System;
 using System.IO;
-
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media.IO
 {
     public unsafe sealed class IOContext : IDisposable
     {
+        private bool isDisposed = false;
+
         private readonly Stream stream;
 
-        const int defaultBufferSize = 32768;
-        private readonly byte* buffer;
+        // keep under 32K
+        // https://ffmpeg.org/pipermail/libav-user/2013-April/004162.html
 
-        private readonly avio_alloc_context_read_packet read;
-        private readonly avio_alloc_context_write_packet write;
-        private readonly avio_alloc_context_seek seek;
+        const int bufferSize = 32768;
+
+        private byte* buffer;
+
+        private avio_alloc_context_read_packet read;
+        private avio_alloc_context_write_packet write;
+        private avio_alloc_context_seek seek;
 
         public IOContext(Stream stream, bool writable = false)
         {
             this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
 
-            ulong paddingLength = writable ? 0ul : ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE;
+            ulong paddingLength = writable ? 0ul : ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE; // reversed
 
-            buffer = (byte*)ffmpeg.av_malloc(defaultBufferSize + paddingLength);
+            // note: this can be replaced...
+            buffer = (byte*)ffmpeg.av_malloc(bufferSize + paddingLength);
 
             // reference to prevent garbage collection
             read = Read;
@@ -30,16 +36,16 @@ namespace Carbon.Media.IO
             seek = Seek;
 
             Pointer = ffmpeg.avio_alloc_context(
-                buffer       : buffer,
-                buffer_size  : defaultBufferSize,
-                write_flag   : writable ? 1 : 0,
-                opaque       : null,
-                read_packet  : read,
-                write_packet : write,
-                seek         : seek
+                buffer: buffer,
+                buffer_size: bufferSize,
+                write_flag: writable ? 1 : 0,
+                opaque: null,
+                read_packet: read,
+                write_packet: write,
+                seek: seek
             );
-            
-            Pointer->seekable = ffmpeg.AVIO_SEEKABLE_NORMAL | ffmpeg.AVIO_SEEKABLE_TIME;
+
+            Pointer->seekable = ffmpeg.AVIO_SEEKABLE_NORMAL; //  | ffmpeg.AVIO_SEEKABLE_TIME;
         }
 
         internal AVIOContext* Pointer;
@@ -60,12 +66,12 @@ namespace Carbon.Media.IO
                 return ffmpeg.AVERROR_EOF;
             }
 
-            Span<byte> buffer = new Span<byte>(buf, bufferSize);
+            var buffer = new Span<byte>(buf, bufferSize);
 
             int result = stream.Read(buffer);
 
             // Console.WriteLine("read" + " " + bufferSize + " / " + result + " | " + stream.Position);
-            
+
             return result;
 
         }
@@ -81,7 +87,7 @@ namespace Carbon.Media.IO
 
             if (!stream.CanSeek)
             {
-                Console.WriteLine("cannot seek");
+                // Console.WriteLine("cannot seek");
 
                 return -1;
             }
@@ -100,11 +106,24 @@ namespace Carbon.Media.IO
 
         public void Dispose(bool disposing)
         {
-            if (Pointer == null) return;
-            
-            Console.WriteLine("Disposing IOContext");
+            if (isDisposed) return;
 
-            ffmpeg.av_freep(&Pointer->buffer);
+            // Console.WriteLine("Disposing IOContext");
+
+            // NOTE: The internal buffer may have changed
+
+            var a = (IntPtr)Pointer->buffer;
+            var b = (IntPtr)buffer;
+
+            if (a == b)
+            {
+                ffmpeg.av_free(buffer);
+            }
+            else
+            {
+                // ffmpeg.av_free(buffer);
+                ffmpeg.av_free(&Pointer->buffer); // free the current buffer
+            }
 
             fixed (AVIOContext** p = &Pointer)
             {
@@ -112,6 +131,8 @@ namespace Carbon.Media.IO
             }
 
             Pointer = null;
+
+            isDisposed = true;
         }
 
         ~IOContext()
