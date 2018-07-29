@@ -8,55 +8,58 @@ namespace Carbon.Media
     /// A packet contains zero or more encoded frames belonging to a single elementary stream (Audio or Video).
     /// Packets are provided as input to decoders and recieved as output from encoders
     /// </summary>
-    public unsafe class Packet : IDisposable
+    public unsafe class Packet : IDisposable // TODO: Make ref struct
     {
         private bool isDisposed = false;
+        private readonly AVPacket* pointer;
 
         private Packet(AVPacket* pointer)
         {
             if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
-            Pointer = pointer;
+            this.pointer = pointer;
         }
 
-        public readonly AVPacket* Pointer;
+        public AVPacket* Pointer => pointer;
 
-        public Buffer GetMemory()
+        /*
+        public Span<byte> GetSpan()
         {
             if (isDisposed) throw new ObjectDisposedException(nameof(Packet));
 
             if (Pointer->buf == null) return null;
 
-            return new Buffer((IntPtr)Pointer->data, Pointer->size);
+            return new Span<byte>(Pointer->buf, Pointer->size);
         }
+        */
 
         public int StreamIndex
         {
-            get => Pointer->stream_index;
-            set => Pointer->stream_index = value;
+            get => pointer->stream_index;
+            set => pointer->stream_index = value;
         }
 
         public long Dts
         {
-            get => Pointer->dts;
-            set => Pointer->dts = value;
+            get => pointer->dts;
+            set => pointer->dts = value;
         }
 
         public long Pts
         {
-            get => Pointer->pts;
-            set => Pointer->pts = value;
+            get => pointer->pts;
+            set => pointer->pts = value;
         }
 
         public long Duration
         {
-            get => Pointer->duration;
-            set => Pointer->duration = value;
+            get => pointer->duration;
+            set => pointer->duration = value;
         }
 
         public long ConvergenceDuration
         {
-            get => Pointer->convergence_duration;
+            get => pointer->convergence_duration;
         }
 
         /// <summary>
@@ -65,8 +68,8 @@ namespace Carbon.Media
         /// </summary>
         public long Position
         {
-            get => Pointer->pos;
-            set => Pointer->pos = value;
+            get => pointer->pos;
+            set => pointer->pos = value;
         }
 
         public void UpdateTimebase(Rational sourceTimeBase, Rational targetTimeBase)
@@ -76,16 +79,10 @@ namespace Carbon.Media
             Duration = new Timestamp(Duration, sourceTimeBase).Transform(targetTimeBase).Value;
         }
 
-        // frees the packet for reuse
-        public void Unref()
-        {   
-            ffmpeg.av_packet_unref(Pointer);   
-        }
-
         public PacketFlags Flags
         {
-            get => (PacketFlags)Pointer->flags;
-            set => Pointer->flags = (int)value;
+            get => (PacketFlags)pointer->flags;
+            set => pointer->flags = (int)value;
         }
       
         #region Helpers
@@ -109,7 +106,16 @@ namespace Carbon.Media
 
             return new Packet(pointer);
         }
-    
+
+        public unsafe void Unref()
+        {
+            if (isDisposed) throw new ObjectDisposedException(nameof(Packet));
+
+            // frees the packet for reuse
+
+            ffmpeg.av_packet_unref(pointer);
+        }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -121,9 +127,9 @@ namespace Carbon.Media
         {
             if (isDisposed) return;
             
-            Console.WriteLine("Disposing Packet");
-                
-            fixed (AVPacket** p = &Pointer)
+            // Console.WriteLine("Disposing Packet");
+
+            fixed (AVPacket** p = &pointer)
             {
                 // unreferences & frees the packet
                 ffmpeg.av_packet_free(p);
