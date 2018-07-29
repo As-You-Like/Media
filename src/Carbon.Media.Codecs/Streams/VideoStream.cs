@@ -46,16 +46,12 @@ namespace Carbon.Media
         public static VideoStream Create(Format format, Codec codec)
         {
             if (format == null)
-            {
                 throw new ArgumentNullException(nameof(format));
-            }
-            
-            if (codec == null)
-            {
-                throw new ArgumentNullException(nameof(codec));
-            }
 
-            var stream = ffmpeg.avformat_new_stream(format.Context.Pointer, codec.Pointer);
+            if (codec == null)
+                throw new ArgumentNullException(nameof(codec));
+
+            AVStream* stream = ffmpeg.avformat_new_stream(format.Context.Pointer, codec.Pointer);
             
             stream->codec = codec.Context.Pointer;
 

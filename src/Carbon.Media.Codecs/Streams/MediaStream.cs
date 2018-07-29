@@ -6,6 +6,7 @@ namespace Carbon.Media
 {
     public unsafe abstract class MediaStream : IDisposable
     {
+        private bool isDisposed = false;
         protected AVStream* pointer;
 
         protected MediaStream(AVStream* pointer, CodecType codecType = CodecType.Decoder)
@@ -18,6 +19,12 @@ namespace Carbon.Media
         }
 
         internal AVStream* Pointer => pointer;
+
+        public int Id
+        {
+            get => pointer->id;
+            set => pointer->id = value;
+        }
 
         public int Index
         {
@@ -113,7 +120,11 @@ namespace Carbon.Media
 
         public void Dispose()
         {
+            if (isDisposed) return;
+
             Codec?.Dispose();
+
+            isDisposed = true;
         }
     }
 }
