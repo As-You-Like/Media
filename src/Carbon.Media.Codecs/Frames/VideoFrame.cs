@@ -27,7 +27,7 @@ namespace Carbon.Media
 
             pointer->extended_data = (byte**)(&pointer->data);
 
-            var format = VideoFormatHelper.Get(pixelFormat, width, height);
+            var format = new VideoFormatInfo(pixelFormat, width, height);
 
             const int align = 8;
 

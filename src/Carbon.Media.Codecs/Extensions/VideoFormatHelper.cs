@@ -3,19 +3,8 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    internal static class VideoFormatHelper
+    public static class VideoFormatHelper
     {
-        public static VideoFormatInfo Get(PixelFormat pixelFormat, int width, int height)
-        {
-            return new VideoFormatInfo(
-                pixelFormat,
-                width,
-                height,
-                Timebases.Ffmpeg,
-                new Rational(1, 1)
-            );
-        }
-
         public static int GetBufferSize(this VideoFormatInfo format, int align = 8)
         {
             return ffmpeg.av_image_get_buffer_size(format.PixelFormat.ToAVFormat(), format.Width, format.Height, align);
@@ -44,7 +33,7 @@ namespace Carbon.Media
 
             int planeCount = ffmpeg.av_pix_fmt_count_planes(avFormat);
 
-            int_array4 temp = new int_array4();
+            var temp = new int_array4();
 
             ffmpeg.av_image_fill_linesizes(ref temp, avFormat, width);
 
