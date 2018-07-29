@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.IO
 {
-    public unsafe readonly struct PacketList
+    public unsafe class PacketList
     {
         public PacketList(AVPacketList* pointer)
         {

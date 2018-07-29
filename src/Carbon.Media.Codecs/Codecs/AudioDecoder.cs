@@ -10,7 +10,6 @@ namespace Carbon.Media.Codecs
         public AudioDecoder(AVCodecContext* context)
             : base(context) { }
 
-
         public AudioFormatInfo GetFormat()
         {
             return new AudioFormatInfo(Context.SampleFormat, Context.ChannelLayout, Context.SampleRate);

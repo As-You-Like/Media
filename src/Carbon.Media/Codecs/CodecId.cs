@@ -432,6 +432,8 @@ namespace Carbon.Media
         Ttf = FontFormat.Ttf,
 
         // -------------------- Subtitle Codecs (100) ---------------------------------------
+        // See: https://en.wikipedia.org/wiki/Category:Subtitle_file_formats
+
         Ass         = 100_001,
         Cmml        = 100_002, //      | Continuous Media Markup Language
         DvbSubtitle = 100_003, //      | DVB subtitles 
@@ -445,7 +447,7 @@ namespace Carbon.Media
         Mpl2        = 100_510, //      |    
         PjsSubtitle = 100_511, //      | Phoenix Japanimation Society
         RealText    = 100_512, //      |   
-        Sami        = 100_513, //      | SAMI
+        Sami        = 100_513, //      | Synchronized Accessible Media Interchange
         Srt         = 100_514, //      | SubRip
         Ssa         = 100_515, //      |   
         Stl         = 100_516, //      | Spruce format

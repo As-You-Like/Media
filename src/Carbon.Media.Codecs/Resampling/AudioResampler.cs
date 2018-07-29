@@ -60,7 +60,7 @@ namespace Carbon.Media.Codecs.Resampling
 
             // TODO: Set the presentation time & duration
 
-            Console.WriteLine($"resampled {source.SampleFormat} {source.SampleCount} -> {targetFormat.SampleFormat} {target.SampleCount} | {sampleCount} | {target.ChannelCount} | {target.Memory.Length}");
+            // Console.WriteLine($"resampled {source.SampleFormat} {source.SampleCount} -> {targetFormat.SampleFormat} {target.SampleCount} | {sampleCount} | {target.ChannelCount} | {target.Memory.Length}");
         }
 
         private int GetOutputSampleCount(int inSampleCount)

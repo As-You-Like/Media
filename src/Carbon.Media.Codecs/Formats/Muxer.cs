@@ -10,9 +10,7 @@ using FFmpeg.AutoGen;
 namespace Carbon.Media.Formats
 {
     public unsafe class Muxer : Format
-    {
-        private IOContext ioContext;
-        
+    {        
         public Muxer(FormatId format)
             : base(format)
         {
@@ -30,7 +28,7 @@ namespace Carbon.Media.Formats
 
             Context.Pointer->oformat = fmt;
 
-            Console.WriteLine("OUTPUT:" + Marshal.PtrToStringAnsi((IntPtr)fmt->long_name));
+            // Console.WriteLine("OUTPUT:" + Marshal.PtrToStringAnsi((IntPtr)fmt->long_name));
         }
         
         public override FormatType Type => FormatType.Muxer;
@@ -97,12 +95,12 @@ namespace Carbon.Media.Formats
 
         public virtual void WriteTrailer()
         {
-            ffmpeg.av_write_trailer(Context.Pointer);
+            ffmpeg.av_write_trailer(Context.Pointer).EnsureSuccess();
         }
         
         public void Open(FileInfo outputFile)
         {
-            ffmpeg.avio_open(&Context.Pointer->pb, outputFile.FullName, ffmpeg.AVIO_FLAG_WRITE);
+            ffmpeg.avio_open(&Context.Pointer->pb, outputFile.FullName, ffmpeg.AVIO_FLAG_WRITE).EnsureSuccess();
         }
 
         public void Open(Stream outputStream)
@@ -117,13 +115,6 @@ namespace Carbon.Media.Formats
             Context.Pointer->flags |= ffmpeg.AVFMT_FLAG_CUSTOM_IO;
 
             Context.Pointer->pb = ioContext.Pointer;
-        }
-
-        internal override void OnDisposing()
-        {
-            ioContext?.Dispose();
-
-            ioContext = null;
         }
 
         public static Muxer Create(FormatId format, Stream stream)

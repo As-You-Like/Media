@@ -4,7 +4,7 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe struct FilterInOut : IDisposable
+    public unsafe class FilterInOut : IDisposable
     {
         public FilterInOut(string name, FilterContext filterContext)
         {
@@ -28,9 +28,9 @@ namespace Carbon.Media
             Pointer->next = null;
         }
 
-        public string Name => Marshal.PtrToStringAnsi((IntPtr)Pointer->name);
-
         public AVFilterInOut* Pointer;
+
+        public string Name => Marshal.PtrToStringAnsi((IntPtr)Pointer->name);
 
         public FilterContext FilterContext;
 

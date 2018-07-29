@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.IO;
 using Carbon.Media.IO;
 using FFmpeg.AutoGen;
 
@@ -8,8 +8,8 @@ namespace Carbon.Media
 {
     public unsafe class FormatContext : IDisposable
     {
+        private bool isDisposed = false;
         private AVFormatContext* pointer;
-        private Rational timebase = Timebases.Ffmpeg;
 
         public FormatContext()
         {
@@ -60,7 +60,7 @@ namespace Carbon.Media
 
             ffmpeg.av_probe_input_buffer(source.Pointer, &inputFormat, null, null, 0, 0).EnsureSuccess();
 
-            Console.WriteLine("probed ->"  + Marshal.PtrToStringAnsi((IntPtr)inputFormat->name));
+            // Console.WriteLine("probed ->"  + Marshal.PtrToStringAnsi((IntPtr)inputFormat->name));
 
             fixed (AVFormatContext** ps = &pointer)
             {
@@ -77,6 +77,16 @@ namespace Carbon.Media
                 ffmpeg.avformat_open_input(ps, url.ToString(), null, null).EnsureSuccess();
             }
             
+            SetupStreams();
+        }
+
+        public void Open(FileInfo file)
+        {
+            fixed (AVFormatContext** ps = &pointer)
+            {
+                ffmpeg.avformat_open_input(ps, file.FullName, null, null).EnsureSuccess();
+            }
+
             SetupStreams();
         }
 
@@ -98,29 +108,31 @@ namespace Carbon.Media
             Streams = streams;
         }
         
-        /*
         public void Seek(int streamIndex, long position)
         {
-            var time = new Timestamp(position, Streams[streamIndex].TimeBase);
+            var time = new Timestamp(position, Streams[0].TimeBase);
 
-             ffmpeg.avformat_seek_file(pointer, streamIndex, time )
+             // ffmpeg.avformat_seek_file(pointer, streamIndex, time )
         }
-        */
 
         public bool CanSeek => pointer->pb->seekable == 1;
 
         public void Dispose()
         {
-            if (pointer == null) return;
+            if (isDisposed) return;
 
-            Console.WriteLine("Disposing FormatContext");
+            // Console.WriteLine("Disposing FormatContext");
 
             fixed (AVFormatContext** p = &pointer)
             {
+                // NOTE: avformat_close_input calls avformat_free_context & frees the streams
+
                 ffmpeg.avformat_close_input(p);
             }
-
+            
             pointer = null;
+
+            isDisposed = true;
         }
     }
 }

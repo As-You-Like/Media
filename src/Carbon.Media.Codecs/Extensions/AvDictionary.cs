@@ -64,7 +64,7 @@ namespace Carbon.Media.Codecs
         {
             if (Pointer == null) return;
 
-            Console.WriteLine("Disposing AVDictionary");
+            // Console.WriteLine("Disposing AVDictionary");
 
             fixed (AVDictionary** p = &Pointer)
             {

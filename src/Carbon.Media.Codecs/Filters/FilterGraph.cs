@@ -7,6 +7,7 @@ namespace Carbon.Media
 {
     public unsafe class FilterGraph
     {
+        private bool isDisposed = false;
         private AVFilterGraph* pointer;
 
         public FilterGraph()
@@ -90,7 +91,7 @@ namespace Carbon.Media
             return new FilterContext(sourceFilterContext);
         }
 
-        public FilterContext AddSource(in AudioFormatInfo format)
+        public FilterContext AddSource(AudioFormatInfo format)
         {
             AVFilterContext* filterContext;
 
@@ -115,7 +116,7 @@ namespace Carbon.Media
                 graph_ctx : pointer
             ).EnsureSuccess();
 
-            Console.WriteLine("added source:" + Marshal.PtrToStringAnsi((IntPtr)filterContext->name));
+            // Console.WriteLine("added source:" + Marshal.PtrToStringAnsi((IntPtr)filterContext->name));
 
             return new FilterContext(filterContext);
         }
@@ -163,11 +164,8 @@ namespace Carbon.Media
             Codec encoder,
             string filterSpecification)
         {
-            if (decoder == null)
-                throw new ArgumentNullException(nameof(decoder));
-
-            if (encoder == null)
-                throw new ArgumentNullException(nameof(encoder));
+            if (decoder == null) throw new ArgumentNullException(nameof(decoder));
+            if (encoder == null) throw new ArgumentNullException(nameof(encoder));
             
             FilterContext bufferSource = default; 
             FilterContext bufferSink = default;
@@ -250,7 +248,7 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            if (pointer == null) return;
+            if (isDisposed) return;
 
             Console.WriteLine("Disposing FilterGraph");
 
@@ -263,6 +261,8 @@ namespace Carbon.Media
             Outputs.Dispose();
 
             pointer = null;
+
+            isDisposed = true;
         }
 
         ~FilterGraph()

@@ -4,9 +4,9 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe readonly struct FilterContext
+    public unsafe class FilterContext
     {
-        public FilterContext(AVFilterContext* pointer)
+        internal FilterContext(AVFilterContext* pointer)
         {
             if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 

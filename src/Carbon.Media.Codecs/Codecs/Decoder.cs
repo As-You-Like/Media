@@ -41,20 +41,15 @@ namespace Carbon.Media.Codecs
        
         public OperationStatus TryGetFrame(Frame frame)
         {
-            var result = ffmpeg.avcodec_receive_frame(Context.Pointer, frame.Pointer);
-
-            if (result == 0)
-            {
-                return OperationStatus.Ok;
-            }
+            int result = ffmpeg.avcodec_receive_frame(Context.Pointer, frame.Pointer);
             
             switch (result)
             {
+                case 0          : return OperationStatus.Ok;
                 case -11        : return OperationStatus.Again; // EAGAIN (needs more data)
                 case -541478725 : return OperationStatus.EOF;   // EOF
+                default         : throw new FFmpegException(result);
             }
-
-            throw new FFmpegException(result);
         }
 
         internal static Decoder Create(AVCodecContext* context)

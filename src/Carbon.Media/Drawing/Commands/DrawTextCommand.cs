@@ -82,7 +82,7 @@ namespace Carbon.Media.Drawing
                     case "height"   : box.Height  = Unit.Parse(v);             break;
                     case "padding"  : box.Padding = UnboundPadding.Parse(v);   break;
                     case "font"     : font        = Font.Parse(v);             break;
-                    case "color"    : color = v;                               break;
+                    case "color"    : color       = v;                         break;
                 }
             }
 

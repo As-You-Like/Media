@@ -5,16 +5,14 @@ namespace Carbon.Media
 {
     public unsafe class Frame : IDisposable
     {
+        private bool isDisposed = false;
         protected AVFrame* pointer;
 
         public Frame()
         {
             this.pointer = ffmpeg.av_frame_alloc();
             
-            if (pointer == null)
-            {
-                throw new Exception("Did not allocate frame");
-            }
+            if (pointer == null) throw new Exception("Did not allocate Frame");
         }
 
         public AVFrame* Pointer => pointer;
@@ -55,6 +53,8 @@ namespace Carbon.Media
         // Prepares the frame for reuse
         public void Unref()
         {
+            if (isDisposed) throw new ObjectDisposedException(nameof(Frame));
+
             ffmpeg.av_frame_unref(pointer);
         }
 
@@ -71,7 +71,7 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            if (pointer == null) return;
+            if (isDisposed) return;
             
             fixed (AVFrame** p = &pointer)
             {
@@ -83,6 +83,8 @@ namespace Carbon.Media
             OnDisposing();
 
             pointer = null;
+
+            isDisposed = true;
         }
 
         ~Frame()
