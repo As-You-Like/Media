@@ -57,9 +57,6 @@ namespace Carbon.Media.Formats
 
                     stream.TimeBase = encoder.Context.TimeBase;
 
-                    encoder.Stream = stream;
-
-                    ffmpeg.avcodec_parameters_from_context(stream.Pointer->codecpar, encoder.Context.Pointer);
                 }
 
                 if (Context.OutputFormat.Flags.HasFlag(OutputFormatFlags.GlobalHeader))
@@ -68,8 +65,12 @@ namespace Carbon.Media.Formats
                 }
 
                 streams[i] = encoder.Stream;
+                
+                encoder.Open();
+
+                ffmpeg.avcodec_parameters_from_context(encoder.Stream.Pointer->codecpar, encoder.Context.Pointer);
             }
-            
+
             this.Context.Streams = streams;
         }
         

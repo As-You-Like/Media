@@ -174,13 +174,15 @@ namespace Carbon.Media
 
             if (decoder is VideoDecoder)
             {
-                bufferSource = graph.AddSource(new VideoFormatInfo(
+                var format = new VideoFormatInfo(
                     decoder.Context.PixelFormat,
                     decoder.Context.Width,
                     decoder.Context.Height,
                     decoder.Context.TimeBase,
                     decoder.Context.AspectRatio
-                ));
+                );
+
+                bufferSource = graph.AddSource(format);
 
                 bufferSink = graph.AddSink(Filter.FromName("buffersink"));
 

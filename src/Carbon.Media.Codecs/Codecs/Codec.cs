@@ -9,80 +9,97 @@ namespace Carbon.Media.Codecs
     {
         protected AVCodec* pointer;
         protected CodecContext context;
-
+        private bool isDisposed = false;
         private bool isOpen = false;
-        private readonly CodecType type;
 
         public Codec(CodecId id, CodecType type)
         {
             Id = id;
-
-            this.type = type;
+            Type = type;
             this.pointer = Get(id, type);
-            
-            this.context = new CodecContext(this);
         }
 
         protected Codec(AVCodecContext* context, CodecType type)
         {
-            this.Id = (context->codec_id).ToCodecId();
-
-            this.type = type;
+            Id = (context->codec_id).ToCodecId();
+            Type = type;
 
             this.pointer = context->codec;
 
-            this.context = new CodecContext(context, this);            
+            if (pointer == null)
+            {
+                pointer = Get(Id, Type);
+            }
+
+            this.context = new CodecContext(context);
         }
-        
+
         public CodecId Id { get; }
+
+        public CodecType Type { get; }
 
         public AVCodec* Pointer => pointer;
 
         public CodecContext Context => context;
-        
-        public MediaStream Stream { get; set; }
+
+        public MediaStream Stream { get; private set; }
 
         public string Name => Marshal.PtrToStringAnsi((IntPtr)pointer->name);
+
+        public void Initialize(MediaStream stream)
+        {
+            if (this.context != null)
+            {
+                throw new Exception("Already Initialized");
+            }
+
+            Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+
+            this.context = new CodecContext(stream.Pointer->codec);
+
+            //  context.Pointer->codec = this.pointer
+        }
+
+        public void Initialize()
+        {
+            if (this.context != null)
+            {
+                throw new Exception("Already Initialized");
+            }
+
+            this.context = new CodecContext(this);
+        }
 
         public CodecCapabilities Capabilities
         {
             get => (CodecCapabilities)pointer->capabilities;
         }
 
-        public void Initialize()
+        public virtual void Open()
         {
-            if (pointer != null)
-            {
-                throw new Exception("Codec is already initialized");
-            }
-
-            this.pointer = Get(Id, type);
-
-            if (pointer == null)
-            {
-                throw new Exception($"Could not find {type} for: " + Id);
-            }
-
-            context.Pointer->codec = this.pointer;
+            InternalOpen();
         }
 
-        public void Open()
-        {
-            Open(null);
-        }
-
-        internal void Open(AvDictionary options)
+        protected void InternalOpen(AvDictionary options = null)
         {
             if (isOpen)
             {
-                Console.WriteLine("already open");
+                Console.WriteLine($"{this.GetType().Name} is already open");
 
                 return;
             }
 
-            if (pointer == null)
+            if (context == null)
             {
-                Initialize();
+                throw new Exception($"Uninitialized ({Id} + {Type})");
+            }
+
+            isOpen = true;
+
+
+            if (ffmpeg.avcodec_is_open(context.Pointer) > 0)
+            {
+                Console.WriteLine("ALREADY OPEN");
             }
 
             if (options != null)
@@ -91,13 +108,13 @@ namespace Carbon.Media.Codecs
                 {
                     ffmpeg.avcodec_open2(context.Pointer, pointer, o).EnsureSuccess();
                 }
+
+                options.Dispose();
             }
             else
             {
                 ffmpeg.avcodec_open2(context.Pointer, pointer, options: null).EnsureSuccess();
             }
-
-            isOpen = true;
         }
 
         public static Codec Create(MediaStream stream, CodecType type)
@@ -128,24 +145,31 @@ namespace Carbon.Media.Codecs
             }
         }
 
-        protected virtual void OnDisposing()
-        {
-        }
-
         public void Dispose()
         {
-            if (context == null) return;
+            if (isDisposed) return;
 
-            Console.WriteLine("Disposing Codec");
+            // Console.WriteLine("Disposing Codec");
 
-            context.Dispose();
+            // ffmpeg.avcodec_close(context.Pointer);
+
+            context?.Dispose();
 
             pointer = null;
-
             context = null;
-
-            OnDisposing();
+            isDisposed = true;
         }
+
+
+        #region Options
+
+        public void SetOption(string key, string value)
+        {
+            ffmpeg.av_opt_set(context.Pointer->priv_data, key, value, 0);
+        }
+
+        #endregion
+
 
         #region Passthrough
 
@@ -161,8 +185,8 @@ namespace Carbon.Media.Codecs
         {
             switch (type)
             {
-                case CodecType.Encoder  : return ffmpeg.avcodec_find_encoder(id.ToAVCodecID());
-                default                 : return ffmpeg.avcodec_find_decoder(id.ToAVCodecID());
+                case CodecType.Encoder : return ffmpeg.avcodec_find_encoder(id.ToAVCodecID());
+                default                : return ffmpeg.avcodec_find_decoder(id.ToAVCodecID());
             }
         }
 

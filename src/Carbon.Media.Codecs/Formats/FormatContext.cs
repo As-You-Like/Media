@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Carbon.Media.Codecs;
+using Carbon.Media.Formats;
 using Carbon.Media.IO;
 using FFmpeg.AutoGen;
 
@@ -59,8 +61,8 @@ namespace Carbon.Media
             AVInputFormat* inputFormat = null;
 
             ffmpeg.av_probe_input_buffer(source.Pointer, &inputFormat, null, null, 0, 0).EnsureSuccess();
-
-            // Console.WriteLine("probed ->"  + Marshal.PtrToStringAnsi((IntPtr)inputFormat->name));
+            
+            // Console.WriteLine("probed -> " + Marshal.PtrToStringAnsi((IntPtr)inputFormat->name));
 
             fixed (AVFormatContext** ps = &pointer)
             {
@@ -123,16 +125,33 @@ namespace Carbon.Media
 
             // Console.WriteLine("Disposing FormatContext");
 
+            if (Streams != null)
+            {
+                foreach (var stream in Streams)
+                {
+                    if (stream.Codec is Encoder)
+                    {
+                        ffmpeg.avcodec_close(stream.Codec.Context.Pointer);
+
+                        // stream.Codec.Dispose();
+                    }
+                }
+            }
+            
+            
             fixed (AVFormatContext** p = &pointer)
             {
-                // NOTE: avformat_close_input calls avformat_free_context & frees the streams
+                // avformat_close_input calls avformat_free_context 
+                // avformat_free_context frees the streams
 
                 ffmpeg.avformat_close_input(p);
             }
-            
+
             pointer = null;
 
             isDisposed = true;
         }
     }
 }
+
+// ref for freeing logic: https://github.com/FFmpeg/FFmpeg/blob/2b1324bd167553f49736e4eaa94f96da9982925e/libavformat/utils.c

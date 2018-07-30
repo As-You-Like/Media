@@ -17,6 +17,8 @@ namespace Carbon.Media
                 case AV_SAMPLE_FMT_S32  : return SampleFormat.Int32;
                 case AV_SAMPLE_FMT_FLT  : return SampleFormat.Float;
                 case AV_SAMPLE_FMT_DBL  : return SampleFormat.Double;
+
+                // Planar Formats
                 case AV_SAMPLE_FMT_U8P  : return SampleFormat.UInt8Planar;
                 case AV_SAMPLE_FMT_S16P : return SampleFormat.Int16Planar;
                 case AV_SAMPLE_FMT_S32P : return SampleFormat.Int32Planar;

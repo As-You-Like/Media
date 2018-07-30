@@ -6,7 +6,8 @@ namespace Carbon.Media.Codecs.Resampling
 {
     public unsafe sealed class AudioResampler : IDisposable
     {
-        private SwrContext* pointer;
+        private bool isDisposed = false;
+        private readonly SwrContext* pointer;
 
         private readonly AudioFormatInfo sourceFormat;
         private readonly AudioFormatInfo targetFormat;
@@ -77,10 +78,14 @@ namespace Carbon.Media.Codecs.Resampling
 
         public unsafe void Dispose()
         {
+            if (isDisposed) return;
+
             fixed (SwrContext** p = &pointer)
             {
                 ffmpeg.swr_free(p);
             }
+
+            isDisposed = true;
         }
     }
 }

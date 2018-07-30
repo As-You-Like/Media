@@ -10,8 +10,6 @@ namespace Carbon.Media.Codecs
 
         public CodecContext(Codec codec)
         {
-            Codec = codec ?? throw new ArgumentNullException(nameof(codec));
-
             this.pointer = ffmpeg.avcodec_alloc_context3(codec.Pointer);
 
             if (this.pointer == null)
@@ -26,15 +24,11 @@ namespace Carbon.Media.Codecs
             // ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults
         }
 
-        public CodecContext(AVCodecContext* pointer, Codec codec)
+        public CodecContext(AVCodecContext* pointer)
         {
             if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
-            Codec = codec ?? throw new ArgumentNullException(nameof(codec));
-
             this.pointer = pointer;
-
-            pointer->codec = codec.Pointer;
         }
 
         public AVCodecContext* Pointer => pointer;

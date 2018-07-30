@@ -1,4 +1,6 @@
-﻿using FFmpeg.AutoGen;
+﻿using System;
+
+using FFmpeg.AutoGen;
 
 namespace Carbon.Media.Codecs
 {
@@ -7,8 +9,15 @@ namespace Carbon.Media.Codecs
         public static readonly SampleFormat[] sampleFormats = { SampleFormat.Int16, SampleFormat.Float };
         public static readonly int[] sampleRates = { 48000, 24000, 16000, 12000, 8000 };
 
+        private readonly OpusEncodingParameters parameters;
+
         public OpusEncoder(OpusEncodingParameters parameters)
            : base(CodecId.Opus)
+        {
+            this.parameters = parameters ?? throw new ArgumentNullException(nameof(parameters)); 
+        }
+
+        public override void Open()
         {
             SetFormat(parameters.GetFormatInfo());
 
@@ -17,14 +26,14 @@ namespace Carbon.Media.Codecs
                 Context.BitRate = parameters.BitRate;
             }
 
-            Open(parameters.ToOptions());
+            InternalOpen(parameters.ToOptions());
         }
 
         public override SampleFormat[] SampleFormats => sampleFormats;
 
         public override int[] SampleRates => sampleRates;
 
-        public string GetFilterGraph()
+        public override string GetFilterGraph()
         {
             string sampleFormat = ffmpeg.av_get_sample_fmt_name(Context.SampleFormat.ToAVFormat());
 

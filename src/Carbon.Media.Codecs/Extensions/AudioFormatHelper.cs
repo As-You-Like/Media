@@ -38,7 +38,7 @@ namespace Carbon.Media
         public static unsafe int[] GetSupportedSampleRates(CodecId codecId)
         {
             var codec = ffmpeg.avcodec_find_encoder(codecId.ToAVCodecID());
-
+            
             var result = new List<int>();
 
             // 0 terminated

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Runtime.InteropServices;
 using FFmpeg.AutoGen;
 
 namespace Carbon.Media
@@ -17,10 +17,8 @@ namespace Carbon.Media
 
             Memory = Buffer.Allocate(AudioFormatHelper.GetBufferSize(format, sampleCount));
 
-            channelPlanePointers = ffmpeg.av_malloc((ulong)IntPtr.Size * 8);
+            channelPlanePointers = ffmpeg.av_calloc((ulong)IntPtr.Size, 8);
             
-            new Span<IntPtr>(channelPlanePointers, 8).Clear(); // ensure the pointers are clear
-
             ffmpeg.av_samples_fill_arrays(
                 audio_data  : (byte**)channelPlanePointers,
                 linesize    : null,
@@ -78,6 +76,7 @@ namespace Carbon.Media
     
         // AppendSamples?
 
+        
         internal void Resize(int sampleCount)
         {
             var newBufferSize = AudioFormatHelper.GetBufferSize(format, sampleCount);
@@ -102,7 +101,7 @@ namespace Carbon.Media
                 Console.WriteLine("resized audio frame:" + newBufferSize);
             }
         }
-
+        /*
         public void Update(int sampleCount, byte** dataPlanes)
         {
             Resize(sampleCount);
@@ -117,6 +116,7 @@ namespace Carbon.Media
                 sample_fmt  : format.SampleFormat.ToAVFormat()
             );
         }
+        */
 
         internal override void OnDisposing()
         {

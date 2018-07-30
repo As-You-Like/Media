@@ -41,9 +41,15 @@ namespace Carbon.Media.Codecs
             return false;
         }
 
+        public virtual string GetFilterGraph() => null;
 
         public void SetFormat(AudioFormatInfo format)
         {
+            if (context == null)
+            {
+                throw new Exception("Uninitialized");
+            }
+
             Validate(format);
 
             Context.SampleFormat  = format.SampleFormat;

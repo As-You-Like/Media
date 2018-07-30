@@ -7,8 +7,6 @@
         public H264MotionEstimationMethod MotionEstimationMethod { get; set; }
 
         public H264Profile Profile { get; set; }
-
-        public Rational? TimeBase { get; set; }
         
         // QuantitizerScale
         // QuantizerCurveBlur

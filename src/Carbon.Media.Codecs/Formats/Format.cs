@@ -53,7 +53,7 @@ namespace Carbon.Media.Formats
             if (isDisposed) return;
 
             // Console.WriteLine("Disposing " + this.GetType().Name);
-            
+           
             Context?.Dispose();
             
             ioContext?.Dispose();

@@ -15,11 +15,11 @@ namespace Carbon.Media.IO
 
         const int bufferSize = 32768;
 
-        private byte* buffer;
+        private readonly byte* buffer;
 
-        private avio_alloc_context_read_packet read;
-        private avio_alloc_context_write_packet write;
-        private avio_alloc_context_seek seek;
+        private readonly avio_alloc_context_read_packet read;
+        private readonly avio_alloc_context_write_packet write;
+        private readonly avio_alloc_context_seek seek;
 
         public IOContext(Stream stream, bool writable = false)
         {

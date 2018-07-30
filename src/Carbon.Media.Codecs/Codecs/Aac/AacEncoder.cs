@@ -11,14 +11,21 @@ namespace Carbon.Media.Codecs
             96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 7350
         };
 
-        public AacEncoder(AacEncodingParameters options)
+        private readonly AacEncodingParameters parameters;
+
+        public AacEncoder(AacEncodingParameters parameters)
             : base(CodecId.Aac)
         {
-            SetFormat(options.GetFormatInfo());
+            this.parameters = parameters ?? throw new ArgumentNullException();
+        }
 
-            if (options.BitRate != null)
+        public override void Open()
+        {
+            SetFormat(parameters.GetFormatInfo());
+
+            if (parameters.BitRate != null)
             {
-                Context.BitRate = options.BitRate;
+                Context.BitRate = parameters.BitRate;
             }
 
             /*
@@ -27,13 +34,14 @@ namespace Carbon.Media.Codecs
             Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
             */
 
-            Open(options.ToOptions());
+            base.InternalOpen(parameters.ToOptions());
         }
+
 
         public override SampleFormat[] SampleFormats => sampleFormats;
 
         public override int[] SampleRates => sampleRates;
-        
+
         public override string GetFilterGraph()
         {
             string sampleFormat = ffmpeg.av_get_sample_fmt_name(Context.SampleFormat.ToAVFormat());

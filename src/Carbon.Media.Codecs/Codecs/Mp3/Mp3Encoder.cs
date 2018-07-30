@@ -24,11 +24,10 @@ namespace Carbon.Media.Codecs
             : base(CodecId.Mp3)
         {
             this.parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+        }
 
-            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
-            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
-            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
-
+        public override void Open()
+        {
             SetFormat(parameters.GetFormatInfo());
 
             if (parameters.BitRate != null)
@@ -36,9 +35,14 @@ namespace Carbon.Media.Codecs
                 Context.BitRate = parameters.BitRate;
             }
 
-            // requires global header?
+            base.InternalOpen(this.parameters.ToOptions());
 
-            Open(parameters.ToOptions());
+            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSampleFormats(base.Context.Codec.Id)));
+            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedChannelLayouts(base.Context.Codec.Id)));
+            // Console.WriteLine(string.Join(',', AudioFormatHelper.GetSupportedSampleRates(base.Context.Codec.Id)));
+
+
+            // requires global header?
         }
 
         public override SampleFormat[] SampleFormats => sampleFormats;
