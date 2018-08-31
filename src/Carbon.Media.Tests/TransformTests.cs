@@ -4,13 +4,12 @@ using System.Text;
 
 using Carbon.Extensions;
 using Carbon.Media.Drawing;
+using Carbon.Media.Processing;
 
 using Xunit;
 
 namespace Carbon.Media.Tests
 {
-    using Processors;
-
     public sealed class Signer : IUrlSigner
     {
         private readonly string name;
@@ -99,12 +98,13 @@ namespace Carbon.Media.Tests
         [Fact]
         public void DrawTextTests()
         {
-            var transformation = MediaTransformation.ParsePath("1045645/draw(text(Hello World,font:14px Helvetica))/100x100.jpeg");
+            var transformation = MediaTransformation.Parse("1045645;draw(text(Hello World,font:14px Helvetica))/100x100.jpeg");
 
             var draw = (DrawFilter)transformation.GetTransforms()[0];
 
             var text = (DrawTextCommand)draw.Commands[0];
 
+            Assert.Equal("1045645",     transformation.Source.Key);
             Assert.Equal("Hello World", text.Content);
             Assert.Equal(14,            text.Font?.Size.Value);
             Assert.Equal(UnitType.Px,   text.Font?.Size.Type);
@@ -209,7 +209,7 @@ namespace Carbon.Media.Tests
             Assert.Equal(54,  b.Height);
 
             Assert.Equal("270x270/crop(0,0,229,54).png", b.TransformPath);
-            Assert.Equal("/1045645/270x270/crop(0,0,229,54).png", b.Url);
+            Assert.Equal("/1045645;270x270/crop(0,0,229,54).png", b.Url);
         }
         
         [Fact]
@@ -219,10 +219,9 @@ namespace Carbon.Media.Tests
 
             var rendition = new MediaRenditionInfo("google.com", "1045645", "100x100/crop(0,0,85,20).png", 85, 20, signer: signer);
 
-            Assert.Equal("https://google.com/sig/1045645/100x100/crop(0,0,85,20).png", rendition.Url);
-
-            Assert.Equal("https://google.com/sig/1045645/200x200/crop(0,0,170,40).png", rendition.Scale(2f).Url);
-            Assert.Equal("https://google.com/sig/1045645/200x200/crop(0,0,170,40).jpeg", rendition.Scale(2f).WithFormat("jpeg").Url);
+            Assert.Equal("https://google.com/sig/1045645;100x100/crop(0,0,85,20).png", rendition.Url);
+            Assert.Equal("https://google.com/sig/1045645;200x200/crop(0,0,170,40).png", rendition.Scale(2f).Url);
+            Assert.Equal("https://google.com/sig/1045645;200x200/crop(0,0,170,40).jpeg", rendition.Scale(2f).WithFormat("jpeg").Url);
 
         }
 
@@ -232,10 +231,10 @@ namespace Carbon.Media.Tests
             var signer = new MD5Signer();
 
             var rendition = new MediaRenditionInfo("google.com", "1045645", "100x100/crop(0,0,85,20).png", 85, 20, signer: signer);
-            
-            Assert.Equal("https://google.com/6f875abf9ec9623c955b69c8de53b890/1045645/100x100/crop(0,0,85,20).png", rendition.Url);
-            Assert.Equal("https://google.com/8e6ade4ef8005a8c1eb4321e1e1ab861/1045645/200x200/crop(0,0,170,40).png", rendition.Scale(2f).Url);
-            Assert.Equal("https://google.com/e4e842003975bee77a70d5952e2c3f6c/1045645/200x200/crop(0,0,170,40).jpeg", rendition.Scale(2f).WithFormat("jpeg").Url);
+
+            Assert.Equal("https://google.com/86a04659943b28fbef72f0bc42254aa0/1045645;100x100/crop(0,0,85,20).png", rendition.Url);
+            Assert.Equal("https://google.com/8dad44c9237d2fb5052eda708256a1db/1045645;200x200/crop(0,0,170,40).png", rendition.Scale(2f).Url);
+            Assert.Equal("https://google.com/0950049f3bd305ab7d46d845c5fdb58a/1045645;200x200/crop(0,0,170,40).jpeg", rendition.Scale(2f).WithFormat("jpeg").Url);
         }
 
         [Fact]
@@ -245,7 +244,7 @@ namespace Carbon.Media.Tests
 
             var b = rendition.Scale(2f);
 
-            Assert.Equal("https://google.com/1045645/200x200/crop(0,0,170,40).png", b.Url);
+            Assert.Equal("https://google.com/1045645;200x200/crop(0,0,170,40).png", b.Url);
         }
         
         [Fact]
@@ -254,7 +253,7 @@ namespace Carbon.Media.Tests
             var a = new MediaRenditionInfo("google.com", "1045645", "100x100/crop(0,0,85,20).png", 85, 20);
             var b = new MediaRenditionInfo("google.com", "1045645", "100x100/crop(0,0,85,20).png", 85, 20);
 
-            Assert.Equal("https://google.com/1045645/200x200/crop(0,0,170,40).jpeg", a.Scale(2).WithFormat("jpeg").Url);
+            Assert.Equal("https://google.com/1045645;200x200/crop(0,0,170,40).jpeg", a.Scale(2).WithFormat("jpeg").Url);
         }
 
         [Fact]
@@ -295,7 +294,7 @@ namespace Carbon.Media.Tests
             Assert.Equal("85x20.jpeg", rendition.GetFullName());
             Assert.Equal("64a5e3944d4f11c05cde1a60efa/85x20.jpeg", rendition.GetPath());
 
-            var img = MediaTransformation.ParsePath(rendition.GetPath());
+            var img = MediaTransformation.Parse(rendition.GetPath());
 
             Assert.Equal(FormatId.Jpeg, img.Encoder.Format);
             Assert.Equal("85x20", img.GetTransforms()[0].ToString());
@@ -312,9 +311,9 @@ namespace Carbon.Media.Tests
             Assert.Equal("100x100/crop(0,0,85,20).png",         rendition.GetFullName());
             Assert.Equal("1045645/100x100/crop(0,0,85,20).png", rendition.GetPath());
 
-            Assert.Equal("100x100|crop(0,0,85,20).png", rendition.GetFullName("|"));
+            Assert.Equal("100x100/crop(0,0,85,20).png", rendition.GetFullName());
 
-            var result = MediaTransformation.ParsePath(rendition.GetPath());
+            var result = MediaTransformation.Parse(rendition.GetPath());
 
             var transforms = result.GetTransforms();
 
@@ -351,7 +350,7 @@ namespace Carbon.Media.Tests
 
             Assert.Equal("50x50/crop(0,0,85,20)/rotate(90).gif", rendition.GetFullName());
 
-            var r2 = MediaTransformation.ParsePath(rendition.GetPath());
+            var r2 = MediaTransformation.Parse(rendition.GetPath());
 
             Assert.Equal(20, rendition.Width);
             Assert.Equal(85, rendition.Height);
@@ -419,7 +418,7 @@ namespace Carbon.Media.Tests
 
             Assert.Equal("contrast(2)/grayscale(1)/quantize(256)/sepia(1)/opacity(1)/saturate(1)/hueRotate(90deg).heif", transformation.GetFullName());
 
-            var img = MediaTransformation.ParsePath(transformation.GetPath());
+            var img = MediaTransformation.Parse(transformation.GetPath());
 
             var transforms = img.GetTransforms();
 
@@ -433,7 +432,7 @@ namespace Carbon.Media.Tests
             Assert.Equal(1f,  (transforms[5] as SaturateFilter).Amount);
             Assert.Equal(90,  (transforms[6] as HueRotateFilter).Degrees);
 
-            Assert.Equal(FormatId.Heif, (transforms[7] as Encode).Format);
+            Assert.Equal(FormatId.Heif, (transforms[7] as EncodeParameters).Format);
         }
 
         [Fact]

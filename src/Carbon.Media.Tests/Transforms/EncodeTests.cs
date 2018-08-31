@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processors.Tests
+namespace Carbon.Media.Processing.Tests
 {
     public class EncodeTests
 	{
@@ -24,11 +24,11 @@ namespace Carbon.Media.Processors.Tests
 
         public void A(string name, FormatId format, string mime)
         {
-            var encode = Encode.Parse($"{name}::encode(quality:95)");
+            var encode = EncodeParameters.Parse($"{name}::encode(quality:95)");
 
             Assert.Equal(95, encode.Quality);
 
-            var e = Encode.Parse(encode.Canonicalize());
+            var e = EncodeParameters.Parse(encode.Canonicalize());
 
             Assert.Equal($"{e.Format.Canonicalize()}::encode(quality:95)", encode.Canonicalize());
 
@@ -40,37 +40,37 @@ namespace Carbon.Media.Processors.Tests
         [Fact]
         public void Png8Test()
         {
-            var encode = Encode.Parse("png8::encode");
+            var encode = EncodeParameters.Parse("png8::encode");
 
             Assert.Equal(FormatId.Png, encode.Format);
-            Assert.True(encode.Flags.HasFlag(EncodingFlags._8bit));
+            Assert.True(encode.Flags.HasFlag(EncodeFlags._8bit));
         }
 
         [Fact]
         public void Png32Test()
         {
-            var encode = Encode.Parse("png32::encode");
+            var encode = EncodeParameters.Parse("png32::encode");
 
             Assert.Equal(FormatId.Png, encode.Format);
-            Assert.True(encode.Flags.HasFlag(EncodingFlags._32bit));
+            Assert.True(encode.Flags.HasFlag(EncodeFlags._32bit));
         }
 
         [Fact]
         public void ProgressiveJpegTest()
         {
-            var encode = Encode.Parse("pjpg::encode");
+            var encode = EncodeParameters.Parse("pjpg::encode");
 
             Assert.Equal(FormatId.Jpeg, encode.Format);
-            Assert.True(encode.Flags.HasFlag(EncodingFlags.Progressive));
+            Assert.True(encode.Flags.HasFlag(EncodeFlags.Progressive));
         }
 
         [Fact]
         public void LosslessTest()
         {
-            var encode = Encode.Parse("WebP::encode(lossless:true)");
+            var encode = EncodeParameters.Parse("WebP::encode(lossless:true)");
 
             Assert.Equal(FormatId.WebP, encode.Format);
-            Assert.True(encode.Flags.HasFlag(EncodingFlags.Lossless));
+            Assert.True(encode.Flags.HasFlag(EncodeFlags.Lossless));
         }
     }
 }

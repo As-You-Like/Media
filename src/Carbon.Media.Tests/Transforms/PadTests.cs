@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processors.Tests
+namespace Carbon.Media.Processing.Tests
 {
     public class PadTests
 	{

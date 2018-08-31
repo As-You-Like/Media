@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processors.Tests
+namespace Carbon.Media.Processing.Tests
 {	
 	public class ResizeTests
 	{
@@ -11,12 +11,12 @@ namespace Carbon.Media.Processors.Tests
         // 100×100,anchor:c
         // 0.5×0.5
         // 50﹪,
-        // 50％×50％
+        // 50%x50%
 
         [Fact]
         public void FromPercentages()
         {
-            var resize = ResizeTransform.Parse("50%×50%");
+            var resize = ResizeTransform.Parse("50%x50%");
 
             Assert.Equal(0.5, resize.Width);
             Assert.Equal(0.5, resize.Height);

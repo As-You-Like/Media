@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-using Carbon.Media.Processors;
+using Carbon.Media.Processing;
 
 namespace Carbon.Media
 {
