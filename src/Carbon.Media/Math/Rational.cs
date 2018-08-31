@@ -76,6 +76,44 @@ namespace Carbon.Media
             return Numerator + "/" + Denominator;
         }
 
+
+        public static bool TryParse(string text, out Rational result)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                result = default;
+
+                return false;
+            }
+
+            int slashIndex = text.IndexOf('/');
+
+            if (slashIndex == -1)
+            {
+                if (long.TryParse(text, out long value))
+                {
+                    result = new Rational(value, 1);
+
+                    return true;
+                }
+            }
+            else if (
+                long.TryParse(text.Substring(0, slashIndex), out long num) &&
+                long.TryParse(text.Substring(slashIndex + 1), out long dem) && dem != 0)
+            {
+                result = new Rational(
+                    numerator: num,
+                    denominator: dem
+                );
+
+                return true;
+            }
+
+            result = default;
+
+            return false;
+        }
+
         public static Rational Parse(string text)
         {
             int slashIndex = text.IndexOf('/');
