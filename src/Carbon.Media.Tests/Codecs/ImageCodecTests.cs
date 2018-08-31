@@ -9,6 +9,17 @@ namespace Carbon.Media.Tests
     public class ImageCodecTests
     {
         [Theory]
+        [InlineData("apng", CodecId.Apng)]
+        [InlineData("bmp", CodecId.Bmp)]
+        [InlineData("jpeg", CodecId.Jpeg)]
+        [InlineData("jp2", CodecId.Jp2)]
+        [InlineData("webp", CodecId.WebP)]
+        public void ParseTests(string name, CodecId id)
+        {
+            Assert.Equal(id, CodecIdHelper.Parse(name));
+        }
+
+        [Theory]
         [InlineData(CodecId.Apng, AV_CODEC_ID_APNG,     ImageFormat.Apng)]
         [InlineData(CodecId.Bmp,  AV_CODEC_ID_BMP,      ImageFormat.Bmp)]
         [InlineData(CodecId.Jp2,  AV_CODEC_ID_JPEG2000, ImageFormat.Jp2)]
@@ -33,14 +44,5 @@ namespace Carbon.Media.Tests
             Assert.Equal(codecId, avCodecId.ToCodecId());
             Assert.Equal(avCodecId, codecId.ToAVCodecID());
         }
-
-        /*
-        [Theory]
-        [InlineData(CodecId.Cr2, AVCodecID.AV_CODEC_ID_DPX)]
-        public void Raw(CodecId a, AVCodecID codecId)
-        {
-            Assert.Equal(a, codecId.ToCodecId());
-        }
-        */
     }
 }

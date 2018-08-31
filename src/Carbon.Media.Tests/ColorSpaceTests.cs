@@ -14,13 +14,12 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
-        public void ColorSpaceInfoTests()
+        public void DciP3InfoIsCorrect()
         {
             var colorSpace = ColorSpaceInfo.DciP3;
-            Assert.Equal(4,  (int)ColorSpace.AdobeRGB);
-            Assert.Equal(11, (int)ColorSpace.LUV);
-            Assert.Equal(21, (int)ColorSpace.CMYK);
-            Assert.Equal(42, (int)ColorSpace.HLS);
+            
+            Assert.Equal(ColorModel.RGB, colorSpace.Model);
+            Assert.True(colorSpace.IsWideGamut);
         }
     }
 }

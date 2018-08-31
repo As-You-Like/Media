@@ -9,6 +9,15 @@ namespace Carbon.Media.Tests
     public class AudioCodecTests
     {
         [Theory]
+        [InlineData("aac", CodecId.Aac)]
+        [InlineData("mp3", CodecId.Mp3)]
+        [InlineData("opus", CodecId.Opus)]
+        public void ParseTests(string name, CodecId id)
+        {
+            Assert.Equal(id, CodecIdHelper.Parse(name));
+        }
+
+        [Theory]
         [InlineData(CodecId.Aac,    AV_CODEC_ID_AAC,         FormatId.Aac)]
         [InlineData(CodecId.Ac3,    AV_CODEC_ID_AC3,         FormatId.Ac3)]
         [InlineData(CodecId.Alac,   AV_CODEC_ID_ALAC,        FormatId.Alac)] // Apple Lossless
@@ -18,7 +27,6 @@ namespace Carbon.Media.Tests
         [InlineData(CodecId.Vorbis, AV_CODEC_ID_VORBIS,      FormatId.Vorbis)]
         [InlineData(CodecId.Wma1,   AV_CODEC_ID_WMAV1,       FormatId.Wma)]
         [InlineData(CodecId.Wmal,   AV_CODEC_ID_WMALOSSLESS, FormatId.Wmal)]
-
         public void Core(CodecId codecId, AVCodecID avCodecId, FormatId format)
         {
             // Assert.Equal((int)codecId, (int)format);

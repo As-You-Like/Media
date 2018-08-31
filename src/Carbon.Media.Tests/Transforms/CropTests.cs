@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processors.Tests
+namespace Carbon.Media.Processing.Tests
 {
     public class CropTests
 	{
@@ -14,9 +14,9 @@ namespace Carbon.Media.Processors.Tests
             Assert.Equal(960, crop.Width);
             Assert.Equal(540, crop.Height);
 
-            Assert.Equal("crop(50％,50％,960,540)", crop.ToString());
+            Assert.Equal("crop(50%,50%,960,540)", crop.ToString());
         }
-
+        
         [Fact]
         public void A()
         {
