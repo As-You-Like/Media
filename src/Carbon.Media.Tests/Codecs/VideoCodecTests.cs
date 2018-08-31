@@ -7,6 +7,17 @@ namespace Carbon.Media.Tests
     public class VideoCodecTests
     {
         [Theory]
+        [InlineData("av1",  CodecId.AV1)]
+        [InlineData("h264", CodecId.H264)]
+        [InlineData("hevc", CodecId.Hevc)]
+        [InlineData("vp8",  CodecId.Vp8)]
+        [InlineData("vp9",  CodecId.Vp9)]
+        public void ParseTests(string name, CodecId id)
+        {
+            Assert.Equal(id, CodecIdHelper.Parse(name));
+        }
+
+        [Theory]
         [InlineData(CodecId.AV1,  AVCodecID.AV_CODEC_ID_AV1)]
         [InlineData(CodecId.Hevc, AVCodecID.AV_CODEC_ID_HEVC)]
         [InlineData(CodecId.H263, AVCodecID.AV_CODEC_ID_H263)]
