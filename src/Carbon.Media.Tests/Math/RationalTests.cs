@@ -5,6 +5,16 @@ namespace Carbon.Media.Tests
     public class RationalTest
     {
         [Fact]
+        public void TryParseTests()
+        {
+            Assert.True(Rational.TryParse("1001/48000", out var result));
+
+            Assert.Equal((1001, 48000), (result.Numerator, result.Denominator));
+
+            Assert.False(Rational.TryParse("1001/0", out _));
+        }
+
+        [Fact]
         public void ToDoubleTests()
         {
             Assert.Equal(10d, new Rational(10, 1).ToDouble());
