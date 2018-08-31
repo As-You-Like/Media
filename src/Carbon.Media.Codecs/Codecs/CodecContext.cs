@@ -24,7 +24,7 @@ namespace Carbon.Media.Codecs
             // ffmpeg.avcodec_get_context_defaults3(pointer, codec.Pointer); // set the defaults
         }
 
-        public CodecContext(AVCodecContext* pointer)
+        internal CodecContext(AVCodecContext* pointer)
         {
             if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Carbon.Media.Codecs;
-using Carbon.Media.Formats;
 using Carbon.Media.IO;
 using FFmpeg.AutoGen;
 
@@ -39,7 +38,7 @@ namespace Carbon.Media
 
         // public object A => pointer->iformat;
 
-        public OutputFormat OutputFormat => new OutputFormat(pointer->oformat);
+        internal OutputFormat OutputFormat => new OutputFormat(pointer->oformat);
         
         internal FormatFlags Flags
         {
@@ -54,8 +53,6 @@ namespace Carbon.Media
         {
             pointer->pb = source.Pointer;
             
-            // Console.WriteLine(pointer->flags);
-
             pointer->flags |= ffmpeg.AVFMT_FLAG_CUSTOM_IO;
 
             AVInputFormat* inputFormat = null;
@@ -78,7 +75,7 @@ namespace Carbon.Media
             {
                 ffmpeg.avformat_open_input(ps, url.ToString(), null, null).EnsureSuccess();
             }
-            
+
             SetupStreams();
         }
 
@@ -105,7 +102,7 @@ namespace Carbon.Media
                 streams[i] = stream;
             }
 
-            // Note: the codecs still need intilized
+            // Note: the codecs must be manually initilized before use
 
             Streams = streams;
         }
@@ -137,7 +134,6 @@ namespace Carbon.Media
                     }
                 }
             }
-            
             
             fixed (AVFormatContext** p = &pointer)
             {

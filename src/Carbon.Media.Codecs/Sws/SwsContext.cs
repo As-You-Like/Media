@@ -6,19 +6,18 @@ namespace Carbon.Media
 {
     public unsafe class SwsContext : IDisposable
     {
+        private bool isDisposed = false;
         private FFmpeg.AutoGen.SwsContext* pointer;
 
         private SwsContext(FFmpeg.AutoGen.SwsContext* pointer)
         {
-            if (pointer == null) throw new ArgumentNullException(nameof(pointer));
+            if (pointer == null)
+                throw new ArgumentNullException(nameof(pointer));
             
             this.pointer = pointer;
         }
 
-        public static SwsContext Create(
-            VideoFormatInfo source, 
-            VideoFormatInfo target, 
-            SwsFlags flags)
+        public static SwsContext Create(VideoFormatInfo source,  VideoFormatInfo target, SwsFlags flags)
         {
             var pointer = ffmpeg.sws_getContext(
                 source.Width, 
@@ -44,13 +43,13 @@ namespace Carbon.Media
         public int Scale(VideoFrame source, int srcSliceY, int srcSliceH, VideoFrame destination)
         {
             return ffmpeg.sws_scale(
-                c           : pointer,
-                srcSlice    : source.Pointer->data,
-                srcStride   : source.Pointer->linesize,
-                srcSliceY   : srcSliceY,
-                srcSliceH   : srcSliceH,
-                dst         : destination.PlaneDataPointers,
-                dstStride   : destination.Strides
+                c         : pointer,
+                srcSlice  : source.PlanePointers, // source.Pointer->data,
+                srcStride : source.Strides, // source.Pointer->linesize,
+                srcSliceY : srcSliceY,
+                srcSliceH : srcSliceH,
+                dst       : destination.PlanePointers,
+                dstStride : destination.Strides
             );
         }
 
@@ -63,11 +62,13 @@ namespace Carbon.Media
 
         public void Dispose(bool disposing)
         {
-            if (pointer == null) return;
+            if (isDisposed) return;
             
             ffmpeg.sws_freeContext(pointer);
 
             pointer = null;
+
+            isDisposed = true;
         }
 
         ~SwsContext()

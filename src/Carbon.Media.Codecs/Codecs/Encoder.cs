@@ -14,6 +14,12 @@ namespace Carbon.Media.Codecs
         {
             var result = ffmpeg.avcodec_send_frame(context.Pointer, frame.Pointer);
             
+            if (frame is UnmanagedFrame unmanaged)
+            {
+                // unreference the frame so it may be reused...
+                unmanaged.Unref();
+            }
+
             switch (result)
             {
                 case 0          : return OperationStatus.Ok;

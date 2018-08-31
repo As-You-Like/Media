@@ -13,9 +13,9 @@ namespace Carbon.Media.Codecs
         };
 
         private static readonly SampleFormat[] sampleFormats = {
-            SampleFormat.Int32Planar,
-            SampleFormat.FloatPlanar,
-            SampleFormat.Int16Planar
+            SampleFormat.I32p,
+            SampleFormat.F32p,
+            SampleFormat.I16p
         };
 
         private static readonly int[] sampleRates = { 44100, 48000, 32000, 22050, 24000, 16000, 11025, 12000, 8000 };

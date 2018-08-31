@@ -17,7 +17,18 @@ namespace Carbon.Media
 
             Codec = Codec.Create(this, codecType);
         }
+    
+        protected MediaStream(AVStream* pointer, Codec codec)
+        {
+            if (pointer == null) throw new ArgumentNullException(nameof(pointer));
 
+            this.pointer = pointer;
+
+            Codec = codec ?? throw new ArgumentNullException(nameof(codec));
+
+            Codec.Initialize(this);
+        }
+  
         internal AVStream* Pointer => pointer;
 
         public int Id
@@ -32,7 +43,7 @@ namespace Carbon.Media
             set => pointer->index = value;
         }
 
-        public abstract MediaType Type { get; }
+        public abstract MediaStreamType Type { get; }
 
         // e.g. H264, AAC ...
         public Codec Codec { get; }
@@ -96,14 +107,14 @@ namespace Carbon.Media
         );
 
         #endregion
-
-        public static MediaStream Create(AVStream* pointer, CodecType codecType = CodecType.Decoder)
+        
+        internal static MediaStream Create(AVStream* pointer)
         {
             MediaStream stream = InternalCreate(pointer);
-
+         
             // Setup the parameters from the current context
             ffmpeg.avcodec_parameters_from_context(stream.Pointer->codecpar, stream.Codec.Context.Pointer).EnsureSuccess();
-
+            
             return stream;
         }
 
@@ -117,6 +128,7 @@ namespace Carbon.Media
                 default                                : return new UnknownStream(pointer); 
             }
         }
+        
 
         public void Dispose()
         {

@@ -89,7 +89,7 @@ namespace Carbon.Media.Codecs
                 return;
             }
 
-            if (context == null)
+            if (context is null)
             {
                 throw new Exception($"Uninitialized ({Id} + {Type})");
             }

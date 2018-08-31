@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media
 {
-    public enum BufferSourceFlags
+    internal enum BufferSourceFlags
     {
         None = 0,
 

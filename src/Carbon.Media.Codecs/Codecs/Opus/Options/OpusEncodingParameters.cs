@@ -6,7 +6,7 @@ namespace Carbon.Media.Codecs
     {
         public OpusEncodingParameters()
         {
-            this.SampleFormat = SampleFormat.Int16; // default to Int16
+            this.SampleFormat = SampleFormat.I16; // default to Int16
             this.SampleRate = 48000;
         }
 

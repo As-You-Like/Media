@@ -19,7 +19,7 @@ namespace Carbon.Media.Formats
                 format = FormatId.Mp4;
             }
 
-            var fmt = ffmpeg.av_guess_format(format.ToString().ToLower(), null, format.ToMime());
+            AVOutputFormat* fmt = ffmpeg.av_guess_format(format.ToString().ToLower(), null, format.ToMime());
 
             if (fmt == null)
             {
@@ -35,7 +35,8 @@ namespace Carbon.Media.Formats
         
         public void Initialize(params Encoder[] encoders)
         {
-            if (encoders == null) throw new ArgumentNullException(nameof(encoders));
+            if (encoders is null)
+                throw new ArgumentNullException(nameof(encoders));
 
             var streams = new MediaStream[encoders.Length];
 
@@ -44,7 +45,7 @@ namespace Carbon.Media.Formats
                 var encoder = encoders[i];
 
                 // Ensure a stream was intilized...
-                if (encoder.Stream == null)
+                if (encoder.Stream is null)
                 {
                     MediaStream stream;
 
@@ -56,7 +57,6 @@ namespace Carbon.Media.Formats
                     }
 
                     stream.TimeBase = encoder.Context.TimeBase;
-
                 }
 
                 if (Context.OutputFormat.Flags.HasFlag(OutputFormatFlags.GlobalHeader))
@@ -92,6 +92,8 @@ namespace Carbon.Media.Formats
         public void WritePacket(Packet packet)
         {
             ffmpeg.av_interleaved_write_frame(Context.Pointer, packet.Pointer).EnsureSuccess();
+
+            packet.Unref();
         }
 
         public virtual void WriteTrailer()

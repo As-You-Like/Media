@@ -6,7 +6,7 @@ namespace Carbon.Media.Codecs
 {
     public sealed class OpusEncoder : AudioEncoder
     {
-        public static readonly SampleFormat[] sampleFormats = { SampleFormat.Int16, SampleFormat.Float };
+        public static readonly SampleFormat[] sampleFormats = { SampleFormat.I16, SampleFormat.F32 };
         public static readonly int[] sampleRates = { 48000, 24000, 16000, 12000, 8000 };
 
         private readonly OpusEncodingParameters parameters;

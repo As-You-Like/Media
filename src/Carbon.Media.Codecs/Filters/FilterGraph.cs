@@ -128,7 +128,7 @@ namespace Carbon.Media
         // Push to the buffer source
         public void PushFrame(Frame frame)
         {
-            if (frame == null) throw new ArgumentNullException(nameof(frame));
+            if (frame is null) throw new ArgumentNullException(nameof(frame));
 
             // Console.WriteLine("pushing frame to:" + bufferSource.Name);
 
@@ -164,8 +164,8 @@ namespace Carbon.Media
             Codec encoder,
             string filterSpecification)
         {
-            if (decoder == null) throw new ArgumentNullException(nameof(decoder));
-            if (encoder == null) throw new ArgumentNullException(nameof(encoder));
+            if (decoder is null) throw new ArgumentNullException(nameof(decoder));
+            if (encoder is null) throw new ArgumentNullException(nameof(encoder));
             
             FilterContext bufferSource = default; 
             FilterContext bufferSink = default;

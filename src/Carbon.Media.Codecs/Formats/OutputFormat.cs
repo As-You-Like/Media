@@ -2,7 +2,7 @@
 
 namespace Carbon.Media
 {
-    public unsafe struct OutputFormat
+    internal unsafe struct OutputFormat
     {
         private readonly AVOutputFormat* pointer;
 

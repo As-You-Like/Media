@@ -24,8 +24,13 @@ namespace Carbon.Media.Formats
         // Packets are either Video or Audio data
         public bool TryReadPacket(Packet packet)
         {
-            if (IsEof) throw new EndOfStreamException("Cannot read past the end of stream");
-            
+            if (IsEof)
+            {
+                throw new EndOfStreamException("Cannot read past the end of stream");
+            }
+
+            packet.Unref(); // unreference the current packet data so we can reuse it to read the next frame
+
             int result = ffmpeg.av_read_frame(Context.Pointer, packet.Pointer);
 
             if (result == 0) // OK
@@ -35,9 +40,11 @@ namespace Carbon.Media.Formats
                 // The timing information will be in AVStream.time_base units, 
                 // i.e. it has to be multiplied by the timebase to convert them to seconds.
 
-                MediaStream outputStream = Context.Streams[packet.StreamIndex];
+                // MediaStream outputStream = Context.Streams[packet.StreamIndex];
                 
                 // tempPacket.TimeBase = outputStream.TimeBase; // set the timebase
+
+                // TODO: Update timestamp
 
                 return true;
             }

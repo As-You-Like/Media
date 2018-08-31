@@ -13,9 +13,7 @@ namespace Carbon.Media.IO
         // keep under 32K
         // https://ffmpeg.org/pipermail/libav-user/2013-April/004162.html
 
-        const int bufferSize = 32768;
-
-        private readonly byte* buffer;
+        const int bufferSize = 32768; // 2 ^ 16
 
         private readonly avio_alloc_context_read_packet read;
         private readonly avio_alloc_context_write_packet write;
@@ -28,7 +26,7 @@ namespace Carbon.Media.IO
             ulong paddingLength = writable ? 0ul : ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE; // reversed
 
             // note: this can be replaced...
-            buffer = (byte*)ffmpeg.av_malloc(bufferSize + paddingLength);
+            var buffer = (byte*)ffmpeg.av_malloc(bufferSize + paddingLength);
 
             // reference to prevent garbage collection
             read = Read;
@@ -73,13 +71,10 @@ namespace Carbon.Media.IO
             // Console.WriteLine("read" + " " + bufferSize + " / " + result + " | " + stream.Position);
 
             return result;
-
         }
 
         long Seek(void* opaque, long offset, int whence)
         {
-            // Console.WriteLine("seek: " + offset + ":" + (SeekFlags)whence + "/" + (SeekOrigin)whence);
-
             if (whence == ffmpeg.AVSEEK_SIZE)
             {
                 return stream.Length;
@@ -87,8 +82,6 @@ namespace Carbon.Media.IO
 
             if (!stream.CanSeek)
             {
-                // Console.WriteLine("cannot seek");
-
                 return -1;
             }
 
@@ -108,22 +101,10 @@ namespace Carbon.Media.IO
         {
             if (isDisposed) return;
 
-            // Console.WriteLine("Disposing IOContext");
-
             // NOTE: The internal buffer may have changed
+            // Do we need to handle this?
 
-            var a = (IntPtr)Pointer->buffer;
-            var b = (IntPtr)buffer;
-
-            if (a == b)
-            {
-                ffmpeg.av_free(buffer);
-            }
-            else
-            {
-                // ffmpeg.av_free(buffer);
-                ffmpeg.av_free(&Pointer->buffer); // free the current buffer
-            }
+            ffmpeg.av_freep(&Pointer->buffer); // free the current buffer
 
             fixed (AVIOContext** p = &Pointer)
             {

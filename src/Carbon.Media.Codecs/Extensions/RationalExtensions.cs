@@ -13,7 +13,7 @@ namespace Carbon.Media
 
         public static AVRational ToAVRational(this Rational? rational)
         {
-            if (rational == null)
+            if (rational is null)
             {
                 return new AVRational { num = 0, den = 1 };
             }

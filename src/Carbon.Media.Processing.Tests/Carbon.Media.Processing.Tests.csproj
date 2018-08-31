@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carbon.Media.Codecs\Carbon.Media.Processing.csproj" />
+    <ProjectReference Include="..\Carbon.Media.Libs\Carbon.Media.Libs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Carbon.Color" Version="2.0.0" />
+    <PackageReference Include="Carbon.Json" Version="1.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="protobuf-net" Version="2.4.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+  
+</Project>

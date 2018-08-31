@@ -13,7 +13,7 @@ namespace Carbon.Media
             Pointer = pointer;
         }
 
-        public readonly AVFilterContext* Pointer;
+        internal readonly AVFilterContext* Pointer;
 
         public string Name => Marshal.PtrToStringAnsi((IntPtr)Pointer->name);
 

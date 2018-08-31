@@ -45,7 +45,7 @@ namespace Carbon.Media.Codecs
 
         public void SetFormat(AudioFormatInfo format)
         {
-            if (context == null)
+            if (context is null)
             {
                 throw new Exception("Uninitialized");
             }

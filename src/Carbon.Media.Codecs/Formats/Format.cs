@@ -28,7 +28,7 @@ namespace Carbon.Media.Formats
 
         public MediaStream[] Streams => Context.Streams;
 
-        public MediaStream GetStream(MediaType type)
+        public MediaStream GetStream(MediaStreamType type)
         {
             foreach (var stream in Streams)
             {

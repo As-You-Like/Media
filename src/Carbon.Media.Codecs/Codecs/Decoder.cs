@@ -41,6 +41,12 @@ namespace Carbon.Media.Codecs
        
         public OperationStatus TryGetFrame(Frame frame)
         {
+            if (frame is UnmanagedFrame unmanagedFrame)
+            {
+                // Ensure the free is available for reuse
+                unmanagedFrame.Unref();
+            }
+
             int result = ffmpeg.avcodec_receive_frame(Context.Pointer, frame.Pointer);
             
             switch (result)

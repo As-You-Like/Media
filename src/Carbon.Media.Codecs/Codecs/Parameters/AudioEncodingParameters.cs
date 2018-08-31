@@ -6,7 +6,7 @@
 
         public ChannelLayout ChannelLayout { get; set; } = ChannelLayout.Stereo;
 
-        public SampleFormat SampleFormat { get; set; } = SampleFormat.FloatPlanar;
+        public SampleFormat SampleFormat { get; set; } = SampleFormat.F32p;
 
         public int SampleRate { get; set; } = 44100;
 

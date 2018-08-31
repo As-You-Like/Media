@@ -19,11 +19,23 @@ namespace Carbon.Media
         SrcVChrDropMask = 0x30000,
         SrcVChrDropShift = 16,
         ParamDefault = 123456,
+
+        /// <summary>
+        /// Enable printing/debug logging.
+        /// </summary>
         PrintInfo = 0x1000,
-        FullChrHInt = 0x2000,
-        FullChrHInp = 0x4000,
+
+        /// <summary>
+        /// Enable full chroma interpolation.
+        /// </summary>
+        FullChromaHInt = 0x2000,
+        FullChromaHInp = 0x4000,
         DirectBGR = 0x8000,
         AccurateRnd = 0x40000,
+
+        /// <summary>
+        /// Enable bitexact output.
+        /// </summary>
         BitExact = 0x80000,
         ErrorDiffusion = 0x800000
     }

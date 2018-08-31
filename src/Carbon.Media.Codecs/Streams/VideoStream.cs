@@ -9,8 +9,11 @@ namespace Carbon.Media
 {
     public unsafe sealed class VideoStream : MediaStream, IVideo
     {
-        public VideoStream(AVStream* pointer)
+        internal VideoStream(AVStream* pointer)
             : base(pointer) { }
+
+        internal VideoStream(AVStream* pointer, Codec codec)
+            : base(pointer, codec) { }
 
         public PixelFormat PixelFormat => Codec.Context.PixelFormat;
 
@@ -29,11 +32,24 @@ namespace Carbon.Media
         /// <summary>
         /// The aspect ratio of the pixels when presented (displayed)
         /// </summary>
-        public Rational AspectRatio => pointer->display_aspect_ratio.ToRational();
-        
+        public Rational AspectRatio
+        {
+            get
+            {
+                if (pointer->display_aspect_ratio.den == 0 || pointer->display_aspect_ratio.IsUnknown() )
+                {
+                    Console.WriteLine("invalid aspect ratio");
+
+                    return new Rational(1, 1);
+                }
+
+                return pointer->display_aspect_ratio.ToRational();
+            }
+        }
+
         // public ExifOrientation? Orientation { get; set; }
-        
-        public override MediaType Type => MediaType.Video;
+
+        public override MediaStreamType Type => MediaStreamType.Video;
 
         #region IVideo
 
@@ -42,20 +58,18 @@ namespace Carbon.Media
         TimeSpan? IVideo.Duration => base.Duration?.TimeSpan;
 
         #endregion
-        
+
         public static VideoStream Create(Format format, Codec codec)
         {
-            if (format == null)
+            if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
-            if (codec == null)
+            if (codec is null)
                 throw new ArgumentNullException(nameof(codec));
 
-            AVStream* stream = ffmpeg.avformat_new_stream(format.Context.Pointer, codec.Pointer);
-            
-            stream->codec = codec.Context.Pointer;
+            AVStream* pointer = ffmpeg.avformat_new_stream(format.Context.Pointer, codec.Pointer);
 
-            return new VideoStream(stream);
+            return new VideoStream(pointer, codec);
         }
     }
 }
