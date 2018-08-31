@@ -137,7 +137,8 @@ namespace Carbon.Media
             { "txt",      Txt },
             { "xml",      Xml },
 
-			// Videos --------------------------------------------
+            // Videos --------------------------------------------
+            { "asf",    Asf }, // Advanced Systems Format
 			{ "avi",    Avi },
             { "f4v",    F4v },
             { "flv",    Flv },

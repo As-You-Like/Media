@@ -10,7 +10,7 @@ namespace Carbon.Media
 
         internal Mime(string name, string[] formats)
         {
-            if (formats == null)
+            if (formats is null)
                 throw new ArgumentNullException(nameof(formats));
 
             if (formats.Length == 0)
@@ -62,26 +62,23 @@ namespace Carbon.Media
 
         public static Mime Parse(string name)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (name is null) throw new ArgumentNullException(nameof(name));
 
             Mime mime;
 
-            if (name.Contains("/"))
+            if (name.IndexOf('/') > -1)
             {
                 if (MimeHelper.NameToMimeMap.TryGetValue(name, out mime))
                 {
                     return mime;
                 }
             }
-            else
+            else if (MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
             {
-                if (MimeHelper.FormatToMimeMap.TryGetValue(name, out mime))
-                {
-                    return mime;
-                }
+                return mime;
             }
 
-            throw new Exception($"No mime found for '{name}'.");
+            throw new Exception($"No mime matching '{name}'.");
         }
 
         public static Mime FromPath(string path)
@@ -91,7 +88,7 @@ namespace Carbon.Media
 
         public static Mime FromExtension(string extension)
         {
-            if (extension == null) throw new ArgumentNullException(nameof(extension));
+            if (extension is null) throw new ArgumentNullException(nameof(extension));
             
             if (extension[0] == '.')
             {
@@ -103,7 +100,7 @@ namespace Carbon.Media
 
         public static Mime FromFormat(string format)
         {
-            if (format == null) throw new ArgumentNullException(nameof(format));
+            if (format is null) throw new ArgumentNullException(nameof(format));
 
             if (MimeHelper.FormatToMimeMap.TryGetValue(format.ToLower(), out Mime mime))
             {
@@ -117,7 +114,7 @@ namespace Carbon.Media
 
         public static bool TryGetFromFormat(string format, out Mime mime)
         {
-            if (format == null) throw new ArgumentNullException(nameof(format));
+            if (format is null) throw new ArgumentNullException(nameof(format));
 
             return MimeHelper.FormatToMimeMap.TryGetValue(format, out mime);
         }
@@ -152,12 +149,12 @@ namespace Carbon.Media
         public static readonly Mime Zip           = new Mime("application/zip",  "zip");
 
         // Audio (2000-2999)
-        public static readonly Mime Aac      = new Mime("audio/aac",         new[] { "aac", "m4a" });
+        public static readonly Mime Aac      = new Mime("audio/aac",         new[] { "aac", "m4a" }, new[] { MagicNumber.Aac1, MagicNumber.Aac2 });
         public static readonly Mime Aiff     = new Mime("audio/aiff",        new[] { "aiff", "aif", "aifc" }, new[] { MagicNumber.Aiff });
         public static readonly Mime Au       = new Mime("audio/au",          new[] { "au" });
         public static readonly Mime Flac     = new Mime("audio/flac",        new[] { "flac" }, new[] { MagicNumber.Flac });
         public static readonly Mime Mka      = new Mime("audio/x-matroska",  "mka");
-        public static readonly Mime Mp3      = new Mime("audio/mpeg",        new[] { "mp3" }, new[] { MagicNumber.Mp3 });
+        public static readonly Mime Mp3      = new Mime("audio/mpeg",        new[] { "mp3" }, new[] { MagicNumber.Mp3, MagicNumber.Mp3_2 });
         public static readonly Mime Mpc      = new Mime("audio/musepack",    "mpc");
         public static readonly Mime M4a      = new Mime("audio/mp4",         "m4a");
         public static readonly Mime Oga      = new Mime("audio/ogg",         "oga");
@@ -165,12 +162,14 @@ namespace Carbon.Media
         public static readonly Mime Spx      = new Mime("audio/speex",       "spx");
         public static readonly Mime Qcelp    = new Mime("audio/qcelp",       "qcelp");
         public static readonly Mime Ra       = new Mime("audio/x-realaudio", new[] { "ra", "ram" });
-        public static readonly Mime Wav      = new Mime("audio/wav",         new[] { "wav", "wave" }, new[] { MagicNumber.Wav1, MagicNumber.Wav2 });
+        public static readonly Mime Tta      = new Mime("audio/x-tta",       new[] { "tta" });
+        public static readonly Mime Wav      = new Mime("audio/wav",         new[] { "wav", "wave" }, new[] { MagicNumber.Wav });
         public static readonly Mime Wma      = new Mime("audio/x-ms-wma",    new[] { "wma" }, new[] { MagicNumber.Wma });
 
         // Image (4000-4999)
         public static readonly Mime Bmp      = new Mime("image/bmp",         new[] { "bmp" }, new[] { MagicNumber.Bmp });
         public static readonly Mime Bpg      = new Mime("image/bpg",         new[] { "bpg" }, new[] { MagicNumber.Bgp });
+        public static readonly Mime Cr2      = new Mime("image/x-canon-cr2", new[] { "cr2" }, new[] { MagicNumber.Cr2 });
         public static readonly Mime Dng      = new Mime("image/dng",         "dng");
         public static readonly Mime Fpx      = new Mime("image/fpx",         new[] { "fpx", "fpix" });
         public static readonly Mime Gif      = new Mime("image/gif",         new[] { "gif" }, new[] { MagicNumber.Gif87a, MagicNumber.Gif89a});
@@ -189,11 +188,11 @@ namespace Carbon.Media
 
         // Text (8000-8999)
         public static readonly Mime AppCache = new Mime("text/cache-manifest", "appcache");
-        public static readonly Mime Css      = new Mime("text/css",     "css");
-        public static readonly Mime Csv      = new Mime("text/csv",     "csv");
-        public static readonly Mime Html     = new Mime("text/html",    "html");
-        public static readonly Mime Txt      = new Mime("text/plain",   "plain");
-        public static readonly Mime Xml      = new Mime("text/xml",     "xml");
+        public static readonly Mime Css      = new Mime("text/css",            "css");
+        public static readonly Mime Csv      = new Mime("text/csv",            "csv");
+        public static readonly Mime Html     = new Mime("text/html",           "html");
+        public static readonly Mime Txt      = new Mime("text/plain",          "plain");
+        public static readonly Mime Xml      = new Mime("text/xml",            "xml");
 
         // Video (9000-9999)
         public static readonly Mime Avi      = new Mime("video/x-msvideo",  new[] { "avi" }, new[] { MagicNumber.Avi });
@@ -201,15 +200,16 @@ namespace Carbon.Media
         public static readonly Mime Flv      = new Mime("video/x-flv",      new[] { "flv" }, new[] { MagicNumber.Flv });
         public static readonly Mime Mkv      = new Mime("video/x-matroska", new[] { "mkv", "mk3d", "mks" });
         public static readonly Mime M4v      = new Mime("video/mp4",        "m4v");
-        public static readonly Mime Mov      = new Mime("video/quicktime",  "mov");
-        public static readonly Mime Mp4      = new Mime("video/mp4",        new[] { "mp4", "m4v" });
-        public static readonly Mime Mpeg     = new Mime("video/mpeg",       "mpeg");
+        public static readonly Mime Mov      = new Mime("video/quicktime",  new[] { "mov" }, new[] { MagicNumber.Mov, MagicNumber.Mov2 });
+        public static readonly Mime Mp4      = new Mime("video/mp4",        new[] { "mp4", "m4v" }, new[] { MagicNumber.Mp4 });
+        public static readonly Mime Mpeg     = new Mime("video/mpeg",       new[] { "mpeg" }, new[] { MagicNumber.Mpeg1 });
         public static readonly Mime Ogv      = new Mime("video/ogg",        new[] { "ogv", "ogg" }, new[] { MagicNumber.Ogg } ); // http://tools.ietf.org/html/rfc5334 (predominantly video)
         public static readonly Mime Ts       = new Mime("video/MP2T",       "ts");
-        public static readonly Mime WebM     = new Mime("video/webm",       "webm");
+        public static readonly Mime WebM     = new Mime("video/webm",       new[] { "webm" }, new[] { MagicNumber.WebM });
         public static readonly Mime Wmv      = new Mime("video/x-ms-wmv",   "wmv");
 
         // Multimedia Containers
+        public static readonly Mime Asf      = new Mime("video/x-ms-asf",  new[] { "asf" }, new[] { MagicNumber.Asf });
         public static readonly Mime _3GP     = new Mime("video/3gpp",      "3gp");
         public static readonly Mime _3GP2    = new Mime("video/3gpp2",     "3g2"); 
         public static readonly Mime Mxf      = new Mime("application/mxf", "mxf");
