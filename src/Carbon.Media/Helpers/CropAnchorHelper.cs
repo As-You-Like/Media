@@ -8,7 +8,8 @@ namespace Carbon.Media
     {
         public static CropAnchor Parse(string text)
         {
-            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
             
             switch (text)
             {

@@ -11,7 +11,7 @@ namespace System.Text
         {
             var sb = cachedInstance;
 
-            if (sb == null)
+            if (sb is null)
             {
                 return new StringBuilder(100);
             }

@@ -8,6 +8,12 @@
             Value = value;
         }
 
+        public Argument(string value)
+        {
+            Name = null;
+            Value = value;
+        }
+
         public string Name { get; }
 
         public string Value { get; }
@@ -20,7 +26,7 @@
 
         public override string ToString()
         {
-            if (Name == null) return Value;
+            if (Name is null) return Value;
 
             return Name + ":" + Value;
         }

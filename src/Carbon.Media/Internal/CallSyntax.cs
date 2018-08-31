@@ -35,7 +35,7 @@ namespace Carbon.Media
 
         public static CallSyntax Parse(string text)
         {
-            if (text == null)
+            if (text is null)
             {
                 throw new ArgumentNullException(nameof(text));
             }
