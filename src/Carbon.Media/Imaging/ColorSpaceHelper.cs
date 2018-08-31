@@ -1,7 +1,24 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public static class ColorSpaceHelper
     {
+        public static ColorSpace Parse(string text)
+        {
+            switch (text.ToLower())
+            {
+                case "hsl"  : return ColorSpace.HSL;
+                case "srgb" : return ColorSpace.sRGB;
+                  
+            }
+
+            Enum.TryParse(text, true, out ColorSpace result);
+
+            return result;
+        }
+
+
         public static string Canonicalize(this ColorSpace colorSpace)
         {
             switch (colorSpace)
