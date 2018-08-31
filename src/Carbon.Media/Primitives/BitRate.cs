@@ -45,8 +45,16 @@ namespace Carbon.Media
         public override string ToString() => Value.ToString();
 
         public static BitRate Parse(string text)
-        {
-            if (text.EndsWith("Kb/s"))
+        {            
+            if (text.EndsWith("kbs"))
+            {
+                return FromKbps(double.Parse(text.Substring(0, text.Length - 3)));
+            }
+            if (text.EndsWith("mbs"))
+            {
+                return FromMbps(double.Parse(text.Substring(0, text.Length - 3)));
+            }
+            else if (text.EndsWith("Kb/s"))
             {
                 return FromKbps(double.Parse(text.Substring(0, text.Length - 4)));
             }
