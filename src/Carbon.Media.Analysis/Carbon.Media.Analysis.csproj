@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Carbon.Media.Analysis</AssemblyName>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Version>0.4.0</Version>
+    <LangVersion>7.3</LangVersion>
+
+    <!-- Package Details-->
+    <Authors>iamcarbon</Authors>
+    <Copyright>© Jason Nelson</Copyright>
+    <Description>Media primitives.</Description>
+    <PackageTags>media;mimes;carbon</PackageTags>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/carbon/Media</RepositoryUrl>
+    
+      </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Carbon.Json" Version="1.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carbon.Media\Carbon.Media.csproj" />
+  </ItemGroup>
+
+</Project>
