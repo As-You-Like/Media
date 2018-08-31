@@ -10,21 +10,22 @@ namespace Carbon.Media
         {
             switch (format)
             {
-                case Int8         : return 1;
-                case Int16        : return 2;
-                case Int32        : return 4;
-                case Int64        : return 8;
-                case UInt8        : return 1;
-                case Float        : return 4;
-                case Double       : return 8;
-                case UInt8Planar  : return 1;
-                case Int16Planar  : return 2;
-                case Int32Planar  : return 4;
-                case FloatPlanar  : return 4;
-                case DoublePlanar : return 8;
-                case Int64Planar  : return 8;            }
-
-            throw new Exception("Invalid SampleFormat:" + format);
+                case I8   : return 1;
+                case I16  : return 2;
+                case I32  : return 4;
+                case I64  : return 8;
+                case U8   : return 1;
+                case F32  : return 4;
+                case F64  : return 8;
+                case U8p  : return 1;
+                case I16p : return 2;
+                case I32p : return 4;
+                case F32p : return 4;
+                case F64p : return 8;
+                case I64p : return 8;
+                default:
+                    throw new Exception("Invalid SampleFormat:" + format);
+            }
         }
     }
 }

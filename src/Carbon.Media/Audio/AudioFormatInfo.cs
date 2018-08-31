@@ -7,8 +7,8 @@ namespace Carbon.Media
         private readonly SampleFormatInfo sampleFormatInfo;
 
         public AudioFormatInfo(
-            SampleFormat sampleFormat, 
-            ChannelLayout channelLayout, 
+            SampleFormat sampleFormat,
+            ChannelLayout channelLayout,
             int sampleRate)
         {
             if (sampleFormat == SampleFormat.Unknown)
@@ -20,8 +20,8 @@ namespace Carbon.Media
             if (channelLayout == default)
                 throw new ArgumentException("Must not be unknown", nameof(channelLayout));
 
-            SampleFormat  = sampleFormat;
-            SampleRate    = sampleRate;
+            SampleFormat = sampleFormat;
+            SampleRate = sampleRate;
             ChannelLayout = channelLayout;
 
             sampleFormatInfo = SampleFormatInfo.Get(sampleFormat);
@@ -41,7 +41,7 @@ namespace Carbon.Media
         public int BitsPerSample => sampleFormatInfo.BitCount;
 
         public bool IsPlanar => sampleFormatInfo.IsPlanar;
-        
+
         public int LineCount => sampleFormatInfo.IsPlanar ? ChannelCount : 1; // PlaneCount?
 
         public int LineSize => sampleFormatInfo.IsPlanar ? (BitsPerSample >> 3) : (BitsPerSample >> 3) * ChannelCount;
@@ -56,8 +56,8 @@ namespace Carbon.Media
         #region Equality
 
         public bool Equals(AudioFormatInfo other) =>
-            SampleFormat  == other.SampleFormat &&
-            SampleRate    == other.SampleRate &&
+            SampleFormat == other.SampleFormat &&
+            SampleRate == other.SampleRate &&
             ChannelLayout == other.ChannelLayout;
 
         #endregion
