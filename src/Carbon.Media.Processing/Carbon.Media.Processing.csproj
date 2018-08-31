@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Carbon.Media.Processing</AssemblyName>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <Features>strict</Features>
+    <Version>0.1.0</Version>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FFmpeg.AutoGen" Version="4.0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carbon.Media\Carbon.Media.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Codecs\Ddp\" />
+    <Folder Include="Codecs\Mp1\" />
+    <Folder Include="Codecs\Wma\" />
+  </ItemGroup>
+
+</Project>
