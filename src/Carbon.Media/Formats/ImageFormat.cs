@@ -7,7 +7,7 @@ namespace Carbon.Media
     public enum ImageFormat
     {
         _3fr = FormatId._3fr, // Hasselblad
-        Apng = FormatId.Apng, // Animated Png
+        Apng = FormatId.Apng, // Animated PNG
         Art  = FormatId.Art,  // ART
         Bmp  = FormatId.Bmp,  // BMP
         Bpg  = FormatId.Bpg,  // Better Portable Graphics
@@ -58,6 +58,7 @@ namespace Carbon.Media
 
             switch (text)
             {
+                case "apng" : return Apng;
                 case "bmp"  : return Bmp;
                 case "bgp"  : return Bpg;
                 case "cr2"  : return Cr2;

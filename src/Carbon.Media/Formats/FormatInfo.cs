@@ -20,8 +20,6 @@ namespace Carbon.Media
         
         public Mime[] Mimes { get; }
 
-        public static readonly FormatInfo Json = new FormatInfo(FormatId.Json, Mime.Json);
-        public static readonly FormatInfo Avi  = new FormatInfo(FormatId.Avi,  Mime.Avi);
         public static readonly FormatInfo Mp3  = new FormatInfo(FormatId.Mp3,  Mime.Mp3);
         public static readonly FormatInfo Mp4  = new FormatInfo(FormatId.Mp4,  Mime.Mp4);
         public static readonly FormatInfo Mkv  = new FormatInfo(FormatId.Mkv,  Mime.Mkv); // Matroska Video

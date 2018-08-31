@@ -21,7 +21,8 @@ namespace Carbon.Media
     {
         public static Size Parse(string text)
         {
-            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
 
             int indexOfX = text.IndexOf('x');
 
@@ -31,8 +32,8 @@ namespace Carbon.Media
             }
 
             return new Size(
-                width: int.Parse(text.Substring(0, indexOfX)), 
-                height: int.Parse(text.Substring(indexOfX + 1))
+                width  : int.Parse(text.Substring(0, indexOfX)), 
+                height : int.Parse(text.Substring(indexOfX + 1))
             );
         }
     }

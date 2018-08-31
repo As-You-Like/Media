@@ -51,7 +51,7 @@ namespace Carbon.Media
 
         public static Unit Parse(string text)
         {
-            if (text == null)
+            if (text is null)
                 throw new ArgumentNullException(nameof(text));
 
             if (text.Length == 1 && text[0] == '_')

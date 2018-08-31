@@ -1,7 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Carbon.Media.Processors
+namespace Carbon.Media.Processing
 {
+    [DataContract]
     public readonly struct Position
     {
         public Position(int x, int y)

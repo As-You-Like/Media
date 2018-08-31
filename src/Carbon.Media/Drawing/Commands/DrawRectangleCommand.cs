@@ -52,7 +52,7 @@ namespace Carbon.Media.Drawing
 
             foreach (var (k, v) in syntax.Arguments)
             {
-                if (k == null) // positional
+                if (k is null) // positional
                 {
                     switch (i)
                     {

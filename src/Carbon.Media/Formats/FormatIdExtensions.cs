@@ -22,12 +22,13 @@ namespace Carbon.Media
                 case Asf      : return Mime.Wma;  
                 case Avi      : return Mime.Avi;
                 case Flv      : return Mime.Flv;
-                case Mp3      : return Mime.Mp3;  // audio/mpeg
-                case Mp4      : return Mime.M4a;
-                case Ogg      : return Mime.Oga;  // audio/ogg
-                case Matroska : return Mime.Mka;  // audio/x-matroska 
-                case Wave     : return Mime.Wav;  // audio/wav
-                case WebM     : return Mime.WebM; // video/webm
+                case Mp3      : return Mime.Mp3;         // audio/mpeg
+                case M4a      : return Mime.M4a;         // audio/mp4
+                case Mp4      : return Mime.M4a;         // audio/mp4
+                case Ogg      : return Mime.Oga;         // audio/ogg
+                case Matroska : return Mime.Mka;         // audio/x-matroska 
+                case Wave     : return Mime.Wav;         // audio/wav
+                case WebM     : return Mime.WebM;        // video/webm
             }
 
             throw new ArgumentException($"{formatId} does not have an audio only type");
@@ -103,8 +104,9 @@ namespace Carbon.Media
                 // Audio
                 case Aac  : return "AAC";
                 case Flac : return "FLAC";
+                case M4a  : return "M4A";
                 case Mp3  : return "MP3";
-                case Opus : return "OPUS";
+                case Opus : return "Opus";
 
                 // Images
                 case Bmp  : return "BMP";
@@ -123,10 +125,12 @@ namespace Carbon.Media
                 case WebP : return "WebP";
 
                 // Video
-                case WebM: return "WebM";
+                case Mp4    : return "MP4";
+                case WebM   : return "WebM";
 
                 // Fonts
-                case Woff: return "WOFF";
+                case Woff   : return "WOFF";
+                case Woff2  : return "WOFF2";
             }
 
             return value.ToString().ToUpper();

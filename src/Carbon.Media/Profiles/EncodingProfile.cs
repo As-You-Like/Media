@@ -5,7 +5,7 @@ namespace Carbon.Media
     [DataContract]
     public class EncodingProfile
     {
-        public EncodingProfile(FormatId format, AudioProfile audio, VideoProfile video)
+        public EncodingProfile(FormatId format, AudioProfile audio = null, VideoProfile video = null)
         {
             Format = format;
             Audio  = audio;

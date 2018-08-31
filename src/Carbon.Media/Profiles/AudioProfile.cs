@@ -38,7 +38,7 @@ namespace Carbon.Media
     }
 }
 
-// Bitrate              // -b:a
-// Codec                // -acodec
-// Audio Frequency      // -af
-// Audio Quality        // -aq
+// Bitrate          | -b:a
+// Codec            | -acodec
+// Audio Frequency  | -af
+// Audio Quality    | -aq
