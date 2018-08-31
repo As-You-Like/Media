@@ -4,55 +4,38 @@ using System.Runtime.Serialization;
 namespace Carbon.Media.Metadata
 {
     [DataContract]
-    public class ImageResolution
-    {
-        [DataMember(Name = "x", Order = 1)]
-        public double X { get; set; }
-
-        [DataMember(Name = "y", Order = 2)]
-        public double Y { get; set; }
-    }
-
-    [DataContract]
     public class ImageInfo
     {
-        [DataMember(Name = "format", Order = 1)]
+        [DataMember(Name = "type", Order = 1, EmitDefaultValue = false)]
+        public string Type { get; set; }
+
+        [DataMember(Name = "format", Order = 2)]
         public string Format { get; set; }
         
         // 2 = Codec
 
-        [DataMember(Name = "pixelFormat", Order = 3, EmitDefaultValue = false)]
+        [DataMember(Name = "pixelFormat", Order = 5, EmitDefaultValue = false)]
         public PixelFormat PixelFormat { get; set; }
 
-        [DataMember(Name = "width", Order = 4, EmitDefaultValue = false)]
+        [DataMember(Name = "width", Order = 6, EmitDefaultValue = false)]
         public int Width { get; set; }
 
-        [DataMember(Name = "height", Order = 5, EmitDefaultValue = false)]
+        [DataMember(Name = "height", Order = 7, EmitDefaultValue = false)]
         public int Height { get; set; }
 
-        [DataMember(Name = "orientation", Order = 6, EmitDefaultValue = false)]
+        [DataMember(Name = "orientation", Order = 8, EmitDefaultValue = false)]
         public ExifOrientation Orientation { get; set; }
 
-        [DataMember(Name = "colorSpace", Order = 7, EmitDefaultValue = false)]
+        [DataMember(Name = "colorSpace", Order = 9, EmitDefaultValue = false)]
         public ColorSpace ColorSpace { get; set; }
 
-        [DataMember(Name = "resolution", Order = 8, EmitDefaultValue = false)]
+        [DataMember(Name = "resolution", Order = 10, EmitDefaultValue = false)]
         public ImageResolution Resolution { get; set; }
 
         // Duration = 10
 
         [DataMember(Name = "frames", Order = 11, EmitDefaultValue = false)]
         public ImageFrameInfo[] Frames { get; set; }
-        
-        #region Timestamps (20)
-
-        [DataMember(Name = "created", Order = 20, EmitDefaultValue = false)]
-        public DateTime? Created { get; }
-
-        [DataMember(Name = "modified", Order = 21, EmitDefaultValue = false)]
-        public DateTime? Modified { get; }
-
-        #endregion
 
         #region Ownership & Rights (30)
 

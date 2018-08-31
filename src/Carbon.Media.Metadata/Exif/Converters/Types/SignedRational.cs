@@ -8,7 +8,7 @@ namespace Carbon.Media.Metadata
 
         public override object Normalize(object value)
         {
-            if (value == null) return "null";
+            if (value is null) return "null";
 
             var data = BitConverter.GetBytes((UInt64)value);
 

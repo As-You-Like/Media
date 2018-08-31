@@ -90,7 +90,7 @@
 
         public object Normalize(object value)
         {
-            if (value == null) return null;
+            if (value is null) return null;
 
             try
             {

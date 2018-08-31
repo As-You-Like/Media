@@ -6,12 +6,17 @@ namespace Carbon.Media.Metadata
     [DataContract]
     public class DocumentInfo
     {
-        // doc
-        [DataMember(Name = "format", Order = 1)]
+        [DataMember(Name = "type", Order = 1, EmitDefaultValue = false)]
+        public string Type { get; set; }
+
+        [DataMember(Name = "format", Order = 2)]
         public string Format { get; set; }
-        
-        // Codec = 2
-        
+
+        // Codec = 3
+
+        [DataMember(Name = "size", Order = 4, EmitDefaultValue = false)]
+        public long Size { get; set; }
+
         [DataMember(Name = "pages", Order = 10)]
         public PageInfo[] Pages { get; set; }
         

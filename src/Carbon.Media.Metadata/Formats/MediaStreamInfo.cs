@@ -10,7 +10,7 @@ namespace Carbon.Media.Metadata
 
         // Audio, Video, ...
         [DataMember(Name = "type", Order = 2)]
-        public MediaType Type { get; set; }
+        public MediaStreamType Type { get; set; }
 
         [DataMember(Name = "codec", Order = 3)]
         public string Codec { get; set; }
