@@ -6,7 +6,15 @@ namespace Carbon.Media
     {
         public static PixelFormat Parse(string text)
         {
-            Enum.TryParse(text, out PixelFormat format);
+            // Aliases
+            switch (text)
+            {
+                case "bgra": return PixelFormat.Bgra32;
+                case "rgba": return PixelFormat.Rgba32;
+                case "gray": return PixelFormat.Gray8;
+            }
+
+            Enum.TryParse(text, ignoreCase: true, out PixelFormat format);
 
             return format;
         }

@@ -8,20 +8,32 @@ namespace Carbon.Media.Tests
 
     public class PixelFormatTests
     {
-      
-
-      
-
         [Theory]
-        [InlineData("Bgr24",      PixelFormat.Bgr24)]
-        [InlineData("Bgra32",     PixelFormat.Bgra32)]
+        [InlineData("A8",         PixelFormat.A8)]
         [InlineData("BlackWhite", PixelFormat.BlackWhite)]
         [InlineData("Cmyk32",     PixelFormat.Cmyk32)]
+        // RGB -------------------------------------------
+        [InlineData("Rgb24",      PixelFormat.Rgb24)]
+        [InlineData("Rgba32",     PixelFormat.Rgba32)]
+        [InlineData("Rgba64",     PixelFormat.Rgba64)]
+        [InlineData("rgb48be",    PixelFormat.Rgb48be)]
+        // BGR(A) -------------------------------------------
+        [InlineData("Bgr24",      PixelFormat.Bgr24)]
+        [InlineData("Bgra32",     PixelFormat.Bgra32)]
+        [InlineData("Bgra64",     PixelFormat.Bgra64)]
+        // YUV
+        [InlineData("yuv422p",    PixelFormat.Yuv422p)]
         public void Parse(string text, PixelFormat type)
         {
             Assert.Equal(type, PixelFormatHelper.Parse(text));
         }
 
+
+        [Fact]
+        public void Identity()
+        {
+            Assert.Equal(10, (int)PixelFormat.Bgr4);
+        }
 
         // https://ffmpeg.org/pipermail/ffmpeg-devel/2007-May/035617.html
 
@@ -43,12 +55,22 @@ namespace Carbon.Media.Tests
         [InlineData(AVPixelFormat.AV_PIX_FMT_BGR24,     PixelFormat.Bgr24)]
         [InlineData(AVPixelFormat.AV_PIX_FMT_BGRA,      PixelFormat.Bgra32)]
 
+
+        // GRAY
+        [InlineData(AVPixelFormat.AV_PIX_FMT_GRAY8, PixelFormat.Gray8)]
+
+        // BGR(A)P
+        [InlineData(AVPixelFormat.AV_PIX_FMT_GBRP,       PixelFormat.Gbrp)]
+        [InlineData(AVPixelFormat.AV_PIX_FMT_GBRAP,      PixelFormat.Gbrap)]
+        [InlineData(AVPixelFormat.AV_PIX_FMT_GBRAPF32BE, PixelFormat.Gbrapfbe)]
+        [InlineData(AVPixelFormat.AV_PIX_FMT_GBRAPF32LE, PixelFormat.Gbrapfle)]
+        
+        // YUV
         [InlineData(AVPixelFormat.AV_PIX_FMT_YUV422P,   PixelFormat.Yuv422p)]
         [InlineData(AVPixelFormat.AV_PIX_FMT_YUV444P,   PixelFormat.Yuv444p)]
-        [InlineData(AVPixelFormat.AV_PIX_FMT_GRAY8,     PixelFormat.Gray8)]
+
         // [InlineData(AVPixelFormat.AV_PIX_FMT_BGR555BE, PixelFormat.Bgr555)]
         [InlineData(AVPixelFormat.AV_PIX_FMT_NV12, PixelFormat.Nv12)]
-
         public void FfmpegInterop(AVPixelFormat avFormat, PixelFormat format)
         {
             Assert.Equal(avFormat, format.ToAVFormat());
