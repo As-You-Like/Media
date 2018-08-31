@@ -27,41 +27,9 @@ namespace Carbon.Media
     {
         public static string ToLower(this ResizeFlags flags)
         {
+            var result = flags.ToString();
+            
             return flags.ToString().Replace(", ", "|").ToLower();
-        }
-    }
-
-    public static class ResizeFlagsHelper
-    {
-        public static ResizeFlags Parse(string text)
-        {
-            if (text == null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (text.Contains("|"))
-            {
-                var flags = ResizeFlags.None;
-
-                foreach (string part in text.Split(Seperators.Bar))
-                {
-                    if (Enum.TryParse(part, true, out ResizeFlags flag))
-                    {
-                        flags |= flag;
-                    }
-                    else
-                    {
-                        throw new Exception("Invalid resize flag:" + part);
-                    }
-
-                    flags |= part.ToEnum<ResizeFlags>(true);
-                }
-
-                return flags;
-            }
-            else
-            {
-                return text.ToEnum<ResizeFlags>(true);
-            }
         }
     }
 }
