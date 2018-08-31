@@ -5,8 +5,12 @@ namespace Carbon.Media
     public static class FormatDetector
     {
         private static readonly Mime[] mimes = new[] {
+            Mime.Aac,
             Mime.Aiff,
+            Mime.Asf,
             Mime.Avi,
+            Mime.Bmp,
+            Mime.Cr2,
             Mime.Doc,
             Mime.Flac,
             Mime.Gif,
@@ -16,10 +20,17 @@ namespace Carbon.Media
             Mime.Jp2,
             Mime.Png,
             Mime.Tiff,
+            Mime.Mov,
+            Mime.Mpeg,
+            Mime.Mp3,
+            Mime.Mp4,
             Mime.Ogv,
             Mime.Pdf,
             Mime.Psd,
-            Mime.Wav
+            Mime.Tiff,
+            Mime.Wav,
+            Mime.WebM,
+            Mime.WebP
         };
 
         public static Mime Detect(ReadOnlySpan<byte> buffer)
