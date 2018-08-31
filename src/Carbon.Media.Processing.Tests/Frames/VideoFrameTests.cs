@@ -7,6 +7,25 @@ namespace Carbon.Media.Processing.Tests
     public class VideoFrameTests
     {
         [Fact]
+        public unsafe void StridesAndLineSizesAreEqual()
+        {
+            using (var frame = new VideoFrame(PixelFormat.Bgr24, 300, 300, align: 8))
+            {
+              
+                Assert.Equal(new int[] { 904 }, frame.Strides); // rows aligned to nearest 8th byte
+
+
+                Assert.Equal(new int[] { 904, 0, 0, 0, 0, 0, 0, 0 }, frame.Pointer->linesize);
+
+                // var a = new Span<int>(&frame.Pointer->linesize, 8);
+                // var b = new Span<long>(&frame.Pointer->data, 8);
+                // 
+                // throw new Exception(string.Join(",", b.ToArray()));
+
+            }
+        }
+
+        [Fact]
         public unsafe void PaddedRowTest()
         {
             using (var frame = new VideoFrame(PixelFormat.Bgr24, 300, 300, align: 8))
@@ -32,12 +51,18 @@ namespace Carbon.Media.Processing.Tests
 
                 Assert.Equal(100 * 100 * 4, frame.Memory.Length);
 
+
+                var b = new Span<IntPtr>(&frame.Pointer->data, 8);
+
+
                 var planePointers = frame.PlanePointers.ToArray();
 
                 Assert.Equal((IntPtr)planePointers[0], frame.Memory.Pointer);
                 Assert.Equal(IntPtr.Zero, (IntPtr)planePointers[1]);
                 Assert.Equal(IntPtr.Zero, (IntPtr)planePointers[2]);
                 Assert.Equal(IntPtr.Zero, (IntPtr)planePointers[3]);
+
+                Assert.Equal(b[0], (IntPtr)planePointers[0]);
             }
         }
 

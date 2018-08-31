@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Carbon.Media.Codecs\Carbon.Media.Processing.csproj" />
     <ProjectReference Include="..\Carbon.Media\Carbon.Media.csproj" />
   </ItemGroup>
 

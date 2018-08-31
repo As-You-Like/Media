@@ -1,5 +1,4 @@
 ﻿using FFmpeg.AutoGen;
-
 using Xunit;
 
 namespace Carbon.Media.Ffmpeg.Tests
@@ -55,26 +54,12 @@ namespace Carbon.Media.Ffmpeg.Tests
             StereoDownmix
         };
 
-        static ChannelLayoutTests()
-        {
-            FFmpegHelper.RegisterBinaries();
-        }
-
-        [Fact]
-        public void DownmixTests()
-        {
-            Assert.Equal(536870912,  (long)DownmixLeft);
-            Assert.Equal(1073741824, (long)DownmixRight);
-        }
-
         [Fact]
         public void ChannelCountEquality()
         {
-            FFmpegHelper.RegisterBinaries();
-
             foreach (var layout in layouts)
             {
-                var count   = layout.GetChannelCount();
+                var count = layout.GetChannelCount();
                 var count2 = ffmpeg.av_get_channel_layout_nb_channels((ulong)layout);
 
                 Assert.Equal(count, count2);

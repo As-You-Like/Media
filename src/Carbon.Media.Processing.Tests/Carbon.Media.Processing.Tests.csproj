@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Carbon.Media.Codecs\Carbon.Media.Processing.csproj" />
     <ProjectReference Include="..\Carbon.Media.Libs\Carbon.Media.Libs.csproj" />
+    <ProjectReference Include="..\Carbon.Media.Processing\Carbon.Media.Processing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +16,7 @@
     <PackageReference Include="Carbon.Json" Version="1.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="protobuf-net" Version="2.4.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
