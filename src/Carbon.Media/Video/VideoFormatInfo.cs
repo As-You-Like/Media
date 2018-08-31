@@ -25,7 +25,7 @@ namespace Carbon.Media
 
             if (height <= 0)
                 throw new ArgumentException("Must be > 0", nameof(height));
-
+            
             PixelFormat = pixelFormat;
             Width       = width;
             Height      = height;
@@ -51,5 +51,10 @@ namespace Carbon.Media
             Width       == other.Width &&
             Height      == other.Height &&
             AspectRatio == other.AspectRatio;
+
+        public override string ToString()
+        {
+            return $"VideoFormat({PixelFormat},{Width},{Height},{TimeBase},{AspectRatio})";
+        }
     }
 }
