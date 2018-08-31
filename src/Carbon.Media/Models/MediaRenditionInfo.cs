@@ -4,23 +4,23 @@ using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
-    using Processors;
+    using Processing;
 
     public sealed class MediaRenditionInfo : ISize
     {
         private readonly string host;
-        private readonly string seperator;
+        private readonly char seperator;
         private readonly IUrlSigner signer;
 
         public MediaRenditionInfo(
             string host, 
             MediaTransformation transformation,
-            string seperator = "/",
+            char seperator = ';',
             IUrlSigner signer = null)
             : this(
                   host          : host,
                   sourcePath    : transformation.Source.Key,
-                  transformPath : transformation.GetFullName("/", prefix: null), 
+                  transformPath : transformation.GetFullName(), 
                   width         : transformation.Width, 
                   height        : transformation.Height,
                   seperator     : seperator
@@ -32,7 +32,7 @@ namespace Carbon.Media
             string sourcePath,
             string transformPath, 
             Size size, 
-            string seperator = "/",
+            char seperator = ';',
             IUrlSigner signer = null)
             : this(host, sourcePath, transformPath, size.Width, size.Height, seperator, signer)
         { }
@@ -43,13 +43,13 @@ namespace Carbon.Media
             string transformPath, 
             int width,
             int height,
-            string seperator = "/",
+            char seperator = ';',
             IUrlSigner signer = null)
         {
             this.host      = host;
             SourcePath     = sourcePath    ?? throw new ArgumentNullException(nameof(sourcePath));
             TransformPath  = transformPath;
-            this.seperator = seperator     ?? throw new ArgumentNullException(nameof(seperator));
+            this.seperator = seperator;
             this.signer    = signer;
 
             Width  = width;
@@ -80,7 +80,7 @@ namespace Carbon.Media
 
         public MediaRenditionInfo Crop(Rectangle rect)
         {
-            var transformation = MediaTransformation.ParsePath(Path);
+            var transformation = MediaTransformation.Parse(Path);
 
             transformation.Crop(rect);
 
@@ -98,7 +98,7 @@ namespace Carbon.Media
 
         public MediaRenditionInfo Scale(double scale)
         {
-            var a = MediaTransformation.ParsePath(Path);
+            var a = MediaTransformation.Parse(Path);
 
             var b = new MediaTransformation(a.Source);
 
@@ -115,7 +115,7 @@ namespace Carbon.Media
             return new MediaRenditionInfo(
                 host          : host,
                 sourcePath    : b.Source.Key, 
-                transformPath : b.GetFullName("/", null), 
+                transformPath : b.GetFullName(), 
                 width         : b.Width,
                 height        : b.Height,
                 seperator     : seperator,
@@ -144,7 +144,7 @@ namespace Carbon.Media
         {
             get
             {
-                if (TransformPath == null) return SourcePath;
+                if (TransformPath is null) return SourcePath;
 
                 return string.Concat(SourcePath, seperator, TransformPath);
             }
