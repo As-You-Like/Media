@@ -22,7 +22,6 @@ namespace Carbon.Media
 
         public AVPacket* Pointer => pointer;
 
-      
         public int StreamIndex
         {
             get => pointer->stream_index;
@@ -64,8 +63,8 @@ namespace Carbon.Media
 
         public void UpdateTimebase(Rational sourceTimeBase, Rational targetTimeBase)
         {
-            Pts      = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
-            Dts      = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
+            Pts = new Timestamp(Pts, sourceTimeBase).Transform(targetTimeBase).Value;
+            Dts = new Timestamp(Dts, sourceTimeBase).Transform(targetTimeBase).Value;
             Duration = new Timestamp(Duration, sourceTimeBase).Transform(targetTimeBase).Value;
         }
 
@@ -74,12 +73,12 @@ namespace Carbon.Media
             get => (PacketFlags)pointer->flags;
             set => pointer->flags = (int)value;
         }
-      
+
         // RESCALE TIME...
 
         #region Helpers
 
-        public bool IsKeyframe => (Flags & PacketFlags.Keyframe) != 0; 
+        public bool IsKeyframe => (Flags & PacketFlags.Keyframe) != 0;
 
         public bool IsCorrupt => (Flags & PacketFlags.Corrupt) != 0;
 
