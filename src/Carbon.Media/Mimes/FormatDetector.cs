@@ -23,15 +23,21 @@ namespace Carbon.Media
             Mime.Mov,
             Mime.Mpeg,
             Mime.Mp3,
+            Mime.M4a,
+            Mime.M4v,
             Mime.Mp4,
             Mime.Ogv,
+            Mime.Otf,
             Mime.Pdf,
             Mime.Psd,
+            Mime.Raf,
             Mime.Tiff,
             Mime.Wav,
             Mime.WebM,
             Mime.WebP
         };
+
+        // TODO: Build a trie
 
         public static Mime Detect(ReadOnlySpan<byte> buffer)
         {
