@@ -8,7 +8,7 @@ namespace Carbon.Media
     {
         public static readonly Unit None = default;
 
-        public Unit(double value, UnitType type = UnitType.Px)
+        public Unit(double value, UnitType type = default)
         {
             Value = value;
             Type = type;
@@ -19,6 +19,8 @@ namespace Carbon.Media
 
         [DataMember(Name = "value", Order = 2)]
         public double Value { get; }
+        
+        public double Scale => Type == UnitType.Percentage ? 0.01: 1;
 
         public static implicit operator double(Unit unit) => unit.Value;
 
@@ -32,61 +34,68 @@ namespace Carbon.Media
         {
             switch (Type)
             {
-                case UnitType.Percent : return (Value * 100) + "％";
-                case UnitType.Meter   : return Value + " m";
-                case UnitType.Second  : return Value + " s";
-                default               : return Value.ToString();
+                case UnitType.Percentage : return Value + "％";
+                case UnitType.M          : return Value + " m";
+                case UnitType.S          : return Value + " s";
+                default                  : return Value.ToString();
             }
         }
 
-        public static Unit Percent(double value) => new Unit(value, UnitType.Percent);
+        public static Unit Percent(double value) => new Unit(value, UnitType.Percentage);
 
-        public static Unit Px(int value) => new Unit(value);
+        public static Unit Px(double value) => new Unit(value, UnitType.Px);
 
-        public static Unit Meters(double value) => new Unit(value, UnitType.Meter);
+        public static Unit Pt(double value) => new Unit(value, UnitType.Pt);
 
-        // 50％
+        public static Unit Meters(double value) => new Unit(value, UnitType.M);
+
+        // 50%
         // 50m
         // 50 m
 
         public static Unit Parse(string text)
         {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
+            if (text is null) throw new ArgumentNullException(nameof(text));
 
-            if (text.Length == 1 && text[0] == '_')
+            if (text == "_")
             {
                 return None;
             }
 
-            if (text.EndsWith("px"))
-            {
-                text = text.Substring(0, text.Length - 2);
+            int unitIndex = 0;
 
-                return new Unit(double.Parse(text), UnitType.Px);
+            foreach (var c in text)
+            {
+                if (char.IsDigit(c) || c == '.')
+                {
+                    unitIndex++;
+                }
+                else
+                {
+                    break;
+                }
             }
 
-            else if (text[text.Length - 1] == '％' || text[text.Length - 1] =='%')
+            if (unitIndex == text.Length)
             {
-                text = text.Substring(0, text.Length - 1);
-
-                return new Unit(double.Parse(text) / 100d, UnitType.Percent);
+                return new Unit(double.Parse(text), UnitType.None);
             }
-
-            else if (text.EndsWith(" m"))
+            else
             {
-                text = text.Substring(0, text.Length - 2);
+                string number = text.Substring(0, unitIndex);
 
-                return new Unit(double.Parse(text), UnitType.Meter);
+                // skip optional space
+                if (text[unitIndex] == ' ')
+                {
+                    unitIndex++;
+                }
+
+                UnitType unitType = UnitTypeHelper.Parse(text.Substring(unitIndex));
+   
+                return new Unit(double.Parse(number), unitType);
             }
-
-            if (text.IndexOf('.') > -1)
-            {
-                return new Unit(double.Parse(text), UnitType.Percent);
-            }
-
-            return new Unit(double.Parse(text));
         }
+
 
         #region Comparisions
 
