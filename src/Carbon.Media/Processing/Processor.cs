@@ -42,9 +42,13 @@
                 case "quantize"     : return QuantizeFilter.Create(syntax);
                 case "sharpen"      : return SharpenFilter.Create(syntax);
                 case "vibrance"     : return VibranceFilter.Create(syntax);
+                case "detect"       : return DetectFilter.Create(syntax);
 
                 // Audio Filters
                 case "volume"       : return VolumeFilter.Create(syntax);
+
+                // Container Filters
+                case "bitrate"      : return BitRateFilter.Create(syntax);
 
                 // Drawing
                 case "draw"         : return DrawFilter.Parse(text);
@@ -54,9 +58,13 @@
                 case "metadata"     : return MetadataFilter.Parse(text);
                 case "quality"      : return QualityFilter.Create(syntax);
                 case "expires"      : return ExpiresFilter.Create(syntax);
+                case "tune"         : return TuneFilter.Create(syntax);
+                case "profile"      : return ProfileFilter.Create(syntax);
+                case "preset"       : return PresetFilter.Create(syntax);
 
                 // Flags
                 case "lossless"     : return LosslessFilter.Default;
+                case "poster"       : return FrameFilter.Poster;
                 case "debug"        : return DebugFilter.Default;
 
                 default             :

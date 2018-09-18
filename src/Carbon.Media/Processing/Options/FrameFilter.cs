@@ -5,6 +5,8 @@ namespace Carbon.Media.Processing
 {
     public sealed class FrameFilter : IProcessor, ICanonicalizable
     {
+        public static readonly FrameFilter Poster = new FrameFilter(0);
+
         public FrameFilter(int number)
         {
             if (number < 0) throw new ArgumentException("Must be > 0", nameof(number));
@@ -27,9 +29,25 @@ namespace Carbon.Media.Processing
 
         public void WriteTo(StringBuilder sb)
         {
-            sb.Append("frame(");
-            sb.Append(Number);
-            sb.Append(')');
+            if (Number == 0)
+            {
+                sb.Append("poster");
+            }
+            else
+            {
+                sb.Append("frame(");
+
+                if (Number == 0)
+                {
+                    sb.Append("poster");
+                }
+                else
+                {
+                    sb.Append(Number);
+                }
+
+                sb.Append(')');
+            }
         }
 
         public override string ToString() => Canonicalize();
@@ -41,4 +59,5 @@ namespace Carbon.Media.Processing
             return new FrameFilter(int.Parse(syntax.Arguments[0].Value));
         }
     }
+
 }
