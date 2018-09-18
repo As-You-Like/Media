@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Carbon.Media
 {
@@ -15,26 +14,5 @@ namespace Carbon.Media
 
         public static Rational ToRational(this Size size) => 
             new Rational(size.Width, size.Height);
-    }
-
-    public static class SizeHelper
-    {
-        public static Size Parse(string text)
-        {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            int indexOfX = text.IndexOf('x');
-
-            if (indexOfX == -1)
-            {
-                throw new ArgumentException($"Invalid size. Was '{text}'.");
-            }
-
-            return new Size(
-                width  : int.Parse(text.Substring(0, indexOfX)), 
-                height : int.Parse(text.Substring(indexOfX + 1))
-            );
-        }
     }
 }
