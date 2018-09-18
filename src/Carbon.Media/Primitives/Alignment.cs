@@ -11,7 +11,22 @@
         Center  = 5
     }
 
-    // Justify?
+    public static class AlignmentHelper
+    {
+        public static Alignment Parse(string text)
+        {
+            switch (text.ToLower())
+            {
+                case "top": return Top;
+                case "left": return Left;
+                case "bottom": return Bottom;
+                case "right": return Right;
+                case "center": return Center;
+            }
+
+            throw new InvalidValueException("alignment", text);
+        }
+    }
 
     public static class AlignmentExtensions
     {

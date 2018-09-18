@@ -83,7 +83,7 @@ namespace Carbon.Media.Drawing
                 {
                     case "fill"   : fill        = v;                          break;
                     case "stroke" : stroke      = v;                          break;
-                    case "mode"   : mode        = v.ToEnum<BlendMode>(true);  break;
+                    case "mode"   : mode        = BlendModeHelper.Parse(v);   break;
                     case "x"      : box.X       = Unit.Parse(v);              break;
                     case "y"      : box.Y       = Unit.Parse(v);              break;
                     case "width"  : box.Width   = Unit.Parse(v);              break;

@@ -68,19 +68,20 @@ namespace Carbon.Media.Drawing
 
                 switch (k)
                 {
-                    case "fill"   : fill        = v;                          break;
-                    case "mode"   : mode        = v.ToEnum<BlendMode>(true);  break;
-                    case "align"  : align       = v.ToEnum<Alignment>(true);  break;
-                    case "x"      : box.X       = Unit.Parse(v);              break;
-                    case "y"      : box.Y       = Unit.Parse(v);              break;
-                    case "width"  : box.Width   = Unit.Parse(v);              break;
-                    case "height" : box.Height  = Unit.Parse(v);              break;
-                    case "padding": box.Padding = UnboundPadding.Parse(v);    break;
+                    case "fill"   : fill        = v;                        break;
+                    case "mode"   : mode        = BlendModeHelper.Parse(v); break;
+                    case "align"  : align       = AlignmentHelper.Parse(v); break;
+                    case "x"      : box.X       = Unit.Parse(v);            break;
+                    case "y"      : box.Y       = Unit.Parse(v);            break;
+                    case "width"  : box.Width   = Unit.Parse(v);            break;
+                    case "height" : box.Height  = Unit.Parse(v);            break;
+                    case "padding": box.Padding = UnboundPadding.Parse(v);  break;
                 }
             }
 
             return new DrawRectangleCommand(fill, box, mode, align);
         }
+
     }
 }
 

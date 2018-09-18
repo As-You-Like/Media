@@ -74,8 +74,8 @@ namespace Carbon.Media.Drawing
                 
                 switch (k)
                 {
-                    case "align"    : align       = v.ToEnum<Alignment>(true); break;
-                    case "mode"     : mode        = v.ToEnum<BlendMode>(true); break;
+                    case "align"    : align       = AlignmentHelper.Parse(v);  break;
+                    case "mode"     : mode        = BlendModeHelper.Parse(v);  break;
                     case "x"        : box.X       = Unit.Parse(v);             break;
                     case "y"        : box.Y       = Unit.Parse(v);             break;
                     case "width"    : box.Width   = Unit.Parse(v);             break;

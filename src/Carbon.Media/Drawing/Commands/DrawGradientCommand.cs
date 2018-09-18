@@ -47,13 +47,13 @@ namespace Carbon.Media.Drawing
                 
                 switch (arg.Name)
                 {
-                    case "mode"   : mode        = arg.Value.ToEnum<BlendMode>(true); break;
-                    case "align"  : align       = arg.Value.ToEnum<Alignment>(true); break;
-                    case "x"      : box.X       = Unit.Parse(arg.Value);             break;
-                    case "y"      : box.Y       = Unit.Parse(arg.Value);             break;
-                    case "width"  : box.Width   = Unit.Parse(arg.Value);             break;
-                    case "height" : box.Height  = Unit.Parse(arg.Value);             break;
-                    case "padding": box.Padding = UnboundPadding.Parse(arg.Value);   break;
+                    case "mode"   : mode        = BlendModeHelper.Parse(arg.Value); break;
+                    case "align"  : align       = AlignmentHelper.Parse(arg.Value); break;
+                    case "x"      : box.X       = Unit.Parse(arg.Value);            break;
+                    case "y"      : box.Y       = Unit.Parse(arg.Value);            break;
+                    case "width"  : box.Width   = Unit.Parse(arg.Value);            break;
+                    case "height" : box.Height  = Unit.Parse(arg.Value);            break;
+                    case "padding": box.Padding = UnboundPadding.Parse(arg.Value);  break;
                 }
             }
 
