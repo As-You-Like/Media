@@ -1,9 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media.Processing
 {
     [DataContract]
-    public readonly struct Position
+    public readonly struct Position : IEquatable<Position>
     {
         public Position(int x, int y)
         {
@@ -16,8 +17,7 @@ namespace Carbon.Media.Processing
 
         [DataMember(Name = "y", Order = 2)]
         public int Y { get; }
-    }  
-}
 
-// Canvas(500,500, color: red)
-// Padding is applied to the scale & becomes a margin in draw phase...
+        public bool Equals(Position other) => X == other.X && Y == other.Y;
+    }
+}
