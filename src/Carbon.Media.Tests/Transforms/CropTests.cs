@@ -9,8 +9,8 @@ namespace Carbon.Media.Processing.Tests
         {
             var crop = CropTransform.Parse("crop(50%,50%,960,540)");
 
-            Assert.Equal(0.5d, crop.X);
-            Assert.Equal(0.5d, crop.Y);
+            Assert.Equal(Unit.Percent(50), crop.X);
+            Assert.Equal(Unit.Percent(50), crop.Y);
             Assert.Equal(960, crop.Width);
             Assert.Equal(540, crop.Height);
 
