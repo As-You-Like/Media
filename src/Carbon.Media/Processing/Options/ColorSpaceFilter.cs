@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
     public class ColorSpaceFilter : IProcessor
     {
@@ -17,12 +15,7 @@ namespace Carbon.Media.Processing
 
         public static ColorSpaceFilter Create(in CallSyntax syntax)
         {
-            if (Enum.TryParse<ColorSpace>(syntax.Arguments[0].Value, ignoreCase: true, out var colorSpace))
-            {
-                return new ColorSpaceFilter(colorSpace);
-            }
-
-            throw new Exception("Invalid ColorSpace:" + syntax.Arguments[0].Value);
+            return new ColorSpaceFilter(ColorSpaceHelper.Parse(syntax.Arguments[0].Value));
         }
     }
 }
