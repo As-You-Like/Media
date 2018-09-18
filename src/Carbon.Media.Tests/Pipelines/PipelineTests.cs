@@ -48,7 +48,7 @@ namespace Carbon.Media.Processing.Tests
             var img = new MediaTransformation(jpeg_100x50)
                 .Resize(100, 100)
                 .WithBackground("fff")
-                .Encode(ImageFormat.Jp2);
+                .Encode(FormatId.Jp2);
 
             var pipe = Pipeline.From(img);
             
@@ -84,7 +84,7 @@ namespace Carbon.Media.Processing.Tests
                 .WithPage(3)
                 .Resize(100, 100)
                 .WithBackground("ffffff")
-                .Encode(ImageFormat.Svg);
+                .Encode(FormatId.Svg);
 
             var pipe = Pipeline.From(img);
 
@@ -99,7 +99,7 @@ namespace Carbon.Media.Processing.Tests
             var img = new MediaTransformation(jpeg_100x50_rotate90)
                 .Resize(100, 100, CropAnchor.Center)
                 .WithQuality(82)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(img);
 
@@ -114,7 +114,7 @@ namespace Carbon.Media.Processing.Tests
             var img = new MediaTransformation(jpeg_100x50_rotate90)
                 .Resize(480, 444)
                 .Crop(0, 33, 480, 360)
-                .Encode(ImageFormat.Png);
+                .Encode(FormatId.Png);
 
             var pipe = Pipeline.From(img);
 
@@ -131,11 +131,11 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void StreamTests()
         { 
-            var t = MediaTransformation.Parse("33695921/drop(audio)/video(1mbs,profile:main).mp4");
+            var t = MediaTransformation.Parse("33695921;drop(audio)/video(1mbs,profile:main).mp4");
 
             var pipe = Pipeline.From(t);
 
-            Assert.Equal("33695921/drop(audio)/video(1mbs,profile:main).mp4", t.GetPath());
+            Assert.Equal("drop(audio)/video(1mbs,profile:main).mp4", t.GetTransformPath());
         }
 
         [Theory]
@@ -145,13 +145,13 @@ namespace Carbon.Media.Processing.Tests
         [InlineData("aac",  "AAC")]
         public void AudioTypes(string name, string canonicalName)
         {
-            var t = MediaTransformation.Parse("1/96kbs." + name);
+            var t = MediaTransformation.Parse("1;96kbs." + name);
 
             var pipe = Pipeline.From(t);
 
             Assert.Null(pipe.Scale);
 
-            Assert.Equal("1/bitrate(96000)." + name, t.GetPath());
+            Assert.Equal("bitrate(96000)." + name, t.GetTransformPath());
 
             Assert.Equal($"blob#1|>bitrate(96000)|>{canonicalName}::encode", pipe.Canonicalize());
         }
@@ -162,13 +162,13 @@ namespace Carbon.Media.Processing.Tests
         [InlineData("mp4", "MP4")]
         public void VideoTests(string name, string canonicalName)
         {
-            var t = MediaTransformation.Parse("1/1920x1080/1000kbs." + name);
+            var t = MediaTransformation.Parse("1;1920x1080/1000kbs." + name);
 
             var pipe = Pipeline.From(t);
 
             Assert.Equal((1920, 1080), (pipe.Scale.Width, pipe.Scale.Height));
 
-            Assert.Equal("1/1920x1080/bitrate(1000000)." + name, t.GetPath());
+            Assert.Equal("1920x1080/bitrate(1000000)." + name, t.GetTransformPath());
 
             Assert.Equal($"blob#1|>scale(1920,1080,lanczos3)|>bitrate(1000000)|>{canonicalName}::encode", pipe.Canonicalize());
         }
@@ -176,20 +176,19 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void OrientTest2()
         {
-            var t = MediaTransformation.Parse("33695921/960x1280/rotate(90).jpeg");
+            var t = MediaTransformation.Parse("33695921;960x1280/rotate(90).jpeg");
 
             var pipe = Pipeline.From(jpeg_1920x2560, t.GetTransforms());
 
             Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
 
-            t = MediaTransformation.Parse("33695921/rotate(90)/1280x960.jpeg");
+            t = MediaTransformation.Parse("33695921;rotate(90)/1280x960.jpeg");
 
             pipe = Pipeline.From(jpeg_1920x2560, t.GetTransforms());
 
             Assert.Equal("blob#1|>rotate(90deg)|>scale(1280,960,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
-
-    
+        
         [Fact]
         public void RotateTest()
         {
@@ -197,7 +196,7 @@ namespace Carbon.Media.Processing.Tests
                 .Resize(480, 444)
                 .Crop(0, 33, 480, 360)
                 .Rotate(90)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(img);
 
@@ -215,7 +214,7 @@ namespace Carbon.Media.Processing.Tests
             var img = new MediaTransformation(jpeg_524x485)
                 .Resize(480, 444)
                 .Crop(0, 33, 480, 360)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(img);
 
@@ -231,7 +230,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_1280x720)
                 .Resize(1492, 839)              // upscale by 1.1x      
                 .Crop(358, 336, 780, 140)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             // var cropScale = 1492 / 1280; // 0.85
 
@@ -249,14 +248,14 @@ namespace Carbon.Media.Processing.Tests
 
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(100, 100, CropAnchor.Center)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
  
             Assert.Equal(
                 "blob#1|>crop(32,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode",
                 Pipeline.From(rendition).Canonicalize()
             );
 
-            rendition = new MediaTransformation(jpeg_85x20).Resize(100, 100, CropAnchor.Left).Encode(ImageFormat.Jpeg);
+            rendition = new MediaTransformation(jpeg_85x20).Resize(100, 100, CropAnchor.Left).Encode(FormatId.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(0,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
@@ -265,7 +264,7 @@ namespace Carbon.Media.Processing.Tests
 
             rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(100, 100, CropAnchor.Right)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(65,0,20,20)|>scale(100,100,lanczos3)|>JPEG::encode", 
@@ -274,7 +273,7 @@ namespace Carbon.Media.Processing.Tests
 
             rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(300, 100, CropAnchor.Right)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             Assert.Equal(
                 "blob#1|>crop(25,0,60,20)|>scale(300,100,lanczos3)|>JPEG::encode",
@@ -288,7 +287,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(100, 100)
                 .Apply(new PadTransform(100))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipeline = Pipeline.From(rendition);
 
@@ -314,7 +313,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Apply(new BackgroundFilter("000000"))
                 .Apply(new ResizeTransform(100, 200, ResizeFlags.Pad))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
             
@@ -328,7 +327,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void Contain1()
         {
-            var a = MediaTransformation.Parse("1/background(000)/1200x630,contain.jpeg", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;background(000)/1200x630,contain.jpeg", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
@@ -347,7 +346,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void CoverTest1()
         {
-            var a = MediaTransformation.Parse("1/1200x630,cover.jpeg", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;1200x630,cover.jpeg", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
@@ -371,7 +370,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void ExpiresTest()
         {
-            var a = MediaTransformation.Parse("1/expires(1514686554).jpeg", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;expires(1514686554).jpeg", jpeg_180x180);
 
             var filter = a.GetTransforms()[0] as ExpiresFilter;
 
@@ -386,7 +385,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void PadModeTest()
         {
-            var a = MediaTransformation.Parse("1/background(000)/1200x630,pad|upscale.jpeg", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;background(000)/1200x630,pad|upscale.jpeg", jpeg_180x180);
             
             var pipe = Pipeline.From(a);
 
@@ -405,7 +404,7 @@ namespace Carbon.Media.Processing.Tests
         {            
             var pipe = Pipeline.From(new MediaTransformation(jpeg_100x50)
                 .Crop(0, 0, 25, 25)
-                .Encode(ImageFormat.Jpeg)
+                .Encode(FormatId.Jpeg)
             );
 
             Assert.Equal("blob#1|>crop(0,0,25,25)|>JPEG::encode", pipe.Canonicalize());
@@ -417,7 +416,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Crop(0, 0, 25, 25)
                 .Resize(50, 50)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -432,7 +431,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Resize(50, 25) // 50%
                 .Crop(0, 0, 25, 25)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -445,7 +444,7 @@ namespace Carbon.Media.Processing.Tests
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Resize(50, 100) // 50%, 200%
                 .Crop(0, 0, 25, 25)
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -467,7 +466,7 @@ namespace Carbon.Media.Processing.Tests
                 .Apply(new PixelateFilter(20))
                 .Apply(new SaturateFilter(0.5f))
                 .Apply(new SepiaFilter(0.5f))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
               
             var pipe = Pipeline.From(rendition);
 
@@ -488,7 +487,7 @@ namespace Carbon.Media.Processing.Tests
                 .Apply(new OpacityFilter(1.3f))    // clamped to 1
                 .Apply(new SaturateFilter(0.5f))
                 .Apply(new SepiaFilter(1.3f))
-                .Encode(ImageFormat.Tiff);
+                .Encode(FormatId.Tiff);
 
             var pipe = Pipeline.From(rendition);
 
@@ -504,7 +503,7 @@ namespace Carbon.Media.Processing.Tests
         {
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Apply(ResizeTransform.Parse("resize(25x50,fit|upscale)"))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -516,20 +515,19 @@ namespace Carbon.Media.Processing.Tests
         {
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Apply(ResizeTransform.Parse("resize(200x200,fit|upscale)"))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
             
             var pipe = Pipeline.From(rendition);
 
             Assert.Equal("blob#1|>scale(200,100,lanczos3)|>JPEG::encode", pipe.Canonicalize());
         }
 
-
         [Fact]
         public void ResizeFit3()
         {
             var rendition = new MediaTransformation(jpeg_100x50)
                 .Apply(ResizeTransform.Parse("resize(25,50,fit)"))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -541,7 +539,7 @@ namespace Carbon.Media.Processing.Tests
         {
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(Unit.Parse("300%"), Unit.Parse("200%"))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
             
@@ -553,7 +551,7 @@ namespace Carbon.Media.Processing.Tests
         {
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Apply(new ScaleTransform(100, 200, InterpolaterMode.Cubic))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             var pipe = Pipeline.From(rendition);
 
@@ -565,7 +563,7 @@ namespace Carbon.Media.Processing.Tests
         {
             var rendition = new MediaTransformation(jpeg_85x20)
                 .Resize(Unit.Parse("_"), Unit.Parse("40"))
-                .Encode(ImageFormat.Jpeg);
+                .Encode(FormatId.Jpeg);
 
             Assert.Equal(170, rendition.Width);
             Assert.Equal(40, rendition.Height);
@@ -580,7 +578,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void FilterTest1()
         {
-            var t = MediaTransformation.Parse("33695921/100x100/" + string.Join('/', 
+            var t = MediaTransformation.Parse("33695921;100x100/" + string.Join('/', 
                 "blur(1)",
                 "brightness(1)",
                 "contrast(1)",
@@ -612,19 +610,17 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void Draw1()
         {
-            var a = MediaTransformation.Parse("1/draw(circle(radius:5)).heif", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;draw(circle(radius:5)).heif", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
             
             Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(5))|>HEIF::encode", pipe.Canonicalize());
         }
 
-       
-
         [Fact]
         public void DrawPath1()
         {
-            var a = MediaTransformation.Parse("1/draw(path(M150 0 L75 200 L225 200 Z)).heif", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;draw(path(M150 0 L75 200 L225 200 Z)).heif", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
@@ -652,7 +648,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void Metadata1()
         {
-            var a = MediaTransformation.Parse("1/metadata(width,height).json", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;metadata(width,height).json", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
@@ -665,7 +661,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void Metadata2()
         {
-            var a = MediaTransformation.Parse("1/metadata({width,height,camera}).json", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;metadata({width,height,camera}).json", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
@@ -680,7 +676,7 @@ namespace Carbon.Media.Processing.Tests
         [Fact]
         public void Metadata3()
         {
-            var a = MediaTransformation.Parse("1/metadata.json", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;metadata.json", jpeg_180x180);
 
             var pipe = Pipeline.From(a);
 
