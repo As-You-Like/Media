@@ -44,7 +44,7 @@ namespace Carbon.Media
             {
                 ref readonly Segment segment = ref segments[i];
 
-                if (!preamble.Slice(segment.Offset, segment.Data.Length).SequenceEqual(segment.Data))
+                if (!segment.Matches(preamble))
                 {
                     return false;
                 }
@@ -65,6 +65,11 @@ namespace Carbon.Media
             public byte[] Data { get; }
 
             public int Offset { get; }
+
+            public bool Matches(ReadOnlySpan<byte> preamble)
+            {
+                return preamble.Slice(Offset, Data.Length).SequenceEqual(Data);
+            }
         }
 
         public static MagicNumber FromASCII(string text, int offset = 0)
@@ -91,13 +96,14 @@ namespace Carbon.Media
 
         //                                                                                    R     I     F     F                                    A     V     I
         public static readonly MagicNumber Avi = new MagicNumber(new Segment(0, new byte[] { 0x52, 0x49, 0x46, 0x46 }), new Segment(8, new byte[] { 0x41, 0x56, 0x49 }));
+        
+        //                                                         B     P     G     û
+        public static readonly MagicNumber Bgp = new MagicNumber(0x42, 0x50, 0x47, 0xFB);
 
         public static readonly MagicNumber Wmv = new MagicNumber(0x30, 0x26, 0xB2, 0x75, 0x8E, 0x66, 0xCF, 0x11, 0xA6, 0xD9);
 
         public static readonly MagicNumber Wma = new MagicNumber(0x30, 0x26, 0xB2, 0x75, 0x8E, 0x66, 0xCF);
 
-        //                                                         B     P     G     û
-        public static readonly MagicNumber Bgp = new MagicNumber(0x42, 0x50, 0x47, 0xfb);
 
         //                                                         B     M
         public static readonly MagicNumber Bmp = new MagicNumber(0x42, 0x4D);
@@ -118,6 +124,10 @@ namespace Carbon.Media
 
         //                                                         F     L     V    .
         public static readonly MagicNumber Flv = new MagicNumber(0x46, 0x4C, 0x56, 0x01);
+
+
+        //                                                                        f     t     y     p     f     4     v
+        public static readonly MagicNumber F4v = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x66, 0x34, 0x76 });
 
         public static readonly MagicNumber Gif87a = FromASCII("GIF87a");
 
@@ -173,26 +183,27 @@ namespace Carbon.Media
         public static readonly MagicNumber Mp3_2 = new MagicNumber(0xFF, 0xFB); // no id3 tag
 
 
-        //                                                                        f     t     y     p     m     p     4     2
-        public static readonly MagicNumber Mp4_1 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x6D, 0x70, 0x34, 0x32 });
+        //                                                                        f     t     y     p     m     p     4           +  ( 1 | 2 )
+        public static readonly MagicNumber Mp4_1 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x6D, 0x70, 0x34 });
 
-        //                                                                        f     t     y     p     i     s     o     m      
+
+        //                                                                          f     t     y     p     i     s     o     m      
         public static readonly MagicNumber Mp4_2 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D });
 
-        //                                                                        f     t     y     p     3     g     p     5
-        public static readonly MagicNumber Mp4_3 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x33, 0x67, 0x70, 0x35 });
+        //                                                                          f     t     y     p     3     g     p             + ( 4 | 5)
+        public static readonly MagicNumber Mp4_3 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x33, 0x67, 0x70 });
 
-        //                                                                        f     t     y     p     M     S     N     V
-        public static readonly MagicNumber Mp4_4 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x4D, 0x53, 0x4E, 0x56 });
+        public static readonly MagicNumber Mp4_4 = FromASCII("ftypMSNV", 4);
+        public static readonly MagicNumber Mp4_5 = FromASCII("ftypFACE", 4);
+        public static readonly MagicNumber Mp4_6 = FromASCII("ftypavc1", 4);
+        public static readonly MagicNumber Mp4_7 = FromASCII("ftypdash", 4);
 
-      
         //                                                                        m     o     o     v
         public static readonly MagicNumber Mov_1 = new MagicNumber(4, new byte[] { 0x6D, 0x6F, 0x6F, 0x76 });
         
-        //                                                                        f     t     y     p     q     t
-        public static readonly MagicNumber Mov_2 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x71, 0x74, 0x20, 0x20, 0x20 });
+        //                                                                          f     t     y     p     q     t
+        public static readonly MagicNumber Mov_2 = new MagicNumber(4, new byte[] { 0x66, 0x74, 0x79, 0x70, 0x71, 0x74 });
 
-        
         // public static readonly MagicNumber Mov_2 = FromASCII("ftyp", 4);
 
         //                                                        O     g     g     S
@@ -239,10 +250,10 @@ namespace Carbon.Media
         public static readonly MagicNumber Tiff_2 = new MagicNumber(0x4D, 0x4D, 0x0, 0x2A);  // MM.* | Big Endian
 
 
-        //                                                                       R     I     F     F                     W     A     V     E
+        //                                                                                    R     I     F     F                                    W     A     V     E
         public static readonly MagicNumber Wav = new MagicNumber(new Segment(0, new byte[] { 0x52, 0x49, 0x46, 0x46 }), new Segment(8, new byte[] { 0x57, 0x41, 0x56, 0x45 }));
 
-        //                                                                        R     I     F     F                     W     E     B    P
+        //                                                                                     R     I     F     F                                    W     E     B    P
         public static readonly MagicNumber WebP = new MagicNumber(new Segment(0, new byte[] { 0x52, 0x49, 0x46, 0x46 }), new Segment(8, new byte[] { 0x57, 0x45, 0x42, 0x50 }));
 
         //                                                        .     E     ß     £       // EMBL + ...
@@ -264,3 +275,6 @@ namespace Carbon.Media
 }
 
 // Reference: https://en.wikipedia.org/wiki/List_of_file_signatures
+
+// The National Archives of the UK has mapped most file formats
+// http://www.nationalarchives.gov.uk/PRONOM/Format/proFormatSearch.aspx?status=listReport
