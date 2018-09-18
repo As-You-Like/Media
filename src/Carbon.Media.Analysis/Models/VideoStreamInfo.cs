@@ -18,5 +18,9 @@ namespace Carbon.Media
 
         [DataMember(Name = "aspect", Order = 13, EmitDefaultValue = false)]
         public Rational? Aspect { get; set; }
+
+        [DataMember(Name = "rotate")]
+        public int? Rotate { get; set; }
+        
     }
 }

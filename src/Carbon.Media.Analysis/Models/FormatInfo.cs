@@ -22,6 +22,9 @@ namespace Carbon.Media.Analysis
         [DataMember(Name = "height", Order = 5, EmitDefaultValue = false)]
         public int Height { get; set; }
 
+        [DataMember(Name = "rotate", Order = 6, EmitDefaultValue = false)]
+        public int? Rotate { get; set; }
+
         [DataMember(Name = "duration", Order = 11)]
         public TimeSpan? Duration { get; set; }
 

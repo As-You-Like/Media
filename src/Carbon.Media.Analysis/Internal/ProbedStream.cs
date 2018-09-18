@@ -159,6 +159,12 @@ namespace Carbon.Media.Analysis.Internal
                     Width = this.Width,
                     Height = this.Height
                 };
+
+                if (Tags != null && Tags.TryGetValue("rotate", out var rotate))
+                {
+                    ((VideoStreamInfo)stream).Rotate = (int)rotate;
+                }
+
             }
             else if (CodecType == "subtitle")
             {

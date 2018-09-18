@@ -33,12 +33,11 @@
 
                 format.Streams[i] = stream;
 
-                if (stream.Type == MediaStreamType.Video)
+                if (stream is VideoStreamInfo videoStream)
                 {
-                    var videoStream = (VideoStreamInfo)stream;
-
                     format.Width = videoStream.Width;
                     format.Height = videoStream.Height;
+                    format.Rotate = videoStream.Rotate;
                 }
             }
 
