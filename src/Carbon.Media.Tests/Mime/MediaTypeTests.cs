@@ -24,7 +24,11 @@ namespace Carbon.Media.Tests
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Application, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(MediaType.Application, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
+
             }
         }
 
@@ -36,9 +40,22 @@ namespace Carbon.Media.Tests
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Text, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(MediaType.Text, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
             }
         }
+
+
+        [Fact]
+        public void ModelTests()
+        {
+            // var mime = new Mime("model/x3d+xml");
+
+
+        }
+
 
         [Fact]
         public void AudioTypeTests()
@@ -47,7 +64,10 @@ namespace Carbon.Media.Tests
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Audio, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(MediaType.Audio, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
             }
         }
 
@@ -60,23 +80,26 @@ namespace Carbon.Media.Tests
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Image, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(MediaType.Image, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
+
             }
         }
 
         [Fact]
         public void VideoTypeTests()
         {
-            var mime = Mime.FromPath("DemoReel_01.10.13-HD for Apple Devices.m4v");
-
-            Assert.Equal(MediaType.Video, mime.Type);
-            Assert.Equal("mp4", mime.Format);
-
             var formats = new[] { "avi", "f4v", "flv", "m4v", "mp4", "mpg", "mpeg", "qt", "webm", "wmv" };
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Video, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(MediaType.Video, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
+
             }
         }
 
@@ -89,7 +112,11 @@ namespace Carbon.Media.Tests
 
             foreach (var format in formats)
             {
-                Assert.Equal(MediaType.Font, Mime.FromFormat(format).Type);
+                var mime = Mime.FromFormat(format);
+
+                Assert.Equal(format, mime.Format);
+                Assert.Equal(MediaType.Font, mime.Type);
+                Assert.Equal(mime, Mime.Parse(mime.Name));
             }
         }
     }
