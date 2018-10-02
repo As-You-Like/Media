@@ -1,6 +1,6 @@
-﻿namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata.Exif
 {
-    public sealed class BooleanConverter : MetadataItemConverter
+    public sealed class BooleanConverter : ExifValueConverter
     {
         public static new readonly BooleanConverter Default = new BooleanConverter();
 

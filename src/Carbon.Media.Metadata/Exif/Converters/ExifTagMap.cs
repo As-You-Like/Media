@@ -1,45 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Carbon.Media.Metadata
+namespace Carbon.Media.Metadata.Exif
 {
-    using static MetaFormat;
+    using static ExifTagFormat;
     using static ExifTag;
 
-    public class MetadataMap
+    public class ExifTagMap
     {
-        public static readonly Dictionary<string, ExifTagInfo> PathsToNames = new Dictionary<string, ExifTagInfo> {
-            { "/app0/{ushort=0}",   new ExifTagInfo("Version") },
-            { "/app0/{ushort=1}",   new ExifTagInfo("Units", new NumberToEnum<ExifResolutionUnit>()) },
-            { "/app0/{ushort=2}",   new ExifTagInfo("DpiX") },
-            { "/app0/{ushort=3}",   new ExifTagInfo("DpiY") },
-            { "/app0/{ushort=4}",   new ExifTagInfo("Xthumbnail") },
-            { "/app0/{ushort=5}",   new ExifTagInfo("Ythumbnail") },
-            { "/app0/{ushort=6}",   new ExifTagInfo("ThumbnailData") },
-            						
-            // GIFS
-            { "/imgdesc/Left",                    new ExifTagInfo("Left",                    Short) },	    // UInt16
-            { "/imgdesc/Top",                     new ExifTagInfo("Top",                     Short) },	    // UInt16
-            { "/imgdesc/Height",                  new ExifTagInfo("Height",                  Short) },	    // UInt16
-            { "/imgdesc/Width",                   new ExifTagInfo("Width",                   Short) },	    // UInt16
-            { "/imgdesc/LocalColorTableFlag",     new ExifTagInfo("LocalColorTableFlag",     Boolean) },	// Bool
-            { "/imgdesc/InterlaceFlag",           new ExifTagInfo("InterlaceFlag",           Boolean) },	// Bool
-            
-            { "/grctlext/Disposal",               new ExifTagInfo("Disposal",                Byte) },	    // Byte
-            { "/grctlext/Delay",                  new ExifTagInfo("Delay",                   Short) },	    // UInt16
-            { "/grctlext/TransparentColorIndex",  new ExifTagInfo("TransparentColorIndex",   Byte) },	    // Byte
-            { "/grctlext/TransparencyFlag",       new ExifTagInfo("TransparencyFlag",        Boolean) },	// Bool
-            { "/grctlext/UserInputFlag",          new ExifTagInfo("UserInputFlag",           Boolean) },	// Bool
-            { "/grctlext/GlobalColorTableFlag",   new ExifTagInfo("GlobalColorTableFlag",    Boolean) },	// Bool
-            { "/grctlext/ColorResolution",        new ExifTagInfo("ColorResolution",         Byte) },	    // Byte
-            
-            
-            // MISC
-            { "/tEXt/{str=Software}",   new ExifTagInfo("Software",  Ansi) },
-            { "/xmp/xmp:CreatorTool",   new ExifTagInfo("Software",  Ansi) },
-            { "{str=Copyright Notice}", new ExifTagInfo("Copyright", Ansi) },	// /app13/{ushort=0}/{ulonglong=61857348781060}/iptc/{str=Copyright Notice}
-            { "{str=By-line}",          new ExifTagInfo("Author",    Ansi) },	// /app13/{ushort=0}/{ulonglong=61857348781060}/iptc/{str=By-line}
-		};
-
         private static readonly Dictionary<ExifTag, ExifTagInfo> TagsToTypes = new Dictionary<ExifTag, ExifTagInfo> {
 			// GPS Metadata			
 			{ GPSVersionID,              new ExifTagInfo(GPSVersionID,              Byte) },
@@ -317,28 +284,6 @@ namespace Carbon.Media.Metadata
         public static ExifTagInfo Get(ExifTag tag)
         {
             TagsToTypes.TryGetValue(tag, out var info);
-
-            return info;
-        }
-
-        public static ExifTagInfo Get(string path)
-        {
-            if (PathsToNames.TryGetValue(path, out ExifTagInfo info))
-            {
-                return info;
-            }
-
-            // BY CODE
-            // /{ushort=7}
-            try
-            {
-                string[] parts = path.Split('/');
-
-                var code = int.Parse(parts[parts.Length - 1].Replace("{ushort=", "").Replace("}", ""));
-
-                TagsToTypes.TryGetValue((ExifTag)code, out info);
-            }
-            catch { }
 
             return info;
         }

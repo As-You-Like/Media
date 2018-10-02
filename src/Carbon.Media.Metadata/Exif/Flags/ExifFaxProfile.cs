@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata.Exif
 {
     public enum ExifFaxProfile
     {
@@ -10,5 +10,4 @@
         L       = 5, // Lossless color & grayscale
         M       = 6, // Mixed raster content
     }
-
 }

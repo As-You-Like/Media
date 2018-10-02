@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Carbon.Media.Metadata
+namespace Carbon.Media.Metadata.Exif
 {
-    internal sealed class DateNormalizer : MetadataItemConverter
+    internal sealed class DateNormalizer : ExifValueConverter
     {
         public static readonly new DateNormalizer Default = new DateNormalizer();
 

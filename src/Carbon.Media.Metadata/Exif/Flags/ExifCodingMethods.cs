@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Carbon.Media.Metadata
+namespace Carbon.Media.Metadata.Exif
 {
     [Flags]
-    public enum CodingMethods
+    public enum ExifCodingMethods
     {
         Unspecified     = 0,
         ModifiedHuffman = 1 << 0, // MH

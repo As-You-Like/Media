@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Carbon.Media.Metadata
+namespace Carbon.Media.Metadata.Exif
 {
-    public sealed class UnsignedRational : MetadataItemConverter
+    public sealed class UnsignedRationalConverter : ExifValueConverter
     {
-        public new static readonly UnsignedRational Default = new UnsignedRational();
+        public new static readonly UnsignedRationalConverter Default = new UnsignedRationalConverter();
 
         public override object Normalize(object value)
         {

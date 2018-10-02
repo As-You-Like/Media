@@ -1,6 +1,6 @@
-﻿namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata.Exif
 {
-    public sealed class IntegerConverter : MetadataItemConverter
+    public sealed class IntegerConverter : ExifValueConverter
     {
         public static new readonly IntegerConverter Default = new IntegerConverter();
 

@@ -1,6 +1,6 @@
-﻿namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata.Exif
 {
-    internal enum MetaFormat
+    internal enum ExifTagFormat
     {
         Any         = 0,
         Ansi        = 1 << 0,

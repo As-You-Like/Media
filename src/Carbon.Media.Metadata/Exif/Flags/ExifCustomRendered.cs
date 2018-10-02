@@ -1,4 +1,4 @@
-﻿namespace Carbon.Media.Metadata
+﻿namespace Carbon.Media.Metadata.Exif
 {
     public enum ExifCustomRendered : short
     {

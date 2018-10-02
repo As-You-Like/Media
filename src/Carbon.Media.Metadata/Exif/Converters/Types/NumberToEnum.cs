@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Carbon.Media.Metadata
+namespace Carbon.Media.Metadata.Exif
 {
-    public sealed class NumberToEnum<T> : MetadataItemConverter
+    public sealed class NumberToEnumConverter<T> : ExifValueConverter
     {
         public override object Normalize(object value)
         {
