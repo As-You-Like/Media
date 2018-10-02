@@ -26,19 +26,19 @@ namespace Carbon.Media
 
         public static implicit operator Unit(int quantity) => new Unit(quantity);
 
+        public static implicit operator float(Unit value) => (float)(value.Value * value.Scale);
+
         public static Unit operator *(Unit left, double right) =>
             new Unit(left.Value * right, left.Type);
 
-        // ％ = large unicode
         public override string ToString()
         {
-            switch (Type)
+            if (Type != UnitType.None)
             {
-                case UnitType.Percentage : return Value + "％";
-                case UnitType.M          : return Value + " m";
-                case UnitType.S          : return Value + " s";
-                default                  : return Value.ToString();
+                return Value + UnitTypeHelper.GetSymbol(Type);
             }
+
+            return Value.ToString();         
         }
 
         public static Unit Percent(double value) => new Unit(value, UnitType.Percentage);
@@ -66,7 +66,11 @@ namespace Carbon.Media
 
             foreach (var c in text)
             {
-                if (char.IsDigit(c) || c == '.')
+                if (unitIndex == 0 && c == '-')
+                {
+                    unitIndex++;
+                }
+                else if (char.IsDigit(c) || c == '.')
                 {
                     unitIndex++;
                 }

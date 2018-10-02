@@ -23,5 +23,27 @@
 
             return UnitType.None;
         }
+
+        public static string GetSymbol(UnitType type)
+        {
+            switch (type)
+            {
+                case UnitType.Percentage : return "%";  
+                case UnitType.Px         : return "px";  
+                case UnitType.Pt         : return "pt"; 
+                case UnitType.M          : return "m"; 
+                case UnitType.Cm         : return "cm";  
+                case UnitType.Mm         : return "mm"; 
+                case UnitType.S          : return "s"; 
+                case UnitType.Ms         : return "ms";  
+                case UnitType.Deg        : return "deg"; 
+                case UnitType.Rad        : return "rad";
+                case UnitType.Hz         : return "Hz";
+                case UnitType.Khz        : return "kHz"; 
+                case UnitType.X          : return "x";
+            }
+
+            return "";
+        }
     }
 }
