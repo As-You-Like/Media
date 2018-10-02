@@ -93,14 +93,14 @@ namespace Carbon.Media
                 case PixelFormat.Gray4         : return Gray4;
                 case PixelFormat.Gray8         : return Gray8;
                 case PixelFormat.Gray16        : return Gray16;
-                case PixelFormat.Gray32Float   : return Gray32Float;
+                case PixelFormat.Gray32f   : return Gray32Float;
 
                 case PixelFormat.Pbgra32       : return Pbgra32;
-                case PixelFormat.Prgba128Float : return Prgba128Float;
+                case PixelFormat.Prgba128f : return Prgba128Float;
 
                 case PixelFormat.Rgb24         : return Rgb24;
                 case PixelFormat.Rgb48         : return Rgb48;
-                case PixelFormat.Rgba128Float  : return Rgba128Float;
+                case PixelFormat.Rgba128f  : return Rgba128Float;
                 case PixelFormat.Rgba64        : return Rgba64;
             }
 
