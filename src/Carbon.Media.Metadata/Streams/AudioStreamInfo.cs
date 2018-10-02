@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Carbon.Media
+namespace Carbon.Media.Metadata
 {
     public sealed class AudioStreamInfo : MediaStreamInfo
     {

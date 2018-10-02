@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Carbon.Media
+namespace Carbon.Media.Metadata
 {
     public class VideoStreamInfo : MediaStreamInfo
     {
@@ -19,7 +19,7 @@ namespace Carbon.Media
         [DataMember(Name = "aspect", Order = 13, EmitDefaultValue = false)]
         public Rational? Aspect { get; set; }
 
-        [DataMember(Name = "rotate")]
+        [DataMember(Name = "rotate", EmitDefaultValue = false)]
         public int? Rotate { get; set; }
         
     }
