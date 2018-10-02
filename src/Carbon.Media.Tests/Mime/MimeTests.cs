@@ -4,7 +4,29 @@
 
     public class MimeTests
 	{
-		[Fact]
+        [Fact]
+        public void MimesToFormatId()
+        {
+            // Audio
+            Assert.Equal(FormatId.Aac,  Mime.Parse("audio/aac").ToFormatId());
+            Assert.Equal(FormatId.Flac, Mime.Parse("audio/flac").ToFormatId());
+            Assert.Equal(FormatId.Mp3,  Mime.Parse("audio/mpeg").ToFormatId());
+            Assert.Equal(FormatId.Ogg,  Mime.Parse("audio/ogg").ToFormatId());
+            Assert.Equal(FormatId.Opus, Mime.Parse("audio/opus").ToFormatId());
+
+            // Images             
+            Assert.Equal(FormatId.Png,  Mime.Parse("image/png").ToFormatId());
+            Assert.Equal(FormatId.Tiff, Mime.Parse("image/tiff").ToFormatId());
+            Assert.Equal(FormatId.Gif,  Mime.Parse("image/gif").ToFormatId());
+            Assert.Equal(FormatId.Heif, Mime.Parse("image/heif").ToFormatId());
+            Assert.Equal(FormatId.Jpeg, Mime.Parse("image/jpeg").ToFormatId());
+            Assert.Equal(FormatId.Jxr,  Mime.Parse("image/vnd.ms-photo").ToFormatId());
+            Assert.Equal(FormatId.Png,  Mime.Parse("image/png").ToFormatId());
+            Assert.Equal(FormatId.Svg,  Mime.Parse("image/svg+xml").ToFormatId());
+            Assert.Equal(FormatId.WebP, Mime.Parse("image/webp").ToFormatId());
+        }
+
+        [Fact]
 		public void MimesFromNames()
 		{
             // Audio
