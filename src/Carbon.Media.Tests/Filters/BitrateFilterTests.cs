@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Processing.Tests
+namespace Carbon.Media.Processing.Filters.Tests
 {
     public class BitrateFilterTests
 	{
