@@ -27,7 +27,7 @@ namespace Carbon.Media.Processing
 
         public static InvertFilter Create(in CallSyntax syntax)
         {
-            return new InvertFilter(float.Parse(syntax.Arguments[0].Value));
+            return new InvertFilter(float.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

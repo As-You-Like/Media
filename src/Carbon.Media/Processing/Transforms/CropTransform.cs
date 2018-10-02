@@ -102,10 +102,10 @@ namespace Carbon.Media.Processing
         public static CropTransform Create(in CallSyntax syntax)
         {
             return new CropTransform(
-                x      : Unit.Parse(syntax.Arguments[0].Value),
-                y      : Unit.Parse(syntax.Arguments[1].Value),
-                width  : Unit.Parse(syntax.Arguments[2].Value),
-                height : Unit.Parse(syntax.Arguments[3].Value)
+                x      : Unit.Parse((string)syntax.Arguments[0].Value),
+                y      : Unit.Parse((string)syntax.Arguments[1].Value),
+                width  : Unit.Parse((string)syntax.Arguments[2].Value),
+                height : Unit.Parse((string)syntax.Arguments[3].Value)
             );
         }
 

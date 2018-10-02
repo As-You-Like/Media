@@ -41,7 +41,7 @@ namespace Carbon.Media.Processing
 
         public static VibranceFilter Create(in CallSyntax syntax)
         {
-            return new VibranceFilter(float.Parse(syntax.Arguments[0].Value));
+            return new VibranceFilter(float.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

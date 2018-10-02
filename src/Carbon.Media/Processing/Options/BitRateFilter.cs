@@ -25,7 +25,7 @@
 
         public static BitRateFilter Create(in CallSyntax syntax)
         {
-            return new BitRateFilter(BitRate.Parse(syntax.Arguments[0].Value));
+            return new BitRateFilter(BitRate.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

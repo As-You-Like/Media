@@ -38,7 +38,7 @@ namespace Carbon.Media.Processing
 
         public static PageFilter Create(in CallSyntax syntax)
         {
-            return new PageFilter(int.Parse(syntax.Arguments[0].Value));
+            return new PageFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

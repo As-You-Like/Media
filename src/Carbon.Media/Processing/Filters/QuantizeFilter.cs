@@ -71,7 +71,7 @@ namespace Carbon.Media.Processing
 
             if (algorithm is null && syntax.Arguments.Length > 1 && syntax.Arguments[1].Name is null)
             {
-                algorithm = syntax.Arguments[1].Value;
+                algorithm = syntax.Arguments[1].Value.ToString();
             }
 
             if (syntax.TryGetValue("dither", out string ditherValue))
@@ -79,7 +79,7 @@ namespace Carbon.Media.Processing
                 dither = (ditherValue == "true" || ditherValue == "1");
             }
 
-            return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value), algorithm, dither);
+            return new QuantizeFilter(int.Parse(syntax.Arguments[0].Value.ToString()), algorithm, dither);
         }
     }
 }

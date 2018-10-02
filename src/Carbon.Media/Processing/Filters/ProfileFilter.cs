@@ -15,7 +15,7 @@ namespace Carbon.Media.Processing
 
         public static ProfileFilter Create(in CallSyntax syntax)
         {
-            return new ProfileFilter(syntax.Arguments[0].Value);
+            return new ProfileFilter(syntax.Arguments[0].Value.ToString());
         }
     }
 }

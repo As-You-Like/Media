@@ -15,7 +15,7 @@ namespace Carbon.Media.Processing
 
         public static TuneFilter Create(in CallSyntax syntax)
         {
-            return new TuneFilter(syntax.Arguments[0].Value);
+            return new TuneFilter(syntax.Arguments[0].Value.ToString());
         }
     }
 }

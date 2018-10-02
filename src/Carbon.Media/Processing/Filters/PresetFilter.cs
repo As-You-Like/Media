@@ -15,7 +15,7 @@ namespace Carbon.Media.Processing
 
         public static PresetFilter Create(in CallSyntax syntax)
         {
-            return new PresetFilter(syntax.Arguments[0].Value);
+            return new PresetFilter((string)syntax.Arguments[0].Value);
         }
     }
 }

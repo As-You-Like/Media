@@ -18,7 +18,7 @@ namespace Carbon.Media.Processing
 
         public static BrightnessFilter Create(in CallSyntax syntax)
         {
-            return new BrightnessFilter(float.Parse(syntax.Arguments[0].Value));
+            return new BrightnessFilter(Unit.Parse(syntax.Arguments[0].Value.ToString()));
         }
 
         public string Canonicalize() => $"brightness({Amount})";

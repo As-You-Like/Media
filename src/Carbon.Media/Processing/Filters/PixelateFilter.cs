@@ -22,7 +22,7 @@ namespace Carbon.Media.Processing
 
         public static PixelateFilter Create(in CallSyntax syntax)
         {
-            return new PixelateFilter(int.Parse(syntax.Arguments[0].Value));
+            return new PixelateFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

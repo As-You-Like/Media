@@ -24,7 +24,7 @@ namespace Carbon.Media.Processing
 
         public static BlurFilter Create(in CallSyntax syntax)
         {
-            return new BlurFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new BlurFilter((float)Unit.Parse(syntax.Arguments[0].Value.ToString()).Value);
         }
     }
 }

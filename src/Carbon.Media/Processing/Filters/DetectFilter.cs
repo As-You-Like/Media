@@ -50,10 +50,10 @@ namespace Carbon.Media.Processing
 
             if (algorithm is null && syntax.Arguments.Length > 1 && syntax.Arguments[1].Name is null)
             {
-                algorithm = syntax.Arguments[1].Value;
+                algorithm = (string)syntax.Arguments[1].Value;
             }   
 
-            return new DetectFilter(syntax.Arguments[0].Value, algorithm);
+            return new DetectFilter((string)syntax.Arguments[0].Value, algorithm);
         }
     }
 }

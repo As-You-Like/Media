@@ -35,7 +35,7 @@ namespace Carbon.Media.Processing
 
         public static SharpenFilter Create(in CallSyntax syntax)
         {
-            return new SharpenFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SharpenFilter((float)Unit.Parse(syntax.Arguments[0].Value.ToString()).Value);
         }
     }
 }

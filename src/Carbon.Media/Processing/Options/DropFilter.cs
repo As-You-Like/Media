@@ -9,7 +9,7 @@ namespace Carbon.Media.Processing
             Type = type;
         }
 
-        public string Type { get; set; }
+        public string Type { get; }
 
         #region ICanonicalizable
 
@@ -35,9 +35,7 @@ namespace Carbon.Media.Processing
 
         public static DropFilter Create(in CallSyntax syntax)
         {
-            var value = syntax.Arguments[0].Value;
-          
-            return new DropFilter(value);
+            return new DropFilter((string)syntax.Arguments[0].Value);
         }
     }
 }

@@ -15,7 +15,7 @@
 
         public static ColorsFilter Create(in CallSyntax syntax)
         {
-            return new ColorsFilter(int.Parse(syntax.Arguments[0].Value));
+            return new ColorsFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

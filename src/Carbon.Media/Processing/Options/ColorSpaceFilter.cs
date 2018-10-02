@@ -15,7 +15,7 @@
 
         public static ColorSpaceFilter Create(in CallSyntax syntax)
         {
-            return new ColorSpaceFilter(ColorSpaceHelper.Parse(syntax.Arguments[0].Value));
+            return new ColorSpaceFilter(ColorSpaceHelper.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

@@ -13,7 +13,7 @@
 
         public static HueRotateFilter Create(in CallSyntax syntax)
         {
-            return new HueRotateFilter(int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
+            return new HueRotateFilter((int)Unit.Parse(syntax.Arguments[0].Value.ToString()).Value);
         }
 
         #region ToString()

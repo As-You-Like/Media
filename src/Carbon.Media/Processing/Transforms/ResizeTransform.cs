@@ -62,9 +62,9 @@ namespace Carbon.Media.Processing
 
                 returnWidth = (int)(returnWidth * scale);
             }
-            else if (width.Type == UnitType.Percent)
+            else if (width.Type == UnitType.Percentage)
             {
-                returnWidth = (int)(source.Width * Width.Value);
+                returnWidth = (int)(source.Width * (Width.Value * width.Scale));
             }
             else // px
             {
@@ -77,9 +77,9 @@ namespace Carbon.Media.Processing
 
                 returnHeight = (int)(returnHeight * scale);
             }
-            else if (height.Type == UnitType.Percent)
+            else if (height.Type == UnitType.Percentage)
             {
-                returnHeight = (int)(source.Height * Height.Value);
+                returnHeight = (int)(source.Height * (Height.Value * width.Scale));
             }
             else
             {
@@ -216,30 +216,30 @@ namespace Carbon.Media.Processing
                 {
                     ref Argument arg = ref args[i];
 
-                    int xIndex = arg.Value.IndexOf('x');
+                    int xIndex = arg.Value.ToString().IndexOf('x');
 
                     if (i == 0 && xIndex > -1)
                     {
-                        width  = Unit.Parse(arg.Value.Substring(0, xIndex));
-                        height = Unit.Parse(arg.Value.Substring(xIndex + 1));
+                        width  = Unit.Parse(arg.Value.ToString().Substring(0, xIndex));
+                        height = Unit.Parse(arg.Value.ToString().Substring(xIndex + 1));
 
                         continue;
                     }
 
                     if (i == 0 && width == default)
                     {
-                        width = Unit.Parse(arg.Value);
+                        width = Unit.Parse(arg.Value.ToString());
                     }
                     else if (i == 1 && height == default)
                     {
-                        height = Unit.Parse(arg.Value);
+                        height = Unit.Parse(arg.Value.ToString());
                     }
                     else
                     {
                         switch (arg.Name)
                         {
-                            case "anchor" : anchor = CropAnchorHelper.Parse(arg.Value); break;
-                            case null     : flags = ResizeFlagsHelper.Parse(arg.Value); break;
+                            case "anchor" : anchor = CropAnchorHelper.Parse(arg.Value.ToString()); break;
+                            case null     : flags = ResizeFlagsHelper.Parse(arg.Value.ToString()); break;
                             default       : throw new Exception("Invalid resize argument:" + arg.Name);
                         }
                     }

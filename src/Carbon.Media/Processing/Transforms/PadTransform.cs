@@ -83,17 +83,17 @@ namespace Carbon.Media.Processing
             switch (syntax.Arguments.Length)
             {
                 case 1:
-                    return new PadTransform(int.Parse(syntax.Arguments[0].Value));
+                    return new PadTransform(int.Parse((string)syntax.Arguments[0].Value));
                 case 2:
-                    var a = int.Parse(syntax.Arguments[0].Value); // Top  & bottom
-                    var b = int.Parse(syntax.Arguments[1].Value); // Left & right
+                    var a = int.Parse((string)syntax.Arguments[0].Value); // Top  & bottom
+                    var b = int.Parse((string)syntax.Arguments[1].Value); // Left & right
 
                     return new PadTransform(a, b, a, b);
                 case 4:
-                    int top    = int.Parse(syntax.Arguments[0].Value);
-                    int right  = int.Parse(syntax.Arguments[1].Value);
-                    int bottom = int.Parse(syntax.Arguments[2].Value);
-                    int left   = int.Parse(syntax.Arguments[3].Value);
+                    int top    = int.Parse((string)syntax.Arguments[0].Value);
+                    int right  = int.Parse((string)syntax.Arguments[1].Value);
+                    int bottom = int.Parse((string)syntax.Arguments[2].Value);
+                    int left   = int.Parse((string)syntax.Arguments[3].Value);
 
                     return new PadTransform(top, right, bottom, left);
             }

@@ -15,7 +15,7 @@
 
         public static OrientTransform Create(in CallSyntax syntax)
         {
-            return new OrientTransform(OrientationHelper.Parse(syntax.Arguments[0].Value));
+            return new OrientTransform(OrientationHelper.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

@@ -11,7 +11,7 @@
 
         public static HalftoneFilter Create(in CallSyntax syntax)
         {
-            return new HalftoneFilter(float.Parse(syntax.Arguments[0].Value));
+            return new HalftoneFilter(Unit.Parse(syntax.Arguments[0].Value.ToString()));
         }
 
         public string Canonicalize() => $"halftone({Amount})";

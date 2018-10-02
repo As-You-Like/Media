@@ -41,7 +41,7 @@ namespace Carbon.Media.Processing
 
         public static ContrastFilter Create(in CallSyntax syntax)
         {
-            return new ContrastFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new ContrastFilter(Unit.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

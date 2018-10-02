@@ -20,7 +20,9 @@
 
         public static RotateTransform Create(in CallSyntax syntax)
         {
-            return new RotateTransform(angle: int.Parse(syntax.Arguments[0].Value.Replace("deg", "")));
+            var angle = Unit.Parse(syntax.Arguments[0].Value.ToString());
+
+            return new RotateTransform(angle: (int)angle.Value);
         }
     }
 }

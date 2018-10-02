@@ -19,7 +19,7 @@ namespace Carbon.Media.Processing
 
         public static SaturateFilter Create(in CallSyntax syntax)
         {
-            return new SaturateFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SaturateFilter((float)Unit.Parse(syntax.Arguments[0].Value.ToString()).Value);
         }
 
         #region ToString()

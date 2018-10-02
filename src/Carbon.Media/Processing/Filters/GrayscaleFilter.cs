@@ -27,7 +27,7 @@ namespace Carbon.Media.Processing
 
         public static GrayscaleFilter Create(in CallSyntax syntax)
         {
-            return new GrayscaleFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new GrayscaleFilter(Unit.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

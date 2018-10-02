@@ -24,7 +24,7 @@ namespace Carbon.Media.Processing
 
         public static GammaFilter Create(in CallSyntax syntax)
         {
-            return new GammaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new GammaFilter((float)Unit.Parse(syntax.Arguments[0].Value.ToString()).Value);
         }
     }
 }

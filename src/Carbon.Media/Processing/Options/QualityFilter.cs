@@ -29,7 +29,7 @@ namespace Carbon.Media.Processing
 
         public static QualityFilter Create(in CallSyntax syntax)
         {
-            return new QualityFilter(int.Parse(syntax.Arguments[0].Value));
+            return new QualityFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

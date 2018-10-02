@@ -36,7 +36,7 @@ namespace Carbon.Media.Processing
 
         public static ExpiresFilter Create(in CallSyntax syntax)
         {
-            var value = syntax.Arguments[0].Value;
+            var value = syntax.Arguments[0].Value.ToString();
 
             DateTime timestamp = DateTimeOffset.FromUnixTimeSeconds(long.Parse(value)).UtcDateTime;
           

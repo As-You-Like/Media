@@ -2,7 +2,7 @@
 {
     public readonly struct Argument
     {
-        public Argument(string name, string value)
+        public Argument(string name, object value)
         {
             Name = name;
             Value = value;
@@ -16,19 +16,19 @@
 
         public string Name { get; }
 
-        public string Value { get; }
+        public object Value { get; }
 
         public void Deconstruct(out string name, out string value)
         {
             name = Name;
-            value = Value;
+            value = Value.ToString();
         }
 
         public override string ToString()
         {
-            if (Name is null) return Value;
+            if (Name is null) return Value.ToString();
 
-            return Name + ":" + Value;
+            return Name + ":" + Value.ToString();
         }
     }
 }

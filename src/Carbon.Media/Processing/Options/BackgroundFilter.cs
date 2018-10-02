@@ -36,7 +36,7 @@ namespace Carbon.Media.Processing
 
         public static BackgroundFilter Create(in CallSyntax syntax)
         {
-            return new BackgroundFilter(syntax.Arguments[0].Value);
+            return new BackgroundFilter(syntax.Arguments[0].Value.ToString());
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Carbon.Media.Processing
 
         public static SepiaFilter Create(in CallSyntax syntax)
         {
-            return new SepiaFilter((float)Unit.Parse(syntax.Arguments[0].Value).Value);
+            return new SepiaFilter(Unit.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 }

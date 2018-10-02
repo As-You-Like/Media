@@ -56,7 +56,7 @@ namespace Carbon.Media.Processing
 
         public static FrameFilter Create(in CallSyntax syntax)
         {
-            return new FrameFilter(int.Parse(syntax.Arguments[0].Value));
+            return new FrameFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
 
