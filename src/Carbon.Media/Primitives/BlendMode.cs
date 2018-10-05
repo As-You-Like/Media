@@ -2,29 +2,28 @@
 {
     public enum BlendMode : byte
     {
-                         // | CSS         | Ffmpeg     |  Skia        |
-        Normal     = 0,  // | normal      |            |  SrcOver     |
-        Color      = 1,  // | color       |            |  Color       |
-        ColorBurn  = 2,  // | color-burn  | burn       |  ColorBurn   | 
-        ColorDodge = 3,  // | color-dodge | dodge      |  ColorDodge  |
-        Darken     = 4,  // | darken      | darken     |  Darken      |
-        Difference = 5,  // | difference  | difference |  Difference  |
-        Exclusion  = 6,  // | exclusion   | exclusion  |  Exclusion   |
-        HardLight  = 7,  // | hard-light  | hardlight  |  HardLight   |
-        HardMix    = 8,  // |             | hardmix    |              |
-        Hue        = 9,  // | hue         |            |  Hue         |
-        Lighten    = 10, // | lighten     | lighten    |  Lighten     |
-        LinearBurn = 11, // |             |            |              |
-        Luminosity = 12, // |             |            |  Luminosity  |
-        Multiply   = 13, // | luminosity  | multiply   |  Multiply    |
-        Overlay    = 14, // | overlay     |            |  Overlay     |
-        Saturation = 15, // | saturation  |            |  Saturation  |
-        Screen     = 16, // | screen      | screen     |  Screen      |
-        SoftLight  = 17, // | soft-light  | softlight  |  SoftLight   |
-        VividLight = 18, // |             | vividlight |              |
-                                                       
-        // Porter-Duff                    |            |
-        Clear   = 100,  //                |            |
+                         // | CSS         | Ffmpeg     |  Skia        | Photoshop
+        Normal     = 0,  // | normal      |            |  SrcOver     | Normal
+        Color      = 1,  // | color       |            |  Color       | Color
+        ColorBurn  = 2,  // | color-burn  | burn       |  ColorBurn   | Color Burn
+        ColorDodge = 3,  // | color-dodge | dodge      |  ColorDodge  | Color Dodge
+        Darken     = 4,  // | darken      | darken     |  Darken      | Darken
+        Difference = 5,  // | difference  | difference |  Difference  | Difference
+        Exclusion  = 6,  // | exclusion   | exclusion  |  Exclusion   | Exclusion
+        HardLight  = 7,  // | hard-light  | hardlight  |  HardLight   | Hard Light
+        HardMix    = 8,  // |             | hardmix    |              | Hard Mix
+        Hue        = 9,  // | hue         |            |  Hue         | Hue
+        Lighten    = 10, // | lighten     | lighten    |  Lighten     | Lighten
+        Luminosity = 11, // |             |            |  Luminosity  | Luminosity
+        Multiply   = 12, // | luminosity  | multiply   |  Multiply    | Multiply
+        Overlay    = 13, // | overlay     |            |  Overlay     | Overlay
+        Saturation = 14, // | saturation  |            |  Saturation  | Saturation
+        Screen     = 15, // | screen      | screen     |  Screen      | Screen
+        SoftLight  = 16, // | soft-light  | softlight  |  SoftLight   | Soft Light
+        VividLight = 17, // |             | vividlight |              | Vivid Light
+
+        // Porter-Duff Modes ---------------------------------------------------------------
+        Clear   = 100,  //                |            |              | Clear
         Dst     = 101,  //                |            |
         DstATop = 102,  //
         DstIn   = 103,  //                |            |
@@ -42,6 +41,8 @@
 
 
     }
+
+    // Additional Photoshop Blend Modes: Dissolve, Behind, Linear Burn, Linear Dodge (Add), Linear Light, Pin Light, Subtract, Divide, 
 
 }
 
