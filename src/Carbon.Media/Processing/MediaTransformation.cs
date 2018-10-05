@@ -41,12 +41,17 @@ namespace Carbon.Media
         public FormatId Format => encoder.Format;
 
         public Size Size => new Size(width, height);
+     
+        public IProcessor this[int index] => processors[index];
 
-        public IReadOnlyList<IProcessor> GetTransforms() => processors.AsReadOnly();
+        public IReadOnlyList<IProcessor> GetTransforms() => processors;
 
         public MediaTransformation Apply(params IProcessor[] processors)
         {
-            if (processors is null) throw new ArgumentNullException(nameof(processors));
+            if (processors is null)
+            {
+                throw new ArgumentNullException(nameof(processors));
+            }
 
             if (processors.Length == 0) return this;
 
@@ -129,9 +134,9 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation Draw(params DrawCommand[] shapes)
+        public MediaTransformation Draw(DrawCommand command)
         {
-            Apply(new DrawFilter(shapes));
+            Apply(command);
 
             return this;
         }
@@ -198,13 +203,8 @@ namespace Carbon.Media
 
             return this;
         }
-
-        public MediaTransformation Encode(ImageFormat format, int? quality = null)
-        {
-            return Encode((FormatId)format, quality);
-        }
-
-        public MediaTransformation Encode(FormatId format, int? quality)
+      
+        public MediaTransformation Encode(FormatId format, int? quality = null)
         {
             if (encoder != null)
             {
@@ -225,8 +225,6 @@ namespace Carbon.Media
         [IgnoreDataMember]
         public bool HasTransforms => processors.Count > 0;
 
-        private static readonly char[] seperators = { ';', '/' };
-
         public static MediaTransformation Parse(string path, IMediaInfo source = null)
         {
             if (path is null)
@@ -243,22 +241,22 @@ namespace Carbon.Media
             // {sourcePath}/{transform}.{format}
 
             int lastDotIndex   = path.LastIndexOf('.');
-            int seperatorIndex = path.IndexOfAny(seperators);
+            int seperatorIndex = path.IndexOf(';');
 
             if (lastDotIndex == -1)
             {
                 throw new InvalidTransformException(-1, "Must end with a format");
             }
            
-            string sourceName    = path.Substring(0, seperatorIndex);
-            string transformName = path.Substring(seperatorIndex + 1, lastDotIndex - (seperatorIndex + 1));
+            string sourcePath    = seperatorIndex > -1 ? path.Substring(0, seperatorIndex) : null;
+            string transformPath = seperatorIndex > -1 ? path.Substring(seperatorIndex + 1, lastDotIndex - (seperatorIndex + 1)) : path.Substring(0, lastDotIndex);
             string format        = path.Substring(lastDotIndex + 1);
 
-            string[] segments = transformName.Split(Seperators.ForwardSlash);
+            string[] segments = transformPath.Split(Seperators.ForwardSlash);
 
             var transforms = ParseTransforms(segments);
 
-            var rendition = new MediaTransformation(source ?? new MediaInfo(sourceName, 0, 0))
+            var rendition = new MediaTransformation(source ?? new MediaInfo(sourcePath, 0, 0))
                 .Apply(transforms)
                 .Encode(FormatIdExtensions.Parse(format), null);
 
@@ -279,12 +277,11 @@ namespace Carbon.Media
 
                 try
                 {
-                    // 100x100 ...
-                    // 1000kbs
+                    // 100x100 || 1000kbs || 1mbs
                     
                     if (char.IsDigit(segment[0]))
                     {
-                        if (segment.EndsWith("kbs"))
+                        if (segment.EndsWith("bs")) // kbs | mbs
                         {
                             transform = BitRateFilter.Create(new CallSyntax("bitrate", new[] { new Argument(segment) }));
                         }
@@ -300,7 +297,7 @@ namespace Carbon.Media
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidTransformException(i, ex.Message, ex);
+                    throw new InvalidTransformException(i, ex.Message, ex) { Text = segment };
                 }
 
                 transforms[i] = transform;
@@ -311,9 +308,7 @@ namespace Carbon.Media
 
         // blob#100 |> resize(100,100) |> sepia(1)
 
-        public string GetPath() => GetFullName(prefix: Source.Key);
-
-        public string GetFullName(string prefix = null)
+        public string GetTransformPath()
         {
             /* 
 			10x10.gif			
@@ -324,11 +319,6 @@ namespace Carbon.Media
 			*/
 
             var sb = StringBuilderCache.Aquire();
-
-            if (prefix != null)
-            {
-                sb.Append(prefix);
-            }
 
             foreach (var transform in processors)
             {
@@ -357,6 +347,8 @@ namespace Carbon.Media
 
             return StringBuilderCache.ExtractAndRelease(sb);
         }
+
+        public Pipeline ToPipeline() => Pipeline.From(this);
 
         #endregion
     }
