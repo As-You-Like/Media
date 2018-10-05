@@ -15,7 +15,7 @@ namespace Carbon.Media
                 throw new ArgumentException("Must not be Unknown", nameof(sampleFormat));
 
             if (sampleRate <= 0)
-                throw new ArgumentException("Must be > 0", nameof(sampleRate));
+                throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "Must be > 0");
 
             if (channelLayout == default)
                 throw new ArgumentException("Must not be unknown", nameof(channelLayout));

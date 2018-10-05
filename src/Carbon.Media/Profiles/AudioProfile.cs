@@ -15,7 +15,9 @@ namespace Carbon.Media
                 throw new ArgumentException("Required", nameof(codec));
 
             if (sampleRate != null && sampleRate.Value <= 0)
+            {
                 throw new ArgumentOutOfRangeException("Must be > 0", sampleRate.Value, nameof(sampleRate));
+            }
 
             Codec        = codec;
             BitRate      = bitRate;
