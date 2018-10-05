@@ -6,18 +6,15 @@ namespace Carbon.Media.Metadata
     [DataContract]
     public class AudioInfo
     {
-        [DataMember(Name = "type", Order = 1, EmitDefaultValue = false)]
-        public string Type { get; set; }
-
         // e.g. aac, mp3 
-        [DataMember(Name = "format", Order = 2)]
+        [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
 
-        [DataMember(Name = "codec", Order = 3)]
+        [DataMember(Name = "codec", Order = 2)]
         public string Codec { get; set; }
 
-        [DataMember(Name = "size", Order = 4, EmitDefaultValue = false)]
-        public long Size { get; set; }
+        [DataMember(Name = "blob", Order = 3, EmitDefaultValue = false)]
+        public BlobInfo Blob { get; set; }
 
         [DataMember(Name = "sampleFormat", Order = 5, EmitDefaultValue = false)]
         public SampleFormat SampleFormat { get; set; }
@@ -30,7 +27,6 @@ namespace Carbon.Media.Metadata
 
         // Frames = 11
     }
-
 }
 
 /*

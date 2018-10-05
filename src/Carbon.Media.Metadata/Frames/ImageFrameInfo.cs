@@ -18,7 +18,6 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "pixelFormat", Order = 4, EmitDefaultValue = false)]
         public PixelFormat? PixelFormat { get; set; }
 
-        // /grctlext/Delay (in 100th of a millisecond)
         [DataMember(Name = "delay", EmitDefaultValue = false)]
         public TimeSpan Delay { get; set; }
 

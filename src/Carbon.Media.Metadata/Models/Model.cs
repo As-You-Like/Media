@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Carbon.Media.Metadata
 {
@@ -29,6 +30,7 @@ namespace Carbon.Media.Metadata
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
         
+        [DataMember(Name = "name", Order = 1)]
         public string Name { get; }
 
         public static implicit operator string(Model model) => model.Name;

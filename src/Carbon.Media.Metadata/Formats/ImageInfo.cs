@@ -1,30 +1,36 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Carbon.Media.Metadata
 {
     [DataContract]
     public class ImageInfo
     {
-        [DataMember(Name = "type", Order = 1, EmitDefaultValue = false)]
-        public string Type { get; set; }
+        public ImageInfo() { }
 
-        [DataMember(Name = "format", Order = 2)]
+        public ImageInfo(string format, int width, int height)
+        {
+            Format = format;
+            Width  = width;
+            Height = height;
+        }
+
+        [DataMember(Name = "format", Order = 1)]
         public string Format { get; set; }
-        
-        // 2 = Codec
 
-        [DataMember(Name = "pixelFormat", Order = 5, EmitDefaultValue = false)]
+        [DataMember(Name = "codec", Order = 2, EmitDefaultValue = false)]
+        public string Codec { get; set; }
+
+        [DataMember(Name = "blob", Order = 3, EmitDefaultValue = false)]
+        public BlobInfo Blob { get; set; }
+
+        [DataMember(Name = "pixelFormat", Order = 4, EmitDefaultValue = false)]
         public PixelFormat PixelFormat { get; set; }
 
-        [DataMember(Name = "width", Order = 6, EmitDefaultValue = false)]
+        [DataMember(Name = "width", Order = 5, EmitDefaultValue = false)]
         public int Width { get; set; }
 
-        [DataMember(Name = "height", Order = 7, EmitDefaultValue = false)]
+        [DataMember(Name = "height", Order = 6, EmitDefaultValue = false)]
         public int Height { get; set; }
-
-        [DataMember(Name = "orientation", Order = 8, EmitDefaultValue = false)]
-        public ExifOrientation Orientation { get; set; }
 
         [DataMember(Name = "colorSpace", Order = 9, EmitDefaultValue = false)]
         public ColorSpace ColorSpace { get; set; }
@@ -52,35 +58,38 @@ namespace Carbon.Media.Metadata
 
         #region Exif Metadata (40)
 
-        [DataMember(Name = "camera", Order = 40, EmitDefaultValue = false)]
+        [DataMember(Name = "exif", Order = 40, EmitDefaultValue = false)]
+        public ExifMetadata Exif { get; set; }
+
+        [DataMember(Name = "camera", Order = 41, EmitDefaultValue = false)]
         public CameraInfo Camera { get; set; }
         
-        [DataMember(Name = "exposure", Order = 41, EmitDefaultValue = false)]
+        [DataMember(Name = "exposure", Order = 42, EmitDefaultValue = false)]
         public ExposureInfo Exposure { get; set; }
 
-        [DataMember(Name = "lens", Order = 42, EmitDefaultValue = false)]
+        [DataMember(Name = "lens", Order = 43, EmitDefaultValue = false)]
         public LensInfo Lens { get; set; }
 
-        [DataMember(Name = "lighting", Order = 43, EmitDefaultValue = false)]
+        [DataMember(Name = "lighting", Order = 44, EmitDefaultValue = false)]
         public LightingInfo Lighting { get; set; }
 
-        [DataMember(Name = "location", Order = 44, EmitDefaultValue = false)]
+        [DataMember(Name = "location", Order = 45, EmitDefaultValue = false)]
         public GpsData Location { get; set; }
    
-        [DataMember(Name = "sensing", Order = 45, EmitDefaultValue = false)]
+        [DataMember(Name = "sensing", Order = 46, EmitDefaultValue = false)]
         public SensingInfo Sensing { get; set; }
 
-        [DataMember(Name = "software", Order = 46, EmitDefaultValue = false)]
+        [DataMember(Name = "software", Order = 47, EmitDefaultValue = false)]
         public SoftwareInfo Software { get; set; }
 
-        [DataMember(Name = "subject", Order = 47, EmitDefaultValue = false)]
+        [DataMember(Name = "subject", Order = 48, EmitDefaultValue = false)]
         public SubjectInfo Subject { get; set; }
         
-        [DataMember(Name = "whiteBalance", Order = 48, EmitDefaultValue = false)]
+        [DataMember(Name = "whiteBalance", Order = 49, EmitDefaultValue = false)]
         public ExifWhiteBalance WhiteBalance { get; set; }
 
         #endregion
-    }
+    } 
 }
 
 /*

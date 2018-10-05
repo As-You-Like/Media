@@ -11,11 +11,11 @@ namespace Carbon.Media.Metadata
         public string Type { get; set; }
 
         // e.g. mp4
-        [DataMember(Name = "name", Order = 4)]
+        [DataMember(Name = "name", Order = 2)]
         public string Name { get; set; }
 
-        [DataMember(Name = "size", Order = 5)]
-        public long Size { get; set; }
+        [DataMember(Name = "blob", Order = 3, EmitDefaultValue = false)]
+        public BlobInfo Blob { get; set; }
 
         /// <summary>
         /// The duration of the longest stream in the container

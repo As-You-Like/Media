@@ -29,24 +29,32 @@ namespace Carbon.Media.Metadata
         #region Boxes
 
         [DataMember(Name = "mediaBox", Order = 10, EmitDefaultValue = false)]
-        public Box? MediaBox { get; set; }
+        public BoundingBox? MediaBox { get; set; }
 
         [DataMember(Name = "bleedBox", Order = 11, EmitDefaultValue = false)]
-        public Box? BleedBox { get; set; }
+        public BoundingBox? BleedBox { get; set; }
 
         [DataMember(Name = "trimBox", Order = 12, EmitDefaultValue = false)]
-        public Box? TrimBox { get; set; }
+        public BoundingBox? TrimBox { get; set; }
 
         [DataMember(Name = "artBox", Order = 13, EmitDefaultValue = false)]
-        public Box? ArtBox { get; set; }
+        public BoundingBox? ArtBox { get; set; }
 
         [DataMember(Name = "cropBox", Order = 14, EmitDefaultValue = false)]
-        public Box? CropBox { get; set; }
+        public BoundingBox? CropBox { get; set; }
 
         #endregion
     }
-
 }
+
+
+// [ MediaBox
+//   [ Bleed Box 
+//      [ Trim Box 
+//         [ Art Box ]
+//      ]
+//   ]
+// ]
 
 
 // https://www.enfocus.com/en/blog/thinking-outside-the-page-box-a-guide-to-pdf-page-boxes
