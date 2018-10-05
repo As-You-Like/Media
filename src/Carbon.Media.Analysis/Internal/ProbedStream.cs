@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Carbon.Json;
+using Carbon.Media.Metadata;
 
 namespace Carbon.Media.Analysis.Internal
 {

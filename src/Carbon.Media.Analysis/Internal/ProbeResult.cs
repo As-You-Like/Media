@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media.Analysis.Internal
+﻿using Carbon.Media.Metadata;
+
+namespace Carbon.Media.Analysis.Internal
 {
     public class ProbeResult
     {
