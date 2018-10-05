@@ -357,7 +357,7 @@ namespace Carbon.Media
                 case AV_CODEC_ID_IMC                    : return CodecId.Imc;
                 case AV_CODEC_ID_MUSEPACK7              : return CodecId.Musepack7;
                 case AV_CODEC_ID_MLP                    : return CodecId.Mlp;
-                case AV_CODEC_ID_GSM_MS                 : return CodecId.Gsm_ms;
+                case AV_CODEC_ID_GSM_MS                 : return CodecId.GsmMicrosoft;
                 case AV_CODEC_ID_ATRAC3                 : return CodecId.Atrac3;
                 case AV_CODEC_ID_APE                    : return CodecId.Ape;
                 case AV_CODEC_ID_NELLYMOSER             : return CodecId.Asao;
@@ -795,7 +795,7 @@ namespace Carbon.Media
                 case CodecId.Imc            : return AV_CODEC_ID_IMC;
                 case CodecId.Musepack7      : return AV_CODEC_ID_MUSEPACK7;
                 case CodecId.Mlp            : return AV_CODEC_ID_MLP;
-                case CodecId.Gsm_ms         : return AV_CODEC_ID_GSM_MS;
+                case CodecId.GsmMicrosoft         : return AV_CODEC_ID_GSM_MS;
                 case CodecId.Atrac3         : return AV_CODEC_ID_ATRAC3;
                 case CodecId.Ape            : return AV_CODEC_ID_APE;
                 case CodecId.Asao           : return AV_CODEC_ID_NELLYMOSER;

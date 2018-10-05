@@ -31,8 +31,6 @@ namespace Carbon.Media
             pointer->width = width;
             pointer->height = height;
 
-      
-
             Memory = Buffer.Allocate(VideoFormatHelper.GetBufferSize(pixelFormat, width, height, align));
 
             // Fill the pointers

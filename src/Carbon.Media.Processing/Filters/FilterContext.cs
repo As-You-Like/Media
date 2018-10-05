@@ -19,17 +19,17 @@ namespace Carbon.Media
 
         public void SetOption(string name, int value)
         {
-            ffmpeg.av_opt_set_bin(Pointer, name, (byte*)&value, 4, ffmpeg.AV_OPT_SEARCH_CHILDREN);   
+            ffmpeg.av_opt_set_bin(Pointer, name, (byte*)&value, 4, ffmpeg.AV_OPT_SEARCH_CHILDREN).EnsureSuccess();
         }
 
         public void SetOption(string name, ulong value)
         {
-            ffmpeg.av_opt_set_bin(Pointer, name, (byte*)&value, 8, ffmpeg.AV_OPT_SEARCH_CHILDREN);
+            ffmpeg.av_opt_set_bin(Pointer, name, (byte*)&value, 8, ffmpeg.AV_OPT_SEARCH_CHILDREN).EnsureSuccess();
         }
 
         public void SetOption(string name, long value)
         {
-            ffmpeg.av_opt_set_int(Pointer, name, value, ffmpeg.AV_OPT_SEARCH_CHILDREN);
+            ffmpeg.av_opt_set_int(Pointer, name, value, ffmpeg.AV_OPT_SEARCH_CHILDREN).EnsureSuccess();
         }        
     }
 }

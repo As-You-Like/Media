@@ -3,7 +3,6 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-
     public unsafe class Frame : IDisposable
     {
         protected bool isDisposed = false;

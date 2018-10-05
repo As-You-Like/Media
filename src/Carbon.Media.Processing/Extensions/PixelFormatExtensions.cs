@@ -170,12 +170,12 @@ namespace Carbon.Media
                 case AV_PIX_FMT_YUVA444P16LE   : return PixelFormat.Yuva444p16le;
 
                 // YUVJ
-                case AV_PIX_FMT_YUVJ411P       : return PixelFormat.Yuvj411p;
-                case AV_PIX_FMT_YUVJ420P       : return PixelFormat.Yuvj420p;
-                case AV_PIX_FMT_YUVJ422P       : return PixelFormat.Yuvj422p;
-                case AV_PIX_FMT_YUVJ440P       : return PixelFormat.Yuvj440p;
-                case AV_PIX_FMT_YUVJ444P       : return PixelFormat.Yuvj444p;
-                    
+                case AV_PIX_FMT_YUVJ411P       : return PixelFormat.Yuvj411p; // -> AV_PIX_FMT_YUV411P
+                case AV_PIX_FMT_YUVJ420P       : return PixelFormat.Yuvj420p; // -> AV_PIX_FMT_YUV420P;
+                case AV_PIX_FMT_YUVJ422P       : return PixelFormat.Yuvj422p; // -> AV_PIX_FMT_YUV422P;
+                case AV_PIX_FMT_YUVJ440P       : return PixelFormat.Yuvj440p; // -> AV_PIX_FMT_YUV440P;
+                case AV_PIX_FMT_YUVJ444P       : return PixelFormat.Yuvj444p; // -> AV_PIX_FMT_YUV444P;
+
                 // YUYV
                 case AV_PIX_FMT_YUYV422        : return PixelFormat.Yuyv422;     
             }

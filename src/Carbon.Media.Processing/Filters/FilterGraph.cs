@@ -5,7 +5,7 @@ using FFmpeg.AutoGen;
 
 namespace Carbon.Media
 {
-    public unsafe class FilterGraph
+    public unsafe class FilterGraph : IDisposable
     {
         private bool isDisposed = false;
         private AVFilterGraph* pointer;
@@ -31,6 +31,11 @@ namespace Carbon.Media
         // Add a graph described by a string
         public void Parse(string filters)
         {
+            if (Inputs == null || Outputs == null)
+            {
+                throw new Exception("Input and outputs must be defined");
+            }
+
             // aresample=22050,aformat=sample_fmts=s16:channel_layouts=mono,asetnsamples=n=1024:p=0
 
             fixed (AVFilterInOut** inputs  = &Inputs.Pointer)
@@ -48,7 +53,7 @@ namespace Carbon.Media
         
         public void Initialize()
         {
-            ffmpeg.avfilter_graph_config(pointer, null);
+            ffmpeg.avfilter_graph_config(pointer, null).EnsureSuccess();
         }
   
         public FilterContext AddSink(Filter sinkFilter)
@@ -156,8 +161,8 @@ namespace Carbon.Media
             throw new FFmpegException(result);
         }
 
-        private FilterContext bufferSource;
-        private FilterContext bufferSink;
+        public FilterContext bufferSource;
+        public FilterContext bufferSink;
 
         public static FilterGraph Create(
             Codec decoder,
@@ -216,7 +221,8 @@ namespace Carbon.Media
             else
             {
                 throw new Exception("Invalid codec");
-            }   
+            }
+
 
             graph.Outputs = new FilterInOut("in",  bufferSource);
             graph.Inputs  = new FilterInOut("out", bufferSink);
@@ -227,6 +233,10 @@ namespace Carbon.Media
             if (filterSpecification != null)
             {
                 graph.Parse(filterSpecification);
+            }
+            else
+            {
+                ffmpeg.avfilter_link(bufferSource.Pointer, 0, bufferSink.Pointer, 0);
             }
 
             graph.Initialize();
@@ -259,8 +269,8 @@ namespace Carbon.Media
                 ffmpeg.avfilter_graph_free(p);
             }
 
-            Inputs.Dispose();
-            Outputs.Dispose();
+            Inputs?.Dispose();
+            Outputs?.Dispose();
 
             pointer = null;
 
