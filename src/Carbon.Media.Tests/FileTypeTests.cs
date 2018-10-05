@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 using Carbon.Extensions;
@@ -41,11 +42,12 @@ namespace Carbon.Media.Tests
             Assert.Equal(Mime.Mpeg, Check("000001ba4400040004010148ebf800")); // mpeg
             Assert.Equal(Mime.M4v,  Check("00000020667479704d345648000000")); // m4v | @4 -> ftypM4VH
             Assert.Equal(Mime.M4v,  Check("0000001c667479704d345620000000")); // m4v | @4 -> ftypM4V
-            Assert.Equal(Mime.Mp3,  Check("fffbb464000ff00000690000000800")); // mp3 (no ID3)
-            Assert.Equal(Mime.Mp3,  Check("4944330200000000103b434f4d0000")); // mp3 (ID3)
+            Assert.Equal(Mime.Mp3,  Check("fffbb464000ff00000690000000800")); // mp3 | no ID3
+            Assert.Equal(Mime.Mp3,  Check("4944330200000000103b434f4d0000")); // mp3 | ID3)
             Assert.Equal(Mime.Mp3,  Check("4944330300000000001654454e4300")); // mp3
             Assert.Equal(Mime.M4a,  Check("00000020667479704d344120000000")); // m4a
             Assert.Equal(Mime.Mov,  Check("000000206674797071742020200503")); // mov | @4 -> ftypM4VH
+            Assert.Equal(Mime.Mov,  Check("000000146674797071742020000000")); // mov | @4 -> ftypqt
             Assert.Equal(Mime.Mp4,  Check("00000018667479706d703432000000")); // mp4
             Assert.Equal(Mime.Mp4,  Check("000000186674797069736f6d000000")); // mp4
             Assert.Equal(Mime.Mp4,  Check("0000001c667479704d534e56012900")); // mp4
@@ -56,6 +58,7 @@ namespace Carbon.Media.Tests
             Assert.Equal(Mime.Mp4,  Check("000000146674797069736f6d000002")); // mp4
             Assert.Equal(Mime.Mp4,  Check("0000001c6674797069736f6d000002")); // mp4
             Assert.Equal(Mime.Mp4,  Check("00000020667479706d703432000000")); // mp4
+            Assert.Equal(Mime.Mp4,  Check("0000001c6674797046414345000005")); // mp4 | @4 -> ftypFACE
             Assert.Equal(Mime.Ogv,  Check("4f676753000200000000000000004a")); // ogv
             Assert.Equal(Mime.Pdf,  Check("255044462d312e340a25f6e4fcdf0a")); // pdf
             Assert.Equal(Mime.Pdf,  Check("255044462d312e360d25e2e3cfd30d")); // pdf
@@ -73,13 +76,17 @@ namespace Carbon.Media.Tests
             Assert.Equal(Mime.Wav,  Check("52494646d4b6550157415645666d74")); // wav
             Assert.Equal(Mime.WebM, Check("1a45dfa3010000000000001f428681")); // webm
 
+
             //  Assert.Equal(Mime.Mov, Check("0000000877696465004831d26d6461")); // mov | wide h1 mda
 
-            // "0000001c6674797046414345000005", // ftypFACE
+        }
+        
+        // [Fact]
+        public string GetBytes()
+        {
+            throw new Exception(string.Join(", ", Encoding.ASCII.GetBytes("ftypmp41").Select(b => "0x" + b.ToString("x2"))));
+        }
 
-        }    
-
-   
         public Mime Check(string hexString)
         {
             var data = HexString.ToBytes(hexString);

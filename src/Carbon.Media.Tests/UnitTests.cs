@@ -5,16 +5,20 @@ namespace Carbon.Media.Tests
     public class UnitTests
     {
         [Theory]
-        [InlineData("0.1", 0.1d, UnitType.Percent)]
-        [InlineData("10%", 0.1d, UnitType.Percent)]
-        [InlineData("100%", 1d, UnitType.Percent)]
+        [InlineData("1", 1d, UnitType.None)]
+        [InlineData("100", 100d, UnitType.None)]
+        [InlineData("50000", 50000d, UnitType.None)]
+        [InlineData("0.1", 0.1d, UnitType.None)]
 
-        [InlineData("100", 100d, UnitType.Px)]
+
+        [InlineData("10%", 10d, UnitType.Percentage)]
+        [InlineData("100%", 100d, UnitType.Percentage)]
+
         [InlineData("100px", 100d, UnitType.Px)]
         [InlineData("10.5px", 10.5d, UnitType.Px)]
-        [InlineData("50000", 50000d, UnitType.Px)]
 
-        [InlineData("50.5 m", 50.5, UnitType.Meter)]
+        [InlineData("100m", 100, UnitType.M)]
+        [InlineData("50.5 m", 50.5, UnitType.M)]
 
         [InlineData("_", 0d, UnitType.None)]
         public void Normalize(string input, double value, UnitType type)
@@ -24,6 +28,17 @@ namespace Carbon.Media.Tests
             Assert.Equal(value, unit.Value);
             Assert.Equal(type, unit.Type);
         }
+        
+        [Fact]
+        public void BM2()
+        {
+            // 305
+            for (var i = 0; i < 1_000_000; i++)
+            {
+
+                Unit.Parse("100.1px");
+            }
+        }     
 
         [Fact]
         public void Equality()
@@ -37,9 +52,9 @@ namespace Carbon.Media.Tests
 
 
         [Fact]
-        public void DefaultEqualToNone()
+        public void NoneIsDefault()
         {
-            Assert.True(Unit.None == default(Unit));
+            Assert.True(Unit.None == default);
         }
     }
 }

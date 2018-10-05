@@ -9,8 +9,7 @@ namespace Carbon.Media.Tests
         [Theory]
         [InlineData(_3GP,     "3gp")]
         [InlineData(Avi,      "avi")]
-        [InlineData(Flv,      "flv")]
-        [InlineData(Mp4,      "mp4")]
+        [InlineData(Mp4,      "m4v")]
         [InlineData(Matroska, "mkv")]
         [InlineData(WebM,     "webm")]
         [InlineData(Ogg,      "ogv")]
@@ -25,12 +24,10 @@ namespace Carbon.Media.Tests
         [InlineData(Mp3,      "mp3")]
         [InlineData(Matroska, "mka")]
         [InlineData(Ogg,      "oga")]
+        [InlineData(Opus,     "opus")]
         public void AudioFormats(FormatId container, string format)
         {
             Assert.Equal(format, container.GetAudioFormat());
         }
-
-
-  
     }
 }

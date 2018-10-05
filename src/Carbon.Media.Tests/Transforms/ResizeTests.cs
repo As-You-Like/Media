@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
 namespace Carbon.Media.Processing.Tests
-{	
-	public class ResizeTests
+{
+    public class ResizeTests
 	{
         // 100x100
         // _x100
@@ -18,10 +18,20 @@ namespace Carbon.Media.Processing.Tests
         {
             var resize = ResizeTransform.Parse("50%x50%");
 
-            Assert.Equal(0.5, resize.Width);
-            Assert.Equal(0.5, resize.Height);
-
+            Assert.Equal(Unit.Percent(50), resize.Width);
+            Assert.Equal(Unit.Percent(50), resize.Height);
         }
+
+        [Fact]
+        public void FromPt()
+        {
+            var resize = ResizeTransform.Parse("resize(50pt,50pt)");
+
+            Assert.Equal(Unit.Pt(50), resize.Width);
+            Assert.Equal(Unit.Pt(50), resize.Height);
+        }
+
+
         [Fact]
         public void FromFullKey1()
         {

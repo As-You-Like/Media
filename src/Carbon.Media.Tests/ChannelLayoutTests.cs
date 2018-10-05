@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Ffmpeg.Tests
+namespace Carbon.Media.Tests
 {
     using static ChannelLayout;
 

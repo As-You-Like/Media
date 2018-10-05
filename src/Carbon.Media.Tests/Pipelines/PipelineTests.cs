@@ -617,6 +617,18 @@ namespace Carbon.Media.Processing.Tests
             Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(5))|>HEIF::encode", pipe.Canonicalize());
         }
 
+
+        [Fact]
+        public void DrawCircleWithUnitAndBlendMode()
+        {
+            var a = MediaTransformation.Parse("1;draw(circle(radius:50%),blendMode:color-burn).heif", jpeg_180x180);
+
+            var pipe = Pipeline.From(a);
+
+            Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(50%),blendMode:ColorBurn)|>HEIF::encode", pipe.Canonicalize());
+        }
+
+     
         [Fact]
         public void DrawPath1()
         {
@@ -624,26 +636,22 @@ namespace Carbon.Media.Processing.Tests
 
             var pipe = Pipeline.From(a);
 
-            var draw = pipe.Filters[0] as DrawFilter;
+            var draw = pipe.Filters[0] as DrawCommand;
 
-            Assert.Equal("M150 0 L75 200 L225 200 Z", (draw.Commands[0] as DrawPathCommand).Content);
+            Assert.Equal("M150 0 L75 200 L225 200 Z", (draw.Objects[0] as PathShape).Content);
 
             Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(path(M150 0 L75 200 L225 200 Z))|>HEIF::encode", pipe.Canonicalize());
         }
-
-        /*
+        
         [Fact]
         public void Draw2()
         {
-            var a = MediaTransformation.ParsePath("1/draw(circle(radius:5),rectangle(100,100,red)).heif", jpeg_180x180);
+            var a = MediaTransformation.Parse("1;draw(circle(radius:5),rectangle(100,100,red),fill:red,blendMode:burn).heif", jpeg_180x180);
 
-            var pipe = MediaPipeline.From(a);
-
-            throw new System.Exception(pipe.Canonicalize());
-
-            Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(radius:5))|>HEIF::encode", pipe.Canonicalize());
+            var pipe = Pipeline.From(a);
+            
+            Assert.Equal("blob#1|>scale(180,180,lanczos3)|>draw(circle(5),rectangle(100,100),fill:red,blendMode:ColorBurn)|>HEIF::encode", pipe.Canonicalize());
         }
-        */
 
         [Fact]
         public void Metadata1()
