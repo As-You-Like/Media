@@ -6,9 +6,9 @@ namespace Carbon.Media.Drawing
     {
         public Font(string name, string weight, Unit size)
         {
-            Name   = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Weight = weight;
-            Size   = size;
+            Size = size;
         }
 
         public string Name { get; }
@@ -22,7 +22,7 @@ namespace Carbon.Media.Drawing
         public static Font Parse(string text)
         {
             int spaceIndex = text.IndexOf(' ');
-            
+
             if (spaceIndex == -1)
             {
                 return new Font(text, "normal", new Unit(12, UnitType.Px));
@@ -33,9 +33,9 @@ namespace Carbon.Media.Drawing
             // 12px Name
 
             return new Font(
-                name   : parts[1], 
-                weight : "normal", 
-                size   : Unit.Parse(parts[0])
+                name: parts[1],
+                weight: "normal",
+                size: Unit.Parse(parts[0])
             );
         }
     }

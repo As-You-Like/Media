@@ -6,15 +6,20 @@ namespace Carbon.Media
     {
         public static void Append(this StringBuilder sb, in Unit unit)
         {
-            if (unit.Type == UnitType.Percent)
+            if (unit.Type == UnitType.Percentage)
             {
-                sb.Append(unit.Value * 100);
+                sb.Append(unit.Value);
                 sb.Append('%');
             }
-            else if (unit.Type == UnitType.Meter)
+            else if (unit.Type == UnitType.M)
             {
                 sb.Append(unit.Value);
                 sb.Append('m');
+            }
+            else if (unit.Type == UnitType.Ns)
+            {
+                sb.Append(unit.Value);
+                sb.Append("ns");
             }
             else
             {

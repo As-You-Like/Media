@@ -21,7 +21,6 @@
         Xmf      = 240, // eXtensible Music Format         | xdf  | audio                                     
 
         // Mks,
-
         Hls      = 250, // HTTP Live Streaming              | m3u8                                            
                                                                                                               
         // Applications                                                                                       

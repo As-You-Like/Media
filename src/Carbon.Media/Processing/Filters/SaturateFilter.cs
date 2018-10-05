@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processing
 {
-    public class SaturateFilter : IFilter, ICanonicalizable
+    public sealed class SaturateFilter : IFilter, ICanonicalizable
     {
         public SaturateFilter(float amount)
         {

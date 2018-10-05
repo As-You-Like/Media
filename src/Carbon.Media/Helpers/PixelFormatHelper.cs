@@ -14,9 +14,12 @@ namespace Carbon.Media
                 case "gray": return PixelFormat.Gray8;
             }
 
-            Enum.TryParse(text, ignoreCase: true, out PixelFormat format);
+            if (Enum.TryParse(text, ignoreCase: true, out PixelFormat format))
+            {
+                return format;
+            }
 
-            return format;
+            throw new InvalidValueException(nameof(PixelFormat), text);
         }
     }
 }

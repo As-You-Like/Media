@@ -22,7 +22,7 @@ namespace Carbon.Media.Processing
 
         // TODO: IEncodeOptions
         public int? Quality { get; }
-
+        
         // jpeg only
         public EncodeFlags Flags { get; }
 
@@ -83,10 +83,10 @@ namespace Carbon.Media.Processing
                 foreach (var (key, value) in args)
                 {
                     switch (key)
-                    {
-                        case "quality"     : quality = int.Parse(value);           break;
-                        case "progressive" : flags |= EncodeFlags.Progressive;   break;
-                        case "lossless"    : flags |= EncodeFlags.Lossless;      break;
+                    {   
+                        case "quality"     : quality = int.Parse(value);       break;
+                        case "progressive" : flags |= EncodeFlags.Progressive; break;
+                        case "lossless"    : flags |= EncodeFlags.Lossless;    break;
 
                         default            : throw new Exception("Invalid encode argument:" + key);
                     }

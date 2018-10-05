@@ -1,4 +1,7 @@
-﻿namespace Carbon.Media.Processing
+﻿using System;
+using Carbon.Media.Drawing;
+
+namespace Carbon.Media.Processing
 {
     public static class Processor
     {
@@ -51,7 +54,7 @@
                 case "bitrate"      : return BitRateFilter.Create(syntax);
 
                 // Drawing
-                case "draw"         : return DrawFilter.Parse(text);
+                case "draw"         : return DrawCommand.Parse(text.AsSpan());
 
                 // Other
                 case "colors"       : return ColorsFilter.Create(syntax);

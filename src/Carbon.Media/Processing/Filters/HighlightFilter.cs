@@ -11,7 +11,7 @@
 
         public static HighlightFilter Create(in CallSyntax syntax)
         {
-            return new HighlightFilter(float.Parse(syntax.Arguments[0].Value));
+            return new HighlightFilter(float.Parse(syntax.Arguments[0].Value.ToString()));
         }
 
         public string Canonicalize() => $"highlight({Amount})";

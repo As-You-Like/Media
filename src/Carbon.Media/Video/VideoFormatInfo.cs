@@ -21,11 +21,11 @@ namespace Carbon.Media
                 throw new ArgumentException("Required", nameof(pixelFormat));
 
             if (width <= 0)
-                throw new ArgumentException("Must be > 0", nameof(width));
+                throw new ArgumentOutOfRangeException(nameof(width), width, "Must be > 0");
 
             if (height <= 0)
-                throw new ArgumentException("Must be > 0", nameof(height));
-            
+                throw new ArgumentOutOfRangeException(nameof(height), height, "Must be > 0");
+
             PixelFormat = pixelFormat;
             Width       = width;
             Height      = height;

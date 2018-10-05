@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Carbon.Media
 {
-    using System;
     using static Mime;
 
     internal static class MimeHelper

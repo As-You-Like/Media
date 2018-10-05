@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace Carbon.Media
 {
@@ -7,7 +6,7 @@ namespace Carbon.Media
     {
         public static string Normalize(string format)
         {
-            if (format == null)
+            if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
             if (format.Length == 0)
@@ -38,7 +37,9 @@ namespace Carbon.Media
 
         public static string FromPath(string path)
         {
-            return Normalize(Path.GetExtension(path));
+            int lastDotIndex = path.LastIndexOf('.');
+
+            return Normalize(path.Substring(lastDotIndex + 1));
         }
     }
 }

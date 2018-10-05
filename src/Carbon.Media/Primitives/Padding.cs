@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Carbon.Media
 {
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct Padding : IEquatable<Padding>
     {
         public static readonly Padding Zero = default;

@@ -22,7 +22,7 @@ namespace Carbon.Media
 
                 if (arg.Name == name)
                 {
-                    value = arg.Value;
+                    value = arg.Value.ToString();
 
                     return true;
                 }
@@ -40,7 +40,7 @@ namespace Carbon.Media
                 throw new ArgumentNullException(nameof(text));
             }
 
-            int argStart = text.IndexOf('(') + 1;
+            int argStart = text.AsSpan().IndexOf('(') + 1;
 
             if (argStart == 0)
             {

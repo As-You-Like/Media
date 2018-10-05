@@ -14,6 +14,6 @@
         Video       = 9,
         Font        = 10 // 2017-02 | https://tools.ietf.org/html/rfc8081#section-4.4.5
     }
-}
 
-// http://www.iana.org/assignments/media-types/media-types.xhtml
+    // http://www.iana.org/assignments/media-types/media-types.xhtml
+}
