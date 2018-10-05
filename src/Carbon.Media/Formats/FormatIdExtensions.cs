@@ -16,19 +16,20 @@ namespace Carbon.Media
         {
             switch (formatId)
             {
-                case _3GP     : return Mime._3GP_Audio;  // audio/3gpp
-                case _3GP2    : return Mime._3GP2_Audio; // audio/3gpp2
-                case Aiff     : return Mime.Aiff;
-                case Asf      : return Mime.Wma;  
-                case Avi      : return Mime.Avi;
-                case Flv      : return Mime.Flv;
-                case Mp3      : return Mime.Mp3;         // audio/mpeg
-                case M4a      : return Mime.M4a;         // audio/mp4
-                case Mp4      : return Mime.M4a;         // audio/mp4
-                case Ogg      : return Mime.Oga;         // audio/ogg
-                case Matroska : return Mime.Mka;         // audio/x-matroska 
-                case Wave     : return Mime.Wav;         // audio/wav
-                case WebM     : return Mime.WebM;        // video/webm
+                case _3GP     : return Mime._3GP_A;  // audio/3gpp
+                case _3GP2    : return Mime._3GP2_A; // audio/3gpp2
+                case Aiff     : return Mime.Aiff;    // audio/aiff
+                case Asf      : return Mime.Wma;     
+                case Avi      : return Mime.Avi;     
+                case Mp3      : return Mime.Mp3;      // audio/mpeg
+                case M4a      : return Mime.M4a;      // audio/mp4
+                case Mp4      : return Mime.M4a;      // audio/mp4
+                case Ogg      : return Mime.Oga;      // audio/ogg
+                case Opus     : return Mime.Opus;    
+                case Mka      : return Mime.Mka;     
+                case Matroska : return Mime.Mka;      // audio/x-matroska 
+                case Wave     : return Mime.Wav;      // audio/wav
+                case WebM     : return Mime.WebM;     // video/webm
             }
 
             throw new ArgumentException($"{formatId} does not have an audio only type");
@@ -43,10 +44,9 @@ namespace Carbon.Media
                 case Aiff     : return Mime.Aiff;
                 case Asf      : return Mime.Wmv;   // video/x-ms-asf | video/x-ms-wmv
                 case Avi      : return Mime.Avi;
-                case Flv      : return Mime.Flv;
                 case Matroska : return Mime.Mkv;   // video/x-matroska 
                 case Mov      : return Mime.Mov;   // video/quicktime
-                case Mp4      : return Mime.Mp4;
+                case Mp4      : return Mime.M4v;
                 case Ogg      : return Mime.Ogv;   // video/ogg
                 case Wave     : return Mime.Wav;   // audio/wav
                 case WebM     : return Mime.WebM;  // video/webm
@@ -57,41 +57,7 @@ namespace Carbon.Media
 
         public static Mime ToMime(this FormatId value)
         {
-            switch (value)
-            {
-                // Audio
-                case Aac  : return Mime.Aac;
-                case Flac : return Mime.Flac;
-                case M4a  : return Mime.M4a; 
-                case Mp3  : return Mime.Mp3;
-                case Opus : return Mime.Opus;
-
-                // Images
-                case Bmp  : return Mime.Bmp;
-                case Bpg  : return Mime.Bpg;
-                case Gif  : return Mime.Gif;
-                case Dng  : return Mime.Dng;
-                case Heif : return Mime.Heif;
-                case Ico  : return Mime.Ico;
-                case Jpeg : return Mime.Jpeg;
-                case Jp2  : return Mime.Jp2;
-                case Jxr  : return Mime.Jxr;
-                case Png  : return Mime.Png;
-                case Psd  : return Mime.Psd;
-                case Svg  : return Mime.Svg;
-                case Tiff : return Mime.Tiff;
-                case WebP : return Mime.WebP;
-
-                // Videos
-                case Mp4   : return Mime.Mp4;
-                case WebM  : return Mime.WebM;
-
-                // Fonts
-                case Woff  : return Mime.Woff;
-                case Woff2 : return Mime.Woff2;
-            }
-
-            throw new Exception("Invalid format:" + value.ToString());
+            return Mime.FromFormat(value);
         }
 
         public static string Canonicalize(this FormatId value)
@@ -126,9 +92,12 @@ namespace Carbon.Media
 
                 // Video
                 case Mp4    : return "MP4";
+                case M4v    : return "M4V";
+
                 case WebM   : return "WebM";
 
                 // Fonts
+                case Ttf    : return "TTF";
                 case Woff   : return "WOFF";
                 case Woff2  : return "WOFF2";
             }
@@ -138,14 +107,27 @@ namespace Carbon.Media
         
         public static FormatId Parse(string text)
         {
-            text = FileFormat.Normalize(text);
+            switch (text)
+            {
+                case "gif"  : return Gif;  
+                case "jpeg" : return Jpeg;
+                case "mp4"  : return Mp4;
+                case "png"  : return Png;
+                case "webp" : return WebP;
+                case "aif"  : return Aiff;
+                case "fpix" : return Fpx;
+                case "jpe"  : return Jpeg;
+                case "jpg"  : return Jpeg;
+                case "tif"  : return Tiff;
+                case "wave" : return Wav;
+            }
             
             if (Enum.TryParse<FormatId>(text, true, out var format))
             {
                 return format;
             }
-          
-            throw new Exception("Invalid format:" + text);            
+
+            throw new InvalidValueException("format", text); 
         }
     }
 }
