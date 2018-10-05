@@ -50,8 +50,8 @@ namespace Carbon.Media.Metadata.Tests
                 PixelFormat = PixelFormat.Cmyk32,
                 Width       = 1_000_000,
                 Height      = 1_000_000,
-                Orientation = ExifOrientation.Rotate90,
-                ColorSpace  = ColorSpace.CMYK
+                ColorSpace  = ColorSpace.CMYK,
+                Exif        = new ExifMetadata { Orientation = ExifOrientation.Rotate90 }
             };
 
             var image2 = Helper.SerializeAndBack(image);
@@ -59,7 +59,7 @@ namespace Carbon.Media.Metadata.Tests
             Assert.Equal("tiff",                   image2.Format);
             Assert.Equal(1_000_000,                image2.Width);
             Assert.Equal(1_000_000,                image2.Height);
-            Assert.Equal(ExifOrientation.Rotate90, image2.Orientation);
+            Assert.Equal(ExifOrientation.Rotate90, image2.Exif.Orientation);
             Assert.Equal(PixelFormat.Cmyk32,       image2.PixelFormat);
         }
 
@@ -88,16 +88,17 @@ namespace Carbon.Media.Metadata.Tests
 
             Assert.Equal("dng",                                     image2.Format);
             Assert.Equal(4000,                                      image2.Width);
-            Assert.Equal(ExifOrientation.None,                      image2.Orientation);
             Assert.Equal("©2018 Willy Wonka. All Rights Reserved.", image2.Copyright);
             Assert.Equal(ColorSpace.RGB,                            image2.ColorSpace);
             Assert.Equal("Canon",                                   image2.Camera.Make);
             Assert.Equal("EOS 5D",                                  image2.Camera.Model);
             Assert.Equal("Canon",                                   image2.Lens.Make);
             Assert.Equal("EF-S 35mm f/2.8 Macro IS STM",            image2.Lens.Model);
-            Assert.Equal("10.5 m",                                  image2.Location.Altitude.ToString());
+            Assert.Equal("10.5m",                                   image2.Location.Altitude.ToString());
             Assert.Equal(2,                                         image2.Location.Latitude);
             Assert.Equal(3,                                         image2.Location.Longitude);
+
+            Assert.Null(image2.Exif);
 
             Assert.Equal(@"{
   ""format"": ""dng"",
@@ -126,7 +127,7 @@ namespace Carbon.Media.Metadata.Tests
   ""location"": {
     ""latitude"": 2,
     ""longitude"": 3,
-    ""altitude"": ""10.5 m""
+    ""altitude"": ""10.5m""
   },
   ""software"": {
     ""name"": ""Photoshop""

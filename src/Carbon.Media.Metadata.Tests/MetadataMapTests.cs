@@ -7,18 +7,18 @@ namespace Carbon.Media.Metadata.Tests
         [Fact]
         public void Test1()
         {
-            var result = MetadataMap.Get(ExifTag.ExposureTime);
+            var result = ExifTagMap.Get(ExifTag.ExposureTime);
 
             Assert.NotNull(result.Converter); // RationalConverter
             Assert.Equal("ExposureTime", result.Name);
             Assert.Equal(33434,           result.Code);
 
-            result = MetadataMap.Get(ExifTag.ExposureMode);
+            result = ExifTagMap.Get(ExifTag.ExposureMode);
 
             Assert.Equal("ExposureMode", result.Name);
             Assert.Equal(41986,          result.Code);
 
-            result = MetadataMap.Get(ExifTag.GPSAltitude);
+            result = ExifTagMap.Get(ExifTag.GPSAltitude);
 
             Assert.Equal("GPSAltitude", result.Name);
             Assert.Equal(6, result.Code);
