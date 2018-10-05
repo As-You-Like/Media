@@ -13,6 +13,7 @@ namespace Carbon.Media.Processing
 
         public int? FrameNumber { get; set; }
 
+        // Replace with BG (Image, Gradient, Color, ...)
         public string BackgroundColor { get; set; }
 
         // 1. Flip
@@ -62,6 +63,28 @@ namespace Carbon.Media.Processing
         // blob#1 |> JPEG::encode(quality:87)
         // blob#1 |> WebP::encode
 
+        public ValidateResult Validate()
+        {
+            // Ensure the width and height are divisible by 2 when targeting the MP4 format
+            if (Encode.Format == FormatId.Mp4)
+            {
+                if (FinalSize.Width % 2 != 0)
+                {
+                    return new ValidateResult(
+                        new ValidationError($"The MP4 format requires a width divisible by 2. Was {FinalSize.Width}.")
+                    );
+                }
+                else if (FinalSize.Height % 2 != 0)
+                {
+                    return new ValidateResult(
+                      new ValidationError($"The MP4 format requires a height divisible by 2. Was {FinalSize.Height}.")
+                  );
+                }
+            }
+
+            return ValidateResult.Successful;
+        }
+
         public static Pipeline From(MediaTransformation transformation)
         {
             return From(transformation.Source, transformation.GetTransforms());
@@ -92,13 +115,12 @@ namespace Carbon.Media.Processing
                 }
             }
 
-            var sourceSize = new Size(source.Width, source.Height);
-
             var interpolater = InterpolaterMode.Lanczos3;
-            Rectangle? crop = null;
-            EncodeFlags encodingFlags = EncodeFlags.None;
+            var encodingFlags = EncodeFlags.None;
 
-            var box = new PaddedBox(sourceSize.Width, sourceSize.Height);
+            Rectangle? crop = null;
+
+            var box = new PaddedBox(source.Width, source.Height);
 
             int? quality = null;
 
@@ -123,8 +145,10 @@ namespace Carbon.Media.Processing
                 }
                 else if (transform is CropTransform ct)
                 {
-                    var xScale = (double)pipeline.Source.Width / box.Width;
-                    var yScale = (double)pipeline.Source.Height / box.Height;
+                    // Note: We may have applied a scaling operating before the crop
+
+                    double xScale = (double)pipeline.Source.Width / box.Width;
+                    double yScale = (double)pipeline.Source.Height / box.Height;
 
                     var c = ct.GetRectangle(box.Size);
 
@@ -209,8 +233,6 @@ namespace Carbon.Media.Processing
                         }
                     }
 
-                    // TODO: Consider source orientation
-
                     pipeline.Rotate = rotate.Angle;
                 }
                 else if (transform is MetadataFilter metadata)
@@ -226,10 +248,11 @@ namespace Carbon.Media.Processing
                 {
                     pipeline.Expires = expires.Timestamp;
                 }
+             
                 else if (transform is EncodeParameters encode)
                 {
                     pipeline.Encode = quality != null || encodingFlags != default
-                        ? new EncodeParameters(encode.Format, quality, encode.Flags | encodingFlags) // set the quality
+                        ? new EncodeParameters(encode.Format, quality, flags: encode.Flags | encodingFlags) // set the quality
                         : encode;
                 }
                 else if (transform is DebugFilter)
@@ -325,6 +348,139 @@ namespace Carbon.Media.Processing
             }
 
             return result;
+        }
+
+        public string ToTransformPath()
+        {
+            if (Encode == null)
+            {
+                throw new Exception("Missing Encode");
+            }
+
+            var sb = StringBuilderCache.Aquire();
+
+            if (Expires != null)
+            {
+                sb.Append('/');
+                sb.Append("expires(");
+                sb.Append(new DateTimeOffset(Expires.Value).ToUnixTimeSeconds());
+                sb.Append(')');
+            }
+
+            if (Encode.Format == FormatId.Json && Metadata != null)
+            {
+                sb.Append('/');
+                Metadata.WriteTo(sb);
+                sb.Append(".json");
+
+                return sb.ToString();
+            }
+
+            if (FrameNumber != null)
+            {
+                sb.Append('/');
+
+                if (FrameNumber == 0)
+                {
+                    sb.Append("poster");
+                }
+                else
+                {
+                    sb.Append("frame(");
+                    sb.Append(FrameNumber);
+                    sb.Append(')');
+                }
+            }
+
+            if (PageNumber != null)
+            {
+                sb.Append('/');
+                sb.Append("page(");
+                sb.Append(PageNumber);
+                sb.Append(')');
+            }
+
+            if (BackgroundColor != null)
+            {
+                sb.Append('/');
+                sb.Append("background(");
+                sb.Append(BackgroundColor);
+                sb.Append(')');
+            }
+
+            if (Flip != null)
+            {
+                sb.Append('/');
+
+                Flip.WriteTo(sb);
+            }
+
+            // TODO: Orient...
+
+            if (Rotate != 0)
+            {
+                sb.Append('/');
+                sb.Append("rotate(");
+                sb.Append(Rotate);
+                sb.Append("deg)");
+            }
+
+            if (Crop is Rectangle crop)
+            {
+                sb.Append('/');
+                sb.Append($"crop({crop.X},{crop.Y},{crop.Width},{crop.Height})");
+            }
+
+            if (Scale != null)
+            {
+                sb.Append('/');
+
+                sb.Append(Scale.Width);
+                sb.Append('x');
+                sb.Append(Scale.Height);
+            }
+
+            // pad(0,0)
+
+            if (!Padding.Equals(Padding.Zero))
+            {
+                sb.Append('/');
+                sb.Append("pad(");
+                sb.Append(Padding.ToString());
+                sb.Append(")");
+            }
+
+            foreach (var filter in Filters)
+            {
+                sb.Append('/');
+
+                if (filter is ICanonicalizable canonicalizable)
+                {
+                    canonicalizable.WriteTo(sb);
+                }
+                else
+                {
+                    sb.Append(filter.Canonicalize());
+                }
+            }
+
+            if (Encode.Flags.HasFlag(EncodeFlags.Lossless))
+            {
+                sb.Append('/');
+                sb.Append("lossless");
+            }
+            else if (Encode.Quality != null)
+            {
+                sb.Append('/');
+                sb.Append("quality(");
+                sb.Append(Encode.Quality.Value);
+                sb.Append(')');
+            }
+
+            sb.Append('.');
+            sb.Append(Encode.Format.ToString().ToLower());
+
+            return StringBuilderCache.ExtractAndRelease(sb).Substring(1);
         }
 
         public string Canonicalize()
