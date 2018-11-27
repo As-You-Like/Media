@@ -8,19 +8,20 @@ namespace Carbon.Media
         public EncodingProfile(FormatId format, AudioProfile audio = null, VideoProfile video = null)
         {
             Format = format;
-            Audio  = audio;
-            Video  = video;
+            Audio = audio;
+            Video = video;
         }
 
         [DataMember(Name = "format", Order = 1)]
         public FormatId Format { get; }
-        
+
         [DataMember(Name = "audio", Order = 2)]
         public AudioProfile Audio { get; }
 
         [DataMember(Name = "video", Order = 3)]
         public VideoProfile Video { get; }
 
-        // Subtitles?
+        [DataMember(Name = "subtitles", Order = 4)]
+        public SubtitleProfile Subtitles { get; set; }
     }
 }
