@@ -4,7 +4,8 @@
     {
         _3fr = FormatId._3fr, // Hasselblad                             
         Apng = FormatId.Apng, // Animated PNG                           
-        Art  = FormatId.Art,  // ART                                    
+        Art  = FormatId.Art,  // ART                
+        Avif = FormatId.Avif, // AV1 Still Image File Format 
         Bmp  = FormatId.Bmp,  // BMP                                    
         Bpg  = FormatId.Bpg,  // Better Portable Graphics               
         Cin  = FormatId.Cin,  // Cineon                                 
@@ -19,7 +20,7 @@
         Flic = FormatId.Flic, // Flic                                   
         Fpx  = FormatId.Fpx,  // FlashPix                               
         Gif  = FormatId.Gif,  // GIF                                    
-        Heif = FormatId.Heif, // High Efficiency Image Format           
+        Heif = FormatId.Heif, // High Efficiency Image Format
         Icns = FormatId.Icns, // Icon File Format                       
         Ico  = FormatId.Ico,  // Windows Icon Format                    
         Iges = 4305,          // Initial Graphics Exchange Specification
