@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System;
+
+namespace Carbon.Media
 {
     public enum PixelFormat
     {
@@ -104,26 +106,30 @@
         [BitsPerPixel(64)] Cmyk64            = 91, // CMYK  |                        | 64bppCMYK        |         |
         [BitsPerPixel(40)] Cmyka40           = 92, // CMYKA |                        | 40bppCMYKA       |         |
         [BitsPerPixel(80)] Cmyka80           = 93, // CMYKA |                        | 80bppCMYKA       |         |
-                                                                                                                  
-        // Gray ----------------------------------------------------------| ---------|----------------- |         |
-        [BitsPerPixel(1)]  BlackWhite        = 100, //                    |          | BlackWhite       |         |
-        [BitsPerPixel(1)]  WhiteBlack        = 101, //                    |          |                  |         |
-        [BitsPerPixel(2)]  Gray2             = 102, // Gray | 2           |          | 2bppGray         |         |
-        [BitsPerPixel(4)]  Gray4             = 103, // Gray |             |          | 4bppGray         |         |
-        [BitsPerPixel(8)]  Gray8             = 104, // Gray | 8           | byte     | 8bppGray         |         |
-        [BitsPerPixel(8)]  Gray8le           = 105, // Gray | 8           |          |                  |         |
-        [BitsPerPixel(9)]  Gray9be           = 106, // Gray | 9           |          |                  |         |
-        [BitsPerPixel(9)]  Gray9le           = 107, // Gray | 9           |          |                  |         |
-        [BitsPerPixel(16)] Gray10be          = 108, // Gray | 10          |          |                  |         |
-        [BitsPerPixel(16)] Gray10le          = 109, // Gray | 10          |          |                  |         |
-        [BitsPerPixel(16)] Gray12be          = 110, // Gray | 12          |          |                  |         |
-        [BitsPerPixel(16)] Gray12le          = 111, // Gray | 12          |          |                  |         |
-        [BitsPerPixel(16)] Gray16            = 112, // Gray | 16BE        |          | 16bppGray        | 16Gray  |
-        [BitsPerPixel(16)] Gray16be          = 113, // Gray | 16          |          |                  |         |
-        [BitsPerPixel(16)] Gray16le          = 114, // Gray | 16          |          |                  |         |
-        [BitsPerPixel(16)] Gray16h           = 115, // Gray | 16          | f16      | 16bppGrayHalf    |         |
-        [BitsPerPixel(32)] Gray32f           = 116, // Gray | 16          | f32      | 32bppGrayFloat   |         |
-        [BitsPerPixel(16)] GrayAlpha16       = 117, // Gray | 8|8         |          |                  |         |
+
+        // Gray ----------------------------------------------------------| ---------|------------------|---------|
+        BlackWhite                           = 100, // Gray               |          | BlackWhite       |         |
+        WhiteBlack                           = 101, // Gray               |          |                  |         |
+        Gray2                                = 102, // Gray | 2           |          | 2bppGray         |         |
+        Gray4                                = 103, // Gray |             |          | 4bppGray         |         |
+        Gray8                                = 104, // Gray | 8           | i8 (le)  | 8bppGray         |         |
+        Gray9be                              = 105, // Gray | 9           |          |                  |         |
+        Gray9le                              = 106, // Gray | 9           |          |                  |         |
+        Gray10be                             = 107, // Gray | 10          |          |                  |         |
+        Gray10le                             = 108, // Gray | 10          |          |                  |         |
+        Gray12be                             = 109, // Gray | 12          |          |                  |         |
+        Gray12le                             = 110, // Gray | 12          |          |                  |         |
+        Gray14be                             = 111, // Gray |             |          |                  |         |
+        Gray14le                             = 112, // Gray |             |          |                  |         |
+        Gray16                               = 113, // Gray | 16BE        |          | 16bppGray        | 16Gray  |
+        Gray16be                             = 114, // Gray | 16          |          |                  |         |
+        Gray16le                             = 115, // Gray | 16          |          |                  |         |
+        Gray16h                              = 116, // Gray | 16          | f16      | 16bppGrayHalf    |         |
+        Gray32fbe                            = 117, // Gray |             | f32      |                  |         |
+        Gray32fle                            = 118, // Gray |             | f32      |                  |         |
+        Gray32f                              = 119, // Gray | 16          | f32      | 32bppGrayFloat   |         |
+        
+        GrayAlpha16                          = 120, // Gray | 8|8         |          |                  |         |
                                                                                                                    
         // Indexed Formats ---------------------------------------------------------------------------------------|
         [BitsPerPixel(1)] Indexed1           = 131, // Indexed |                     | 1bppIndexed | 1Monochrome  |
@@ -229,11 +235,11 @@
         Yuva444p16le    = 626, // YUVA | 
 
         // YUVJ
-        Yuvj411p        = 650, // YUVJ | 
-        Yuvj420p        = 651, // YUVJ |
-        Yuvj422p        = 652, // YUVJ |
-        Yuvj440p        = 653, // YUVJ |
-        Yuvj444p        = 654, // YUVJ |
+        [Obsolete] Yuvj411p = 650, // YUVJ | => YUV + range
+        [Obsolete] Yuvj420p = 651, // YUVJ | => YUV + range
+        [Obsolete] Yuvj422p = 652, // YUVJ | => YUV + range
+        [Obsolete] Yuvj440p = 653, // YUVJ | => YUV + range
+        [Obsolete] Yuvj444p = 654, // YUVJ | => YUV + range
 
         // YUYV
         [BitsPerPixel(16)] Yuyv422 = 660, // YUV | 4:2:2 | Y0 Cb Y1 Cr
