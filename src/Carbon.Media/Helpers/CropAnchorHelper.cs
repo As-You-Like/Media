@@ -8,46 +8,43 @@ namespace Carbon.Media
     {
         public static CropAnchor Parse(string text)
         {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-            
-            switch (text)
+            if (text is null) throw new ArgumentNullException(nameof(text));
+
+
+            if (text.Length == 1)
             {
-                case "b":
-                case "s":
-                case "bottom": return Bottom;
-
-                case "bl": return Bottom | Left;
-                case "sw": return Bottom | Left;
-                case "br": return Bottom | Right;
-                case "se": return Bottom | Right;
-
-                case "c":
-                case "center": return Center;
-
-                case "w":
-                case "west":
-                case "l":
-                case "left":  return Left;
-
-                case "e":
-                case "east":
-                case "r":
-                case "right": return Right;
-
-                case "n":
-                case "north":
-                case "t":
-                case "top": return Top;
-
-                case "nw":
-                case "tl": return Top | Left;
-
-                case "ne":
-                case "tr": return Top | Right;
+                return Parse(text[0]);
             }
 
-            throw new Exception("Invalid CropAnchor :" + text);
+            if (text.Length == 2)
+            {
+                return Parse(text[0]) | Parse(text[1]);   
+            }
+
+            switch (text)
+            {
+                case "bottom" : return Bottom;
+                case "center" : return Center;
+                case "left"   : return Left;
+                case "right"  : return Right;
+                case "top"    : return Top;
+            }
+            
+            throw new Exception("Invalid anchor :" + text);
+        }
+
+        private static CropAnchor Parse(char code)
+        {
+            switch (code)
+            {
+                case 't': return Top;
+                case 'r': return Right;
+                case 'b': return Bottom;
+                case 'l': return Left;
+                case 'c': return Center;
+
+                default: throw new Exception("Invalid anchor:" + code);
+            }
         }
     }
 }
