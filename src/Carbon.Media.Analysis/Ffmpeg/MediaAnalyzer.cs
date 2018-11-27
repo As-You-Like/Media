@@ -6,24 +6,35 @@ namespace Carbon.Media.Analysis
 {
     public class MediaAnalyzer
     {
-        private readonly Ffprobe probe = new Ffprobe();
+        private static readonly Ffprobe probe = new Ffprobe();
         
         public FormatInfo Analyze(Uri url)
         {
             if (url is null)
                 throw new ArgumentNullException(nameof(url));
 
-            var result = probe.Get(url.ToString());
-            
+            string result = probe.Get(url.ToString());
+
+            if (result[0] != '{')
+            {
+                throw new Exception("Expected JSON. Was " + result);
+            }
+
+            var json = JsonObject.Parse(result);
+
+            // Check for errors
+            if (json.TryGetValue("error", out JsonNode errorNode))
+            {
+                throw new AnalyzeException(errorNode.As<AnalyzeError>());
+            }
+
             try
             {
-                var r = JsonObject.Parse(result).As<ProbeResult>();
-
-                return r.ToFormatInfo();
+                return json.As<ProbeResult>().ToFormatInfo();
             }
             catch
             {
-                throw new Exception(result);
+                throw new Exception("error converting JSON to FormatInfo:" + result);
             }
         }
     }

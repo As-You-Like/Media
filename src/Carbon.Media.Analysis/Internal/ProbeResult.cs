@@ -1,27 +1,33 @@
-﻿using Carbon.Media.Metadata;
+﻿using System.Runtime.Serialization;
+using Carbon.Media.Metadata;
 
 namespace Carbon.Media.Analysis.Internal
 {
     public class ProbeResult
     {
+        [DataMember(Name = "format")]
+        public ProbedFormat Format { get; set; }
+
+        [DataMember(Name = "streams")]
         public ProbedStream[] Streams { get; set; }
 
-        public ProbedFormat Format { get; set; }
-        
+        // packets
+        // streams
+        // chapters
+        // error
+
         public FormatInfo ToFormatInfo()
         {
             var formatName = Format.FormatName;
-
-            if (formatName.IndexOf(',') > -1)
+            
+            if (formatName.IndexOf(',') is int commaIndex
+                && commaIndex > -1)
             {
-                formatName = formatName.Substring(0, formatName.IndexOf(','));
+                formatName = formatName.Substring(0, commaIndex);
             }
 
-            var ok = Mime.TryGetFromFormat(formatName, out var mime);
-
-            var format = new FormatInfo
-            {
-                Type = ok ? mime.Name : "application/" + formatName,
+            var format = new FormatInfo {
+                Type = Mime.TryGetFromFormat(formatName, out var mime) ? mime.Name : "application/" + formatName,
                 Format = formatName,
                 Size = Format.Size,
                 Duration = Format.Duration,
@@ -49,7 +55,6 @@ namespace Carbon.Media.Analysis.Internal
 
     }
 }
-
 
 // SCHEMA
 // https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/doc/ffprobe.xsd
