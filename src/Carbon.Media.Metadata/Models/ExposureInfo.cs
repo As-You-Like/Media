@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Carbon.Media.Metadata.Exif;
 
 namespace Carbon.Media.Metadata
 {
@@ -23,6 +24,5 @@ namespace Carbon.Media.Metadata
         public TimeSpan? Time { get; set; }
         
         // Method (Shutter?)
-
     }
 }

@@ -21,6 +21,8 @@ namespace Carbon.Media.Metadata
 
         [DataMember(Name = "rotate", EmitDefaultValue = false)]
         public int? Rotate { get; set; }
+
+        // MajorBrand
         
     }
 }

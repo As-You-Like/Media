@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Carbon.Media.Metadata.Exif;
 
 namespace Carbon.Media.Metadata
 {

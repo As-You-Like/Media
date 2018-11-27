@@ -1,6 +1,6 @@
 ﻿using System;
 using Carbon.Json;
-
+using Carbon.Media.Metadata.Exif;
 using Xunit;
 
 namespace Carbon.Media.Metadata.Tests

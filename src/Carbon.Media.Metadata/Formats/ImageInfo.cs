@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Carbon.Media.Metadata.Exif;
 
 namespace Carbon.Media.Metadata
 {
@@ -76,18 +77,12 @@ namespace Carbon.Media.Metadata
         [DataMember(Name = "location", Order = 45, EmitDefaultValue = false)]
         public GpsData Location { get; set; }
    
-        [DataMember(Name = "sensing", Order = 46, EmitDefaultValue = false)]
-        public SensingInfo Sensing { get; set; }
-
         [DataMember(Name = "software", Order = 47, EmitDefaultValue = false)]
         public SoftwareInfo Software { get; set; }
 
         [DataMember(Name = "subject", Order = 48, EmitDefaultValue = false)]
         public SubjectInfo Subject { get; set; }
-        
-        [DataMember(Name = "whiteBalance", Order = 49, EmitDefaultValue = false)]
-        public ExifWhiteBalance WhiteBalance { get; set; }
-
+       
         #endregion
     } 
 }

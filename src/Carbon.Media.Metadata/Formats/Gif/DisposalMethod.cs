@@ -1,6 +1,5 @@
 ﻿namespace Carbon.Media.Metadata
 {
-
     public enum FrameDisposalMethod : byte
     {
         Unspecified         = 0,

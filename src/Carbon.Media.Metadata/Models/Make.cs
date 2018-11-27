@@ -12,7 +12,6 @@ namespace Carbon.Media.Metadata
             { "SONY", Sony },
             { "SANYO ELECTRIC CO., LTD.", Sanyo },
             { "CANON", Canon },
-
         };
         
         // Canonicalize's the value
@@ -31,6 +30,7 @@ namespace Carbon.Media.Metadata
         
         public string Name { get; }
 
+        public static readonly Make Apple   = new Make("Apple");
         public static readonly Make Canon   = new Make("Canon");
         public static readonly Make Nikon   = new Make("Nikon");
         public static readonly Make Pentax  = new Make("Pentax");
@@ -39,6 +39,5 @@ namespace Carbon.Media.Metadata
         public static readonly Make Olympus = new Make("Olympus");
 
         public static implicit operator string (Make make) => make.Name;
-
     }
 }

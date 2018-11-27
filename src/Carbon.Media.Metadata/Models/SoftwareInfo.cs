@@ -56,7 +56,7 @@ namespace Carbon.Media.Metadata
 
             if (platform != null)
             {
-                name = name.Replace(" " + lastPart, "");
+                name = name.Replace(" " + lastPart, string.Empty);
             }
 
             software = new SoftwareInfo(name, version, platform);
