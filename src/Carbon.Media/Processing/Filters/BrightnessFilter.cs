@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
-    public class BrightnessFilter : IFilter
+    public sealed class BrightnessFilter : IFilter
     {
         public BrightnessFilter(float amount)
         {
             if (amount < -10 || amount > 10)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between -10 and 10");
+                throw ExceptionHelper.OutOfRange(nameof(amount), -10, 10, amount);
             }
 
             Amount = amount;

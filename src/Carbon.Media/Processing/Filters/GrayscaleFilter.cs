@@ -1,20 +1,15 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
     public sealed class GrayscaleFilter : IFilter
     {
         public GrayscaleFilter(float amount)
         {
-            if (amount < 0)
+            if (amount < 0 || amount > 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be >= 0");
+                throw ExceptionHelper.OutOfRange(nameof(amount), 0, 1, amount);
             }
-            
-            if (amount > 1)  // clamped to 1
-            {
-                amount = 1;
-            }
+
+            // CSS clamps to 1
 
             Amount = amount;
         }

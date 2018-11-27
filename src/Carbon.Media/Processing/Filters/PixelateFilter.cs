@@ -6,9 +6,9 @@ namespace Carbon.Media.Processing
     {
         public PixelateFilter(int amount)
         {
-            if (amount < 0 || amount > 10000)
+            if (amount < 0 || amount > 10_000)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between 0 & 10,000");
+                throw ExceptionHelper.OutOfRange(nameof(amount), 0, 10_000, amount);
             }
 
             Amount = amount;

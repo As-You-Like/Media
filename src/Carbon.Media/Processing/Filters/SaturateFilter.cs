@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace Carbon.Media.Processing
 {
@@ -9,7 +8,7 @@ namespace Carbon.Media.Processing
         {
             if (amount < -2 || amount > 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between -2 and 2");
+                ExceptionHelper.OutOfRange(nameof(amount), -2, 2, amount);
             }
 
             Amount = amount;

@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
     public class BlurFilter : IFilter
     {
         public BlurFilter(float radius)
         {
-            if (radius < 0 || radius > 2000)
+            if (radius < 0 || radius > 1_000)
             {
-                throw new ArgumentOutOfRangeException(nameof(radius), radius, "Must be between 0 and 2,000");
+                throw ExceptionHelper.OutOfRange(nameof(radius), 0, 1_000, radius);
             }
 
             Amount = radius;

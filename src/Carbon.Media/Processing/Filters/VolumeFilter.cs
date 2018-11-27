@@ -1,24 +1,38 @@
-﻿using System;
+﻿using System.Text;
 
 namespace Carbon.Media.Processing
 {
-    public class VolumeFilter : IFilter
+    public sealed class VolumeFilter : IFilter
     {
         public VolumeFilter(float amount)
         {
-            if (amount < 0)
+            if (amount < 0 || amount > 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be >= 0");
+                ExceptionHelper.OutOfRange(nameof(amount), 0, 1, amount);
             }
 
             Amount = amount;
         }
 
         public float Amount { get; }
+        
+        public string Canonicalize()
+        {
+            var sb = StringBuilderCache.Aquire();
 
-        public string Canonicalize() => $"volume({Amount})";
+            WriteTo(sb);
+
+            return StringBuilderCache.ExtractAndRelease(sb);
+        }
 
         public override string ToString() => Canonicalize();
+
+        public void WriteTo(StringBuilder sb)
+        {
+            sb.Append("volume(");
+            sb.Append(Amount);
+            sb.Append(')');
+        }
 
         public static VolumeFilter Create(in CallSyntax syntax)
         {
@@ -26,5 +40,3 @@ namespace Carbon.Media.Processing
         }
     }
 }
-
-// adjust(volume:50%) ???

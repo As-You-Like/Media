@@ -7,7 +7,10 @@ namespace Carbon.Media.Processing
     {
         public PageFilter(int number)
         {
-            if (number < 0) throw new ArgumentOutOfRangeException(nameof(number), number, "Must be >= 0");
+            if (number < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(number), number, "Must be >= 0");
+            }
 
             Number = number;
         }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
     public class GammaFilter : IFilter
     {
@@ -10,7 +8,7 @@ namespace Carbon.Media.Processing
         {
             if (amount < 0 || amount > 5)
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Must be between 0 and 5");
+                throw ExceptionHelper.OutOfRange(nameof(amount), 0, 5, amount);
             }
 
             Amount = amount;

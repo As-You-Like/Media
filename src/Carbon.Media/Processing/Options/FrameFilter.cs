@@ -11,7 +11,7 @@ namespace Carbon.Media.Processing
         {
             if (number < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(number), number, "Must be > 0");
+                ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(number), number);
             }
 
             Number = number;
@@ -62,5 +62,7 @@ namespace Carbon.Media.Processing
             return new FrameFilter(int.Parse(syntax.Arguments[0].Value.ToString()));
         }
     }
-
 }
+
+// frame(1)
+// 00:00
