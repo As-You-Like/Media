@@ -8,20 +8,20 @@ namespace Carbon.Media
         {
             switch (text)
             {
-                case "color"        : result = BlendMode.Color;      return true;
-                case "color-burn"   : result = BlendMode.ColorBurn;  return true;
-                case "color-dodge"  : result = BlendMode.ColorBurn;  return true;
-                case "darken"       : result = BlendMode.Darken;     return true;
-                case "difference"   : result = BlendMode.Difference; return true;
-                case "exclusion"    : result = BlendMode.Exclusion;  return true;
-                case "hard-light"   : result = BlendMode.HardLight;  return true;
-                case "hue"          : result = BlendMode.Hue;        return true;
-                case "lighten"      : result = BlendMode.Lighten;    return true;
-                case "luminosity"   : result = BlendMode.Luminosity; return true;
-                case "overlay"      : result = BlendMode.Overlay;    return true;
-                case "saturation"   : result = BlendMode.Saturation; return true;
-                case "screen"       : result = BlendMode.Screen;     return true;
-                case "soft-light"   : result = BlendMode.SoftLight;  return true;
+                case "color"        : result = BlendMode.Color;       return true;
+                case "color-burn"   : result = BlendMode.ColorBurn;   return true;
+                case "color-dodge"  : result = BlendMode.ColorDodge;  return true;
+                case "darken"       : result = BlendMode.Darken;      return true;
+                case "difference"   : result = BlendMode.Difference;  return true;
+                case "exclusion"    : result = BlendMode.Exclusion;   return true;
+                case "hard-light"   : result = BlendMode.HardLight;   return true;
+                case "hue"          : result = BlendMode.Hue;         return true;
+                case "lighten"      : result = BlendMode.Lighten;     return true;
+                case "luminosity"   : result = BlendMode.Luminosity;  return true;
+                case "overlay"      : result = BlendMode.Overlay;     return true;
+                case "saturation"   : result = BlendMode.Saturation;  return true;
+                case "screen"       : result = BlendMode.Screen;      return true;
+                case "soft-light"   : result = BlendMode.SoftLight;   return true;
 
                 // Aliases
                 case "burn"  : result = BlendMode.ColorBurn; return true;
