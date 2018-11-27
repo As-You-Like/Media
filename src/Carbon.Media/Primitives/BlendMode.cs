@@ -2,26 +2,28 @@
 {
     public enum BlendMode : byte
     {
-                         // | CSS         | Ffmpeg     |  Skia        | Photoshop
-        Normal     = 0,  // | normal      |            |  SrcOver     | Normal
-        Color      = 1,  // | color       |            |  Color       | Color
-        ColorBurn  = 2,  // | color-burn  | burn       |  ColorBurn   | Color Burn
-        ColorDodge = 3,  // | color-dodge | dodge      |  ColorDodge  | Color Dodge
-        Darken     = 4,  // | darken      | darken     |  Darken      | Darken
-        Difference = 5,  // | difference  | difference |  Difference  | Difference
-        Exclusion  = 6,  // | exclusion   | exclusion  |  Exclusion   | Exclusion
-        HardLight  = 7,  // | hard-light  | hardlight  |  HardLight   | Hard Light
-        HardMix    = 8,  // |             | hardmix    |              | Hard Mix
-        Hue        = 9,  // | hue         |            |  Hue         | Hue
-        Lighten    = 10, // | lighten     | lighten    |  Lighten     | Lighten
-        Luminosity = 11, // |             |            |  Luminosity  | Luminosity
-        Multiply   = 12, // | luminosity  | multiply   |  Multiply    | Multiply
-        Overlay    = 13, // | overlay     |            |  Overlay     | Overlay
-        Saturation = 14, // | saturation  |            |  Saturation  | Saturation
-        Screen     = 15, // | screen      | screen     |  Screen      | Screen
-        SoftLight  = 16, // | soft-light  | softlight  |  SoftLight   | Soft Light
-        VividLight = 17, // |             | vividlight |              | Vivid Light
-
+                          // | CSS         | Ffmpeg     |  Skia        | Photoshop          | Figma
+        Normal      = 0,  // | normal      |            |  SrcOver     | Normal             |
+        Color       = 1,  // | color       |            |  Color       | Color              | COLOR
+        ColorBurn   = 2,  // | color-burn  | burn       |  ColorBurn   | Color Burn         | COLOR_BURN
+        ColorDodge  = 3,  // | color-dodge | dodge      |  ColorDodge  | Color Dodge        | COLOR_DODGE
+        Darken      = 4,  // | darken      | darken     |  Darken      | Darken             | DARKEN
+        Difference  = 5,  // | difference  | difference |  Difference  | Difference         | DIFFERENCE
+        Exclusion   = 6,  // | exclusion   | exclusion  |  Exclusion   | Exclusion          | EXCLUSION
+        HardLight   = 7,  // | hard-light  | hardlight  |  HardLight   | Hard Light         | HARD_LIGHT
+        HardMix     = 8,  // |             | hardmix    |              | Hard Mix           |
+        Hue         = 9,  // | hue         |            |  Hue         | Hue                | HUE
+        Lighten     = 10, // | lighten     | lighten    |  Lighten     | Lighten            | LIGHTEN
+        LinearBurn  = 11, // |                                         | Linear Burn        | LINEAR_BURN
+        LinearDodge = 12, // |                                         | Linear Dodge       | LINEAR_DODGE
+        Luminosity  = 13, // |             |            |  Luminosity  | Luminosity         | LUMINOSITY
+        Multiply    = 14, // | luminosity  | multiply   |  Multiply    | Multiply           | MULTIPLY
+        Overlay     = 15, // | overlay     |            |  Overlay     | Overlay            | OVERLAY
+        Saturation  = 16, // | saturation  |            |  Saturation  | Saturation         | SATURATION
+        Screen      = 17, // | screen      | screen     |  Screen      | Screen             | SCREEN
+        SoftLight   = 18, // | soft-light  | softlight  |  SoftLight   | Soft Light         | SOFT_LIGHT
+        VividLight  = 18, // |             | vividlight |              | Vivid Light        |
+                                                                                           
         // Porter-Duff Modes ---------------------------------------------------------------
         Clear   = 100,  //                |            |              | Clear
         Dst     = 101,  //                |            |
