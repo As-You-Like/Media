@@ -6,12 +6,48 @@ namespace Carbon.Media.Tests
 {
     public class MediaTransformTests
     {
+        // 00:00:01.777333
+        private static readonly MediaSource _1_2000x2000 = new MediaSource("1", 2000, 2000);
+        private static readonly MediaSource _37117398_960x540 = new MediaSource("37117398", 960, 540);
+
+        [Fact]
+        public void ParseTimestamp()
+        {
+            var transformation = MediaTransformation.Parse("00:00:01/960x540.heif", _37117398_960x540);
+
+            var timestamp = transformation[0] as TimestampFilter;
+
+            Assert.Equal(1, timestamp.Value);
+
+            Assert.Equal("timestamp(1)/960x540.heif", new MediaRenditionInfo(null, transformation).TransformPath);
+        }
+
+        [Fact]
+        public void ParseTimestamp2()
+        {
+            var transformation = MediaTransformation.Parse("timestamp(2.6252524)/960x540.tiff", _37117398_960x540);
+
+            var timestamp = transformation[0] as TimestampFilter;
+
+            Assert.Equal(2.6252524, timestamp.Value);
+
+            Assert.Equal("timestamp(2.6252524)/960x540.tiff", new MediaRenditionInfo(null, transformation).TransformPath);
+        }
+
+        [Fact]
+        public void InvalidFormat()
+        {
+            var ex = Assert.Throws<InvalidTransformException>(() => {
+                MediaTransformation.Parse("1;2000x2000/crop(97,21,480,360).jpeg&", _1_2000x2000);
+            });
+
+            Assert.Equal(2, ex.Index);
+        }
+
         [Fact]
         public void Detect()
         {
-            var source = new MediaSource("37117398", 960, 540);
-
-            var transformation = MediaTransformation.Parse("detect(edges,lanzcos5)/960x540.webp", source);
+            var transformation = MediaTransformation.Parse("detect(edges,lanzcos5)/960x540.webp", _37117398_960x540);
 
             var detectFilter = transformation[0] as DetectFilter;
 
@@ -20,15 +56,13 @@ namespace Carbon.Media.Tests
 
             Assert.Equal("960x540/detect(edges,algorithm:lanzcos5).webp", new MediaRenditionInfo(null, transformation).TransformPath);
 
-            Assert.Equal("960x540/detect(edges).webp", new MediaRenditionInfo(null, MediaTransformation.Parse("detect(edges).webp", source)).TransformPath);
+            Assert.Equal("960x540/detect(edges).webp", new MediaRenditionInfo(null, MediaTransformation.Parse("detect(edges).webp", _37117398_960x540)).TransformPath);
         }
 
         [Fact]
         public void Poster()
         {
-            var source = new MediaSource("37117398", 960, 540);
-
-            var transformation = MediaTransformation.Parse("poster/960x540.webp", source);
+            var transformation = MediaTransformation.Parse("poster/960x540.webp", _37117398_960x540);
 
             Assert.Equal(FrameFilter.Poster, transformation[0]);
 
@@ -40,10 +74,8 @@ namespace Carbon.Media.Tests
 
         [Fact]
         public void Preset()
-        {
-            var source = new MediaSource("37117398", 960, 540);
-            
-            var transformation = MediaTransformation.Parse("preset(ultrafast)/960x540.mp4", source);
+        {            
+            var transformation = MediaTransformation.Parse("preset(ultrafast)/960x540.mp4", _37117398_960x540);
 
             Assert.Equal("ultrafast", (transformation[0] as PresetFilter).Name);
             Assert.Equal(FormatId.Mp4, transformation.Encoder.Format);
@@ -54,9 +86,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void Profile()
         {
-            var source = new MediaSource("37117398", 960, 540);
-
-            var transformation = MediaTransformation.Parse("profile(high444)/960x540.mp4", source);
+            var transformation = MediaTransformation.Parse("profile(high444)/960x540.mp4", _37117398_960x540);
 
             Assert.Equal("high444", (transformation[0] as ProfileFilter).Name);
 
@@ -66,9 +96,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void Tune()
         {
-            var source = new MediaSource("37117398", 960, 540);
-
-            var transformation = MediaTransformation.Parse("tune(animation)/960x540.webm", source);
+            var transformation = MediaTransformation.Parse("tune(animation)/960x540.webm", _37117398_960x540);
 
             Assert.Equal("animation", (transformation[0] as TuneFilter).Name);
             Assert.Equal(FormatId.WebM, transformation.Encoder.Format);
@@ -146,9 +174,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void ToPipelineTests()
         {
-            var source = new MediaSource("1", 2000, 2000);
-
-            var transformation = MediaTransformation.Parse("1;2000x2000/crop(97,21,480,360).jpeg", source);
+            var transformation = MediaTransformation.Parse("1;2000x2000/crop(97,21,480,360).jpeg", _1_2000x2000);
 
             Assert.Equal(480, transformation.Width);
             Assert.Equal(360, transformation.Height);
@@ -162,9 +188,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void DoubleResizeUp()
         {
-            var source = new MediaSource("1", 2000, 2000);
-
-            var transformation = MediaTransformation.Parse("1;2000x2000/crop(97,21,480,360)/960x720.jpeg", source);
+            var transformation = MediaTransformation.Parse("1;2000x2000/crop(97,21,480,360)/960x720.jpeg", _1_2000x2000);
 
             Assert.Equal(960, transformation.Width);
             Assert.Equal(720, transformation.Height);
@@ -180,9 +204,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void DoubleResizeDown()
         {
-            var source = new MediaSource("1", 2000, 2000);
-
-            var transformation = MediaTransformation.Parse("blob;2000x2000/crop(97,21,480,360)/240x180.jpeg", source);
+            var transformation = MediaTransformation.Parse("blob;2000x2000/crop(97,21,480,360)/240x180.jpeg", _1_2000x2000);
 
             var pipeline = transformation.ToPipeline();
 
@@ -198,9 +220,10 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
-        public void Q()
+        public void FlipCropAndScaleOrder()
         {
-            var source = new MediaSource("1", 2000, 2000);
+            // flip the crop and scale order
+            var source = _1_2000x2000;
 
             var transformation = MediaTransformation.Parse("blob;1300x1300/crop(56,62,480,360).jpeg", source);
             
@@ -208,16 +231,16 @@ namespace Carbon.Media.Tests
 
             var scale = pipeline.Scale.Width / (double)pipeline.Crop.Value.Width;
             
-            Assert.Equal(0.650406504065041, scale, 5);
+            Assert.Equal(0.650406504065041, scale, 9);
 
             Assert.Equal(1300, (int)(source.Width * scale));
             Assert.Equal(1300, (int)(source.Height * scale));
 
-            Assert.Equal(55, (int)(pipeline.Crop.Value.X * scale));
-            Assert.Equal(61, (int)(pipeline.Crop.Value.Y * scale));
+            Assert.Equal(55,  (int)(pipeline.Crop.Value.X * scale));
+            Assert.Equal(61,  (int)(pipeline.Crop.Value.Y * scale));
             Assert.Equal(480, (int)(pipeline.Crop.Value.Width * scale));
-            Assert.Equal(359, (int)(pipeline.Crop.Value.Height * scale));
-            
+            Assert.Equal(359, (int)(pipeline.Crop.Value.Height * scale)); // 359.674796747967
+
             Assert.Equal("crop(86,95,738,553)/480x360.jpeg", pipeline.ToTransformPath());
         }
 
@@ -259,8 +282,6 @@ namespace Carbon.Media.Tests
                 Assert.Equal(typeof(ArgumentOutOfRangeException), ex.InnerException.GetType());
             }
         }
-
-
         
         [Fact]
         public void C()
@@ -271,7 +292,7 @@ namespace Carbon.Media.Tests
             }
             catch (InvalidTransformException ex)
             {
-                Assert.Equal(2, ex.Index);
+                Assert.Equal(1, ex.Index);
 
                 // Assert.Equal("Must be >= 0", ex.Message);
             }

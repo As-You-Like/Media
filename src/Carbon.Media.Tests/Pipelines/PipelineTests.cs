@@ -29,7 +29,7 @@ namespace Carbon.Media.Processing.Tests
             Assert.Equal("blob#pipe|>frame(3)|>JPEG::encode", pipeline.Canonicalize());
 
             Assert.Null(pipeline.Scale);
-            Assert.Equal(3, pipeline.FrameNumber);
+            Assert.Equal(new ExtractFilter(ExtractFilterType.Frame, 3), pipeline.Extract);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Carbon.Media.Processing.Tests
         {
             var pipeline = Pipeline.Parse("blob#pipe|>frame(3)|>scale(800,600)|>GIF::encode");
 
-            Assert.Equal(3, pipeline.FrameNumber);
+            Assert.Equal(3, pipeline.Extract.Value.Value);
             Assert.Equal(new Size(800, 600), pipeline.FinalSize);
             Assert.Equal(FormatId.Gif, pipeline.Encode.Format);
         }
@@ -64,7 +64,7 @@ namespace Carbon.Media.Processing.Tests
 
             Assert.Equal("blob#11|>page(3)|>crop(0,0,200,200)|>JPEG::encode", pipeline.Canonicalize());
 
-            Assert.Equal(3, pipeline.PageNumber);
+            Assert.Equal(new ExtractFilter(ExtractFilterType.Page, 3), pipeline.Extract);
         }
 
         [Fact]
@@ -482,9 +482,9 @@ namespace Carbon.Media.Processing.Tests
                 .Resize(Unit.Parse("300%"), Unit.Parse("200%"))
                 .Apply(new BrightnessFilter(3.5f)) // not clamped
                 .Apply(new ContrastFilter(3.5f))   // not clamped
-                .Apply(new InvertFilter(1.4f))     // clamped to 1
-                .Apply(new GrayscaleFilter(1.3f))  // clamped to 1
-                .Apply(new OpacityFilter(1.3f))    // clamped to 1
+                .Apply(new InvertFilter(1))        // clamped to 1
+                .Apply(new GrayscaleFilter(1))     // clamped to 1
+                .Apply(new OpacityFilter(1))       // clamped to 1
                 .Apply(new SaturateFilter(0.5f))
                 .Apply(new SepiaFilter(1.3f))
                 .Encode(FormatId.Tiff);

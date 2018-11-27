@@ -14,11 +14,17 @@ namespace Carbon.Media
             if (sampleFormat == SampleFormat.Unknown)
                 throw new ArgumentException("Must not be Unknown", nameof(sampleFormat));
 
-            if (sampleRate <= 0)
-                throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "Must be > 0");
+            // 8 kHz ?
+
+            if (sampleRate <= 0 || sampleRate > 22_579_200)
+            {
+                throw ExceptionHelper.OutOfRange(nameof(sampleRate), 0, 22_579_200, sampleRate);
+            }
 
             if (channelLayout == default)
+            {
                 throw new ArgumentException("Must not be unknown", nameof(channelLayout));
+            }
 
             SampleFormat = sampleFormat;
             SampleRate = sampleRate;

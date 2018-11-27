@@ -6,7 +6,7 @@ namespace Carbon.Media.Tests
 {
     using static CropAnchor;
 
-	public class CropAnchorTests
+    public class CropAnchorTests
 	{
         // origin: top left point...
 
@@ -48,29 +48,23 @@ namespace Carbon.Media.Tests
         }
 
         [Fact]
-		public void ParseTests()
+		public void CanParse()
 		{
             Assert.Equal(Top | Left,  CropAnchorHelper.Parse("tl"));
             Assert.Equal(Top | Right, CropAnchorHelper.Parse("tr"));
 
             Assert.Equal(Top,         CropAnchorHelper.Parse("t"));
-            Assert.Equal(Right,       CropAnchorHelper.Parse("r"));
-            Assert.Equal(Bottom,      CropAnchorHelper.Parse("b"));
             Assert.Equal(Left,        CropAnchorHelper.Parse("l"));
-
+            Assert.Equal(Bottom,      CropAnchorHelper.Parse("b"));
+            Assert.Equal(Right,       CropAnchorHelper.Parse("r"));
             Assert.Equal(Center,      CropAnchorHelper.Parse("c"));
-
-            // Compass
-            Assert.Equal(Top,         CropAnchorHelper.Parse("n"));
-            Assert.Equal(Right,       CropAnchorHelper.Parse("e"));
-            Assert.Equal(Bottom,      CropAnchorHelper.Parse("s"));
-            Assert.Equal(Left,        CropAnchorHelper.Parse("w"));
 
             // Full words
             Assert.Equal(Top,         CropAnchorHelper.Parse("top"));
             Assert.Equal(Right,       CropAnchorHelper.Parse("right"));
             Assert.Equal(Bottom,      CropAnchorHelper.Parse("bottom"));
             Assert.Equal(Left,        CropAnchorHelper.Parse("left"));
+
         }
     }
 }

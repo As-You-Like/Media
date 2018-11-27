@@ -6,14 +6,17 @@
         {
             switch (text)
             {
-                case "mono"   : layout = ChannelLayout.Mono;   return true;
-                case "stereo" : layout = ChannelLayout.Stereo; return true;
-                case "2.1"    : layout = ChannelLayout._2_1;   return true;
-                case "3.0"    : layout = ChannelLayout._3_0;   return true;
-                case "3.1"    : layout = ChannelLayout._3_1;   return true;
-                case "5.0"    : layout = ChannelLayout._5_0;   return true;
-                case "5.1"    : layout = ChannelLayout._5_1;   return true;
-                case "7.1"    : layout = ChannelLayout._7_1;   return true;
+                case "mono"   : layout = ChannelLayout.Mono;            return true;
+                case "stereo" : layout = ChannelLayout.Stereo;          return true;
+                case "downmix": layout = ChannelLayout.StereoDownmix;   return true;
+                case "2.1"    : layout = ChannelLayout._2_1;            return true;
+                case "3.0"    : layout = ChannelLayout._3_0;            return true;
+                case "3.1"    : layout = ChannelLayout._3_1;            return true;
+                case "4.0"    : layout = ChannelLayout._4_0;            return true;
+                case "5.0"    : layout = ChannelLayout._5_0;            return true;
+                case "5.1"    : layout = ChannelLayout._5_1;            return true;
+                case "6.0"    : layout = ChannelLayout._6_0;            return true;
+                case "7.1"    : layout = ChannelLayout._7_1;            return true;
             }
 
             layout = default;

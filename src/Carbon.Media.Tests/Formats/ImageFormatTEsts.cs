@@ -16,7 +16,7 @@ namespace Carbon.Media.Tests
         [InlineData(ImageFormat.Jp2,  "image/jp2",          4310)]
         [InlineData(ImageFormat.Jpeg, "image/jpeg",         4320)]
         [InlineData(ImageFormat.Tiff, "image/tiff",         4775)]
-        public void ImageCodecTypes(ImageFormat type, string mediaType, int id)
+        public void MimesAreCorrect(ImageFormat type, string mediaType, int id)
         {
             Assert.Equal((int)type, id);
 
