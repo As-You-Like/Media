@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Processing
 {
-    public class TuneFilter : IFilter
+    public sealed class TuneFilter : IFilter
     {
         public TuneFilter(string name)
         {

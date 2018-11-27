@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Carbon.Media.Processing
+﻿namespace Carbon.Media.Processing
 {
     public sealed class QualityFilter : IProcessor
     {
@@ -8,7 +6,7 @@ namespace Carbon.Media.Processing
         {
             if (value < 0 && value > 100)
             {
-                throw new ArgumentOutOfRangeException(nameof(value), value, "Must be between 0 & 100");
+                ExceptionHelper.OutOfRange(nameof(value), 0, 100, value);
             }
 
             Value = value;

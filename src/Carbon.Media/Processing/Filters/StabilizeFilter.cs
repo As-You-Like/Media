@@ -2,7 +2,7 @@
 
 namespace Carbon.Media.Processing
 {
-    public class StabilizeFilter : IFilter
+    public sealed class StabilizeFilter : IFilter
     {
         public string Canonicalize() => "stabilize";
         

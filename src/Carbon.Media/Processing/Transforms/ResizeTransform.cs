@@ -6,13 +6,6 @@ namespace Carbon.Media.Processing
 {
     public sealed class ResizeTransform : IProcessor
     {
-        const int maxDimension = 16384;
-
-        // 8K = 7,680 x 4,320
-
-        // The maximum pixel dimensions of a WebP image is 16384 x 16384.
-        // 16384 * 16384 * 4 = 1GB bitmap
-
         private readonly Unit width;
         private readonly Unit height;
 

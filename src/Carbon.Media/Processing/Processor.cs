@@ -21,7 +21,8 @@ namespace Carbon.Media.Processing
                 case "pad"          : return PadTransform.Create(syntax);
 
                 case "page"         : return PageFilter.Create(syntax);
-                case "frame"        : return FrameFilter.Create(syntax);        
+                case "frame"        : return FrameFilter.Create(syntax);
+                case "timestamp"    : return TimestampFilter.Create(syntax);
                 case "background"   : return BackgroundFilter.Create(syntax);
                 
                 // web filters
@@ -66,7 +67,7 @@ namespace Carbon.Media.Processing
                 case "preset"       : return PresetFilter.Create(syntax);
 
                 // Flags
-                case "lossless"     : return LosslessFilter.Default;
+                case "lossless"     : return LosslessFlag.Default;
                 case "poster"       : return FrameFilter.Poster;
                 case "debug"        : return DebugFilter.Default;
 

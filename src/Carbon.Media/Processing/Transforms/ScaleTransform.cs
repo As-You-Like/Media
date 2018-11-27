@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -13,10 +12,14 @@ namespace Carbon.Media.Processing
         public ScaleTransform(int width, int height, InterpolaterMode mode)
         {
             if (width < 0 || width > Constants.MaxWidth)
-                throw new ArgumentOutOfRangeException(nameof(width), width, message: "Must be between 0 and 16,384");
+            {
+                ExceptionHelper.OutOfRange(nameof(width), 0, Constants.MaxWidth, width);
+            }
 
             if (height < 0 || height > Constants.MaxHeight)
-                throw new ArgumentOutOfRangeException(nameof(height), height, message: "Must be between 0 and 16,384");
+            {
+                ExceptionHelper.OutOfRange(nameof(height), 0, Constants.MaxHeight, height);
+            }
 
             Width = width;
             Height = height;

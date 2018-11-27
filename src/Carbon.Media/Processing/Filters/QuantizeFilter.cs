@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace Carbon.Media.Processing
 {
@@ -7,15 +6,11 @@ namespace Carbon.Media.Processing
     {
         public QuantizeFilter(int maxColors, string algorithm = null, bool? dither = null)
         {
-            if (maxColors <= 0)
+            if (maxColors <= 0 || maxColors > 256)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be greater than 0");
+                throw ExceptionHelper.OutOfRange(nameof(maxColors), 0, 256, maxColors);
             }
-            else if (maxColors > 256)
-            {
-                throw new ArgumentOutOfRangeException(nameof(maxColors), maxColors, "Must be less than 256");
-            }
-
+   
             MaxColors = maxColors;
             Algorithm = algorithm;
             Dither = dither;
