@@ -190,6 +190,13 @@ namespace Carbon.Media
             return this;
         }
 
+        public MediaTransformation WithTimestamp(double timestamp)
+        {
+            Apply(new TimestampFilter(timestamp));
+
+            return this;
+        }
+
         public MediaTransformation WithColorSpace(ColorSpace colorSpace)
         {
             Apply(new ColorSpaceFilter(colorSpace));
@@ -254,11 +261,22 @@ namespace Carbon.Media
 
             string[] segments = transformPath.Split(Seperators.ForwardSlash);
 
-            var transforms = ParseTransforms(segments);
+            IProcessor[] transforms = ParseTransforms(segments);
+
+            FormatId formatId;
+
+            try
+            {
+                formatId = FormatIdExtensions.Parse(format);
+            }
+            catch
+            {
+                throw new InvalidTransformException(segments.Length, "Invalid format");
+            }
 
             var rendition = new MediaTransformation(source ?? new MediaInfo(sourcePath, 0, 0))
                 .Apply(transforms)
-                .Encode(FormatIdExtensions.Parse(format), null);
+                .Encode(formatId, null);
 
             return rendition;
         }
@@ -277,13 +295,17 @@ namespace Carbon.Media
 
                 try
                 {
-                    // 100x100 || 1000kbs || 1mbs
+                    // 100x100 || 1000kbs || 1mbs || 00:00:00
                     
                     if (char.IsDigit(segment[0]))
                     {
                         if (segment.EndsWith("bs")) // kbs | mbs
                         {
-                            transform = BitRateFilter.Create(new CallSyntax("bitrate", new[] { new Argument(segment) }));
+                            transform = new BitRateFilter(BitRate.Parse(segment));
+                        }
+                        else if (segment.IndexOf(':') > 0) // 00:00:00
+                        {
+                            transform = new TimestampFilter(TimeSpan.Parse(segment).TotalSeconds);
                         }
                         else
                         {

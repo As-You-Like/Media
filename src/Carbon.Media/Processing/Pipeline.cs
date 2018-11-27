@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Carbon.Media.Processing
 {
+
     public class Pipeline
     {
         public IMediaInfo Source { get; set; } // Input
 
-        public int? PageNumber { get; set; }
-
-        public int? FrameNumber { get; set; }
-
+        // Page | Frame | Timestamp
+        public ExtractFilter? Extract { get; set; }
+        
         // Replace with BG (Image, Gradient, Color, ...)
         public string BackgroundColor { get; set; }
 
@@ -101,7 +101,7 @@ namespace Carbon.Media.Processing
                 switch(source.Orientation.Value)
                 {
                     case ExifOrientation.FlipHorizontal : pipeline.Flip   = FlipTransform.Horizontally;  break;
-                    case ExifOrientation.Rotate180      : pipeline.Rotate = 180;                break;
+                    case ExifOrientation.Rotate180      : pipeline.Rotate = 180; break;
                     case ExifOrientation.FlipVertical   : pipeline.Flip   = FlipTransform.Vertically;    break;
 
                     case ExifOrientation.Transpose      : pipeline.Flip = FlipTransform.Horizontally;
@@ -128,11 +128,15 @@ namespace Carbon.Media.Processing
             {
                 if (transform is PageFilter page)
                 {
-                    pipeline.PageNumber = page.Number;
+                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Page, page.Number);
                 }
                 else if (transform is FrameFilter frame)
                 {
-                    pipeline.FrameNumber = frame.Number;
+                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Frame, frame.Number);
+                }
+                else if (transform is TimestampFilter timestamp)
+                {
+                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Timestamp, timestamp.Value);
                 }
                 else if (transform is BackgroundFilter background)
                 {
@@ -239,7 +243,7 @@ namespace Carbon.Media.Processing
                 {
                     pipeline.Metadata = metadata;
                 }
-                else if (transform is LosslessFilter)
+                else if (transform is LosslessFlag)
                 {
                     quality = 100;
                     encodingFlags |= EncodeFlags.Lossless;
@@ -248,7 +252,7 @@ namespace Carbon.Media.Processing
                 {
                     pipeline.Expires = expires.Timestamp;
                 }
-             
+
                 else if (transform is EncodeParameters encode)
                 {
                     pipeline.Encode = quality != null || encodingFlags != default
@@ -314,10 +318,13 @@ namespace Carbon.Media.Processing
                 switch (transform)
                 {
                     case PageFilter page:
-                        result.PageNumber = page.Number;
+                        result.Extract = new ExtractFilter(ExtractFilterType.Page, page.Number);
                         break;
                     case FrameFilter frame:
-                        result.FrameNumber = frame.Number;
+                        result.Extract = new ExtractFilter(ExtractFilterType.Frame, frame.Number);
+                        break;
+                    case TimestampFilter timestamp:
+                        result.Extract = new ExtractFilter(ExtractFilterType.Timestamp, timestamp.Value);
                         break;
 
                     case BackgroundFilter bg:
@@ -376,28 +383,28 @@ namespace Carbon.Media.Processing
                 return sb.ToString();
             }
 
-            if (FrameNumber != null)
+            if (Extract is ExtractFilter extract)
             {
                 sb.Append('/');
 
-                if (FrameNumber == 0)
+                if (extract.Type == ExtractFilterType.Frame)
                 {
-                    sb.Append("poster");
+                    if (extract.Value == 0)
+                    {
+                        sb.Append("poster");
+                    }
+                    else
+                    {
+                        sb.Append("frame(");
+                        sb.Append(extract.Value);
+                        sb.Append(')');
+                    }
                 }
                 else
                 {
-                    sb.Append("frame(");
-                    sb.Append(FrameNumber);
-                    sb.Append(')');
+                    // page | timestamp
+                    sb.Append(extract.ToString());
                 }
-            }
-
-            if (PageNumber != null)
-            {
-                sb.Append('/');
-                sb.Append("page(");
-                sb.Append(PageNumber);
-                sb.Append(')');
             }
 
             if (BackgroundColor != null)
@@ -506,20 +513,16 @@ namespace Carbon.Media.Processing
                 return sb.ToString();
             }
 
-            if (FrameNumber != null)
+            if (Extract is ExtractFilter extract)
             {
-                sb.Append("|>frame(");
-                sb.Append(FrameNumber);
+                sb.Append("|>");
+                // frame | page | timestamp
+                sb.Append(extract.Type.ToString().ToLower());
+                sb.Append('(');
+                sb.Append(extract.Value);
                 sb.Append(')');
             }
-
-            if (PageNumber != null)
-            {
-                sb.Append("|>page(");
-                sb.Append(PageNumber);
-                sb.Append(')');
-            }
-
+            
             if (BackgroundColor != null)
             {
                 sb.Append("|>background(");
