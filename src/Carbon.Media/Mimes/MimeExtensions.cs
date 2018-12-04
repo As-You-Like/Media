@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Carbon.Media
 {
@@ -17,6 +18,7 @@ namespace Carbon.Media
                 case "f4v"  : return FormatId.Mp4;
                 case "flv"  : return FormatId.Flv;
                 case "gif"  : return FormatId.Gif;
+                case "heif" : return FormatId.Heif;
                 case "ico"  : return FormatId.Ico;
                 case "jpeg" : return FormatId.Jpeg;
                 case "jp2"  : return FormatId.Jp2;
@@ -27,7 +29,7 @@ namespace Carbon.Media
                 case "mpeg" : return FormatId.Mp1;
                 case "mov"  : return FormatId.Mov;
                 case "ogg"  : return FormatId.Ogg;
-                case "oga"  : return FormatId.Ogg; // TODO OGA
+                case "oga"  : return FormatId.Ogg;
                 case "ogv"  : return FormatId.Ogv;
                 case "opus" : return FormatId.Opus;
                 case "png"  : return FormatId.Png;
@@ -41,7 +43,7 @@ namespace Carbon.Media
 
             if (!Enum.TryParse<FormatId>(mime.Format, true, out var result))
             {
-                throw new Exception("no format for:" + mime.Format);
+                throw new KeyNotFoundException("No format for " + mime.Format);
             }
 
             return result;
