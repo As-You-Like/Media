@@ -6,23 +6,23 @@ namespace Carbon.Media
     public class AudioProfile
     {
         public AudioProfile(
-            string codec, 
+            string codec,
             BitRate bitRate,
-            SampleFormat sampleFormat = default, 
+            SampleFormat sampleFormat = default,
             int? sampleRate = null)
         {
             if (string.IsNullOrEmpty(codec))
                 throw new ArgumentException("Required", nameof(codec));
 
-            if (sampleRate != null && sampleRate.Value <= 0)
+            if (sampleRate is int sr && sr <= 0)
             {
                 throw new ArgumentOutOfRangeException("Must be > 0", sampleRate.Value, nameof(sampleRate));
             }
 
-            Codec        = codec;
-            BitRate      = bitRate;
+            Codec = codec;
+            BitRate = bitRate;
             SampleFormat = sampleFormat;
-            SampleRate   = sampleRate;
+            SampleRate = sampleRate;
         }
 
         [DataMember(Name = "codec", Order = 1)]
@@ -36,7 +36,7 @@ namespace Carbon.Media
 
         // 0...48000
         [DataMember(Name = "sampleRate", Order = 4)]
-        public int? SampleRate { get; }        
+        public int? SampleRate { get; }
     }
 }
 

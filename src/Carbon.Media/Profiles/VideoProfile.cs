@@ -11,14 +11,14 @@ namespace Carbon.Media
 
         public VideoProfile(
             string codec,
-            BitRate bitRate, 
+            BitRate bitRate,
             int width,
             int height)
         {
-            Codec   = codec;
+            Codec = codec;
             BitRate = bitRate;
-            Width   = width;
-            Height  = height;
+            Width = width;
+            Height = height;
         }
 
         [DataMember(Name = "codec", Order = 1)]
@@ -38,7 +38,7 @@ namespace Carbon.Media
 
         [DataMember(Name = "maxBitRate", Order = 6)]
         public BitRate? MaxBitRate { get; set; } // -maxrate
-        
+
         [DataMember(Name = "frameRate", Order = 8, EmitDefaultValue = false)]
         public Rational? FrameRate { get; set; }
 
@@ -56,12 +56,19 @@ namespace Carbon.Media
 
         [DataMember(Name = "scaleMode", Order = 12), DefaultValue(ResizeFlags.Fit)]
         public ResizeFlags ScaleMode { get; set; }
-        
+
+        [IgnoreDataMember]
         public bool Upscale => (ScaleMode & ResizeFlags.Upscale) != 0;
     }
 }
+
+// CODECS + profile
 
 // avc1.42E01E (H264 Baseline)
 // avc1.4D401E (H264 Main)
 // theora
 // vp8
+
+
+
+
