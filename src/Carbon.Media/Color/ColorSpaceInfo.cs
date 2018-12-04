@@ -17,14 +17,6 @@ namespace Carbon.Media
 
         public ColorSpaceFlags Flags { get; }
 
-        // WhitePoint
-
-        // PrimaryColors
-
-        // TODO: ColorTable (for indexed color spaces)
-
-        // ICCData?
-
         public bool IsWideGamut => (Flags & ColorSpaceFlags.WideGamut) != 0;
 
         public static readonly ColorSpaceInfo Cmyk     = new ColorSpaceInfo("CMYK",      ColorModel.CMYK);
