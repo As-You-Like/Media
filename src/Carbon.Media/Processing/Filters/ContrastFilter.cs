@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processing
 {
-    public class ContrastFilter : IFilter, ICanonicalizable
+    public sealed class ContrastFilter : IFilter, ICanonicalizable
     {
         public ContrastFilter(float amount)
         {

@@ -11,11 +11,14 @@ namespace Carbon.Media.Processing
                 ExceptionHelper.OutOfRange(nameof(amount), 0, 1, amount);
             }
 
-            Amount = amount;
+            Value = amount;
         }
 
-        public float Amount { get; }
-        
+        public float Value { get; }
+
+        // if(lt(t,10),1,max(1-(t-10)/5,0))
+        // public string Expression { get; set; }
+
         public string Canonicalize()
         {
             var sb = StringBuilderCache.Aquire();
@@ -30,7 +33,7 @@ namespace Carbon.Media.Processing
         public void WriteTo(StringBuilder sb)
         {
             sb.Append("volume(");
-            sb.Append(Amount);
+            sb.Append(Value);
             sb.Append(')');
         }
 

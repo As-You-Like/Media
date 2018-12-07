@@ -190,9 +190,9 @@ namespace Carbon.Media
             return this;
         }
 
-        public MediaTransformation WithTimestamp(double timestamp)
+        public MediaTransformation WithTime(double timestamp)
         {
-            Apply(new TimestampFilter(timestamp));
+            Apply(new TimeFilter(timestamp));
 
             return this;
         }
@@ -305,7 +305,7 @@ namespace Carbon.Media
                         }
                         else if (segment.IndexOf(':') > 0) // 00:00:00
                         {
-                            transform = new TimestampFilter(TimeSpan.Parse(segment).TotalSeconds);
+                            transform = new TimeFilter(TimeSpan.Parse(segment).TotalSeconds);
                         }
                         else
                         {

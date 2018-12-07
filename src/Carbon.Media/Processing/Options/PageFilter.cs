@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Carbon.Media.Processing
 {
-    public class PageFilter : IProcessor, ICanonicalizable
+    public sealed class PageFilter : IProcessor, ICanonicalizable
     {
         public PageFilter(int number)
         {

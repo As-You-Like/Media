@@ -1,6 +1,6 @@
 ﻿namespace Carbon.Media.Processing
 {
-    public class ColorSpaceFilter : IProcessor
+    public sealed class ColorSpaceFilter : IProcessor
     {
         public ColorSpaceFilter(ColorSpace type)
         {

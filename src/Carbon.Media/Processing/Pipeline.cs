@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Carbon.Media.Processing
 {
-
     public class Pipeline
     {
         public IMediaInfo Source { get; set; } // Input
 
-        // Page | Frame | Timestamp
+        // | page(1)
+        // | frame(17)
+        // | timestamp(1.452)
         public ExtractFilter? Extract { get; set; }
         
-        // Replace with BG (Image, Gradient, Color, ...)
-        public string BackgroundColor { get; set; }
+        // | fff
+        // | black
+        // | linear-gradient(...)
+        [DataMember(Name = "background")]
+        public string Background { get; set; }
 
         // 1. Flip
         public FlipTransform Flip { get; set; }
@@ -132,15 +137,15 @@ namespace Carbon.Media.Processing
                 }
                 else if (transform is FrameFilter frame)
                 {
-                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Frame, frame.Number);
+                    pipeline.Extract = new ExtractFilter(frame.Number == 0 ? ExtractFilterType.Poster : ExtractFilterType.Frame, frame.Number);
                 }
-                else if (transform is TimestampFilter timestamp)
+                else if (transform is TimeFilter timestamp)
                 {
-                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Timestamp, timestamp.Value);
+                    pipeline.Extract = new ExtractFilter(ExtractFilterType.Time, timestamp.Value);
                 }
                 else if (transform is BackgroundFilter background)
                 {
-                    pipeline.BackgroundColor = background.Color;
+                    pipeline.Background = background.Color;
                 }
                 else if (transform is FlipTransform flip)
                 {
@@ -321,14 +326,15 @@ namespace Carbon.Media.Processing
                         result.Extract = new ExtractFilter(ExtractFilterType.Page, page.Number);
                         break;
                     case FrameFilter frame:
-                        result.Extract = new ExtractFilter(ExtractFilterType.Frame, frame.Number);
+                        result.Extract = new ExtractFilter(frame.Number == 0 ? ExtractFilterType.Poster : ExtractFilterType.Frame, frame.Number);
+
                         break;
-                    case TimestampFilter timestamp:
-                        result.Extract = new ExtractFilter(ExtractFilterType.Timestamp, timestamp.Value);
+                    case TimeFilter timestamp:
+                        result.Extract = new ExtractFilter(ExtractFilterType.Time, timestamp.Value);
                         break;
 
-                    case BackgroundFilter bg:
-                        result.BackgroundColor = bg.Color;
+                    case BackgroundFilter background:
+                        result.Background = background.Color;
                         break;
                     case RotateTransform rotate:
                         result.Rotate = rotate.Angle;
@@ -386,32 +392,16 @@ namespace Carbon.Media.Processing
             if (Extract is ExtractFilter extract)
             {
                 sb.Append('/');
-
-                if (extract.Type == ExtractFilterType.Frame)
-                {
-                    if (extract.Value == 0)
-                    {
-                        sb.Append("poster");
-                    }
-                    else
-                    {
-                        sb.Append("frame(");
-                        sb.Append(extract.Value);
-                        sb.Append(')');
-                    }
-                }
-                else
-                {
-                    // page | timestamp
-                    sb.Append(extract.ToString());
-                }
+                
+               // page | timestamp | frame | poster
+               sb.Append(extract.ToString());
             }
 
-            if (BackgroundColor != null)
+            if (Background != null)
             {
                 sb.Append('/');
                 sb.Append("background(");
-                sb.Append(BackgroundColor);
+                sb.Append(Background);
                 sb.Append(')');
             }
 
@@ -516,17 +506,15 @@ namespace Carbon.Media.Processing
             if (Extract is ExtractFilter extract)
             {
                 sb.Append("|>");
+
                 // frame | page | timestamp
-                sb.Append(extract.Type.ToString().ToLower());
-                sb.Append('(');
-                sb.Append(extract.Value);
-                sb.Append(')');
+                sb.Append(extract.ToString());
             }
             
-            if (BackgroundColor != null)
+            if (Background != null)
             {
                 sb.Append("|>background(");
-                sb.Append(BackgroundColor);
+                sb.Append(Background);
                 sb.Append(')');
             }
 

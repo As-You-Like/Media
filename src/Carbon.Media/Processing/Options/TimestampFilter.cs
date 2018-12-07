@@ -2,9 +2,9 @@
 
 namespace Carbon.Media.Processing
 {
-    public sealed class TimestampFilter : IProcessor, ICanonicalizable
+    public sealed class TimeFilter : IProcessor, ICanonicalizable
     {
-        public TimestampFilter(double value)
+        public TimeFilter(double value)
         {
             Value = value;
         }
@@ -23,11 +23,11 @@ namespace Carbon.Media.Processing
             return StringBuilderCache.ExtractAndRelease(sb);
         }
 
-        // timestamp(1.13s)
+        // time(1.13s)
 
         public void WriteTo(StringBuilder sb)
         {
-            sb.Append("timestamp(");
+            sb.Append("time(");
             sb.Append(Value);
             sb.Append('s');
             sb.Append(')');
@@ -37,7 +37,7 @@ namespace Carbon.Media.Processing
 
         #endregion
 
-        public static TimestampFilter Create(in CallSyntax syntax)
+        public static TimeFilter Create(in CallSyntax syntax)
         {
             string arg = syntax.Arguments[0].Value.ToString();
 
@@ -46,9 +46,9 @@ namespace Carbon.Media.Processing
                 arg = arg.Substring(0, arg.Length - 1);
             }
 
-            return new TimestampFilter(double.Parse(arg));
+            return new TimeFilter(double.Parse(arg));
         }
     }
 }
 
-// timestamp(1s)
+// time(1s)
