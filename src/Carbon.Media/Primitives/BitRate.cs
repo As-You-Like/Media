@@ -13,6 +13,11 @@ namespace Carbon.Media
             Value = value;
         }
 
+        public BitRate(BitRate value)
+        {
+            Value = value.Value;
+        }
+
         [DataMember(Name = "value", Order = 1)]
         public long Value { get; }
 
@@ -34,6 +39,30 @@ namespace Carbon.Media
             return new BitRate((long)(kbs * 1000 * 1000));
         }
 
+        public static BitRate FromGbps(double gbs)
+        {
+            return new BitRate((long)(gbs * 1000 * 1000 * 1000));
+        }
+
+        #region Operators
+
+        public static BitRate operator +(BitRate lhs, BitRate rhs)
+        {
+            return new BitRate(lhs.Value + rhs.Value);
+        }
+
+        public static BitRate operator -(BitRate lhs, BitRate rhs)
+        {
+            return new BitRate(lhs.Value - rhs.Value);
+        }
+
+        public static BitRate operator *(BitRate lhs, double value)
+        {
+            return new BitRate((long)(lhs.Value * value));
+        }
+
+        #endregion
+
         #region Equality
 
         public bool Equals(BitRate other) => Value == other.Value;
@@ -45,22 +74,31 @@ namespace Carbon.Media
         public override string ToString() => Value.ToString();
 
         public static BitRate Parse(string text)
-        {            
-            if (text.EndsWith("kbs"))
+        {
+            if (text is null) throw new ArgumentNullException(nameof(text));
+            
+            if (text[text.Length - 1] == 's')
             {
-                return FromKbps(double.Parse(text.Substring(0, text.Length - 3)));
-            }
-            if (text.EndsWith("mbs"))
-            {
-                return FromMbps(double.Parse(text.Substring(0, text.Length - 3)));
-            }
-            else if (text.EndsWith("Kb/s"))
-            {
-                return FromKbps(double.Parse(text.Substring(0, text.Length - 4)));
-            }
-            else if (text.EndsWith("Mb/s"))
-            {
-                return FromMbps(double.Parse(text.Substring(0, text.Length - 4)));
+                if (text.EndsWith("bps"))
+                {
+                    return new BitRate(long.Parse(text.Substring(0, text.Length - 3)));
+                }
+                if (text.EndsWith("kbs"))
+                {
+                    return FromKbps(double.Parse(text.Substring(0, text.Length - 3)));
+                }
+                if (text.EndsWith("mbs"))
+                {
+                    return FromMbps(double.Parse(text.Substring(0, text.Length - 3)));
+                }
+                else if (text.EndsWith("Kb/s"))
+                {
+                    return FromKbps(double.Parse(text.Substring(0, text.Length - 4)));
+                }
+                else if (text.EndsWith("Mb/s"))
+                {
+                    return FromMbps(double.Parse(text.Substring(0, text.Length - 4)));
+                }
             }
 
             return new BitRate(long.Parse(text));
