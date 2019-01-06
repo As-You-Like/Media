@@ -8,13 +8,13 @@ namespace Carbon.Media
             PixelFormat pixelFormat,
             int width,
             int height)
-            : this(pixelFormat, width, height,  new Rational(1, 1), new Rational(1, 1)) { }
+            : this(pixelFormat, width, height,  new TimeBase(1, 1), new Rational(1, 1)) { }
 
         public VideoFormatInfo(
             PixelFormat pixelFormat,
             int width, 
             int height, 
-            Rational timeBase,
+            TimeBase timeBase,
             Rational aspectRatio)
         {
             if (pixelFormat == default)
@@ -39,18 +39,16 @@ namespace Carbon.Media
 
         public int Height { get; }
 
-        // Allows for variable rate...
-        public Rational TimeBase { get; }
+        public TimeBase TimeBase { get; }
 
         public Rational AspectRatio { get; }
 
-        // Check timebase & aspectRatio?
-
         public bool Equals(VideoFormatInfo other) =>
             PixelFormat == other.PixelFormat &&
-            Width       == other.Width &&
-            Height      == other.Height &&
-            AspectRatio == other.AspectRatio;
+            Width.Equals(other.Width) &&
+            Height.Equals(other.Height) &&
+            TimeBase.Equals(other.TimeBase) &&
+            AspectRatio.Equals(other.AspectRatio);
 
         public override string ToString()
         {
