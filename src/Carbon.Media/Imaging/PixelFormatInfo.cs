@@ -76,32 +76,32 @@ namespace Carbon.Media
         {
             switch (format)
             {
-                case PixelFormat.Bgr101010     : return Bgr101010;
-                case PixelFormat.Bgr24         : return Bgr24;
-                case PixelFormat.Bgr32         : return Bgr32;   
-                case PixelFormat.Bgr555        : return Bgr555;   
-                case PixelFormat.Bgr565        : return Bgr565;  
-                case PixelFormat.Bgra32        : return Bgra32;
+                case PixelFormat.Bgr101010  : return Bgr101010;
+                case PixelFormat.Bgr24      : return Bgr24;
+                case PixelFormat.Bgr32      : return Bgr32;   
+                case PixelFormat.Bgr555     : return Bgr555;   
+                case PixelFormat.Bgr565     : return Bgr565;  
+                case PixelFormat.Bgra32     : return Bgra32;
 
-                case PixelFormat.Cmyk32        : return Cmyk32;
-                case PixelFormat.Cmyk64        : return Cmyk64; 
-                case PixelFormat.Cmyka40       : return Cmyka40;
-                case PixelFormat.Cmyka80       : return Cmyka80;
+                case PixelFormat.Cmyk32     : return Cmyk32;
+                case PixelFormat.Cmyk64     : return Cmyk64; 
+                case PixelFormat.Cmyka40    : return Cmyka40;
+                case PixelFormat.Cmyka80    : return Cmyka80;
 
-                case PixelFormat.BlackWhite    : return BlackWhite;
-                case PixelFormat.Gray2         : return Gray2;
-                case PixelFormat.Gray4         : return Gray4;
-                case PixelFormat.Gray8         : return Gray8;
-                case PixelFormat.Gray16        : return Gray16;
-                case PixelFormat.Gray32f   : return Gray32Float;
+                case PixelFormat.BlackWhite : return BlackWhite;
+                case PixelFormat.Gray2      : return Gray2;
+                case PixelFormat.Gray4      : return Gray4;
+                case PixelFormat.Gray8      : return Gray8;
+                case PixelFormat.Gray16     : return Gray16;
+                case PixelFormat.Gray32f    : return Gray32Float;
 
-                case PixelFormat.Pbgra32       : return Pbgra32;
-                case PixelFormat.Prgba128f : return Prgba128Float;
+                case PixelFormat.Pbgra32    : return Pbgra32;
+                case PixelFormat.Prgba128f  : return Prgba128Float;
 
-                case PixelFormat.Rgb24         : return Rgb24;
-                case PixelFormat.Rgb48         : return Rgb48;
-                case PixelFormat.Rgba128f  : return Rgba128Float;
-                case PixelFormat.Rgba64        : return Rgba64;
+                case PixelFormat.Rgb24      : return Rgb24;
+                case PixelFormat.Rgb48      : return Rgb48;
+                case PixelFormat.Rgba128f   : return Rgba128Float;
+                case PixelFormat.Rgba64     : return Rgba64;
             }
 
             throw new Exception("Invalid PixelFormat:" + format);
