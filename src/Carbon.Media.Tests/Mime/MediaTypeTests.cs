@@ -52,8 +52,6 @@ namespace Carbon.Media.Tests
         public void ModelTests()
         {
             // var mime = new Mime("model/x3d+xml");
-
-
         }
 
 
@@ -91,7 +89,7 @@ namespace Carbon.Media.Tests
         [Fact]
         public void VideoTypeTests()
         {
-            var formats = new[] { "avi", "f4v", "flv", "m4v", "mp4", "mpg", "mpeg", "qt", "webm", "wmv" };
+            var formats = new[] { "avi", "f4v", "flv", "m4s", "m4v", "mp4", "mpg", "mpeg", "qt", "webm", "wmv" };
 
             foreach (var format in formats)
             {

@@ -34,37 +34,48 @@
             Assert.Equal("flac",  Mime.Parse("audio/flac").Format);
             Assert.Equal("mp3",   Mime.Parse("audio/mpeg").Format);
             Assert.Equal("oga",	  Mime.Parse("audio/ogg").Format);
-			Assert.Equal("opus",  Mime.Parse("audio/opus").Format);
-                                  
+            Assert.Equal("opus",  Mime.Parse("audio/opus").Format);
+
             // Images             
-			Assert.Equal("png",	  Mime.Parse("image/png").Format);
-			Assert.Equal("tiff",  Mime.Parse("image/tiff").Format);
-			Assert.Equal("gif",	  Mime.Parse("image/gif").Format);
+            Assert.Equal("avif",  Mime.Parse("image/avif").Format);
+            Assert.Equal("png",	  Mime.Parse("image/png").Format);
+            Assert.Equal("tiff",  Mime.Parse("image/tiff").Format);
+            Assert.Equal("gif",	  Mime.Parse("image/gif").Format);
             Assert.Equal("heif",  Mime.Parse("image/heif").Format);
             Assert.Equal("jpeg",  Mime.Parse("image/jpeg").Format);
-			Assert.Equal("jxr",	  Mime.Parse("image/vnd.ms-photo").Format);
+            Assert.Equal("jxr",	  Mime.Parse("image/vnd.ms-photo").Format);
             Assert.Equal("png",	  Mime.Parse("image/png").Format);
             Assert.Equal("svg",	  Mime.Parse("image/svg+xml").Format);
-			Assert.Equal("webp",  Mime.Parse("image/webp").Format);
+            Assert.Equal("webp",  Mime.Parse("image/webp").Format);
                                   
-			// Videos             
-			Assert.Equal("wmv",	  Mime.Parse("video/x-ms-wmv").Format);
-			Assert.Equal("mp4",	  Mime.Parse("video/mp4").Format);
-			Assert.Equal("mov",	  Mime.Parse("video/quicktime").Format);
-			Assert.Equal("ogv",	  Mime.Parse("video/ogg").Format);
+            // Videos             
+            Assert.Equal("wmv",	  Mime.Parse("video/x-ms-wmv").Format);
+            Assert.Equal("mp4",	  Mime.Parse("video/mp4").Format);
+            Assert.Equal("mov",	  Mime.Parse("video/quicktime").Format);
+            Assert.Equal("ogv",	  Mime.Parse("video/ogg").Format);
                                   
-			// Application        
-			Assert.Equal("js",	  Mime.Parse("application/javascript").Format);
-			Assert.Equal("json",  Mime.Parse("application/json").Format);
-			Assert.Equal("zip",	  Mime.Parse("application/zip").Format);
+            // Application        
+            Assert.Equal("js",	  Mime.Parse("application/javascript").Format);
+            Assert.Equal("json",  Mime.Parse("application/json").Format);
+            Assert.Equal("zip",	  Mime.Parse("application/zip").Format);
                                   
-			// Text               
-			Assert.Equal("css",	  Mime.Parse("text/css").Format);
-
+            // Text               
+            Assert.Equal("css",	  Mime.Parse("text/css").Format);
+            
             // Fonts
             Assert.Equal("ttf",   Mime.Parse("font/ttf").Format);
             Assert.Equal("woff",  Mime.Parse("font/woff").Format);
             Assert.Equal("woff2", Mime.Parse("font/woff2").Format);
+
+        }
+
+        [Fact]
+        public void PlaylistTests()
+        {
+            Assert.Equal("application/dash+xml",  Mime.FromFormat("mpd").Name);
+            Assert.Equal("application/x-mpegURL", Mime.FromFormat("m3u8").Name);
+
+            Assert.Equal("video/iso.segment", Mime.FromFormat("m4s").Name);
         }
 
         [Fact]

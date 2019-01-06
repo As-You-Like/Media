@@ -11,27 +11,27 @@ namespace Carbon.Media.Tests
         private static readonly MediaSource _37117398_960x540 = new MediaSource("37117398", 960, 540);
 
         [Fact]
-        public void ParseTimestamp()
+        public void ParseTimeFilter1()
         {
             var transformation = MediaTransformation.Parse("00:00:01/960x540.heif", _37117398_960x540);
 
-            var timestamp = transformation[0] as TimestampFilter;
+            var filter = transformation[0] as TimeFilter;
 
-            Assert.Equal(1, timestamp.Value);
+            Assert.Equal(1, filter.Value);
 
-            Assert.Equal("timestamp(1)/960x540.heif", new MediaRenditionInfo(null, transformation).TransformPath);
+            Assert.Equal("time(1)/960x540.heif", new MediaRenditionInfo(null, transformation).TransformPath);
         }
 
         [Fact]
-        public void ParseTimestamp2()
+        public void ParseTimeFilter2()
         {
-            var transformation = MediaTransformation.Parse("timestamp(2.6252524)/960x540.tiff", _37117398_960x540);
+            var transformation = MediaTransformation.Parse("time(2.6252524)/960x540.tiff", _37117398_960x540);
 
-            var timestamp = transformation[0] as TimestampFilter;
+            var filter = transformation[0] as TimeFilter;
 
-            Assert.Equal(2.6252524, timestamp.Value);
+            Assert.Equal(2.6252524, filter.Value);
 
-            Assert.Equal("timestamp(2.6252524)/960x540.tiff", new MediaRenditionInfo(null, transformation).TransformPath);
+            Assert.Equal("time(2.6252524)/960x540.tiff", new MediaRenditionInfo(null, transformation).TransformPath);
         }
 
         [Fact]
@@ -67,20 +67,26 @@ namespace Carbon.Media.Tests
             Assert.Equal(FrameFilter.Poster, transformation[0]);
 
             Assert.Equal("poster/960x540.webp", new MediaRenditionInfo(null, transformation).TransformPath);
-            
-            Assert.Equal("blob#37117398|>frame(0)|>scale(960,540,lanczos3)|>WebP::encode", transformation.ToPipeline().Canonicalize());
+
+            // 50000;@1/4500
+            // 5000;time(5.524s)
+
+            // @1.45s
+
+
+            Assert.Equal("blob#37117398|>poster|>scale(960,540,lanczos3)|>WebP::encode", transformation.ToPipeline().Canonicalize());
 
         }
 
         [Fact]
-        public void Preset()
+        public void Speed()
         {            
-            var transformation = MediaTransformation.Parse("preset(ultrafast)/960x540.mp4", _37117398_960x540);
+            var transformation = MediaTransformation.Parse("speed(ultrafast)/960x540.mp4", _37117398_960x540);
 
-            Assert.Equal("ultrafast", (transformation[0] as PresetFilter).Name);
+            Assert.Equal("ultrafast", (transformation[0] as SpeedFilter).Name);
             Assert.Equal(FormatId.Mp4, transformation.Encoder.Format);
 
-            Assert.Equal("960x540/preset(ultrafast).mp4", new MediaRenditionInfo(null, transformation).TransformPath);
+            Assert.Equal("960x540/speed(ultrafast).mp4", new MediaRenditionInfo(null, transformation).TransformPath);
         }
 
         [Fact]
@@ -184,7 +190,6 @@ namespace Carbon.Media.Tests
             Assert.Equal("blob#1|>crop(97,21,480,360)|>JPEG::encode", pipeline.Canonicalize());
         }
 
-
         [Fact]
         public void DoubleResizeUp()
         {
@@ -260,7 +265,7 @@ namespace Carbon.Media.Tests
 
             var resize = t[0] as ResizeTransform;
             var rotate = t[1] as RotateTransform;
-            var encode = t[2] as EncodeParameters;
+            var encode = t[2] as EncodingParameters;
 
             Assert.Equal((960, 1280), (resize.Width, resize.Height));
             Assert.Equal(90, rotate.Angle);

@@ -24,9 +24,7 @@ namespace Carbon.Media.Processing.Filters.Tests
         [Fact]
         public void ThrowsWheNegtive()
         {
-            Assert.Throws<ArgumentException>(() => SepiaFilter.Create(CallSyntax.Parse("sepia(-1%)")));
-
-
+            Assert.Throws<ArgumentOutOfRangeException>(() => SepiaFilter.Create(CallSyntax.Parse("sepia(-1%)")));
         }
 
         [Fact]

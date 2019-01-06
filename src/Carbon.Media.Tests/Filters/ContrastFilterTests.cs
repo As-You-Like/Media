@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Carbon.Media.Processing.Filters.Tests
 {
+
     public class ContrastFilterTests
     {
         [Fact]

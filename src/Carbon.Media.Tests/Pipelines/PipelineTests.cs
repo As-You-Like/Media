@@ -22,6 +22,18 @@ namespace Carbon.Media.Processing.Tests
         private static readonly MediaSource gif_200x200 = new MediaSource("1", 200, 200);
 
         [Fact]
+        public void Palette()
+        {
+            var pipeline = Pipeline.Parse("blob#pipe|>frame(3)|>palette(256)|>JSON::encode");
+
+            Assert.Equal("blob#pipe|>frame(3)|>palette(256)|>JSON::encode", pipeline.Canonicalize());
+            
+            var filter = pipeline.Filters[0] as PaletteFilter;
+
+            Assert.Equal(256, filter.Count);
+        }
+
+        [Fact]
         public void Frame()
         {
             var pipeline = Pipeline.Parse("blob#pipe|>frame(3)|>JPEG::encode");
@@ -136,41 +148,6 @@ namespace Carbon.Media.Processing.Tests
             var pipe = Pipeline.From(t);
 
             Assert.Equal("drop(audio)/video(1mbs,profile:main).mp4", t.GetTransformPath());
-        }
-
-        [Theory]
-        [InlineData("mp3",  "MP3")]
-        [InlineData("m4a",  "M4A")]
-        [InlineData("opus", "Opus")]
-        [InlineData("aac",  "AAC")]
-        public void AudioTypes(string name, string canonicalName)
-        {
-            var t = MediaTransformation.Parse("1;96kbs." + name);
-
-            var pipe = Pipeline.From(t);
-
-            Assert.Null(pipe.Scale);
-
-            Assert.Equal("bitrate(96000)." + name, t.GetTransformPath());
-
-            Assert.Equal($"blob#1|>bitrate(96000)|>{canonicalName}::encode", pipe.Canonicalize());
-        }
-
-
-        [Theory]
-        [InlineData("webm", "WebM")]
-        [InlineData("mp4", "MP4")]
-        public void VideoTests(string name, string canonicalName)
-        {
-            var t = MediaTransformation.Parse("1;1920x1080/1000kbs." + name);
-
-            var pipe = Pipeline.From(t);
-
-            Assert.Equal((1920, 1080), (pipe.Scale.Width, pipe.Scale.Height));
-
-            Assert.Equal("1920x1080/bitrate(1000000)." + name, t.GetTransformPath());
-
-            Assert.Equal($"blob#1|>scale(1920,1080,lanczos3)|>bitrate(1000000)|>{canonicalName}::encode", pipe.Canonicalize());
         }
 
         [Fact]
@@ -353,18 +330,6 @@ namespace Carbon.Media.Processing.Tests
             Assert.Equal("blob#1|>crop(0,43,180,94)|>scale(1200,630,lanczos3)|>JPEG::encode", pipe.Canonicalize());
 
             Assert.Equal(new Size(1200, 630), pipe.FinalSize);
-        }
-
-        [Fact]
-        public void DebugTest()
-        {
-            var pipeline = Pipeline.Parse("blob#pipe|>crop(0,0,200,200)|>JPEG::encode|>debug");
-
-            Assert.Equal("blob#pipe|>crop(0,0,200,200)|>JPEG::encode|>debug", pipeline.Canonicalize());
-
-            Assert.Equal(new Size(200, 200), pipeline.FinalSize);
-
-            Assert.True(pipeline.IsDebug);
         }
 
         [Fact]

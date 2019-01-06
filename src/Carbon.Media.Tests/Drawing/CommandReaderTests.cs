@@ -1,15 +1,15 @@
 ﻿using Xunit;
 
-namespace Carbon.Media.Drawing.Tests
+namespace Carbon.Media.Internal.Tests
 {
-    public class DrawArgumentReaderTests
+    public class ArgumentReaderTests
     {
         [Fact]
         public void Single()
         {
             var text = "circle(radius:5)";
 
-            var reader = new DrawArgumentReader(text);
+            var reader = new ArgumentReader(text);
 
             Assert.True(reader.TryRead(out var command));
 
@@ -25,7 +25,7 @@ namespace Carbon.Media.Drawing.Tests
         {
             var text = "stroke:red,fill:blue";
 
-            var reader = new DrawArgumentReader(text);
+            var reader = new ArgumentReader(text);
 
             Assert.True(reader.TryRead(out var stroke));
             Assert.True(reader.TryRead(out var file));
@@ -40,7 +40,7 @@ namespace Carbon.Media.Drawing.Tests
         {
             var text = "circle(radius:5), x: 100px, y: 50px, color: rgba(255, 255, 255, 10%)";
 
-            var reader = new DrawArgumentReader(text);
+            var reader = new ArgumentReader(text);
 
             Assert.True(reader.TryRead(out var command));
 
@@ -68,7 +68,7 @@ namespace Carbon.Media.Drawing.Tests
         {
             var text = "circle(radius:5),text(hello,font:12px Helvetica,x:10,y:10)";
 
-            var reader = new DrawArgumentReader(text);
+            var reader = new ArgumentReader(text);
 
             Assert.True(reader.TryRead(out var circleArg));
 

@@ -2,7 +2,6 @@
 
 namespace Carbon.Media.Tests
 {
-
     public class FileFormatTests
     {
         [Theory]
