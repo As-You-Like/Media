@@ -1,4 +1,6 @@
-﻿namespace Carbon.Media
+﻿using System.Runtime.Serialization;
+
+namespace Carbon.Media
 {
     public readonly struct Argument
     {
@@ -14,8 +16,10 @@
             Value = value;
         }
 
+        [DataMember(Name = "name", Order = 1, EmitDefaultValue = false)]
         public string Name { get; }
 
+        [DataMember(Name = "value", Order = 2)]
         public object Value { get; }
 
         public void Deconstruct(out string name, out string value)

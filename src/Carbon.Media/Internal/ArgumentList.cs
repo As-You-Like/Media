@@ -1,27 +1,24 @@
-﻿namespace Carbon.Media
+﻿using System;
+using System.Collections.Generic;
+
+using Carbon.Media.Internal;
+
+namespace Carbon.Media
 {
     internal static class ArgumentList
     {
-        public static Argument[] Parse(string text)
+        public static Argument[] Parse(ReadOnlySpan<char> text)
         {
-            var parts = text.Split(Seperators.Comma);
+            var reader = new ArgumentReader(text);
 
-            var args = new Argument[parts.Length];
+            var args = new List<Argument>();
 
-            for (int i = 0; i < parts.Length; i++)
+            while (reader.TryRead(out var arg))
             {
-                var part = parts[i];
-
-                var colonIndex = part.IndexOf(':');
-                
-                args[i] = colonIndex > -1
-                     ? new Argument(
-                        name: part.Substring(0, colonIndex),
-                        value: part.Substring(colonIndex + 1)
-                     ) : new Argument(null, part);
+                args.Add(arg);
             }
 
-            return args;
+            return args.ToArray();
         }
     }
 }
