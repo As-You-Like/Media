@@ -203,9 +203,10 @@ namespace Carbon.Media
                 }
                
                 bufferSource = graph.AddSource(new AudioFormatInfo(
-                   audioDecoder.Context.SampleFormat,
-                   audioDecoder.Context.ChannelLayout,
-                   audioDecoder.Context.SampleRate
+                   sampleFormat  : audioDecoder.Context.SampleFormat,
+                   sampleRate    : audioDecoder.Context.SampleRate,
+                   channelCount  : audioDecoder.Context.ChannelCount,
+                   channelLayout : audioDecoder.Context.ChannelLayout
                 ));
 
                 bufferSink = graph.AddSink(Filter.FromName("abuffersink"));

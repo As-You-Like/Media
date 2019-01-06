@@ -1,69 +1,85 @@
 ﻿using System;
+using Carbon.Media.Processing;
 
 namespace Carbon.Media
 {
     public class AudioFormatInfo : IEquatable<AudioFormatInfo>
     {
-        private readonly SampleFormatInfo sampleFormatInfo;
+        public AudioFormatInfo(
+          SampleFormat sampleFormat,
+          int sampleRate,
+          ChannelLayout channelLayout)
+            : this(sampleFormat, sampleRate, ChannelLayoutHelper.GetChannelCount(channelLayout), channelLayout)
+        {
+        }
 
         public AudioFormatInfo(
             SampleFormat sampleFormat,
-            ChannelLayout channelLayout,
-            int sampleRate)
+            int sampleRate,
+            int channelCount,
+            ChannelLayout channelLayout = default)
         {
             if (sampleFormat == SampleFormat.Unknown)
-                throw new ArgumentException("Must not be Unknown", nameof(sampleFormat));
-
-            // 8 kHz ?
-
-            if (sampleRate <= 0 || sampleRate > 22_579_200)
             {
-                throw ExceptionHelper.OutOfRange(nameof(sampleRate), 0, 22_579_200, sampleRate);
+                throw new ArgumentException("Must not be Unknown", nameof(sampleFormat));
             }
 
-            if (channelLayout == default)
+            if (sampleRate <= 0 || sampleRate > Constants.MaxSampleRate)
             {
-                throw new ArgumentException("Must not be unknown", nameof(channelLayout));
+                throw ExceptionHelper.OutOfRange(nameof(sampleRate), 1, Constants.MaxSampleRate, sampleRate);
+            }
+
+            if (channelCount <= 0 || channelCount > Constants.MaxChannelCount)
+            {
+                throw ExceptionHelper.OutOfRange(nameof(sampleRate), 1, Constants.MaxChannelCount, sampleRate);
             }
 
             SampleFormat = sampleFormat;
             SampleRate = sampleRate;
+            ChannelCount = channelCount;
             ChannelLayout = channelLayout;
-
-            sampleFormatInfo = SampleFormatInfo.Get(sampleFormat);
         }
 
-        // bitCount, isPlanar, ..
         public SampleFormat SampleFormat { get; }
 
         public int SampleRate { get; }
 
-        public ChannelLayout ChannelLayout { get; }
+        public int ChannelCount { get; }
 
-        public int ChannelCount => ChannelLayout.GetChannelCount();
+        public ChannelLayout ChannelLayout { get; }
 
         #region Helpers
 
-        public int BitsPerSample => sampleFormatInfo.BitCount;
+        public int BitsPerSample => SampleFormatInfo.Get(SampleFormat).BitCount;
 
-        public bool IsPlanar => sampleFormatInfo.IsPlanar;
+        public bool IsPlanar => SampleFormatHelper.IsPlanar(SampleFormat);
 
-        public int LineCount => sampleFormatInfo.IsPlanar ? ChannelCount : 1; // PlaneCount?
-
-        public int LineSize => sampleFormatInfo.IsPlanar ? (BitsPerSample >> 3) : (BitsPerSample >> 3) * ChannelCount;
+        public int LineCount => IsPlanar ? ChannelCount : 1;
 
         #endregion
 
-        public override string ToString()
+        public int GetLineSize(int sampleCount)
         {
-            return string.Join(" ", SampleFormat, ChannelLayout, SampleRate);
+            if (sampleCount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sampleCount), "Must be > 0");
+            }
+
+            var info = SampleFormatInfo.Get(SampleFormat);
+
+            int lineSize = info.IsPlanar ? (info.BitCount >> 3) : (info.BitCount >> 3) * ChannelCount;
+
+            return lineSize * sampleCount;
         }
+
+        public override string ToString() => string.Join(" ", SampleFormat, SampleRate, ChannelCount, ChannelLayout);
 
         #region Equality
 
         public bool Equals(AudioFormatInfo other) =>
             SampleFormat == other.SampleFormat &&
             SampleRate == other.SampleRate &&
+            ChannelCount == other.ChannelCount &&
             ChannelLayout == other.ChannelLayout;
 
         #endregion
@@ -76,4 +92,5 @@ namespace Carbon.Media
 /// 96,000 Hz    : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
 /// 192,000 Hz   : DVD-Audio, BD-ROM (Blu-ray Disc)/HD-DVD audio tracks
 /// 2,822,400 Hz : SACD
+/// 
 // Channels { L, R, C }
