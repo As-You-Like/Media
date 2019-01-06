@@ -13,5 +13,15 @@ namespace Carbon.Media
         {
             return new ArgumentOutOfRangeException(name, actual, "Must be >= 0");
         }
+
+        public static ArgumentOutOfRangeException MustBeGreaterThanZero(string name, int actual)
+        {
+            return new ArgumentOutOfRangeException(name, actual, "Must be > 0");
+        }
+
+        public static ArgumentException InvalidOptionValue(string name, string actual)
+        {
+            return new ArgumentException("Invalid value", name);
+        }
     }
 }

@@ -17,7 +17,9 @@ namespace Carbon.Media.Drawing
         public UnboundPadding(Unit value)
         {
             if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(value), value.Value, "Must be >= 0");
+            {
+                throw ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(value), value.Value);
+            }
 
             Top = value;
             Right = value;            
@@ -27,10 +29,10 @@ namespace Carbon.Media.Drawing
 
         public UnboundPadding(Unit top, Unit right, Unit bottom, Unit left)
         {
-            if (top < 0)    throw new ArgumentOutOfRangeException(nameof(top),    top.Value,    "Must be >= 0");
-            if (right < 0)  throw new ArgumentOutOfRangeException(nameof(right),  right.Value,  "Must be >= 0");
-            if (bottom < 0) throw new ArgumentOutOfRangeException(nameof(bottom), bottom.Value, "Must be >= 0");
-            if (left < 0)   throw new ArgumentOutOfRangeException(nameof(left),   left.Value,   "Must be >= 0");
+            if (top < 0)    throw ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(top),    top.Value);
+            if (right < 0)  throw ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(right),  right.Value);
+            if (bottom < 0) throw ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(bottom), bottom.Value);
+            if (left < 0)   throw ExceptionHelper.MustBeGreaterThanOrEqualToZero(nameof(left),   left.Value);
 
             Top = top;
             Right = right;
