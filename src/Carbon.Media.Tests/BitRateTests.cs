@@ -7,6 +7,9 @@ namespace Carbon.Media.Tests
         [Fact]
         public void A()
         {
+            Assert.Equal(100, BitRate.Parse("100bps").Value);
+            Assert.Equal(100, BitRate.Parse("100 bps").Value);
+
             Assert.Equal(1,   BitRate.Parse("1mbs").Mbps);
             Assert.Equal(128, BitRate.Parse("128kbs").Kbps);
 
