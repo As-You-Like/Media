@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carbon.Media
+namespace Carbon.Media.Codecs
 {
     public static class CodecIdHelper
     {
