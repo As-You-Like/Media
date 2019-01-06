@@ -233,14 +233,7 @@ namespace Carbon.Media
         Yuva444p10le    = 624, // YUVA | 
         Yuva444p16be    = 625, // YUVA | 
         Yuva444p16le    = 626, // YUVA | 
-
-        // YUVJ
-        [Obsolete] Yuvj411p = 650, // YUVJ | => YUV + range
-        [Obsolete] Yuvj420p = 651, // YUVJ | => YUV + range
-        [Obsolete] Yuvj422p = 652, // YUVJ | => YUV + range
-        [Obsolete] Yuvj440p = 653, // YUVJ | => YUV + range
-        [Obsolete] Yuvj444p = 654, // YUVJ | => YUV + range
-
+        
         // YUYV
         [BitsPerPixel(16)] Yuyv422 = 660, // YUV | 4:2:2 | Y0 Cb Y1 Cr
         [BitsPerPixel(16)] Yvyu422 = 661, // YUV 4:2:2
